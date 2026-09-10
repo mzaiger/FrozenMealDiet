@@ -4,7 +4,10 @@ build_meal_pool.py
 Pulls a fresh pool of frozen-meal candidates from Kroger's Products API,
 splits them into a "breakfast" pool (name/category contains "breakfast")
 and a "general" pool (everything else, used for lunch and dinner), then
-looks up calories for each item from USDA FoodData Central by UPC.
+looks up calories for each item -- first from USDA FoodData Central by
+UPC, falling back to Open Food Facts (direct barcode lookup) for items
+USDA's branded database doesn't have, which in practice is mostly
+store-brand/private-label items.
 
 Writes candidate_pool.json, which the static front-end (index.html) uses
 to build a 7-day / 21-meal plan entirely in the browser. Meant to run on
@@ -160,8 +163,43 @@ def upc_variants(upc):
     return variants
 
 
+def lookup_calories_off(upc):
+    """Fallback nutrition source: Open Food Facts. Free, no API key, and does
+    a direct exact-barcode lookup rather than a fuzzy text search -- better
+    coverage for store-brand/private-label items USDA's branded database
+    tends to miss."""
+    global _off_debug_count
+    for candidate in upc_variants(upc):
+        url = f"https://world.openfoodfacts.org/api/v2/product/{candidate}.json"
+        try:
+            resp = http_json(url, headers={"User-Agent": "freezer-week-planner/1.0"})
+        except urllib.error.HTTPError:
+            continue
+        except urllib.error.URLError:
+            continue
+
+        if _off_debug_count < USDA_DEBUG_SAMPLES:
+            _off_debug_count += 1
+            print(
+                f"  [debug] OFF barcode='{candidate}' -> status={resp.get('status')}, "
+                f"product_name={resp.get('product', {}).get('product_name')!r}",
+                file=sys.stderr,
+            )
+
+        if resp.get("status") != 1:
+            continue
+
+        product = resp.get("product", {})
+        nutriments = product.get("nutriments", {})
+        cal = nutriments.get("energy-kcal_serving") or nutriments.get("energy-kcal_value")
+        if cal:
+            return round(cal)
+    return None
+
+
 _usda_error_count = 0
 _usda_debug_count = 0
+_off_debug_count = 0
 USDA_DEBUG_SAMPLES = 3
 
 
@@ -217,6 +255,10 @@ def lookup_calories(upc):
             cal = label.get("calories", {}).get("value")
             if cal:
                 return round(cal)
+
+    off_cal = lookup_calories_off(upc)
+    if off_cal:
+        return off_cal
 
     return None
 
