@@ -131,8 +131,12 @@ def extract_image(product):
     return images[0]["url"] if images else None
 
 
+_usda_error_count = 0
+
+
 def lookup_calories(upc):
     """Look up calories for a UPC via USDA FoodData Central. Returns int or None."""
+    global _usda_error_count
     if not USDA_API_KEY or not upc:
         return None
     params = urllib.parse.urlencode(
@@ -142,7 +146,15 @@ def lookup_calories(upc):
     try:
         resp = http_json(url)
     except urllib.error.HTTPError as e:
-        print(f"  USDA lookup failed for UPC {upc}: {e}", file=sys.stderr)
+        _usda_error_count += 1
+        if _usda_error_count <= 3:
+            print(f"  USDA lookup failed for UPC {upc}: {e}", file=sys.stderr)
+            if e.code in (401, 403):
+                print(
+                    "  -> looks like an invalid/unauthorized USDA_API_KEY, "
+                    "not a bad UPC. Check the secret value.",
+                    file=sys.stderr,
+                )
         return None
 
     for food in resp.get("foods", []):
@@ -157,17 +169,27 @@ def build_pool(token, location_id, terms):
     seen_upcs = set()
     pool = []
     for term in terms:
-        print(f"  searching: {term}")
-        for product in search_products(token, location_id, term):
+        products = search_products(token, location_id, term)
+        found = 0
+        matched = 0
+        skipped_dupe = 0
+        no_upc = 0
+        for product in products:
             upc = product.get("upc")
-            if not upc or upc in seen_upcs:
+            if not upc:
+                no_upc += 1
+                continue
+            if upc in seen_upcs:
+                skipped_dupe += 1
                 continue
             seen_upcs.add(upc)
+            found += 1
 
             calories = lookup_calories(upc)
             time.sleep(REQUEST_PAUSE_SECONDS)
             if calories is None:
                 continue  # skip items we can't get real calorie data for
+            matched += 1
 
             pool.append(
                 {
@@ -180,10 +202,23 @@ def build_pool(token, location_id, terms):
                     "calories": calories,
                 }
             )
+        print(
+            f"  '{term}': {len(products)} from Kroger, {found} new/unique, "
+            f"{matched} with a calorie match, {no_upc} missing upc, "
+            f"{skipped_dupe} dupes"
+        )
     return pool
 
 
 def main():
+    if not USDA_API_KEY:
+        print(
+            "WARNING: USDA_API_KEY is not set — every product will fail its "
+            "calorie lookup and the pool will come back empty. Add it as a "
+            "GitHub Actions secret (see README).",
+            file=sys.stderr,
+        )
+
     print(f"Authenticating with Kroger...")
     token = get_kroger_token()
 
