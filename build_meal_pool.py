@@ -22,14 +22,19 @@ Required environment variables:
   KROGER_CLIENT_SECRET
 
 Optional environment variables:
-  KROGER_ZIP              -- zip code used to find a nearby store
-  USDA_API_KEY            -- only needed if USDA fallback is enabled
-  ENABLE_USDA_FALLBACK    -- set to 0/false/no/off to disable USDA fallback
+  KROGER_ZIP
+  USDA_API_KEY
+  ENABLE_USDA_FALLBACK
+  OFF_REQUEST_PAUSE_SECONDS
+  KROGER_REQUEST_PAUSE_SECONDS
+  USDA_REQUEST_PAUSE_SECONDS
+  OFF_USER_AGENT
 """
 
 import base64
 import json
 import os
+import random
 import re
 import sys
 import time
@@ -49,6 +54,14 @@ ENABLE_USDA_FALLBACK = os.environ.get("ENABLE_USDA_FALLBACK", "1").strip().lower
     "no",
     "off",
 )
+
+# Rate limiting / pacing.
+# Open Food Facts is the most likely source of 429s. Default to a conservative
+# minimum interval between OFF barcode lookups.
+OFF_REQUEST_PAUSE_SECONDS = float(os.environ.get("OFF_REQUEST_PAUSE_SECONDS", "1.5"))
+KROGER_REQUEST_PAUSE_SECONDS = float(os.environ.get("KROGER_REQUEST_PAUSE_SECONDS", "1.0"))
+USDA_REQUEST_PAUSE_SECONDS = float(os.environ.get("USDA_REQUEST_PAUSE_SECONDS", "0.75"))
+BETWEEN_PRODUCTS_PAUSE_SECONDS = float(os.environ.get("BETWEEN_PRODUCTS_PAUSE_SECONDS", "0.25"))
 
 KROGER_BASE = "https://api.kroger.com/v1"
 USDA_BASE = "https://api.nal.usda.gov/fdc/v1"
@@ -73,24 +86,31 @@ GENERAL_TERMS = [
 ]
 
 PRODUCTS_PER_TERM = 20
-REQUEST_PAUSE_SECONDS = 0.3
 
 DEFAULT_HEADERS = {
-    # Federal API gateways and Open Food Facts are less likely to throttle
-    # a normal-looking client UA. Open Food Facts also appreciates a
-    # descriptive UA.
-    "User-Agent": "frozen-meal-planner/1.0 (GitHub Actions meal-pool builder)",
+    "User-Agent": "Mozilla/5.0 (compatible; frozen-meal-planner/1.0)",
     "Accept": "application/json",
 }
 
+# Open Food Facts appreciates a descriptive UA. If you have a contact email,
+# put it in OFF_USER_AGENT, for example:
+# OFF_USER_AGENT="my-app/1.0 (https://example.com; me@example.com)"
+OFF_USER_AGENT = os.environ.get(
+    "OFF_USER_AGENT",
+    "frozen-meal-planner/1.0 (barcode nutrition lookup; contact: you@example.com)",
+)
+
 OFF_HEADERS = {
     **DEFAULT_HEADERS,
-    "User-Agent": "frozen-meal-planner/1.0 (meal planner barcode lookup)",
+    "User-Agent": OFF_USER_AGENT,
 }
+
+OFF_FIELDS = "nutriments,serving_size,product_quantity,product_quantity_unit"
 
 _off_stats = {
     "attempted": 0,
     "http_error": 0,
+    "rate_limited": 0,
     "not_found": 0,
     "found_no_calories": 0,
     "matched": 0,
@@ -105,8 +125,32 @@ _usda_stats = {
 
 _usda_missing_key_warned = False
 
+_last_off_request = 0.0
+_off_slowdown_factor = 1.0
 
-def http_json(url, data=None, headers=None, method=None, retries=3, backoff=1.5):
+
+def _retry_after_seconds(http_error, default_wait):
+    """
+    Parse a Retry-After header if present. If it cannot be parsed, fall back
+    to the provided default wait. Adds a little jitter.
+    """
+    wait = default_wait
+
+    try:
+        retry_after = http_error.headers.get("Retry-After")
+        if retry_after:
+            retry_after = str(retry_after).strip()
+
+            # Simple numeric Retry-After, including decimals.
+            if retry_after.replace(".", "", 1).isdigit():
+                wait = max(wait, float(retry_after))
+    except Exception:
+        pass
+
+    return wait + random.uniform(0.0, 0.5)
+
+
+def http_json(url, data=None, headers=None, method=None, retries=4, backoff=2.0):
     merged_headers = {**DEFAULT_HEADERS, **(headers or {})}
 
     if data is not None and not isinstance(data, (bytes, bytearray)):
@@ -124,11 +168,16 @@ def http_json(url, data=None, headers=None, method=None, retries=3, backoff=1.5)
         except urllib.error.HTTPError as e:
             last_error = e
 
-            # 429/502/503/504 are transient/throttling — worth retrying.
-            # 404 and auth errors usually will not fix themselves.
+            # Transient/throttling responses: retry with backoff.
             if e.code in (429, 502, 503, 504) and attempt < retries - 1:
-                wait = backoff * (2 ** attempt)
-                print(f"    got HTTP {e.code}, retrying in {wait:.1f}s...", file=sys.stderr)
+                default_wait = backoff * (2 ** attempt)
+                wait = _retry_after_seconds(e, default_wait)
+
+                print(
+                    f"    got HTTP {e.code} for {url}, retrying in {wait:.1f}s...",
+                    file=sys.stderr,
+                )
+
                 time.sleep(wait)
                 continue
 
@@ -138,8 +187,13 @@ def http_json(url, data=None, headers=None, method=None, retries=3, backoff=1.5)
             last_error = e
 
             if attempt < retries - 1:
-                wait = backoff * (2 ** attempt)
-                print(f"    URL error, retrying in {wait:.1f}s...", file=sys.stderr)
+                wait = backoff * (2 ** attempt) + random.uniform(0.0, 0.5)
+
+                print(
+                    f"    URL error for {url}, retrying in {wait:.1f}s...",
+                    file=sys.stderr,
+                )
+
                 time.sleep(wait)
                 continue
 
@@ -149,6 +203,42 @@ def http_json(url, data=None, headers=None, method=None, retries=3, backoff=1.5)
         raise last_error
 
     raise RuntimeError("HTTP request failed for an unknown reason.")
+
+
+def _off_throttle():
+    """
+    Enforce a minimum interval between Open Food Facts requests.
+    """
+    global _last_off_request
+
+    interval = OFF_REQUEST_PAUSE_SECONDS * _off_slowdown_factor
+    now = time.monotonic()
+    wait = interval - (now - _last_off_request)
+
+    if wait > 0:
+        time.sleep(wait)
+
+    _last_off_request = time.monotonic()
+
+
+def _off_mark_rate_limited():
+    """
+    If Open Food Facts starts returning 429s, automatically slow down future
+    requests for the remainder of the run.
+    """
+    global _off_slowdown_factor
+
+    _off_slowdown_factor = min(_off_slowdown_factor * 1.5, 8.0)
+
+
+def _off_mark_success():
+    """
+    If requests are succeeding, gently relax the slowdown factor, but never
+    below 1.0.
+    """
+    global _off_slowdown_factor
+
+    _off_slowdown_factor = max(1.0, _off_slowdown_factor / 1.1)
 
 
 def get_kroger_token():
@@ -253,11 +343,14 @@ def _as_number(value):
 
 def _off_barcode_variants(upc):
     """
-    Build barcode candidates for Open Food Facts.
+    Build a small set of barcode candidates for Open Food Facts.
 
     Kroger often gives UPC-A style 12-digit codes. Open Food Facts frequently
     stores EAN-13/GTIN-13 codes, so a 12-digit UPC usually needs one leading
     zero added.
+
+    This version intentionally limits the number of variants to reduce request
+    volume and avoid 429s.
     """
     digits = "".join(ch for ch in str(upc).strip() if ch.isdigit())
 
@@ -265,33 +358,30 @@ def _off_barcode_variants(upc):
         return []
 
     candidates = []
-    stripped = digits.lstrip("0") or "0"
 
     if len(digits) == 12:
-        # UPC-A -> EAN-13 style.
+        # Most likely Open Food Facts form first.
         candidates.append("0" + digits)
         candidates.append(digits)
 
     elif len(digits) == 13:
         candidates.append(digits)
-        candidates.append(stripped)
 
     elif len(digits) == 14:
+        stripped = digits.lstrip("0") or "0"
+
         candidates.append(digits)
         candidates.append(stripped)
 
         if len(stripped) == 12:
             candidates.append("0" + stripped)
 
-        if len(stripped) <= 13:
-            candidates.append(stripped.zfill(13))
+    elif len(digits) < 13:
+        candidates.append(digits.zfill(13))
+        candidates.append(digits)
 
     else:
         candidates.append(digits)
-        candidates.append(digits.zfill(13))
-
-    if len(digits) < 13:
-        candidates.append(digits.zfill(13))
 
     seen = set()
     variants = []
@@ -301,7 +391,8 @@ def _off_barcode_variants(upc):
             seen.add(variant)
             variants.append(variant)
 
-    return variants
+    # Hard cap to keep request volume predictable.
+    return variants[:3]
 
 
 def _parse_serving_grams(product):
@@ -461,6 +552,8 @@ def lookup_calories_off(upc):
     Look up calories via Open Food Facts barcode endpoint.
     Returns int calories or None.
     """
+    global _off_slowdown_factor
+
     if not upc:
         return None
 
@@ -472,32 +565,59 @@ def lookup_calories_off(upc):
     _off_stats["attempted"] += 1
 
     found_product = False
+    fields_params = urllib.parse.urlencode({"fields": OFF_FIELDS})
 
-    for i, barcode in enumerate(variants):
-        if i > 0:
-            time.sleep(REQUEST_PAUSE_SECONDS)
+    for barcode in variants:
+        _off_throttle()
 
-        url = f"{OFF_BASE}/api/v2/product/{barcode}.json"
+        url = f"{OFF_BASE}/api/v2/product/{barcode}.json?{fields_params}"
 
         try:
-            resp = http_json(url, headers=OFF_HEADERS)
+            resp = http_json(
+                url,
+                headers=OFF_HEADERS,
+                retries=5,
+                backoff=3.0,
+            )
 
         except urllib.error.HTTPError as e:
-            # Open Food Facts returns 404 for missing products in some cases.
             if e.code == 404:
                 continue
 
-            print(f"  Open Food Facts lookup failed for barcode {barcode}: {e}", file=sys.stderr)
+            if e.code == 429:
+                _off_stats["http_error"] += 1
+                _off_stats["rate_limited"] += 1
+                _off_mark_rate_limited()
+
+                print(
+                    "  Open Food Facts rate limit persisted after retries; "
+                    "pausing 20s and skipping this barcode lookup.",
+                    file=sys.stderr,
+                )
+
+                time.sleep(20)
+                return None
+
+            print(
+                f"  Open Food Facts lookup failed for barcode {barcode}: {e}",
+                file=sys.stderr,
+            )
             _off_stats["http_error"] += 1
             continue
 
         except urllib.error.URLError as e:
-            print(f"  Open Food Facts lookup failed for barcode {barcode}: {e}", file=sys.stderr)
+            print(
+                f"  Open Food Facts lookup failed for barcode {barcode}: {e}",
+                file=sys.stderr,
+            )
             _off_stats["http_error"] += 1
             continue
 
         if not isinstance(resp, dict):
             continue
+
+        if resp.get("status") == 1:
+            _off_mark_success()
 
         if resp.get("status") != 1:
             continue
@@ -537,9 +657,6 @@ def _upc_variants_usda(upc):
 
     bare = digits.lstrip("0") or "0"
 
-    # Most Branded Foods entries store gtinUpc as a 14-digit, zero-padded
-    # GTIN, so try that first — it's the most likely hit — then fall back
-    # to the as-received UPC and the bare/13-digit forms.
     candidates = [
         bare.zfill(14),
         digits,
@@ -579,7 +696,7 @@ def lookup_calories_usda(upc):
 
     for i, variant in enumerate(variants):
         if i > 0:
-            time.sleep(REQUEST_PAUSE_SECONDS)
+            time.sleep(USDA_REQUEST_PAUSE_SECONDS)
 
         params = urllib.parse.urlencode(
             {
@@ -665,7 +782,12 @@ def build_pool(token, location_id, terms):
     for term in terms:
         print(f"  searching: {term}")
 
-        for product in search_products(token, location_id, term):
+        products = search_products(token, location_id, term)
+
+        # Small pause between Kroger search terms.
+        time.sleep(KROGER_REQUEST_PAUSE_SECONDS)
+
+        for product in products:
             upc = product.get("upc")
 
             if not upc or upc in seen_upcs:
@@ -674,17 +796,22 @@ def build_pool(token, location_id, terms):
             seen_upcs.add(upc)
 
             calories = lookup_calories(upc)
-            time.sleep(REQUEST_PAUSE_SECONDS)
+
+            # A tiny pause between products helps keep overall pacing calm,
+            # especially if USDA fallback ends up being used.
+            time.sleep(BETWEEN_PRODUCTS_PAUSE_SECONDS)
 
             if calories is None or calories <= 0:
                 continue
+
+            items = product.get("items") or [{}]
 
             pool.append(
                 {
                     "upc": upc,
                     "name": product.get("description"),
                     "brand": product.get("brandName"),
-                    "size": (product.get("items") or [{}])[0].get("size"),
+                    "size": items[0].get("size"),
                     "price": extract_price(product),
                     "image": extract_image(product),
                     "calories": calories,
