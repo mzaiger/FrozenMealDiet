@@ -380,6 +380,11 @@ _usda_cache = {}
 _off_cache = {}
 
 
+_usda_error_count = 0
+_debug_used = 0
+DEBUG_BUDGET = 8  # unique products given full verbose treatment across the whole run
+
+
 def lookup_calories(upc, name=None, brand=None, force_debug=False):
     """
     Look up calories using:
