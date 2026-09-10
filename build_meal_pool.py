@@ -172,10 +172,21 @@ def lookup_calories_off(upc):
     for candidate in upc_variants(upc):
         url = f"https://world.openfoodfacts.org/api/v2/product/{candidate}.json"
         try:
-            resp = http_json(url, headers={"User-Agent": "freezer-week-planner/1.0"})
-        except urllib.error.HTTPError:
+            resp = http_json(url, headers={"User-Agent": "freezer-week-planner/1.0 (github.com marc meal planner)"})
+        except urllib.error.HTTPError as e:
+            if _off_debug_count < USDA_DEBUG_SAMPLES:
+                _off_debug_count += 1
+                print(f"  [debug] OFF barcode='{candidate}' -> HTTPError {e.code}: {e.reason}", file=sys.stderr)
             continue
-        except urllib.error.URLError:
+        except urllib.error.URLError as e:
+            if _off_debug_count < USDA_DEBUG_SAMPLES:
+                _off_debug_count += 1
+                print(f"  [debug] OFF barcode='{candidate}' -> URLError: {e.reason}", file=sys.stderr)
+            continue
+        except Exception as e:
+            if _off_debug_count < USDA_DEBUG_SAMPLES:
+                _off_debug_count += 1
+                print(f"  [debug] OFF barcode='{candidate}' -> unexpected error: {e!r}", file=sys.stderr)
             continue
 
         if _off_debug_count < USDA_DEBUG_SAMPLES:
