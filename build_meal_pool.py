@@ -163,36 +163,31 @@ def upc_variants(upc):
     return variants
 
 
-def lookup_calories_off(upc):
+def lookup_calories_off(upc, debug=False):
     """Fallback nutrition source: Open Food Facts. Free, no API key, and does
     a direct exact-barcode lookup rather than a fuzzy text search -- better
     coverage for store-brand/private-label items USDA's branded database
     tends to miss."""
-    global _off_debug_count
     for candidate in upc_variants(upc):
         url = f"https://world.openfoodfacts.org/api/v2/product/{candidate}.json"
         try:
             resp = http_json(url, headers={"User-Agent": "freezer-week-planner/1.0 (github.com marc meal planner)"})
         except urllib.error.HTTPError as e:
-            if _off_debug_count < USDA_DEBUG_SAMPLES:
-                _off_debug_count += 1
-                print(f"  [debug] OFF barcode='{candidate}' -> HTTPError {e.code}: {e.reason}", file=sys.stderr)
+            if debug:
+                print(f"    [OFF] barcode='{candidate}' -> HTTPError {e.code}: {e.reason}", file=sys.stderr)
             continue
         except urllib.error.URLError as e:
-            if _off_debug_count < USDA_DEBUG_SAMPLES:
-                _off_debug_count += 1
-                print(f"  [debug] OFF barcode='{candidate}' -> URLError: {e.reason}", file=sys.stderr)
+            if debug:
+                print(f"    [OFF] barcode='{candidate}' -> URLError: {e.reason}", file=sys.stderr)
             continue
         except Exception as e:
-            if _off_debug_count < USDA_DEBUG_SAMPLES:
-                _off_debug_count += 1
-                print(f"  [debug] OFF barcode='{candidate}' -> unexpected error: {e!r}", file=sys.stderr)
+            if debug:
+                print(f"    [OFF] barcode='{candidate}' -> unexpected error: {e!r}", file=sys.stderr)
             continue
 
-        if _off_debug_count < USDA_DEBUG_SAMPLES:
-            _off_debug_count += 1
+        if debug:
             print(
-                f"  [debug] OFF barcode='{candidate}' -> status={resp.get('status')}, "
+                f"    [OFF] barcode='{candidate}' -> status={resp.get('status')}, "
                 f"product_name={resp.get('product', {}).get('product_name')!r}",
                 file=sys.stderr,
             )
@@ -209,19 +204,27 @@ def lookup_calories_off(upc):
 
 
 _usda_error_count = 0
-_usda_debug_count = 0
-_off_debug_count = 0
-USDA_DEBUG_SAMPLES = 3
+_debug_used = 0
+DEBUG_BUDGET = 8  # unique products given full verbose treatment across the whole run
 
 
-def lookup_calories(upc):
-    """Look up calories for a UPC via USDA FoodData Central. Returns int or None.
-    Tries a few digit-padding variants since Kroger's UPC format and USDA's
-    stored gtinUpc format don't always match exactly."""
+def lookup_calories(upc, name=None, force_debug=False):
+    """Look up calories for a UPC, USDA first then Open Food Facts. Returns
+    int or None. Tries a few digit-padding variants since Kroger's UPC
+    format and each source's stored UPC format don't always match exactly."""
     global _usda_error_count
-    global _usda_debug_count
+    global _debug_used
+
+    debug = force_debug
+    if not debug and _debug_used < DEBUG_BUDGET:
+        _debug_used += 1
+        debug = True
+
     if not USDA_API_KEY or not upc:
         return None
+
+    if debug:
+        print(f"  [debug] ---- {name!r} (upc={upc}) ----", file=sys.stderr)
 
     for candidate in upc_variants(upc):
         params = urllib.parse.urlencode(
@@ -232,23 +235,21 @@ def lookup_calories(upc):
             resp = http_json(url)
         except urllib.error.HTTPError as e:
             _usda_error_count += 1
-            if _usda_error_count <= 3:
-                print(f"  USDA lookup failed for UPC {candidate}: {e}", file=sys.stderr)
+            if _usda_error_count <= 3 or debug:
+                print(f"    [USDA] query='{candidate}' -> HTTPError: {e}", file=sys.stderr)
                 if e.code in (401, 403):
                     print(
-                        "  -> looks like an invalid/unauthorized USDA_API_KEY, "
+                        "    -> looks like an invalid/unauthorized USDA_API_KEY, "
                         "not a bad UPC. Check the secret value.",
                         file=sys.stderr,
                     )
             continue
 
-        if _usda_debug_count < USDA_DEBUG_SAMPLES:
-            _usda_debug_count += 1
+        if debug:
             foods = resp.get("foods", [])
-            sample_gtins = [f.get("gtinUpc") for f in foods[:3]]
+            sample = [(f.get("description"), f.get("gtinUpc")) for f in foods[:3]]
             print(
-                f"  [debug] USDA query='{candidate}' -> {len(foods)} foods, "
-                f"sample gtinUpc values: {sample_gtins}",
+                f"    [USDA] query='{candidate}' -> {len(foods)} foods, sample: {sample}",
                 file=sys.stderr,
             )
 
@@ -259,19 +260,31 @@ def lookup_calories(upc):
             label = food.get("labelNutrients", {})
             cal = label.get("calories", {}).get("value")
             if cal and food.get("gtinUpc", "").lstrip("0") == candidate.lstrip("0"):
+                if debug:
+                    print(f"    [USDA] matched by gtinUpc -> {cal} cal", file=sys.stderr)
                 return round(cal)
 
         for food in resp.get("foods", []):
             label = food.get("labelNutrients", {})
             cal = label.get("calories", {}).get("value")
             if cal:
+                if debug:
+                    print(f"    [USDA] no gtinUpc match, using first result with calories -> {cal} cal", file=sys.stderr)
                 return round(cal)
 
-    off_cal = lookup_calories_off(upc)
+    off_cal = lookup_calories_off(upc, debug=debug)
     if off_cal:
+        if debug:
+            print(f"    [OFF] matched -> {off_cal} cal", file=sys.stderr)
         return off_cal
 
+    if debug:
+        print(f"    -> no calorie match from either source", file=sys.stderr)
+
     return None
+
+
+FORCE_DEBUG_TERMS = {"lean cuisine", "stouffer's", "healthy choice frozen"}
 
 
 def build_pool(token, location_id, terms):
@@ -283,6 +296,7 @@ def build_pool(token, location_id, terms):
         matched = 0
         skipped_dupe = 0
         no_upc = 0
+        forced_this_term = False
         for product in products:
             upc = product.get("upc")
             if not upc:
@@ -294,7 +308,11 @@ def build_pool(token, location_id, terms):
             seen_upcs.add(upc)
             found += 1
 
-            calories = lookup_calories(upc)
+            force_debug = term in FORCE_DEBUG_TERMS and not forced_this_term
+            if force_debug:
+                forced_this_term = True
+
+            calories = lookup_calories(upc, name=product.get("description"), force_debug=force_debug)
             time.sleep(REQUEST_PAUSE_SECONDS)
             if calories is None:
                 continue  # skip items we can't get real calorie data for
