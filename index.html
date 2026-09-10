@@ -184,6 +184,16 @@
     margin-top:2px;
   }
 
+  .meal-link{
+    font-size:11px;
+    color:var(--blue);
+    text-decoration:none;
+    margin-left:6px;
+    white-space:nowrap;
+  }
+
+  .meal-link:hover{ text-decoration:underline; }
+
   .meal-cal{
     font-family:'IBM Plex Mono', monospace;
     font-size:14px;
@@ -241,7 +251,7 @@
 <header>
   <div class="kicker">FROZEN &middot; WEEKLY</div>
   <h1>Freezer Week</h1>
-  <p class="sub">Seven days, twenty-one meals, pulled from your local Kroger's frozen aisle. Set a daily calorie goal and each day lands within 250 calories of it.</p>
+  <p class="sub">Seven days, twenty-one meals, pulled from the frozen aisle. Set a daily calorie goal and each day lands within 250 calories of it.</p>
 
   <div class="controls">
     <div class="field">
@@ -386,10 +396,13 @@ function generateWeek(){
 function mealRow(slot, meal){
   const row = document.createElement('div');
   row.className = 'meal-row';
+  const link = meal.product_url
+    ? `<a class="meal-link" href="${meal.product_url}" target="_blank" rel="noopener noreferrer">view &rarr;</a>`
+    : '';
   row.innerHTML = `
     <div class="meal-info">
       <div class="meal-slot">${slot}</div>
-      <div class="meal-name">${meal.name || 'Unnamed item'}</div>
+      <div class="meal-name">${meal.name || 'Unnamed item'}${link}</div>
     </div>
     <div class="meal-cal">${meal.calories} cal</div>
   `;

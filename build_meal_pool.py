@@ -1,18 +1,30 @@
 """
 build_meal_pool.py
 
-Strategy:
-1. Try exact BARCODE lookup first (most accurate).
-   - Mathematically calculates missing GS1 check digits that Kroger drops.
-   - Falls back to wildcard prefix search (e.g., `code:7790070615*`).
-2. If barcode is missing from OFF, fallback to TEXT SEARCH.
-3. Strict Category Filtering prevents the text search from matching 
-   "yogurt" to "pancakes" or "raw sausage" to "sandwiches".
+Local-CSV version (no Kroger API needed).
 
-Writes candidate_pool.json.
+Strategy:
+1. Load frozen items from a local Walmart grocery export (WMT_Grocery_*.csv,
+   or the .zip it ships in) instead of hitting the Kroger API.
+   - "Frozen Breakfast" category -> breakfast pool
+   - "Frozen Meals & Snacks" / "Frozen Pizza, Pasta, & Breads" categories,
+     filtered down to actual entrees (excludes sides/snacks/desserts) -> general pool
+2. For each candidate item, look up calories on Open Food Facts (OFF):
+   - Text search (Walmart SKUs aren't UPCs, so barcode lookup is skipped).
+   - Strict Category Filtering prevents the text search from matching
+     "yogurt" to "pancakes" or "raw sausage" to "sandwiches".
+3. Writes candidate_pool.json, same shape as before, plus a product_url field
+   on every item (used by index.html to link back to the Walmart listing).
+
+Usage:
+    python build_meal_pool.py /path/to/archive.zip
+    python build_meal_pool.py /path/to/frozen_food.csv
+    python build_meal_pool.py                      # looks for frozen_food.csv
+                                                     # or archive.zip in cwd
 """
 
-import base64
+import csv
+import io
 import json
 import logging
 import os
@@ -23,22 +35,50 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import zipfile
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
+from pathlib import Path
 
 
-KROGER_ZIP = os.environ.get("KROGER_ZIP", "68508")  # Lincoln, NE default
-KROGER_CLIENT_ID = os.environ.get("KROGER_CLIENT_ID")
-KROGER_CLIENT_SECRET = os.environ.get("KROGER_CLIENT_SECRET")
+# --- CSV source config -------------------------------------------------
+DEFAULT_CSV_CANDIDATES = ["frozen_food.csv", "archive.zip"]
+DEPARTMENT_COLUMN = "DEPARTMENT"
+FROZEN_DEPARTMENT = "Frozen"
 
-KROGER_BASE = "https://api.kroger.com/v1"
+BREAKFAST_CATEGORY = "Frozen Breakfast"
+GENERAL_CATEGORIES = {"Frozen Meals & Snacks", "Frozen Pizza, Pasta, & Breads"}
+
+# Keeps the general pool to actual entrees, not sides/snacks/desserts.
+GENERAL_INCLUDE_KEYWORDS = {
+    "meal", "dinner", "entree", "bowl", "pizza", "lasagna", "pot pie",
+    "casserole", "skillet", "stir fry", "alfredo", "teriyaki",
+    "shepherd's pie", "meatloaf", "meat loaf", "salisbury", "burrito",
+    "enchilada", "taco", "chimichanga", "mac & cheese", "mac and cheese",
+    "fettuccine", "fettucini", "pasta", "spaghetti", "ravioli", "gnocchi",
+    "risotto", "curry", "fried rice", "noodle", "calzone", "stromboli",
+    "pot roast", "salisbury steak",
+}
+GENERAL_EXCLUDE_KEYWORDS = {
+    "breadstick", "garlic bread", "texas toast", "toast", "dessert",
+    "ice cream", "cookie", "cake", "sundae", "chip", "cracker", "pretzel",
+    "popcorn", "roll", "stick", "ring", "slider", "tot", "fries",
+    "hash brown", "waffle", "pancake",
+}
+
+# How many candidates (max) to pull calories for, per pool. OFF text search
+# is rate-limited (OFF_PAUSE_SECONDS between calls), so this keeps runtime
+# reasonable. Raise via env var if you want a bigger pool and don't mind
+# the wait.
+BREAKFAST_SAMPLE_SIZE = int(os.environ.get("BREAKFAST_SAMPLE_SIZE", "60"))
+GENERAL_SAMPLE_SIZE = int(os.environ.get("GENERAL_SAMPLE_SIZE", "60"))
+RANDOM_SEED = os.environ.get("RANDOM_SEED")
+
+# --- Open Food Facts config (unchanged from the Kroger version) --------
 OFF_SEARCH_BASE = os.environ.get("OFF_SEARCH_BASE", "https://search.openfoodfacts.org")
 OFF_PRODUCT_BASE = "https://world.openfoodfacts.org"
 
-PRODUCTS_PER_TERM = int(os.environ.get("PRODUCTS_PER_TERM", "20"))
-KROGER_PAUSE_SECONDS = float(os.environ.get("KROGER_PAUSE_SECONDS", "0.3"))
 OFF_PAUSE_SECONDS = float(os.environ.get("OFF_PAUSE_SECONDS", "1.5"))
-
 HTTP_TIMEOUT_SECONDS = float(os.environ.get("HTTP_TIMEOUT_SECONDS", "30"))
 MAX_RETRIES = int(os.environ.get("HTTP_MAX_RETRIES", "5"))
 INITIAL_BACKOFF_SECONDS = float(os.environ.get("HTTP_INITIAL_BACKOFF_SECONDS", "1.0"))
@@ -50,20 +90,10 @@ OFF_MAX_QUERIES_PER_ITEM = int(os.environ.get("OFF_MAX_QUERIES_PER_ITEM", "3"))
 
 USER_AGENT = os.environ.get(
     "USER_AGENT",
-    "kroger-meal-pool/2.5 (GS1 Check Digit Math + Wildcards)",
+    "walmart-csv-meal-pool/1.0 (local CSV source + OFF calories)",
 )
 
-BREAKFAST_TERMS = [
-    "frozen breakfast ", "frozen breakfast sandwich ", "frozen breakfast bowl ",
-    "frozen pancakes breakfast ", "frozen breakfast burrito ",
-]
-
-GENERAL_TERMS = [
-    "frozen meal ", "frozen dinner ", "frozen entree ", "lean cuisine ",
-    "stouffer's ", "healthy choice frozen ", "frozen bowl meal ",
-]
-
-# --- Strict Category Filtering Rules ---
+# --- Strict Category Filtering Rules (unchanged) ------------------------
 MAINS = {"pancake", "waffle", "sandwich", "burrito", "bowl", "biscuit", "croissant", "wrap", "bagel", "muffin", "toast", "scramble", "hash", "pizza", "pasta", "meal", "entree", "dinner", "taco", "chimichanga"}
 INGREDIENTS = {"sausage", "bacon", "egg", "cheese", "chicken", "beef", "pork", "turkey", "potato", "gravy", "steak"}
 BAD_WORDS = {"yogurt", "shake", "milk", "cereal", "bread", "loaf", "sauce", "dip", "spread", "soup", "juice", "coffee", "tea", "water", "soda", "cookie", "pie", "donut", "bar"}
@@ -74,17 +104,17 @@ def get_categories(name):
     ings = {i for i in INGREDIENTS if i in name_lower}
     return mains, ings
 
-def is_valid_fuzzy_match(kroger_name, off_name):
-    k_mains, k_ings = get_categories(kroger_name)
+def is_valid_fuzzy_match(source_name, off_name):
+    k_mains, k_ings = get_categories(source_name)
     o_mains, o_ings = get_categories(off_name)
-    
+
     if k_mains and not o_mains: return False
     if k_mains and o_mains and not (k_mains & o_mains): return False
-        
+
     for bw in BAD_WORDS:
-        if bw in (off_name or "").lower() and bw not in (kroger_name or "").lower():
+        if bw in (off_name or "").lower() and bw not in (source_name or "").lower():
             return False
-            
+
     return True
 # --------------------------------------------
 
@@ -166,61 +196,6 @@ def http_json(url, data=None, headers=None, method=None, timeout=HTTP_TIMEOUT_SE
                 continue
             raise
 
-def get_kroger_token():
-    if not KROGER_CLIENT_ID or not KROGER_CLIENT_SECRET:
-        sys.exit("Missing KROGER_CLIENT_ID / KROGER_CLIENT_SECRET environment variables.")
-    creds = base64.b64encode(f"{KROGER_CLIENT_ID}:{KROGER_CLIENT_SECRET}".encode("utf-8")).decode("utf-8")
-    logging.info("Authenticating with Kroger...")
-    resp = http_json(f"{KROGER_BASE}/connect/oauth2/token", data={"grant_type": "client_credentials", "scope": "product.compact"},
-        headers={"Authorization": f"Basic {creds}", "Content-Type": "application/x-www-form-urlencoded"}, method="POST", label="Kroger token")
-    token = resp.get("access_token")
-    if not token: sys.exit("Kroger token response did not include access_token.")
-    logging.info("Kroger token acquired.")
-    return token
-
-def find_location_id(token, zip_code):
-    url = f"{KROGER_BASE}/locations?filter.zipCode.near={zip_code}&filter.limit=1"
-    logging.info("Finding Kroger store near zip=%s", zip_code)
-    resp = http_json(url, headers={"Authorization": f"Bearer {token}"}, label="Kroger locations")
-    locations = resp.get("data", [])
-    if not locations: sys.exit(f"No Kroger store found near zip {zip_code}.")
-    location_id = locations[0]["locationId"]
-    logging.info("Found Kroger locationId=%s", location_id)
-    return location_id
-
-def search_products(token, location_id, term, limit=PRODUCTS_PER_TERM):
-    params = urllib.parse.urlencode({"filter.term": term, "filter.locationId": location_id, "filter.fulfillment": "csp", "filter.limit": limit})
-    url = f"{KROGER_BASE}/products?{params}"
-    try:
-        resp = http_json(url, headers={"Authorization": f"Bearer {token}"}, label=f"Kroger search term={term}")
-    except Exception as exc:
-        logging.error("Kroger search failed term=%r error=%r", term, exc)
-        return []
-    products = resp.get("data", [])
-    logging.info("Kroger search term=%r returned %s products", term, len(products))
-    time.sleep(KROGER_PAUSE_SECONDS)
-    return products
-
-def extract_price(product):
-    items = product.get("items") or []
-    if not items: return None
-    price = items[0].get("price") or {}
-    return price.get("promo") or price.get("regular")
-
-def extract_image(product):
-    for img in product.get("images", []):
-        if img.get("size") == "medium":
-            url = img.get("url")
-            if url: return url
-    for img in product.get("images", []):
-        url = img.get("url")
-        if url: return url
-    return None
-
-def extract_size(product):
-    items = product.get("items") or []
-    return items[0].get("size") if items else None
-
 MASS_UNIT_TO_GRAMS = {
     "g": 1.0, "gram": 1.0, "grams": 1.0, "kg": 1000.0, "kilogram": 1000.0, "kilograms": 1000.0,
     "oz": 28.3495, "ounce": 28.3495, "ounces": 28.3495, "lb": 453.592, "lbs": 453.592, "pound": 453.592, "pounds": 453.592,
@@ -273,7 +248,7 @@ def get_off_kcal_100g(nutriments):
         return energy
     return None
 
-def extract_off_calories(off_product, kroger_mass_g=None):
+def extract_off_calories(off_product, source_mass_g=None):
     nutriments = off_product.get("nutriments") or {}
     kcal_serving = safe_float(nutriments.get("energy-kcal_serving"))
     if kcal_serving and kcal_serving > 0: return round(kcal_serving), "off_serving"
@@ -287,7 +262,7 @@ def extract_off_calories(off_product, kroger_mass_g=None):
     if not kcal_100g or kcal_100g <= 0: return None, None
     serving_g = safe_float(off_product.get("serving_quantity"))
     if serving_g and serving_g > 0: return round(kcal_100g * serving_g / 100.0), "off_serving_estimated_from_100g"
-    if kroger_mass_g and kroger_mass_g > 0: return round(kcal_100g * kroger_mass_g / 100.0), "kroger_size_estimated"
+    if source_mass_g and source_mass_g > 0: return round(kcal_100g * source_mass_g / 100.0), "source_size_estimated"
     product_g = safe_float(off_product.get("product_quantity"))
     if product_g and product_g > 0: return round(kcal_100g * product_g / 100.0), "off_package_estimated_from_100g"
     return round(kcal_100g), "per_100g"
@@ -310,151 +285,11 @@ def score_off_candidate(candidate, query, brand):
     if safe_float(candidate.get("product_quantity")): score += 5.0
     return score
 
-# --- NEW GS1 CHECK DIGIT MATH ---
-def calculate_gs1_check_digit(payload_str):
-    """Calculates standard GS1 check digit for a numeric string."""
-    total = 0
-    for i, char in enumerate(reversed(payload_str)):
-        if i % 2 == 0:
-            total += int(char) * 3
-        else:
-            total += int(char) * 1
-    return str((10 - (total % 10)) % 10)
-
-def get_gtin_variants_and_wildcards(upc):
-    variants = set()
-    wildcards = set()
-    
-    if not upc or not upc.isdigit():
-        return list(variants), list(wildcards)
-        
-    variants.add(upc)
-    core = upc.lstrip('0')
-    if not core:
-        return list(variants), list(wildcards)
-        
-    wildcards.add(core)
-    
-    # Check if original string padded to standard lengths is already a valid GTIN
-    for length in [8, 12, 13, 14]:
-        test_str = core.zfill(length)
-        if len(test_str) == length and len(test_str) >= 2:
-            payload = test_str[:-1]
-            expected_check = calculate_gs1_check_digit(payload)
-            if test_str[-1] == expected_check:
-                variants.add(test_str)
-                if length == 12:
-                    variants.add("0" + test_str)
-                    variants.add("00" + test_str)
-                elif length == 13:
-                    variants.add("0" + test_str)
-                    
-    # If not valid, assume it's a payload missing the check digit
-    if len(core) <= 11:
-        payload_11 = core.zfill(11)
-        check = calculate_gs1_check_digit(payload_11)
-        gtin_12 = payload_11 + check
-        variants.add(gtin_12)
-        variants.add("0" + gtin_12)
-        variants.add("00" + gtin_12)
-    elif len(core) == 12:
-        payload_12 = core
-        check = calculate_gs1_check_digit(payload_12)
-        gtin_13 = payload_12 + check
-        variants.add(gtin_13)
-        variants.add("0" + gtin_13)
-        
-    return list(variants), list(wildcards)
-# -------------------------------
-
-def lookup_by_barcode(upc, kroger_mass_g):
-    if not upc: return None
-    
-    variants, wildcards = get_gtin_variants_and_wildcards(upc)
-    
-    logging.info("Trying exact barcode variants for UPC %s: %s", upc, sorted(variants))
-    
-    for code in sorted(variants):
-        params = {
-            "q": f"code:{code}",
-            "page_size": 1,
-            "fields": "code,product_name,brands,nutriments,serving_quantity,product_quantity",
-        }
-        url = f"{OFF_SEARCH_BASE}/search?{urllib.parse.urlencode(params)}"
-        time.sleep(OFF_PAUSE_SECONDS)
-        
-        try:
-            resp = http_json(url, headers={"Accept": "application/json"}, label=f"OFF barcode {code}")
-        except Exception as e:
-            logging.warning("Barcode search failed for code=%s error=%r", code, e)
-            continue
-            
-        hits = resp.get("hits") or []
-        if hits:
-            candidate = hits[0]
-            returned_code = str(candidate.get("code"))
-            if returned_code not in variants: continue
-
-            calories, basis = extract_off_calories(candidate, kroger_mass_g)
-            if calories is not None:
-                logging.info("Barcode EXACT match found! code=%s calories=%s", returned_code, calories)
-                return {
-                    "calories": calories, "calories_basis": basis,
-                    "off_upc": returned_code,
-                    "off_url": f"{OFF_PRODUCT_BASE}/product/{returned_code}",
-                    "off_name": candidate.get("product_name"),
-                    "off_brand": candidate.get("brands"),
-                    "off_query": f"barcode:{code}",
-                    "match_type": "exact_barcode"
-                }
-
-    # Wildcard fallback
-    for wc in wildcards:
-        if len(wc) >= 8:
-            logging.info("Trying wildcard barcode search for UPC core %s*", wc)
-            params = {
-                "q": f"code:{wc}*",
-                "page_size": 5,
-                "fields": "code,product_name,brands,nutriments,serving_quantity,product_quantity",
-            }
-            url = f"{OFF_SEARCH_BASE}/search?{urllib.parse.urlencode(params)}"
-            time.sleep(OFF_PAUSE_SECONDS)
-            
-            try:
-                resp = http_json(url, headers={"Accept": "application/json"}, label=f"OFF wildcard {wc}*")
-            except Exception as e:
-                continue
-                
-            hits = resp.get("hits") or []
-            for candidate in hits:
-                returned_code = str(candidate.get("code"))
-                if not returned_code.startswith(wc) and not returned_code.lstrip('0').startswith(wc):
-                    continue
-                    
-                calories, basis = extract_off_calories(candidate, kroger_mass_g)
-                if calories is not None:
-                    logging.info("Wildcard Barcode match found! code=%s calories=%s", returned_code, calories)
-                    return {
-                        "calories": calories, "calories_basis": basis,
-                        "off_upc": returned_code,
-                        "off_url": f"{OFF_PRODUCT_BASE}/product/{returned_code}",
-                        "off_name": candidate.get("product_name"),
-                        "off_brand": candidate.get("brands"),
-                        "off_query": f"wildcard:{wc}*",
-                        "match_type": "wildcard_barcode"
-                    }
-                    
-    return None
-
-def lookup_open_food_facts(name, brand, size_text, upc):
-    kroger_mass_g = parse_mass_grams(size_text)
-    logging.info("OFF lookup start: upc=%s name=%r brand=%r size=%r parsed_mass_g=%s", upc, name, brand, size_text, kroger_mass_g)
-
-    barcode_result = lookup_by_barcode(upc, kroger_mass_g)
-    if barcode_result:
-        return barcode_result
-
-    logging.info("Barcode lookup found no exact match. Falling back to text search...")
+def lookup_open_food_facts(name, brand, size_text):
+    """Walmart SKUs aren't real barcodes, so this goes straight to the
+    (strict) text search rather than trying a barcode lookup first."""
+    source_mass_g = parse_mass_grams(size_text)
+    logging.info("OFF lookup start: name=%r brand=%r size=%r parsed_mass_g=%s", name, brand, size_text, source_mass_g)
 
     queries = build_off_queries(name, brand)
     if not queries:
@@ -480,18 +315,18 @@ def lookup_open_food_facts(name, brand, size_text, upc):
         for idx, candidate in enumerate(products):
             off_code = str(candidate.get("code") or candidate.get("_id") or "")
             candidate_name = candidate.get("product_name") or ""
-            
+
             if not is_valid_fuzzy_match(name, candidate_name):
-                logging.info("OFF candidate %s skipped CATEGORY MISMATCH: kroger=%r off=%r", idx, name, candidate_name)
+                logging.info("OFF candidate %s skipped CATEGORY MISMATCH: source=%r off=%r", idx, name, candidate_name)
                 continue
 
             candidate_brand = candidate.get("brands") or ""
             if isinstance(candidate_brand, list): candidate_brand = ", ".join(candidate_brand)
-            calories, basis = extract_off_calories(candidate, kroger_mass_g)
+            calories, basis = extract_off_calories(candidate, source_mass_g)
             if calories is None:
                 logging.info("OFF candidate %s skipped no calories: code=%s name=%r", idx, off_code, candidate_name)
                 continue
-            
+
             score = score_off_candidate(candidate, query, brand)
             candidates.append((score, idx, calories, basis, candidate))
 
@@ -502,22 +337,15 @@ def lookup_open_food_facts(name, brand, size_text, upc):
             best_name = best.get("product_name") or ""
             best_brand = best.get("brands") or ""
             if isinstance(best_brand, list): best_brand = ", ".join(best_brand)
-                
-            match_type = "fuzzy_text"
-            if best_code and upc:
-                if best_code == upc or best_code == upc.lstrip('0') or best_code == upc.zfill(13):
-                    match_type = "text_search_barcode_match"
-                else:
-                    logging.info("FUZZY MATCH (Approved by category filter): OFF UPC (%s) differs from Kroger UPC (%s). Name: %r", best_code, upc, best_name)
 
-            logging.info("OFF selected: query=%r code=%s name=%r calories=%s match_type=%s", query, best_code, best_name, best_calories, match_type)
+            logging.info("OFF selected: query=%r code=%s name=%r calories=%s", query, best_code, best_name, best_calories)
 
             return {
                 "calories": best_calories, "calories_basis": best_basis,
                 "off_upc": best_code or None,
                 "off_url": f"{OFF_PRODUCT_BASE}/product/{best_code}" if best_code else None,
                 "off_name": best_name, "off_brand": best_brand, "off_query": query,
-                "match_type": match_type,
+                "match_type": "fuzzy_text",
             }
 
         logging.warning("OFF query returned no candidates with usable calories: query=%r", query)
@@ -525,65 +353,137 @@ def lookup_open_food_facts(name, brand, size_text, upc):
     logging.warning("OFF lookup failed to find calories: name=%r brand=%r", name, brand)
     return None
 
-def build_pool(token, location_id, terms):
-    seen_upcs = set()
-    pool = []
-    for term in terms:
-        logging.info("Searching Kroger term=%r", term)
-        products = search_products(token, location_id, term)
-        for product in products:
-            upc = product.get("upc")
-            name = product.get("description")
-            brand = product.get("brandName")
-            if not upc:
-                logging.warning("Kroger product skipped: missing UPC name=%r", name)
-                continue
-            if upc in seen_upcs:
-                logging.info("Kroger product skipped duplicate UPC=%s name=%r", upc, name)
-                continue
-            seen_upcs.add(upc)
-            logging.info("Processing Kroger product upc=%s name=%r brand=%r", upc, name, brand)
-            
-            size = extract_size(product)
-            off_result = lookup_open_food_facts(name, brand, size, upc)
-            
-            if off_result is None:
-                logging.info("Skipping Kroger product upc=%s (no OFF data)", upc)
-                time.sleep(KROGER_PAUSE_SECONDS)
-                continue
+# --- Local CSV sourcing (replaces the Kroger API calls) -----------------
 
-            item = {
-                "upc": upc, "kroger_upc": upc,
-                "open_food_facts_upc": off_result.get("off_upc"), "off_upc": off_result.get("off_upc"),
-                "open_food_facts_url": off_result.get("off_url"),
-                "name": name, "brand": brand, "size": size,
-                "price": extract_price(product), "image": extract_image(product),
-                "calories": off_result["calories"], "calories_basis": off_result.get("calories_basis"),
-                "calories_source": "open_food_facts",
-                "off_name": off_result.get("off_name"), "off_brand": off_result.get("off_brand"),
-                "off_query": off_result.get("off_query"),
-                "match_type": off_result.get("match_type"),
-            }
-            pool.append(item)
-            logging.info("Added to pool upc=%s off_upc=%s calories=%s match_type=%s", upc, item["off_upc"], item["calories"], item["match_type"])
-            time.sleep(KROGER_PAUSE_SECONDS)
-        time.sleep(KROGER_PAUSE_SECONDS)
+def resolve_csv_path(arg_path):
+    if arg_path:
+        return Path(arg_path)
+    for candidate in DEFAULT_CSV_CANDIDATES:
+        p = Path(candidate)
+        if p.exists():
+            return p
+    sys.exit(
+        "No input file found. Pass a path to your Walmart export "
+        "(archive.zip or frozen_food.csv), e.g.:\n"
+        "  python build_meal_pool.py frozen_food.csv"
+    )
+
+def open_source(path: Path):
+    """Text-mode handle for the CSV, whether path is a .zip or a raw .csv."""
+    if path.suffix.lower() == ".zip":
+        zf = zipfile.ZipFile(path)
+        csv_names = [n for n in zf.namelist() if n.lower().endswith(".csv")]
+        if not csv_names:
+            sys.exit(f"No CSV file found inside {path}")
+        if len(csv_names) > 1:
+            logging.info("Multiple CSVs found in zip, using first: %s", csv_names[0])
+        inner = zf.open(csv_names[0], "r")
+        return io.TextIOWrapper(inner, encoding="utf-8", newline="")
+    return open(path, "r", encoding="utf-8", newline="")
+
+def is_general_entree(name):
+    name_lower = (name or "").lower()
+    if any(bad in name_lower for bad in GENERAL_EXCLUDE_KEYWORDS):
+        return False
+    return any(good in name_lower for good in GENERAL_INCLUDE_KEYWORDS)
+
+def load_frozen_rows(csv_path):
+    """Reads the Frozen-department CSV and splits it into deduped
+    breakfast / general candidate lists (list of dicts)."""
+    breakfast, general = [], []
+    seen_skus = set()
+
+    with open_source(csv_path) as f:
+        reader = csv.DictReader(f)
+        required = {DEPARTMENT_COLUMN, "CATEGORY", "PRODUCT_NAME", "SKU", "PRODUCT_URL"}
+        missing = required - set(reader.fieldnames or [])
+        if missing:
+            sys.exit(f"Input CSV is missing expected columns: {sorted(missing)}")
+
+        for row in reader:
+            if row.get(DEPARTMENT_COLUMN, "").strip() != FROZEN_DEPARTMENT:
+                continue
+            sku = row.get("SKU", "").strip()
+            if not sku or sku in seen_skus:
+                continue
+            seen_skus.add(sku)
+
+            category = row.get("CATEGORY", "").strip()
+            name = row.get("PRODUCT_NAME", "").strip()
+
+            if category == BREAKFAST_CATEGORY:
+                breakfast.append(row)
+            elif category in GENERAL_CATEGORIES and is_general_entree(name):
+                general.append(row)
+
+    logging.info("Loaded %s breakfast candidates, %s general candidates from %s", len(breakfast), len(general), csv_path)
+    return breakfast, general
+
+def build_pool(rows, sample_size):
+    if RANDOM_SEED is not None:
+        random.seed(RANDOM_SEED)
+    if sample_size and len(rows) > sample_size:
+        rows = random.sample(rows, sample_size)
+
+    pool = []
+    for row in rows:
+        sku = row.get("SKU", "").strip()
+        name = row.get("PRODUCT_NAME", "").strip()
+        brand = row.get("BRAND", "").strip().strip('"') or None
+        size = row.get("PRODUCT_SIZE", "").strip() or None
+        price = safe_float(row.get("PRICE_CURRENT"))
+        product_url = row.get("PRODUCT_URL", "").strip() or None
+        category = row.get("CATEGORY", "").strip() or None
+
+        logging.info("Processing sku=%s name=%r brand=%r", sku, name, brand)
+        off_result = lookup_open_food_facts(name, brand, size)
+
+        if off_result is None:
+            logging.info("Skipping sku=%s (no OFF data)", sku)
+            continue
+
+        item = {
+            "sku": sku,
+            "name": name,
+            "brand": brand,
+            "size": size,
+            "price": price,
+            "category": category,
+            "product_url": product_url,
+            "calories": off_result["calories"], "calories_basis": off_result.get("calories_basis"),
+            "calories_source": "open_food_facts",
+            "off_upc": off_result.get("off_upc"),
+            "open_food_facts_url": off_result.get("off_url"),
+            "off_name": off_result.get("off_name"), "off_brand": off_result.get("off_brand"),
+            "off_query": off_result.get("off_query"),
+            "match_type": off_result.get("match_type"),
+        }
+        pool.append(item)
+        logging.info("Added to pool sku=%s calories=%s", sku, item["calories"])
+
     return pool
 
 def main():
     setup_logging()
-    logging.info("Starting meal pool build. Strategy: Barcode Math + Wildcards -> Filtered Text Fallback.")
-    token = get_kroger_token()
-    location_id = find_location_id(token, KROGER_ZIP)
-    
-    logging.info("Building breakfast pool...")
-    breakfast_pool = build_pool(token, location_id, BREAKFAST_TERMS)
-    logging.info("Building general lunch/dinner pool...")
-    general_pool = build_pool(token, location_id, GENERAL_TERMS)
+    logging.info("Starting meal pool build from local CSV + Open Food Facts calories.")
+
+    arg_path = sys.argv[1] if len(sys.argv) > 1 else None
+    csv_path = resolve_csv_path(arg_path)
+
+    breakfast_rows, general_rows = load_frozen_rows(csv_path)
+    if not breakfast_rows:
+        logging.warning("No breakfast candidates found (category=%r).", BREAKFAST_CATEGORY)
+    if not general_rows:
+        logging.warning("No general candidates found (categories=%s).", GENERAL_CATEGORIES)
+
+    logging.info("Building breakfast pool (sampling up to %s)...", BREAKFAST_SAMPLE_SIZE)
+    breakfast_pool = build_pool(breakfast_rows, BREAKFAST_SAMPLE_SIZE)
+    logging.info("Building general lunch/dinner pool (sampling up to %s)...", GENERAL_SAMPLE_SIZE)
+    general_pool = build_pool(general_rows, GENERAL_SAMPLE_SIZE)
 
     output = {
         "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-        "location_id": location_id, "zip": KROGER_ZIP,
+        "source": str(csv_path),
         "calories_source": "open_food_facts",
         "breakfast": breakfast_pool, "general": general_pool,
     }
