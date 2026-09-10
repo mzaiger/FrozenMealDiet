@@ -131,37 +131,93 @@ def extract_image(product):
     return images[0]["url"] if images else None
 
 
+def upc_variants(upc):
+    """Kroger UPCs and USDA's stored gtinUpc values don't always agree on
+    digit count/padding (13-digit padded vs 12-digit UPC-A vs 14-digit GTIN).
+    Try the plausible variants rather than a single exact string."""
+    upc = upc.strip()
+    variants = [upc]
+
+    stripped = upc.lstrip("0")
+    if stripped and stripped not in variants:
+        variants.append(stripped)
+
+    if len(upc) == 13 and upc.startswith("0"):
+        no_lead = upc[1:]
+        if no_lead not in variants:
+            variants.append(no_lead)
+
+    if len(upc) <= 13:
+        padded14 = upc.zfill(14)
+        if padded14 not in variants:
+            variants.append(padded14)
+
+    if len(upc) == 12:
+        padded13 = upc.zfill(13)
+        if padded13 not in variants:
+            variants.append(padded13)
+
+    return variants
+
+
 _usda_error_count = 0
+_usda_debug_count = 0
+USDA_DEBUG_SAMPLES = 3
 
 
 def lookup_calories(upc):
-    """Look up calories for a UPC via USDA FoodData Central. Returns int or None."""
+    """Look up calories for a UPC via USDA FoodData Central. Returns int or None.
+    Tries a few digit-padding variants since Kroger's UPC format and USDA's
+    stored gtinUpc format don't always match exactly."""
     global _usda_error_count
+    global _usda_debug_count
     if not USDA_API_KEY or not upc:
         return None
-    params = urllib.parse.urlencode(
-        {"api_key": USDA_API_KEY, "query": upc, "dataType": "Branded", "pageSize": 3}
-    )
-    url = f"{USDA_BASE}/foods/search?{params}"
-    try:
-        resp = http_json(url)
-    except urllib.error.HTTPError as e:
-        _usda_error_count += 1
-        if _usda_error_count <= 3:
-            print(f"  USDA lookup failed for UPC {upc}: {e}", file=sys.stderr)
-            if e.code in (401, 403):
-                print(
-                    "  -> looks like an invalid/unauthorized USDA_API_KEY, "
-                    "not a bad UPC. Check the secret value.",
-                    file=sys.stderr,
-                )
-        return None
 
-    for food in resp.get("foods", []):
-        label = food.get("labelNutrients", {})
-        cal = label.get("calories", {}).get("value")
-        if cal:
-            return round(cal)
+    for candidate in upc_variants(upc):
+        params = urllib.parse.urlencode(
+            {"api_key": USDA_API_KEY, "query": candidate, "dataType": "Branded", "pageSize": 5}
+        )
+        url = f"{USDA_BASE}/foods/search?{params}"
+        try:
+            resp = http_json(url)
+        except urllib.error.HTTPError as e:
+            _usda_error_count += 1
+            if _usda_error_count <= 3:
+                print(f"  USDA lookup failed for UPC {candidate}: {e}", file=sys.stderr)
+                if e.code in (401, 403):
+                    print(
+                        "  -> looks like an invalid/unauthorized USDA_API_KEY, "
+                        "not a bad UPC. Check the secret value.",
+                        file=sys.stderr,
+                    )
+            continue
+
+        if _usda_debug_count < USDA_DEBUG_SAMPLES:
+            _usda_debug_count += 1
+            foods = resp.get("foods", [])
+            sample_gtins = [f.get("gtinUpc") for f in foods[:3]]
+            print(
+                f"  [debug] USDA query='{candidate}' -> {len(foods)} foods, "
+                f"sample gtinUpc values: {sample_gtins}",
+                file=sys.stderr,
+            )
+
+        for food in resp.get("foods", []):
+            # Prefer a food whose own gtinUpc actually matches this candidate
+            # (search is fuzzy text match, not an exact UPC filter) before
+            # falling back to "first result with a calorie value".
+            label = food.get("labelNutrients", {})
+            cal = label.get("calories", {}).get("value")
+            if cal and food.get("gtinUpc", "").lstrip("0") == candidate.lstrip("0"):
+                return round(cal)
+
+        for food in resp.get("foods", []):
+            label = food.get("labelNutrients", {})
+            cal = label.get("calories", {}).get("value")
+            if cal:
+                return round(cal)
+
     return None
 
 
