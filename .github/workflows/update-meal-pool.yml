@@ -21,11 +21,8 @@ jobs:
 
       - name: Fetch fresh meal pool
         env:
-          KROGER_CLIENT_ID: ${{ secrets.KROGER_CLIENT_ID }}
-          KROGER_CLIENT_SECRET: ${{ secrets.KROGER_CLIENT_SECRET }}
           USDA_API_KEY: ${{ secrets.USDA_API_KEY }}
-          KROGER_ZIP: ${{ secrets.KROGER_ZIP }}
-        run: python build_meal_pool.py
+        run: python build_meal_pool.py --debug
 
       - name: Commit updated pool
         run: |
