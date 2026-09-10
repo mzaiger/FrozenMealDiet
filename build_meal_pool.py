@@ -131,25 +131,61 @@ def extract_image(product):
     return images[0]["url"] if images else None
 
 
+def _upc_variants(upc):
+    """
+    USDA FoodData Central stores barcodes as GTIN-14 (often zero-padded),
+    while Kroger returns plain UPC-A (12-digit, sometimes without leading
+    zeros). Build the set of formats a given code might appear as so we
+    can try them all: bare digits, and zero-padded to 12/13/14 digits.
+    """
+    digits = "".join(ch for ch in str(upc).strip() if ch.isdigit())
+    if not digits:
+        return []
+    bare = digits.lstrip("0") or "0"
+    candidates = [digits, bare, bare.zfill(12), bare.zfill(13), bare.zfill(14)]
+    seen = set()
+    variants = []
+    for v in candidates:
+        if v not in seen:
+            seen.add(v)
+            variants.append(v)
+    return variants
+
+
 def lookup_calories(upc):
     """Look up calories for a UPC via USDA FoodData Central. Returns int or None."""
     if not USDA_API_KEY or not upc:
         return None
-    params = urllib.parse.urlencode(
-        {"api_key": USDA_API_KEY, "query": upc, "dataType": "Branded", "pageSize": 3}
-    )
-    url = f"{USDA_BASE}/foods/search?{params}"
-    try:
-        resp = http_json(url)
-    except urllib.error.HTTPError as e:
-        print(f"  USDA lookup failed for UPC {upc}: {e}", file=sys.stderr)
-        return None
 
-    for food in resp.get("foods", []):
-        label = food.get("labelNutrients", {})
-        cal = label.get("calories", {}).get("value")
-        if cal:
-            return round(cal)
+    variants = _upc_variants(upc)
+    if not variants:
+        return None
+    # Compare on the zero-stripped form so "011110001234" and its GTIN-14
+    # padded equivalent "00011110001234" are recognized as the same code.
+    target_bare_forms = {v.lstrip("0") or "0" for v in variants}
+
+    for variant in variants:
+        params = urllib.parse.urlencode(
+            {"api_key": USDA_API_KEY, "query": variant, "dataType": "Branded", "pageSize": 5}
+        )
+        url = f"{USDA_BASE}/foods/search?{params}"
+        try:
+            resp = http_json(url)
+        except urllib.error.HTTPError as e:
+            print(f"  USDA lookup failed for UPC {variant}: {e}", file=sys.stderr)
+            continue
+
+        for food in resp.get("foods", []):
+            food_gtin = str(food.get("gtinUpc") or "")
+            food_bare = food_gtin.lstrip("0") or "0"
+            if food_bare not in target_bare_forms:
+                # Query matched on text relevance, not actually this barcode.
+                continue
+            label = food.get("labelNutrients", {})
+            cal = label.get("calories", {}).get("value")
+            if cal:
+                return round(cal)
+
     return None
 
 
