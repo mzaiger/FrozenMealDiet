@@ -1,9 +1,9 @@
 """
-build_meal_pool2.py
+build_meal_pool.py
 
 Pulls a fresh pool of frozen-meal candidates from Kroger's Products API,
 splits them into a "breakfast" pool and a "general" pool, then looks up
-calories from Open Food Facts by product name.
+calories from Open Food Facts by product name using the Search-a-licious API.
 
 USDA FoodData Central is no longer used.
 
@@ -28,14 +28,6 @@ Optional environment variables:
     LOG_LEVEL
     LOG_FILE
     USER_AGENT
-
-Open Food Facts rate limiting notes:
-    - Open Food Facts is a shared public API.
-    - The legacy search endpoint (cgi/search.pl) is currently returning global 503 errors.
-    - This script uses the new Search-a-licious API (search.openfoodfacts.org).
-    - If Open Food Facts returns HTTP 429, this script respects Retry-After
-      when present and backs off exponentially with jitter.
-    - Adjust OFF_PAUSE_SECONDS if you need to be more conservative.
 """
 
 import base64
@@ -352,12 +344,23 @@ def extract_price(product):
 
 
 def extract_image(product):
+    """
+    Extract the best available image URL from a Kroger product.
+    Prefers 'medium' size, falls back to any image with a URL.
+    Safely handles Kroger image objects that might be missing the 'url' key.
+    """
     for img in product.get("images", []):
         if img.get("size") == "medium":
-            return img.get("url")
+            url = img.get("url")
+            if url:
+                return url
 
-    images = product.get("images", [])
-    return images[0]["url"] if images else None
+    for img in product.get("images", []):
+        url = img.get("url")
+        if url:
+            return url
+
+    return None
 
 
 def extract_size(product):
