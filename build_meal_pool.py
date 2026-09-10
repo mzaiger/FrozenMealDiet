@@ -13,7 +13,7 @@ API_KEY = os.environ.get("USDA_API_KEY")
 MAX_WORKERS = 5
 PAGE_REQUEST_TIMEOUT = 10
 ITEMS_PER_MINUTE = 15
-DEBUG_TIME_LIMIT_SECONDS = 180  # 3 minutes
+DEBUG_TIME_LIMIT_SECONDS = 600  # 3 minutes
 
 # Categories to skip during processing
 EXCLUDED_CATEGORIES = {
