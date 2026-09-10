@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-10T18:19:15Z",
+  "generated_at": "2026-09-10T19:21:33Z",
   "location_id": "61500320",
   "zip": "68130",
   "calories_source": "open_food_facts",
@@ -20,7 +20,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Ruiz el monterey sausage egg and cheese breakfast tornado",
       "off_brand": "Holiday/Circle K",
-      "off_query": "El Monterey Egg Sausage Cheese"
+      "off_query": "El Monterey Egg Sausage Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790033496",
@@ -38,7 +39,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean, pancakes & sausage on a stick!, original",
       "off_brand": "Jimmy Dean",
-      "off_query": "Jimmy Dean Pancakes Sausage Stick"
+      "off_query": "Jimmy Dean Pancakes Sausage Stick",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001111009680",
@@ -56,7 +58,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Bacon Egg and Cheese Croissant",
       "off_brand": "",
-      "off_query": "Kroger Bacon Egg Cheese Croissant"
+      "off_query": "Kroger Bacon Egg Cheese Croissant",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007100714690",
@@ -74,7 +77,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Egg, applewood smoked bacon & cheese burritos, egg, applewood smoked bacon & cheese",
       "off_brand": "Signature,   El Monterey",
-      "off_query": "El Monterey Egg Applewood Smoked Bacon Cheese"
+      "off_query": "El Monterey Egg Applewood Smoked Bacon Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007100714571",
@@ -92,7 +96,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Ruiz el monterey sausage egg and cheese breakfast tornado",
       "off_brand": "Holiday/Circle K",
-      "off_query": "El Monterey Egg Sausage Cheese Potato"
+      "off_query": "El Monterey Egg Sausage Cheese Potato",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790047131",
@@ -110,7 +115,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean biscuit bacon egg and cheese",
       "off_brand": "Jimmy Dean",
-      "off_query": "Jimmy Dean Bacon Egg Cheese"
+      "off_query": "Jimmy Dean Bacon Egg Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790050308",
@@ -128,7 +134,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy Dean Delights - Croissant with egg white, turkey sausage & cheese",
       "off_brand": "Jimmy Dean",
-      "off_query": "Jimmy Dean Sausage Egg Cheese Croissant"
+      "off_query": "Jimmy Dean Sausage Egg Cheese Croissant",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790050241",
@@ -146,7 +153,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy Dean Delights - Croissant with egg white, turkey sausage & cheese",
       "off_brand": "Jimmy Dean",
-      "off_query": "Jimmy Dean Turkey Sausage Egg White Cheese English"
+      "off_query": "Jimmy Dean Turkey Sausage Egg White Cheese English",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790050311",
@@ -164,7 +172,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean biscuit bacon egg and cheese",
       "off_brand": "Jimmy Dean",
-      "off_query": "Jimmy Dean Sausage Egg Cheese Biscuit"
+      "off_query": "Jimmy Dean Sausage Egg Cheese Biscuit",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790050257",
@@ -182,7 +191,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy Dean Delights - Croissant with egg white, turkey sausage & cheese",
       "off_brand": "Jimmy Dean",
-      "off_query": "Jimmy Dean Turkey Sausage Egg White Cheese Croissant"
+      "off_query": "Jimmy Dean Turkey Sausage Egg White Cheese Croissant",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790031101",
@@ -200,7 +210,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean, biscuit sausage sandwiches",
       "off_brand": "Jimmy Dean,   Sara Lee Foods",
-      "off_query": "Jimmy Dean Sausage Biscuit"
+      "off_query": "Jimmy Dean Sausage Biscuit",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790047150",
@@ -218,7 +229,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean sausage gravy bowl",
       "off_brand": "Jimmy Dean",
-      "off_query": "Jimmy Dean Biscuit Sausage Gravy"
+      "off_query": "Jimmy Dean Biscuit Sausage Gravy",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007100714937",
@@ -236,7 +248,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Ruiz el monterey sausage egg and cheese breakfast tornado",
       "off_brand": "Holiday/Circle K",
-      "off_query": "El Monterey Egg Sausage Cheese"
+      "off_query": "El Monterey Egg Sausage Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790033494",
@@ -254,7 +267,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean, pancakes & sausage on a stick!, original",
       "off_brand": "Jimmy Dean",
-      "off_query": "Jimmy Dean Blueberry Pancakes Sausage Stick"
+      "off_query": "Jimmy Dean Blueberry Pancakes Sausage Stick",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790050186",
@@ -272,7 +286,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean biscuit bacon egg and cheese",
       "off_brand": "Jimmy Dean",
-      "off_query": "Jimmy Dean Bacon Egg Cheese Croissant"
+      "off_query": "Jimmy Dean Bacon Egg Cheese Croissant",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790050210",
@@ -290,7 +305,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy Dean Delights - Croissant with egg white, turkey sausage & cheese",
       "off_brand": "Jimmy Dean",
-      "off_query": "Jimmy Dean Sausage Egg Cheese Croissant"
+      "off_query": "Jimmy Dean Sausage Egg Cheese Croissant",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790070615",
@@ -308,7 +324,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean, meat lovers breakfast bowl",
       "off_brand": "Jimmy Dean,   Sara Lee Foods",
-      "off_query": "Jimmy Dean Meat Lovers"
+      "off_query": "Jimmy Dean Meat Lovers",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790011101",
@@ -326,7 +343,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean, biscuit sausage sandwiches",
       "off_brand": "Jimmy Dean,   Sara Lee Foods",
-      "off_query": "Jimmy Dean Sausage Biscuit"
+      "off_query": "Jimmy Dean Sausage Biscuit",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790050213",
@@ -344,7 +362,8 @@
       "calories_source": "open_food_facts",
       "off_name": "English muffin sausage egg and cheese",
       "off_brand": "",
-      "off_query": "Jimmy Dean Sausage Egg Cheese English Muffin"
+      "off_query": "Jimmy Dean Sausage Egg Cheese English Muffin",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790047133",
@@ -362,7 +381,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean turkey sausage",
       "off_brand": "Jimmy dean",
-      "off_query": "Jimmy Dean Turkey Sausage"
+      "off_query": "Jimmy Dean Turkey Sausage",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790050192",
@@ -380,7 +400,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy Dean Delights - Croissant with egg white, turkey sausage & cheese",
       "off_brand": "Jimmy Dean",
-      "off_query": "Jimmy Dean Turkey Sausage Egg White Cheese English"
+      "off_query": "Jimmy Dean Turkey Sausage Egg White Cheese English",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001111011016",
@@ -398,7 +419,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Bacon Egg and Cheese Croissant",
       "off_brand": "",
-      "off_query": "Kroger Bacon Egg Cheese Croissant"
+      "off_query": "Kroger Bacon Egg Cheese Croissant",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790000348",
@@ -416,7 +438,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy Dean Delights - Croissant with egg white, turkey sausage & cheese",
       "off_brand": "Jimmy Dean",
-      "off_query": "Jimmy Dean Protein Sausage Egg Cheese Croissant Fully"
+      "off_query": "Jimmy Dean Protein Sausage Egg Cheese Croissant Fully",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790050209",
@@ -434,7 +457,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean biscuit bacon egg and cheese",
       "off_brand": "Jimmy Dean",
-      "off_query": "Jimmy Dean Sausage, Egg, Cheese Biscuit"
+      "off_query": "Jimmy Dean Sausage, Egg, Cheese Biscuit",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001111009683",
@@ -452,7 +476,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Croissant lite turkey sausage egg white and cheese",
       "off_brand": "Kroger",
-      "off_query": "Kroger Lite Turkey Sausage Egg White Cheese English"
+      "off_query": "Kroger Lite Turkey Sausage Egg White Cheese English",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790000169",
@@ -470,7 +495,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Sausage griddle cake sandwiches, egg & cheese",
       "off_brand": "",
-      "off_query": "Jimmy Dean Sausage, Egg Cheese Maple Griddle Cake"
+      "off_query": "Jimmy Dean Sausage, Egg Cheese Maple Griddle Cake",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790050212",
@@ -488,7 +514,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean biscuit bacon egg and cheese",
       "off_brand": "Jimmy Dean",
-      "off_query": "Jimmy Dean Bacon Egg Cheese Biscuit"
+      "off_query": "Jimmy Dean Bacon Egg Cheese Biscuit",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001111016306",
@@ -506,7 +533,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Kroger, sausage, egg & cheese breakfast sandwich biscuit",
       "off_brand": "Kroger",
-      "off_query": "Kroger Sausage Egg Cheese Biscuit"
+      "off_query": "Kroger Sausage Egg Cheese Biscuit",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007229000227",
@@ -524,7 +552,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Odom's tennessee pride sausage & buttermilk biscuits",
       "off_brand": "",
-      "off_query": "Odom's Tennessee Pride Sausage Buttermilk Biscuits"
+      "off_query": "Odom's Tennessee Pride Sausage Buttermilk Biscuits",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0003100000989",
@@ -542,7 +571,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Mega meals boneless fried chicken",
       "off_brand": "Banquet Mega Meals",
-      "off_query": "Banquet MEGA Bacon"
+      "off_query": "Banquet MEGA Bacon",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001111015259",
@@ -560,7 +590,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Breakfast Bowl Meat lovers Scramble",
       "off_brand": "Kroger",
-      "off_query": "Kroger Meat Lovers Scramble"
+      "off_query": "Kroger Meat Lovers Scramble",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790047141",
@@ -578,7 +609,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean sausage gravy bowl",
       "off_brand": "Jimmy Dean",
-      "off_query": "Jimmy Dean Sausage Gravy"
+      "off_query": "Jimmy Dean Sausage Gravy",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790047132",
@@ -596,7 +628,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean  chicken sausage and egg",
       "off_brand": "Jimmy dean",
-      "off_query": "Jimmy Dean Sausage Egg Cheese"
+      "off_query": "Jimmy Dean Sausage Egg Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001111015261",
@@ -614,7 +647,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Turkey Sausage Egg White Scramble",
       "off_brand": "",
-      "off_query": "Kroger Turkey Sausage Egg White Scramble"
+      "off_query": "Kroger Turkey Sausage Egg White Scramble",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001111015257",
@@ -632,7 +666,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Farmhouse-style sausage scramble",
       "off_brand": "Atkins,   Atkins Nutritionals  Inc.",
-      "off_query": "Kroger Farmhouse Style Scramble"
+      "off_query": "Kroger Farmhouse Style Scramble",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0003100000651",
@@ -650,7 +685,8 @@
       "calories_source": "open_food_facts",
       "off_name": "BANQUET Sausage And Gravy Cornbread, 29.9 OZ",
       "off_brand": "Banquet",
-      "off_query": "Banquet MEGA Sausage Gravy"
+      "off_query": "Banquet MEGA Sausage Gravy",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790000346",
@@ -668,7 +704,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean, premium pork sausage, bacon",
       "off_brand": "",
-      "off_query": "Jimmy Dean Protein Classic Sausage Bacon Cheese Scrambled"
+      "off_query": "Jimmy Dean Protein Classic Sausage Bacon Cheese Scrambled",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001111015260",
@@ -686,7 +723,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Breakfast Bowl Creamy Chorizo Scramble",
       "off_brand": "Kroger",
-      "off_query": "Kroger Creamy Chorizo Scramble"
+      "off_query": "Kroger Creamy Chorizo Scramble",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0003100000627",
@@ -704,7 +742,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Meat lovers vegan burgers, meat lovers",
       "off_brand": "Morning star farms",
-      "off_query": "Banquet MEGA Meat Lovers"
+      "off_query": "Banquet MEGA Meat Lovers",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001111015256",
@@ -722,7 +761,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Bacon Scramble",
       "off_brand": "Atkins",
-      "off_query": "Kroger Bacon Scramble"
+      "off_query": "Kroger Bacon Scramble",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0003100000444",
@@ -740,7 +780,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Banquet Turkey Sausage Links",
       "off_brand": "Banquet",
-      "off_query": "Banquet MEGA Sausage"
+      "off_query": "Banquet MEGA Sausage",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0071514121223",
@@ -758,7 +799,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Eggland's best egg rounds sausage and cheese - Eggland's Best",
       "off_brand": "",
-      "off_query": "Eggland's Best Three Cheese Omelet"
+      "off_query": "Eggland's Best Three Cheese Omelet",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001111010218",
@@ -776,7 +818,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Uncured Bacon and Cheese Egg Bites",
       "off_brand": "Higher Harvest",
-      "off_query": "Simple Truth Protein Cheese Uncured Bacon Egg Bites"
+      "off_query": "Simple Truth Protein Cheese Uncured Bacon Egg Bites",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790000350",
@@ -794,7 +837,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean  chicken sausage and egg",
       "off_brand": "Jimmy dean",
-      "off_query": "Jimmy Dean Protein Chipotle Chicken Scrambled Egg Monterey"
+      "off_query": "Jimmy Dean Protein Chipotle Chicken Scrambled Egg Monterey",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0071514121235",
@@ -812,7 +856,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Eggland's best egg rounds sausage and cheese - Eggland's Best",
       "off_brand": "",
-      "off_query": "Eggland's Best Three Cheese Omelets, 2 Count"
+      "off_query": "Eggland's Best Three Cheese Omelets, 2 Count",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0003800040340",
@@ -830,7 +875,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Eggo Waffles, Strawberry",
       "off_brand": "Eggo",
-      "off_query": "Eggo Strawberry Waffles"
+      "off_query": "Eggo Strawberry Waffles",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0070559901322",
@@ -848,7 +894,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Protein buttermilk pancakes",
       "off_brand": "Perso milling",
-      "off_query": "Kodiak Buttermilk Protein Pancakes"
+      "off_query": "Kodiak Buttermilk Protein Pancakes",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0002531737429",
@@ -866,7 +913,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Sausage & Pancake On A Stick",
       "off_brand": "Kroger,   The Kroger Co.",
-      "off_query": "Applegate Naturals Pancake Pork Sausage Stick ( )"
+      "off_query": "Applegate Naturals Pancake Pork Sausage Stick ( )",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0067984410457",
@@ -884,7 +932,8 @@
       "calories_source": "open_food_facts",
       "off_name": "De wafelbakkers, pancakes, chocolate chip",
       "off_brand": "De Wafelbakkers  Llc.",
-      "off_query": "De Wafelbakkers Buttermilk Pancakes, 18 Count Pack"
+      "off_query": "De Wafelbakkers Buttermilk Pancakes, 18 Count Pack",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0067984410442",
@@ -902,7 +951,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Buttermilk mini pancakes, buttermilk",
       "off_brand": "Meijer",
-      "off_query": "De Wafelbakkers Buttermilk Mini Pancakes, 60 Count Pack"
+      "off_query": "De Wafelbakkers Buttermilk Mini Pancakes, 60 Count Pack",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0067984410369",
@@ -920,7 +970,8 @@
       "calories_source": "open_food_facts",
       "off_name": "De wafelbakkers, pancakes, chocolate chip",
       "off_brand": "De Wafelbakkers  Llc.",
-      "off_query": "De Wafelbakkers Homestyle Pancakes"
+      "off_query": "De Wafelbakkers Homestyle Pancakes",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0003800030589",
@@ -938,7 +989,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Vanilla Protein Pancakes",
       "off_brand": "Naked Harvest",
-      "off_query": "Eggo Protein Pancakes Vanilla"
+      "off_query": "Eggo Protein Pancakes Vanilla",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0003800031167",
@@ -956,7 +1008,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Buttermilk Protein Pancake",
       "off_brand": "",
-      "off_query": "Eggo Protein Pancake Minis Buttermilk Vanilla"
+      "off_query": "Eggo Protein Pancake Minis Buttermilk Vanilla",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790000341",
@@ -974,7 +1027,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean fully cooked turkey sausage",
       "off_brand": "Jimmy dean",
-      "off_query": "Jimmy Dean Protein Buttermilk Waffles Fully Cooked"
+      "off_query": "Jimmy Dean Protein Buttermilk Waffles Fully Cooked",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790000342",
@@ -992,7 +1046,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean fully cooked turkey sausage",
       "off_brand": "Jimmy dean",
-      "off_query": "Jimmy Dean Protein Blueberry Waffles Fully Cooked"
+      "off_query": "Jimmy Dean Protein Blueberry Waffles Fully Cooked",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001111015493",
@@ -1010,7 +1065,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Buttermilk mini pancakes, buttermilk",
       "off_brand": "Meijer",
-      "off_query": "Simple Truth Protein Buttermilk Mini Pancakes"
+      "off_query": "Simple Truth Protein Buttermilk Mini Pancakes",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001111015494",
@@ -1028,7 +1084,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Simple Truth Blueberry Yogurt",
       "off_brand": "",
-      "off_query": "Simple Truth Protein Blueberry Sized Filled Pancakes"
+      "off_query": "Simple Truth Protein Blueberry Sized Filled Pancakes",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001111015495",
@@ -1046,7 +1103,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Simple truth",
       "off_brand": "Simple truth",
-      "off_query": "Simple Truth Protein Hazelnut Cocoa Sized Filled Pancakes"
+      "off_query": "Simple Truth Protein Hazelnut Cocoa Sized Filled Pancakes",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0089903900263",
@@ -1064,7 +1122,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Buttermilk pancake shake gf",
       "off_brand": "",
-      "off_query": "Feel Good Foods GF Buttermilk Pancake Balls 12.7oz"
+      "off_query": "Feel Good Foods GF Buttermilk Pancake Balls 12.7oz",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007229000957",
@@ -1082,7 +1141,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Odom's Tennessee Pride maple country sausage",
       "off_brand": "",
-      "off_query": "Odom\u2019s Tennessee Pride Maple Pancake Sausage"
+      "off_query": "Odom\u2019s Tennessee Pride Maple Pancake Sausage",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0086000701434",
@@ -1100,7 +1160,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Pancake Sandwich W/ Maple Sausage And Egg",
       "off_brand": "Mason Dixie",
-      "off_query": "Mason Dixie Pancake Sausage Egg"
+      "off_query": "Mason Dixie Pancake Sausage Egg",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0070559901221",
@@ -1118,7 +1179,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Kodiak cakes homestyle protein packed power waffles",
       "off_brand": "Kodiak Cakes",
-      "off_query": "Kodiak Protein-Packed Buttermilk Vanilla Power Waffles 12g Protein"
+      "off_query": "Kodiak Protein-Packed Buttermilk Vanilla Power Waffles 12g Protein",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0070559901215",
@@ -1136,7 +1198,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Kodiak cakes homestyle protein packed power waffles",
       "off_brand": "Kodiak Cakes",
-      "off_query": "Kodiak Protein-Packed Blueberry Power Waffles 12g Protein"
+      "off_query": "Kodiak Protein-Packed Blueberry Power Waffles 12g Protein",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007100714159",
@@ -1154,7 +1217,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Egg, applewood smoked bacon & cheese burritos, egg, applewood smoked bacon & cheese",
       "off_brand": "Signature,   El Monterey",
-      "off_query": "El Monterey Egg, Applewood Smoked Bacon Cheese"
+      "off_query": "El Monterey Egg, Applewood Smoked Bacon Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007100714842",
@@ -1172,7 +1236,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Ruiz el monterey sausage egg and cheese breakfast tornado",
       "off_brand": "Holiday/Circle K",
-      "off_query": "El Monterey Egg Sausage Cheese Potato"
+      "off_query": "El Monterey Egg Sausage Cheese Potato",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007100714332",
@@ -1190,7 +1255,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jalape\u00f1o Monterey Jack Cheese",
       "off_brand": "Bothwell",
-      "off_query": "El Monterey Egg Cheese Jalape\u00f1o"
+      "off_query": "El Monterey Egg Cheese Jalape\u00f1o",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085041600288",
@@ -1208,7 +1274,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Meat lovers vegan burgers, meat lovers",
       "off_brand": "Morning star farms",
-      "off_query": "Red\u2019s Meat Lovers"
+      "off_query": "Red\u2019s Meat Lovers",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085041600227",
@@ -1226,7 +1293,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Turkey sausage breakfast burrito",
       "off_brand": "Red\u2019s",
-      "off_query": "Red\u2019s Turkey Sausage"
+      "off_query": "Red\u2019s Turkey Sausage",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790019488",
@@ -1244,7 +1312,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean, meat lovers breakfast bowl",
       "off_brand": "Jimmy Dean,   Sara Lee Foods",
-      "off_query": "Jimmy Dean Meat Lovers"
+      "off_query": "Jimmy Dean Meat Lovers",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007100714766",
@@ -1262,7 +1331,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Ruiz el monterey sausage egg and cheese breakfast tornado",
       "off_brand": "Holiday/Circle K",
-      "off_query": "El Monterey Simply Egg Turkey Sausage Cheese"
+      "off_query": "El Monterey Simply Egg Turkey Sausage Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007790019487",
@@ -1280,7 +1350,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Jimmy dean  chicken sausage and egg",
       "off_brand": "Jimmy dean",
-      "off_query": "Jimmy Dean Egg Sausage Cheese"
+      "off_query": "Jimmy Dean Egg Sausage Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085006515811",
@@ -1298,7 +1369,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Mason Dixie Croissant Sandwich",
       "off_brand": "Mason Dixie",
-      "off_query": "Mason Dixie Egg Cheese"
+      "off_query": "Mason Dixie Egg Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085006515807",
@@ -1316,7 +1388,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Mason Dixie Croissant Sandwich",
       "off_brand": "Mason Dixie",
-      "off_query": "Mason Dixie Sausage"
+      "off_query": "Mason Dixie Sausage",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085001191135",
@@ -1334,7 +1407,8 @@
       "calories_source": "open_food_facts",
       "off_name": "H-e-b, taco seasoned turkey sausage",
       "off_brand": "H-E-B,   H E Butt Grocery Company",
-      "off_query": "Red's Turkey Sausage"
+      "off_query": "Red's Turkey Sausage",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085041600247",
@@ -1352,7 +1426,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Fit foods chicken & chorizo with baby potatoes",
       "off_brand": "Fit Foods, Dublin Meat Co",
-      "off_query": "Red\u2019s Chicken Chorizo"
+      "off_query": "Red\u2019s Chicken Chorizo",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085006423419",
@@ -1370,7 +1445,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Sausage, egg & cheese, sausage,egg & cheese",
       "off_brand": "",
-      "off_query": "Red's Sausage Egge Cheese"
+      "off_query": "Red's Sausage Egge Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085006423452",
@@ -1388,7 +1464,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Cheese Snackers",
       "off_brand": "Taylor Farms",
-      "off_query": "Red\u2019s Snackers Egg Cheese"
+      "off_query": "Red\u2019s Snackers Egg Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085006423451",
@@ -1406,7 +1483,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Red's Unholy Barbecue Sauce Mild",
       "off_brand": "Red\u2019s",
-      "off_query": "Red\u2019s Snackers Chicken Maple"
+      "off_query": "Red\u2019s Snackers Chicken Maple",
+      "match_type": "fuzzy_text"
     }
   ],
   "general": [
@@ -1426,7 +1504,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Marie callender's, comfort bakes, cheesy chicken & rice",
       "off_brand": "",
-      "off_query": "Marie Callender's Aged Cheddar Cheesy Chicken Rice ,"
+      "off_query": "Marie Callender's Aged Cheddar Cheesy Chicken Rice ,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500909",
@@ -1444,7 +1523,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Healthy choice, cafe steamers, southwestern style chicken",
       "off_brand": "",
-      "off_query": "Healthy Choice Cafe Steamers Chicken Alfredo,"
+      "off_query": "Healthy Choice Cafe Steamers Chicken Alfredo,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500110",
@@ -1462,7 +1542,8 @@
       "calories_source": "open_food_facts",
       "off_name": "HEALTHY CHOICE Cafe Steamers Beef Merlot, 9.5 OZ",
       "off_brand": "Healthy Choice",
-      "off_query": "Healthy Choice Cafe Steamers Beef Teriyaki,"
+      "off_query": "Healthy Choice Cafe Steamers Beef Teriyaki,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380010070",
@@ -1480,7 +1561,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Michelina's Salisbury Steak",
       "off_brand": "Michelina's",
-      "off_query": "Stouffer's Salisbury Steak"
+      "off_query": "Stouffer's Salisbury Steak",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265545442",
@@ -1498,7 +1580,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Cafe steamers chicken fettuccini alfredo",
       "off_brand": "Healthy Choice",
-      "off_query": "Healthy Choice Cafe Steamers Chicken Fettuccini Alfredo Broccoli,"
+      "off_query": "Healthy Choice Cafe Steamers Chicken Fettuccini Alfredo Broccoli,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0002113100114",
@@ -1516,7 +1599,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Marie callender's, three meat & four cheese lasagna",
       "off_brand": "",
-      "off_query": "Marie Callender's Lasagna Meat Sauce"
+      "off_query": "Marie Callender's Lasagna Meat Sauce",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380012007",
@@ -1534,7 +1618,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stouffer's, classic lasagna with meat & sauce",
       "off_brand": "",
-      "off_query": "Stouffer's Spaghetti Meat Sauce"
+      "off_query": "Stouffer's Spaghetti Meat Sauce",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380017115",
@@ -1552,7 +1637,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Chicken enchilada suiza",
       "off_brand": "",
-      "off_query": "Lean Cuisine Classic Chicken Enchilada Suiza"
+      "off_query": "Lean Cuisine Classic Chicken Enchilada Suiza",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0003100010101",
@@ -1570,7 +1656,8 @@
       "calories_source": "open_food_facts",
       "off_name": "BANQUET Chicken Pot Pie, 7 OZ",
       "off_brand": "Banquet",
-      "off_query": "Banquet Chicken Pot Pie,"
+      "off_query": "Banquet Chicken Pot Pie,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380010321",
@@ -1588,7 +1675,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stouffer's, classic lasagna with meat & sauce",
       "off_brand": "",
-      "off_query": "Stouffer's Classic Lasagna Meat Sauce"
+      "off_query": "Stouffer's Classic Lasagna Meat Sauce",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0002113190533",
@@ -1606,7 +1694,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Marie callender's, country fried chicken",
       "off_brand": "",
-      "off_query": "Marie Callender's Country Fried Chicken Gravy,"
+      "off_query": "Marie Callender's Country Fried Chicken Gravy,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380010072",
@@ -1624,7 +1713,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stouffer's, classic mac & cheese",
       "off_brand": "Nestl\u00e9",
-      "off_query": "Stouffer's Classic Meatloaf"
+      "off_query": "Stouffer's Classic Meatloaf",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380010340",
@@ -1642,7 +1732,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stouffer\u2019s Macaroni & Cheese",
       "off_brand": "Stouffer's",
-      "off_query": "Stouffer's Macaroni Cheese"
+      "off_query": "Stouffer's Macaroni Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0071785410525",
@@ -1660,7 +1751,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Michelina's, macaroni & cheese with ham",
       "off_brand": "Michelina's,   Bellisio Foods  Inc.",
-      "off_query": "Michelina's Wheels Cheese"
+      "off_query": "Michelina's Wheels Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380010172",
@@ -1678,7 +1770,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stouffer's, roast turkey, classics",
       "off_brand": "",
-      "off_query": "Stouffer's Roast Turkey"
+      "off_query": "Stouffer's Roast Turkey",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0002113100039",
@@ -1696,7 +1789,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Spaghetti and meatballs bowl",
       "off_brand": "Marie callender's",
-      "off_query": "Marie Callender's Classic Spaghetti Meatballs"
+      "off_query": "Marie Callender's Classic Spaghetti Meatballs",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265555627",
@@ -1714,7 +1808,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Healthy choice, cafe steamers, southwestern style chicken",
       "off_brand": "",
-      "off_query": "Healthy Choice Cafe Steamers Turkey Sausage Lasagna ,"
+      "off_query": "Healthy Choice Cafe Steamers Turkey Sausage Lasagna ,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380044786",
@@ -1732,7 +1827,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stouffer's classics escalloped chicken & noodles",
       "off_brand": "",
-      "off_query": "Stouffer's Escalloped Chicken Noodles Casserole"
+      "off_query": "Stouffer's Escalloped Chicken Noodles Casserole",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0002113100026",
@@ -1750,7 +1846,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Marie callender's, three meat & four cheese lasagna",
       "off_brand": "",
-      "off_query": "Marie Callender's Four Cheese Fettuccini Alfredo"
+      "off_query": "Marie Callender's Four Cheese Fettuccini Alfredo",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380010115",
@@ -1768,7 +1865,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stouffer's, chicken alfredo",
       "off_brand": "Stouffer's",
-      "off_query": "Stouffer's Chicken Fettuccine Alfredo"
+      "off_query": "Stouffer's Chicken Fettuccine Alfredo",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085706300204",
@@ -1786,7 +1884,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Chicken biryani with saffron rice",
       "off_brand": "Chef Bombay",
-      "off_query": "Saffron Road Chicken Biryani Basmati Rice Gluten-Free Indian"
+      "off_query": "Saffron Road Chicken Biryani Basmati Rice Gluten-Free Indian",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0003100070000",
@@ -1804,7 +1903,8 @@
       "calories_source": "open_food_facts",
       "off_name": "P.F. Chang's Home Menu Meals for 2, Sweet and Sour Chicken Skillet Meal, 22 Oz",
       "off_brand": "",
-      "off_query": "P.F. Chang's Home Menu Chicken Fried Rice Skillet"
+      "off_query": "P.F. Chang's Home Menu Chicken Fried Rice Skillet",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0002113190532",
@@ -1822,7 +1922,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Marie callender's, sausage, gravy & egg pot pie",
       "off_brand": "",
-      "off_query": "Marie Callender's Meat Loaf Gravy,"
+      "off_query": "Marie Callender's Meat Loaf Gravy,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380065455",
@@ -1840,7 +1941,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Chicken Alfredo - Lean Cuisine - Lean Cuisine - Lean Cuisine",
       "off_brand": "",
-      "off_query": "Lean Cuisine Sesame Chicken"
+      "off_query": "Lean Cuisine Sesame Chicken",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085706300200",
@@ -1858,7 +1960,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Saffron Road Chicken Tikka Masala",
       "off_brand": "Saffron Road",
-      "off_query": "Saffron Road Chicken Tikka Masala Basmati Rice Gluten-Free"
+      "off_query": "Saffron Road Chicken Tikka Masala Basmati Rice Gluten-Free",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007142900246",
@@ -1876,7 +1979,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Blackened Chicken Alfredo",
       "off_brand": "New Orleans Style",
-      "off_query": "Zatarain's Blackened Chicken Alfredo"
+      "off_query": "Zatarain's Blackened Chicken Alfredo",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085706300206",
@@ -1894,7 +1998,8 @@
       "calories_source": "open_food_facts",
       "off_name": "White Rice Pad Thai Noodles Gluten Free",
       "off_brand": "Koyo",
-      "off_query": "Saffron Road Chicken Pad Thai Rice Noodles Gluten-Free"
+      "off_query": "Saffron Road Chicken Pad Thai Rice Noodles Gluten-Free",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085044600873",
@@ -1912,7 +2017,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Penang Chicken Curry",
       "off_brand": "Bighams",
-      "off_query": "Saffron Road Coconut Curry Chicken Gluten-Free Indian"
+      "off_query": "Saffron Road Coconut Curry Chicken Gluten-Free Indian",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085706300238",
@@ -1930,7 +2036,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Chicken enchiladas poblano with black beans & rice roasted dark meat chicken, spinach & oaxaca cheese wrapped with corn tortillas in a creamy poblano chili sauce",
       "off_brand": "Saffron Road",
-      "off_query": "Saffron Road Chicken Enchiladas Poblano Black Beans Rice"
+      "off_query": "Saffron Road Chicken Enchiladas Poblano Black Beans Rice",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085706300289",
@@ -1948,7 +2055,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Chipotle Chicken Enchiladas",
       "off_brand": "Amazon Kitchen",
-      "off_query": "Saffron Road Chicken Enchiladas Al Chipotle Gluten-Free Mexican"
+      "off_query": "Saffron Road Chicken Enchiladas Al Chipotle Gluten-Free Mexican",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007007781129",
@@ -1966,7 +2074,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Fried Rice, Chicken - Tai Pei - Tai Pei - Tai Pei",
       "off_brand": "",
-      "off_query": "Tai Pei Chicken Fried Rice Asian Entr\u00e9e 11"
+      "off_query": "Tai Pei Chicken Fried Rice Asian Entr\u00e9e 11",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007100730679",
@@ -1984,7 +2093,8 @@
       "calories_source": "open_food_facts",
       "off_name": "El monterey beef",
       "off_brand": "El Monterey",
-      "off_query": "El Monterey Entr\u00e9e Beef Enchiladas"
+      "off_query": "El Monterey Entr\u00e9e Beef Enchiladas",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380079188",
@@ -2002,7 +2112,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stouffer s classics meat lovers lasagna",
       "off_brand": "",
-      "off_query": "Stouffer's Meat Lovers Lasagna"
+      "off_query": "Stouffer's Meat Lovers Lasagna",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380044790",
@@ -2020,7 +2131,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stouffer's, roast turkey, classics",
       "off_brand": "",
-      "off_query": "Stouffer's Turkey Tetrazzini Casserole"
+      "off_query": "Stouffer's Turkey Tetrazzini Casserole",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0085044600871",
@@ -2038,7 +2150,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Organic Indian Vegetable Biryani",
       "off_brand": "Food Earth",
-      "off_query": "Saffron Road Vegetable Biryani Gluten-Free Vegan Indian"
+      "off_query": "Saffron Road Vegetable Biryani Gluten-Free Vegan Indian",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007100700197",
@@ -2056,7 +2169,8 @@
       "calories_source": "open_food_facts",
       "off_name": "EL Monterey Signature Steak Enchiladas",
       "off_brand": "EL MONTEREY",
-      "off_query": "El Monterey Entr\u00e9e Steak Enchilada, 9 ( )"
+      "off_query": "El Monterey Entr\u00e9e Steak Enchilada, 9 ( )",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0002370006218",
@@ -2074,7 +2188,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Raw Stuffed Chicken Breast",
       "off_brand": "Hannford",
-      "off_query": "Tyson Pepperoni Pizza Seasoned Stuffed Raw Chicken Breast,"
+      "off_query": "Tyson Pepperoni Pizza Seasoned Stuffed Raw Chicken Breast,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500107",
@@ -2092,7 +2207,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Healthy choice, cafe steamers, southwestern style chicken",
       "off_brand": "",
-      "off_query": "Healthy Choice Cafe Steamers Grilled Chicken Pesto Vegetables,"
+      "off_query": "Healthy Choice Cafe Steamers Grilled Chicken Pesto Vegetables,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380017420",
@@ -2110,7 +2226,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Lean cuisine, three cheese stuffed rigatoni",
       "off_brand": "",
-      "off_query": "Lean Cuisine Classic Five Cheese Rigatoni"
+      "off_query": "Lean Cuisine Classic Five Cheese Rigatoni",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380016695",
@@ -2128,7 +2245,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Lean Cuisine Meatloaf with mqshed potatoes",
       "off_brand": "Lean Cuisine",
-      "off_query": "Lean Cuisine Meatloaf Mashed Potatoes"
+      "off_query": "Lean Cuisine Meatloaf Mashed Potatoes",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380017419",
@@ -2146,7 +2264,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Chicken Alfredo - Lean Cuisine - Lean Cuisine - Lean Cuisine",
       "off_brand": "",
-      "off_query": "Lean Cuisine Alfredo Pasta Chicken Broccoli"
+      "off_query": "Lean Cuisine Alfredo Pasta Chicken Broccoli",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380018803",
@@ -2164,7 +2283,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Chicken Alfredo - Lean Cuisine - Lean Cuisine - Lean Cuisine",
       "off_brand": "",
-      "off_query": "Lean Cuisine Chicken Fettuccine"
+      "off_query": "Lean Cuisine Chicken Fettuccine",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380016668",
@@ -2182,7 +2302,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Lasagna With Meat Sauce",
       "off_brand": "Michael Angelo's",
-      "off_query": "Lean Cuisine Lasagna Meat Sauce"
+      "off_query": "Lean Cuisine Lasagna Meat Sauce",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380016686",
@@ -2200,7 +2321,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Classic cheese ravioli, classic cheese",
       "off_brand": "",
-      "off_query": "Lean Cuisine Classic Cheese Ravioli"
+      "off_query": "Lean Cuisine Classic Cheese Ravioli",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380004717",
@@ -2218,7 +2340,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Lean cuisine, pepperoni pizza",
       "off_brand": "",
-      "off_query": "Lean Cuisine Pepperoni Pizza"
+      "off_query": "Lean Cuisine Pepperoni Pizza",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380018807",
@@ -2236,7 +2359,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Swedish meatballs",
       "off_brand": "Natural ketosis",
-      "off_query": "Lean Cuisine Swedish Meatballs"
+      "off_query": "Lean Cuisine Swedish Meatballs",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380036604",
@@ -2254,7 +2378,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Vermont white cheddar mac & cheese",
       "off_brand": "",
-      "off_query": "Lean Cuisine Vermont White Cheddar Mac Cheese"
+      "off_query": "Lean Cuisine Vermont White Cheddar Mac Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380093052",
@@ -2272,7 +2397,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Spinach & ricotta ravioli",
       "off_brand": "Marks & Spencer",
-      "off_query": "Lean Cuisine Ricotta Cheese Spinach Ravioli"
+      "off_query": "Lean Cuisine Ricotta Cheese Spinach Ravioli",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380016619",
@@ -2290,7 +2416,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Lean Cuisine Salisbury Steak with Macaroni & Cheese",
       "off_brand": "Lean Cuisine",
-      "off_query": "Lean Cuisine Salisbury Steak Macaroni Cheese"
+      "off_query": "Lean Cuisine Salisbury Steak Macaroni Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380013660",
@@ -2308,7 +2435,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Lean cuisine, chicken teriyaki",
       "off_brand": "",
-      "off_query": "Lean Cuisine Chicken Teriyaki"
+      "off_query": "Lean Cuisine Chicken Teriyaki",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380016607",
@@ -2326,7 +2454,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Chicken Alfredo - Lean Cuisine - Lean Cuisine - Lean Cuisine",
       "off_brand": "",
-      "off_query": "Lean Cuisine Chicken Parmesan"
+      "off_query": "Lean Cuisine Chicken Parmesan",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380016651",
@@ -2344,7 +2473,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Chicken Alfredo - Lean Cuisine - Lean Cuisine - Lean Cuisine",
       "off_brand": "",
-      "off_query": "Lean Cuisine Classic Fettuccine Alfredo"
+      "off_query": "Lean Cuisine Classic Fettuccine Alfredo",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380004719",
@@ -2362,7 +2492,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Four cheese pizza",
       "off_brand": "Shoprite, ",
-      "off_query": "Lean Cuisine Four Cheese Pizza"
+      "off_query": "Lean Cuisine Four Cheese Pizza",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380016661",
@@ -2380,7 +2511,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Lean cuisine, comfort roasted turkey & vegetables",
       "off_brand": "",
-      "off_query": "Lean Cuisine Roasted Turkey Breast"
+      "off_query": "Lean Cuisine Roasted Turkey Breast",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380055239",
@@ -2398,7 +2530,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Lean Cuisine chicken fried rice",
       "off_brand": "",
-      "off_query": "Lean Cuisine Classic Chicken Fried Rice"
+      "off_query": "Lean Cuisine Classic Chicken Fried Rice",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380016635",
@@ -2416,7 +2549,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Lean spaghetti & meat sauce",
       "off_brand": "",
-      "off_query": "Lean Cuisine Spaghetti Meat Sauce"
+      "off_query": "Lean Cuisine Spaghetti Meat Sauce",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380016689",
@@ -2434,7 +2568,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Chicken Alfredo - Lean Cuisine - Lean Cuisine - Lean Cuisine",
       "off_brand": "",
-      "off_query": "Lean Cuisine Baked Chicken"
+      "off_query": "Lean Cuisine Baked Chicken",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380010018",
@@ -2452,7 +2587,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stouffer's, creamed spinach",
       "off_brand": "",
-      "off_query": "Stouffer's Creamed Chipped Beef"
+      "off_query": "Stouffer's Creamed Chipped Beef",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380012009",
@@ -2470,7 +2606,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Swedish meatballs",
       "off_brand": "Natural ketosis",
-      "off_query": "Stouffer's Swedish Meatballs"
+      "off_query": "Stouffer's Swedish Meatballs",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380010323",
@@ -2488,7 +2625,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stouffer's, vegetable lasagna",
       "off_brand": "",
-      "off_query": "Stouffer's Vegetable Lasagna"
+      "off_query": "Stouffer's Vegetable Lasagna",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380019086",
@@ -2506,7 +2644,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Grandma's chicken & vegetable rice bake",
       "off_brand": "",
-      "off_query": "Stouffer's Grandma's Chicken Vegetable Rice Bake Family"
+      "off_query": "Stouffer's Grandma's Chicken Vegetable Rice Bake Family",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380010393",
@@ -2524,7 +2663,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Spaghetti Meatballs",
       "off_brand": "Little Dish",
-      "off_query": "Stouffer's Spaghetti Meatballs"
+      "off_query": "Stouffer's Spaghetti Meatballs",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380004708",
@@ -2542,7 +2682,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stouffer's, rigatoni with chicken & pesto",
       "off_brand": "",
-      "off_query": "Stouffer's Chicken Pesto Rigatoni"
+      "off_query": "Stouffer's Chicken Pesto Rigatoni",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380010342",
@@ -2560,7 +2701,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stouffer\u2019s Macaroni & Cheese",
       "off_brand": "Stouffer's",
-      "off_query": "Stouffer's Macaroni Cheese Sides"
+      "off_query": "Stouffer's Macaroni Cheese Sides",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380010067",
@@ -2578,7 +2720,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stuffed peppers with beef & rice in sauce",
       "off_brand": "",
-      "off_query": "Stouffer's Stuffed Peppers Large"
+      "off_query": "Stouffer's Stuffed Peppers Large",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380037975",
@@ -2596,7 +2739,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stouffer's, chicken enchilada",
       "off_brand": "",
-      "off_query": "Stouffer's Chicken Enchilada"
+      "off_query": "Stouffer's Chicken Enchilada",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380055478",
@@ -2614,7 +2758,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Michelina's Salisbury Steak",
       "off_brand": "Michelina's",
-      "off_query": "Stouffer's Salisbury Steak"
+      "off_query": "Stouffer's Salisbury Steak",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0001380023260",
@@ -2632,7 +2777,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Stouffer's, classic lasagna with meat & sauce",
       "off_brand": "",
-      "off_query": "Stouffer's Classic Lasagna Meat Sauce Family"
+      "off_query": "Stouffer's Classic Lasagna Meat Sauce Family",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500105",
@@ -2650,7 +2796,8 @@
       "calories_source": "open_food_facts",
       "off_name": "HEALTHY CHOICE Cafe Steamers Balsamic Garlic Chicken, 9.5 OZ",
       "off_brand": "",
-      "off_query": "Healthy Choice Cafe Steamers Chicken Margherita Balsamic,"
+      "off_query": "Healthy Choice Cafe Steamers Chicken Margherita Balsamic,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500108",
@@ -2668,7 +2815,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Simply steamers grilled chicken marsala frozen meal",
       "off_brand": "Healthy Choice",
-      "off_query": "Healthy Choice Simply Steamers Grilled Chicken Marsala,"
+      "off_query": "Healthy Choice Simply Steamers Grilled Chicken Marsala,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500101",
@@ -2686,7 +2834,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Healthy choice, cafe steamers, southwestern style chicken",
       "off_brand": "",
-      "off_query": "Healthy Choice Cafe Steamers Grilled Chicken Marinara Parmesan,"
+      "off_query": "Healthy Choice Cafe Steamers Grilled Chicken Marinara Parmesan,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500124",
@@ -2704,7 +2853,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Simply Steamers- Grilled Chicken & Broccoli Alfredo",
       "off_brand": "Healthy Choice",
-      "off_query": "Healthy Choice Simply Steamers Grilled Chicken Broccoli Alfredo,"
+      "off_query": "Healthy Choice Simply Steamers Grilled Chicken Broccoli Alfredo,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500103",
@@ -2722,7 +2872,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Cafe steamers chicken linguini with red pepper alfredo",
       "off_brand": "Healthy Choice",
-      "off_query": "Healthy Choice Cafe Steamers Chicken Linguini Red Pepper"
+      "off_query": "Healthy Choice Cafe Steamers Chicken Linguini Red Pepper",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265503219",
@@ -2740,7 +2891,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Blueberry delight high protein",
       "off_brand": "Gainomax",
-      "off_query": "Healthy Choice Protein Greek-Style Chicken, High Protein"
+      "off_query": "Healthy Choice Protein Greek-Style Chicken, High Protein",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500102",
@@ -2758,7 +2910,8 @@
       "calories_source": "open_food_facts",
       "off_name": "HEALTHY CHOICE Cafe Steamers Beef Merlot, 9.5 OZ",
       "off_brand": "Healthy Choice",
-      "off_query": "Healthy Choice Cafe Steamers Beef Merlot,"
+      "off_query": "Healthy Choice Cafe Steamers Beef Merlot,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500115",
@@ -2776,7 +2929,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Healthy Choice Cafe Steamers Frozen Dinner, Pineapple Chicken, 9.9 Ounce, 9.9 OZ",
       "off_brand": "",
-      "off_query": "Healthy Choice Cafe Steamers Pineapple Chicken,"
+      "off_query": "Healthy Choice Cafe Steamers Pineapple Chicken,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500112",
@@ -2794,7 +2948,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Healthy choice, cafe steamers, southwestern style chicken",
       "off_brand": "",
-      "off_query": "Healthy Choice Cafe Steamers Cajun-Style Chicken Shrimp,"
+      "off_query": "Healthy Choice Cafe Steamers Cajun-Style Chicken Shrimp,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500504",
@@ -2812,7 +2967,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Healthy choice, cafe steamers, southwestern style chicken",
       "off_brand": "",
-      "off_query": "Healthy Choice Cafe Steamers Chicken Fajita"
+      "off_query": "Healthy Choice Cafe Steamers Chicken Fajita",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265545441",
@@ -2830,7 +2986,8 @@
       "calories_source": "open_food_facts",
       "off_name": "HEALTHY CHOICE Cafe Steamers Sweet And Sour Chicken, 10 OZ",
       "off_brand": "Healthy choice",
-      "off_query": "Healthy Choice Cafe Steamers Sweet Sour Chicken,"
+      "off_query": "Healthy Choice Cafe Steamers Sweet Sour Chicken,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265540509",
@@ -2848,7 +3005,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Caf steamers barbecue seasoned steak with potatoes frozen meal",
       "off_brand": "Healthy Choice",
-      "off_query": "Healthy Choice Cafe Steamers Barbecue Seasoned Steak Potatoes,"
+      "off_query": "Healthy Choice Cafe Steamers Barbecue Seasoned Steak Potatoes,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500104",
@@ -2866,7 +3024,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Healthy Choice Cafe Steamers Frozen Dinner, Sweet Sesame Glazed Chicken, 9.75 Ounce, 9.75 OZ",
       "off_brand": "Healthy Choice",
-      "off_query": "Healthy Choice Cafe Steamers Sweet Sesame Chicken,"
+      "off_query": "Healthy Choice Cafe Steamers Sweet Sesame Chicken,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500251",
@@ -2884,7 +3043,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Blueberry delight high protein",
       "off_brand": "Gainomax",
-      "off_query": "Healthy Choice Protein Chicken Marinara High Protein"
+      "off_query": "Healthy Choice Protein Chicken Marinara High Protein",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265545445",
@@ -2902,7 +3062,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Healthy Choice Simply Steamers Meatball Marinara frozen meal",
       "off_brand": "Healthy Choice",
-      "off_query": "Healthy Choice Simply Steamers Beef Broccoli,"
+      "off_query": "Healthy Choice Simply Steamers Beef Broccoli,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500111",
@@ -2920,7 +3081,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Cafe steamers honey glazed turkey & potatoes",
       "off_brand": "Healthy Choice",
-      "off_query": "Healthy Choice Cafe Steamers Honey Glazed Turkey Potatoes,"
+      "off_query": "Healthy Choice Cafe Steamers Honey Glazed Turkey Potatoes,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0004227201219",
@@ -2938,7 +3100,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Asian dumplings in a savory hoisin sauce bowls",
       "off_brand": "",
-      "off_query": "Amy's Vegan Asian Dumplings Savory Hoisin Sauce"
+      "off_query": "Amy's Vegan Asian Dumplings Savory Hoisin Sauce",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0002113190552",
@@ -2956,7 +3119,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Marie callender's, chicken & broccoli alfredo",
       "off_brand": "",
-      "off_query": "Marie Callender's Tender Ginger Beef Broccoli"
+      "off_query": "Marie Callender's Tender Ginger Beef Broccoli",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0002113100098",
@@ -2974,7 +3138,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Marie callender's, herb roasted chicken",
       "off_brand": "",
-      "off_query": "Marie Callender's Sweet Citrusy Orange Chicken"
+      "off_query": "Marie Callender's Sweet Citrusy Orange Chicken",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0002113100093",
@@ -2992,7 +3157,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Marie callender's, country fried chicken",
       "off_brand": "",
-      "off_query": "Marie Callender's Savory Chicken Fried Rice"
+      "off_query": "Marie Callender's Savory Chicken Fried Rice",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0004227200811",
@@ -3010,7 +3176,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Broccoli & Cheddar Bake",
       "off_brand": "Amy\u2019s",
-      "off_query": "Amy's Gluten Free Broccoli Cheddar Bake"
+      "off_query": "Amy's Gluten Free Broccoli Cheddar Bake",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0003100080943",
@@ -3028,7 +3195,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Mega Bowls, Dynamite Penne With Meatballs",
       "off_brand": "Banquet",
-      "off_query": "Banquet MEGA Dynamite Penne Meatballs High Protein"
+      "off_query": "Banquet MEGA Dynamite Penne Meatballs High Protein",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0003100012610",
@@ -3046,7 +3214,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Mega bowls buffalo-style chicken mac 'n cheese",
       "off_brand": "Banquet",
-      "off_query": "Banquet MEGA Buffalo-Style Chicken Mac 'N Cheese,"
+      "off_query": "Banquet MEGA Buffalo-Style Chicken Mac 'N Cheese,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0003100012612",
@@ -3064,7 +3233,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Fried Chicken, Original Crispy - Banquet - Banquet - Banquet",
       "off_brand": "",
-      "off_query": "Banquet MEGA Country Fried Chicken High Protein"
+      "off_query": "Banquet MEGA Country Fried Chicken High Protein",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265555555",
@@ -3082,7 +3252,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Healthy choice, cafe steamers, southwestern style chicken",
       "off_brand": "",
-      "off_query": "Healthy Choice Simply Steamers Southwest-Style Chicken"
+      "off_query": "Healthy Choice Simply Steamers Southwest-Style Chicken",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0002113100040",
@@ -3100,7 +3271,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Marie callender's, country fried chicken",
       "off_brand": "",
-      "off_query": "Marie Callender's Fried Chicken Mac Cheese"
+      "off_query": "Marie Callender's Fried Chicken Mac Cheese",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265503220",
@@ -3118,7 +3290,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Blueberry delight high protein",
       "off_brand": "Gainomax",
-      "off_query": "Healthy Choice Protein Cajun-Style Chicken Sausage High-Protein"
+      "off_query": "Healthy Choice Protein Cajun-Style Chicken Sausage High-Protein",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0003100012613",
@@ -3136,7 +3309,8 @@
       "calories_source": "open_food_facts",
       "off_name": "High Protein Chicken Fajita",
       "off_brand": "youfoodz",
-      "off_query": "Banquet MEGA Chicken Fajita High Protein"
+      "off_query": "Banquet MEGA Chicken Fajita High Protein",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0003100067072",
@@ -3154,7 +3328,8 @@
       "calories_source": "open_food_facts",
       "off_name": "P f chang's dumplings",
       "off_brand": "P.f. chang's",
-      "off_query": "P.F. Chang's Home Menu Dan Dan Noodle ,"
+      "off_query": "P.F. Chang's Home Menu Dan Dan Noodle ,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0007265500210",
@@ -3172,7 +3347,8 @@
       "calories_source": "open_food_facts",
       "off_name": "HEALTHY CHOICE Cafe Steamers Simply Lemon Herb Chicken, 10 OZ",
       "off_brand": "",
-      "off_query": "Healthy Choice MAX Protein Lemon Herb Chicken,"
+      "off_query": "Healthy Choice MAX Protein Lemon Herb Chicken,",
+      "match_type": "fuzzy_text"
     },
     {
       "upc": "0081026402710",
@@ -3190,7 +3366,8 @@
       "calories_source": "open_food_facts",
       "off_name": "Kevin's natural foods",
       "off_brand": "",
-      "off_query": "Kevin's Natural Foods Gluten-Free Chicken"
+      "off_query": "Kevin's Natural Foods Gluten-Free Chicken",
+      "match_type": "fuzzy_text"
     }
   ]
 }
