@@ -14,7 +14,7 @@ the same pattern as the other trackers.
 Required environment variables (set as GitHub Actions secrets):
     KROGER_CLIENT_ID
     KROGER_CLIENT_SECRET
-    USDA_API_KEY        -- free, instant signup at https://data.gov
+    USDA_API_KEY        -- free, instant signup at https://api.data.gov/signup/
 
 Optional:
     KROGER_ZIP           -- zip code used to find a nearby store (default below)
@@ -34,8 +34,8 @@ KROGER_CLIENT_ID = os.environ.get("KROGER_CLIENT_ID")
 KROGER_CLIENT_SECRET = os.environ.get("KROGER_CLIENT_SECRET")
 USDA_API_KEY = os.environ.get("USDA_API_KEY")
 
-KROGER_BASE = "https://kroger.com"
-USDA_BASE = "https://usda.gov"
+KROGER_BASE = "https://api.kroger.com/v1"
+USDA_BASE = "https://api.nal.usda.gov/fdc/v1"
 
 # Search terms used to build each pool. Kroger's product search is a plain
 # term search, not a strict category filter, so we run several queries and
@@ -63,13 +63,8 @@ REQUEST_PAUSE_SECONDS = 0.3
 
 def http_json(url, data=None, headers=None, method=None):
     headers = headers or {}
-    
-    # Mandatory User-Agent string to prevent Kroger's API firewall from dropping connections
-    headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-    
     if data is not None and not isinstance(data, (bytes, bytearray)):
         data = urllib.parse.urlencode(data).encode("utf-8")
-        
     req = urllib.request.Request(url, data=data, headers=headers, method=method)
     with urllib.request.urlopen(req, timeout=30) as resp:
         return json.loads(resp.read().decode("utf-8"))
@@ -140,18 +135,14 @@ def lookup_calories(upc):
     """Look up calories for a UPC via USDA FoodData Central. Returns int or None."""
     if not USDA_API_KEY or not upc:
         return None
-    
-    # Pad the Kroger UPC to a 14-digit GTIN standard required by the USDA database
-    gtin_upc = upc.zfill(14)
-    
     params = urllib.parse.urlencode(
-        {"api_key": USDA_API_KEY, "query": gtin_upc, "dataType": "Branded", "pageSize": 3}
+        {"api_key": USDA_API_KEY, "query": upc, "dataType": "Branded", "pageSize": 3}
     )
     url = f"{USDA_BASE}/foods/search?{params}"
     try:
         resp = http_json(url)
     except urllib.error.HTTPError as e:
-        print(f"  USDA lookup failed for UPC {gtin_upc}: {e}", file=sys.stderr)
+        print(f"  USDA lookup failed for UPC {upc}: {e}", file=sys.stderr)
         return None
 
     for food in resp.get("foods", []):
@@ -193,12 +184,6 @@ def build_pool(token, location_id, terms):
 
 
 def main():
-    print("Checking Environment Configurations...")
-    print(f"  Kroger Client ID present: {bool(KROGER_CLIENT_ID)}")
-    print(f"  Kroger Secret present:    {bool(KROGER_CLIENT_SECRET)}")
-    print(f"  USDA API Key present:     {bool(USDA_API_KEY)}")
-    print("-" * 40)
-
     print(f"Authenticating with Kroger...")
     token = get_kroger_token()
 

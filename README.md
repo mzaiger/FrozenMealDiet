@@ -68,15 +68,7 @@ pool") to generate the first `candidate_pool.json`.
   the term lists if anything odd sneaks in (e.g. a frozen breakfast search
   returning a non-breakfast item that just has "breakfast" in a bundle
   name).
-- **Two calorie sources, USDA first then Open Food Facts.** USDA
-  FoodData Central's branded-food database leans toward major national
-  brands (Stouffer's, Lean Cuisine, Healthy Choice, etc.) and often
-  doesn't carry store-brand/private-label items. For anything USDA comes
-  up empty on, the script now falls back to Open Food Facts, which does a
-  direct barcode lookup (not a fuzzy text search) and has noticeably
-  better private-label coverage. An item is only dropped from the pool if
-  *both* sources miss it.
-- **Items without a calorie match from either source are dropped**
+- **Items without a calorie match on USDA FoodData Central are dropped**
   from the pool rather than included with a guessed value — so a thin pool
   usually means USDA's branded-food database didn't have that UPC, not
   that the script is broken.
