@@ -1,14 +1,169 @@
-from pathlib import Path
-import re
+"""
+build_meal_pool.py
 
-src = Path("/mnt/data/build_meal_pool.py")
-text = src.read_text()
+Pulls a fresh pool of frozen-meal candidates from Kroger's Products API,
+splits them into a "breakfast" pool (name/category contains "breakfast")
+and a "general" pool (everything else, used for lunch and dinner), then
+looks up calories for each item -- first from USDA FoodData Central by
+UPC, falling back to Open Food Facts (direct barcode lookup) for items
+USDA's branded database doesn't have, which in practice is mostly
+store-brand/private-label items.
 
-# Replace the entire nutrition lookup section with a more robust implementation.
-start = text.index("def usda_search(")
-end = text.index("\n\nFORCE_DEBUG_TERMS =", start)
+Writes candidate_pool.json, which the static front-end (index.html) uses
+to build a 7-day / 21-meal plan entirely in the browser. Meant to run on
+a schedule via GitHub Actions (see .github/workflows/update-meal-pool.yml),
+the same pattern as the other trackers.
 
-new_section = r'''def usda_search(query, page_size=10):
+Required environment variables (set as GitHub Actions secrets):
+    KROGER_CLIENT_ID
+    KROGER_CLIENT_SECRET
+    USDA_API_KEY        -- free, instant signup at https://api.data.gov/signup/
+
+Optional:
+    KROGER_ZIP           -- zip code used to find a nearby store (default below)
+"""
+
+import base64
+import json
+import os
+import sys
+import time
+import urllib.parse
+import urllib.request
+import urllib.error
+
+KROGER_ZIP = os.environ.get("KROGER_ZIP", "68508")  # Lincoln, NE default
+KROGER_CLIENT_ID = os.environ.get("KROGER_CLIENT_ID")
+KROGER_CLIENT_SECRET = os.environ.get("KROGER_CLIENT_SECRET")
+USDA_API_KEY = os.environ.get("USDA_API_KEY")
+
+KROGER_BASE = "https://api.kroger.com/v1"
+USDA_BASE = "https://api.nal.usda.gov/fdc/v1"
+
+# Search terms used to build each pool. Kroger's product search is a plain
+# term search, not a strict category filter, so we run several queries and
+# de-dupe by UPC to get a decent-sized, varied pool.
+BREAKFAST_TERMS = [
+    "frozen breakfast",
+    "frozen breakfast sandwich",
+    "frozen breakfast bowl",
+    "frozen pancakes breakfast",
+    "frozen breakfast burrito",
+]
+GENERAL_TERMS = [
+    "frozen meal",
+    "frozen dinner",
+    "frozen entree",
+    "lean cuisine",
+    "stouffer's",
+    "healthy choice frozen",
+    "frozen bowl meal",
+]
+
+PRODUCTS_PER_TERM = 20
+REQUEST_PAUSE_SECONDS = 0.3
+
+
+def http_json(url, data=None, headers=None, method=None):
+    headers = headers or {}
+    if data is not None and not isinstance(data, (bytes, bytearray)):
+        data = urllib.parse.urlencode(data).encode("utf-8")
+    req = urllib.request.Request(url, data=data, headers=headers, method=method)
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return json.loads(resp.read().decode("utf-8"))
+
+
+def get_kroger_token():
+    if not KROGER_CLIENT_ID or not KROGER_CLIENT_SECRET:
+        sys.exit("Missing KROGER_CLIENT_ID / KROGER_CLIENT_SECRET environment variables.")
+    creds = base64.b64encode(
+        f"{KROGER_CLIENT_ID}:{KROGER_CLIENT_SECRET}".encode("utf-8")
+    ).decode("utf-8")
+    resp = http_json(
+        f"{KROGER_BASE}/connect/oauth2/token",
+        data={"grant_type": "client_credentials", "scope": "product.compact"},
+        headers={
+            "Authorization": f"Basic {creds}",
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        method="POST",
+    )
+    return resp["access_token"]
+
+
+def find_location_id(token, zip_code):
+    url = f"{KROGER_BASE}/locations?filter.zipCode.near={zip_code}&filter.limit=1"
+    resp = http_json(url, headers={"Authorization": f"Bearer {token}"})
+    locations = resp.get("data", [])
+    if not locations:
+        sys.exit(f"No Kroger store found near zip {zip_code}.")
+    return locations[0]["locationId"]
+
+
+def search_products(token, location_id, term, limit=PRODUCTS_PER_TERM):
+    params = urllib.parse.urlencode(
+        {
+            "filter.term": term,
+            "filter.locationId": location_id,
+            "filter.fulfillment": "csp",
+            "filter.limit": limit,
+        }
+    )
+    url = f"{KROGER_BASE}/products?{params}"
+    try:
+        resp = http_json(url, headers={"Authorization": f"Bearer {token}"})
+    except urllib.error.HTTPError as e:
+        print(f"  Kroger search failed for '{term}': {e}", file=sys.stderr)
+        return []
+    return resp.get("data", [])
+
+
+def extract_price(product):
+    items = product.get("items") or []
+    if not items:
+        return None
+    price = items[0].get("price") or {}
+    return price.get("promo") or price.get("regular")
+
+
+def extract_image(product):
+    for img in product.get("images", []):
+        if img.get("size") == "medium":
+            return img.get("url")
+    images = product.get("images", [])
+    return images[0]["url"] if images else None
+
+
+def upc_variants(upc):
+    """Kroger UPCs and USDA's stored gtinUpc values don't always agree on
+    digit count/padding (13-digit padded vs 12-digit UPC-A vs 14-digit GTIN).
+    Try the plausible variants rather than a single exact string."""
+    upc = upc.strip()
+    variants = [upc]
+
+    stripped = upc.lstrip("0")
+    if stripped and stripped not in variants:
+        variants.append(stripped)
+
+    if len(upc) == 13 and upc.startswith("0"):
+        no_lead = upc[1:]
+        if no_lead not in variants:
+            variants.append(no_lead)
+
+    if len(upc) <= 13:
+        padded14 = upc.zfill(14)
+        if padded14 not in variants:
+            variants.append(padded14)
+
+    if len(upc) == 12:
+        padded13 = upc.zfill(13)
+        if padded13 not in variants:
+            variants.append(padded13)
+
+    return variants
+
+
+def usda_search(query, page_size=10):
     """Search USDA FoodData Central Branded foods by text."""
     if not USDA_API_KEY:
         return {}
@@ -323,30 +478,37 @@ def lookup_calories(upc, name=None, brand=None, force_debug=False):
     result = (None, None)
     _usda_cache[cache_key] = result
     return result
-'''
 
-text = text[:start] + new_section + text[end:]
 
-# Fix the tuple handling in build_pool.
-old = '''            calories = lookup_calories(upc, name=product.get("description"), force_debug=force_debug)
-            time.sleep(REQUEST_PAUSE_SECONDS)
-            if calories is None:
-                continue  # skip items we can't get real calorie data for
-            matched += 1
+FORCE_DEBUG_TERMS = {"lean cuisine", "stouffer's", "healthy choice frozen"}
 
-            pool.append(
-                {
-                    "upc": upc,
-                    "name": product.get("description"),
-                    "brand": product.get("brandName"),
-                    "size": product.get("items", [{}])[0].get("size"),
-                    "price": extract_price(product),
-                    "image": extract_image(product),
-                    "calories": calories,
-                }
-            )'''
 
-new = '''            calories, calorie_source = lookup_calories(
+def build_pool(token, location_id, terms):
+    seen_upcs = set()
+    pool = []
+    for term in terms:
+        products = search_products(token, location_id, term)
+        found = 0
+        matched = 0
+        skipped_dupe = 0
+        no_upc = 0
+        forced_this_term = False
+        for product in products:
+            upc = product.get("upc")
+            if not upc:
+                no_upc += 1
+                continue
+            if upc in seen_upcs:
+                skipped_dupe += 1
+                continue
+            seen_upcs.add(upc)
+            found += 1
+
+            force_debug = term in FORCE_DEBUG_TERMS and not forced_this_term
+            if force_debug:
+                forced_this_term = True
+
+            calories, calorie_source = lookup_calories(
                 upc,
                 name=product.get("description"),
                 brand=product.get("brandName"),
@@ -368,15 +530,53 @@ new = '''            calories, calorie_source = lookup_calories(
                     "calories": calories,
                     "calorie_source": calorie_source,
                 }
-            )'''
+            )
+        print(
+            f"  '{term}': {len(products)} from Kroger, {found} new/unique, "
+            f"{matched} with a calorie match, {no_upc} missing upc, "
+            f"{skipped_dupe} dupes"
+        )
+    return pool
 
-if old not in text:
-    raise RuntimeError("Could not find build_pool lookup block to replace.")
 
-text = text.replace(old, new)
+def main():
+    if not USDA_API_KEY:
+        print(
+            "WARNING: USDA_API_KEY is not set — every product will fail its "
+            "calorie lookup and the pool will come back empty. Add it as a "
+            "GitHub Actions secret (see README).",
+            file=sys.stderr,
+        )
 
-out = Path("/mnt/data/build_meal_pool_fixed.py")
-out.write_text(text)
+    print(f"Authenticating with Kroger...")
+    token = get_kroger_token()
 
-print(f"Created: {out}")
-print(f"Lines: {len(text.splitlines())}")
+    print(f"Finding store near {KROGER_ZIP}...")
+    location_id = find_location_id(token, KROGER_ZIP)
+    print(f"  using locationId {location_id}")
+
+    print("Building breakfast pool...")
+    breakfast_pool = build_pool(token, location_id, BREAKFAST_TERMS)
+
+    print("Building general (lunch/dinner) pool...")
+    general_pool = build_pool(token, location_id, GENERAL_TERMS)
+
+    output = {
+        "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "location_id": location_id,
+        "zip": KROGER_ZIP,
+        "breakfast": breakfast_pool,
+        "general": general_pool,
+    }
+
+    with open("candidate_pool.json", "w") as f:
+        json.dump(output, f, indent=2)
+
+    print(
+        f"Wrote candidate_pool.json: {len(breakfast_pool)} breakfast items, "
+        f"{len(general_pool)} general items."
+    )
+
+
+if __name__ == "__main__":
+    main()
