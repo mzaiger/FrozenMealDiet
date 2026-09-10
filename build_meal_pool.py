@@ -179,8 +179,21 @@ def _upc_variants(upc):
     return variants
 
 
+USDA_DEBUG_SAMPLES = 6  # print full diagnostics for the first N lookups only
+_usda_stats = {
+    "attempted": 0,
+    "http_error": 0,
+    "no_foods_returned": 0,
+    "foods_returned_no_gtin_match": 0,
+    "gtin_match_no_calories": 0,
+    "matched": 0,
+}
+_usda_debug_count = 0
+
+
 def lookup_calories(upc):
     """Look up calories for a UPC via USDA FoodData Central. Returns int or None."""
+    global _usda_debug_count
     if not USDA_API_KEY or not upc:
         return None
 
@@ -190,6 +203,15 @@ def lookup_calories(upc):
     # Compare on the zero-stripped form so "011110001234" and its GTIN-14
     # padded equivalent "00011110001234" are recognized as the same code.
     target_bare_forms = {v.lstrip("0") or "0" for v in variants}
+
+    _usda_stats["attempted"] += 1
+    show_debug = _usda_debug_count < USDA_DEBUG_SAMPLES
+    if show_debug:
+        _usda_debug_count += 1
+        print(f"    [debug] UPC {upc} -> trying variants {variants}", file=sys.stderr)
+
+    any_foods_seen = False
+    any_gtin_match = False
 
     for i, variant in enumerate(variants):
         if i > 0:
@@ -202,18 +224,46 @@ def lookup_calories(upc):
             resp = http_json(url)
         except urllib.error.HTTPError as e:
             print(f"  USDA lookup failed for UPC {variant}: {e}", file=sys.stderr)
+            _usda_stats["http_error"] += 1
             continue
 
-        for food in resp.get("foods", []):
+        foods = resp.get("foods", [])
+        if show_debug:
+            print(
+                f"    [debug] variant {variant}: totalHits={resp.get('totalHits')} "
+                f"foods_returned={len(foods)}",
+                file=sys.stderr,
+            )
+        if foods:
+            any_foods_seen = True
+
+        for food in foods:
             food_gtin = str(food.get("gtinUpc") or "")
             food_bare = food_gtin.lstrip("0") or "0"
+            if show_debug:
+                print(
+                    f"    [debug]   candidate gtinUpc={food_gtin!r} "
+                    f"desc={food.get('description')!r}",
+                    file=sys.stderr,
+                )
             if food_bare not in target_bare_forms:
                 # Query matched on text relevance, not actually this barcode.
                 continue
+            any_gtin_match = True
             label = food.get("labelNutrients", {})
             cal = label.get("calories", {}).get("value")
+            if show_debug:
+                print(f"    [debug]   gtin match! labelNutrients={label!r}", file=sys.stderr)
             if cal:
+                _usda_stats["matched"] += 1
                 return round(cal)
+
+    if not any_foods_seen:
+        _usda_stats["no_foods_returned"] += 1
+    elif not any_gtin_match:
+        _usda_stats["foods_returned_no_gtin_match"] += 1
+    else:
+        _usda_stats["gtin_match_no_calories"] += 1
 
     return None
 
@@ -277,6 +327,7 @@ def main():
         f"Wrote candidate_pool.json: {len(breakfast_pool)} breakfast items, "
         f"{len(general_pool)} general items."
     )
+    print(f"USDA lookup stats: {_usda_stats}")
 
 
 if __name__ == "__main__":
