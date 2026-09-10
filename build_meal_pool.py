@@ -163,6 +163,14 @@ def upc_variants(upc):
     return variants
 
 
+def usda_search(query, page_size=5):
+    params = urllib.parse.urlencode(
+        {"api_key": USDA_API_KEY, "query": query, "dataType": "Branded", "pageSize": page_size}
+    )
+    url = f"{USDA_BASE}/foods/search?{params}"
+    return http_json(url)
+
+
 def lookup_calories_off(upc, debug=False):
     """Fallback nutrition source: Open Food Facts. Free, no API key, and does
     a direct exact-barcode lookup rather than a fuzzy text search -- better
@@ -175,6 +183,7 @@ def lookup_calories_off(upc, debug=False):
         except urllib.error.HTTPError as e:
             if debug:
                 print(f"    [OFF] barcode='{candidate}' -> HTTPError {e.code}: {e.reason}", file=sys.stderr)
+            time.sleep(0.4)
             continue
         except urllib.error.URLError as e:
             if debug:
@@ -208,10 +217,18 @@ _debug_used = 0
 DEBUG_BUDGET = 8  # unique products given full verbose treatment across the whole run
 
 
-def lookup_calories(upc, name=None, force_debug=False):
-    """Look up calories for a UPC, USDA first then Open Food Facts. Returns
-    int or None. Tries a few digit-padding variants since Kroger's UPC
-    format and each source's stored UPC format don't always match exactly."""
+def lookup_calories(upc, name=None, brand=None, force_debug=False):
+    """Look up calories for a UPC. Three tiers, in order:
+      1. USDA FoodData Central, exact UPC (a few digit-padding variants)
+      2. Open Food Facts, exact barcode
+      3. USDA FoodData Central, brand+name TEXT search (approximate --
+         barcode-exact matching against these two free databases misses a
+         lot of real Kroger inventory, so this trades some precision for
+         actually returning a usable pool. Flagged in the output as
+         calorie_source: "approximate".)
+    Returns (calories, source) where source is "exact" or "approximate", or
+    (None, None) if nothing was found anywhere.
+    """
     global _usda_error_count
     global _debug_used
 
@@ -221,7 +238,7 @@ def lookup_calories(upc, name=None, force_debug=False):
         debug = True
 
     if not USDA_API_KEY or not upc:
-        return None
+        return None, None
 
     if debug:
         print(f"  [debug] ---- {name!r} (upc={upc}) ----", file=sys.stderr)
@@ -262,7 +279,7 @@ def lookup_calories(upc, name=None, force_debug=False):
             if cal and food.get("gtinUpc", "").lstrip("0") == candidate.lstrip("0"):
                 if debug:
                     print(f"    [USDA] matched by gtinUpc -> {cal} cal", file=sys.stderr)
-                return round(cal)
+                return round(cal), "exact"
 
         for food in resp.get("foods", []):
             label = food.get("labelNutrients", {})
@@ -270,18 +287,41 @@ def lookup_calories(upc, name=None, force_debug=False):
             if cal:
                 if debug:
                     print(f"    [USDA] no gtinUpc match, using first result with calories -> {cal} cal", file=sys.stderr)
-                return round(cal)
+                return round(cal), "exact"
 
     off_cal = lookup_calories_off(upc, debug=debug)
     if off_cal:
         if debug:
             print(f"    [OFF] matched -> {off_cal} cal", file=sys.stderr)
-        return off_cal
+        return off_cal, "exact"
+
+    # Tier 3: neither source has this exact barcode. Fall back to a
+    # brand+name text search on USDA -- approximate (could match a
+    # different size/flavor of the same product) but produces a usable
+    # pool instead of dropping the item entirely.
+    query = " ".join(p for p in [brand, name] if p).strip()
+    if query:
+        try:
+            resp = usda_search(query, page_size=5)
+        except urllib.error.HTTPError as e:
+            if debug:
+                print(f"    [USDA name-search] query={query!r} -> HTTPError: {e}", file=sys.stderr)
+            resp = {}
+        foods = resp.get("foods", [])
+        cal = best_calories_from_foods(foods)
+        if debug:
+            print(
+                f"    [USDA name-search] query={query!r} -> {len(foods)} foods, "
+                f"calories={cal}",
+                file=sys.stderr,
+            )
+        if cal:
+            return cal, "approximate"
 
     if debug:
-        print(f"    -> no calorie match from either source", file=sys.stderr)
+        print(f"    -> no calorie match from any source", file=sys.stderr)
 
-    return None
+    return None, None
 
 
 FORCE_DEBUG_TERMS = {"lean cuisine", "stouffer's", "healthy choice frozen"}
