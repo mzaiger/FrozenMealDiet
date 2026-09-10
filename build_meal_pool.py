@@ -163,191 +163,35 @@ def upc_variants(upc):
     return variants
 
 
-def usda_search(query, page_size=10):
-    """Search USDA FoodData Central Branded foods by text."""
-    if not USDA_API_KEY:
-        return {}
+def usda_search(query, page_size=5):
     params = urllib.parse.urlencode(
-        {
-            "api_key": USDA_API_KEY,
-            "query": query,
-            "dataType": "Branded",
-            "pageSize": page_size,
-        }
+        {"api_key": USDA_API_KEY, "query": query, "dataType": "Branded", "pageSize": page_size}
     )
     url = f"{USDA_BASE}/foods/search?{params}"
     return http_json(url)
 
 
-def normalize_text(value):
-    """Normalize product text for approximate matching."""
-    value = value or ""
-    value = value.lower()
-    value = value.replace("&", " and ")
-    value = re.sub(r"[^a-z0-9]+", " ", value)
-    return re.sub(r"\s+", " ", value).strip()
-
-
-def nutrition_calories(food):
-    """Get calories from the USDA search result's label nutrients."""
-    label = food.get("labelNutrients") or {}
-    value = (label.get("calories") or {}).get("value")
-    if value is not None:
-        try:
-            return round(float(value))
-        except (TypeError, ValueError):
-            pass
-
-    # Some USDA records expose nutrients as a list instead.
-    for nutrient in food.get("foodNutrients") or []:
-        name = normalize_text(nutrient.get("nutrientName"))
-        if name == "energy" or "calorie" in name:
-            value = nutrient.get("value")
-            unit = normalize_text(nutrient.get("unitName"))
-            if value is not None and (not unit or unit in {"kcal", "cal"}):
-                try:
-                    return round(float(value))
-                except (TypeError, ValueError):
-                    pass
-    return None
-
-
-def best_calories_from_foods(foods, product_name=None, brand=None):
-    """
-    Pick the USDA Branded result most likely to be the Kroger product.
-
-    USDA's search endpoint is fuzzy, so do not blindly take the first result.
-    Score candidates using brand/name token overlap and prefer a close match.
-    """
-    if not foods:
-        return None
-
-    target_name = normalize_text(product_name)
-    target_brand = normalize_text(brand)
-
-    target_tokens = set(target_name.split())
-    # Remove generic words that do not help identify the product.
-    generic = {
-        "frozen", "breakfast", "meal", "entree", "sandwich", "bowl",
-        "burrito", "food", "foods", "the", "and", "with", "cheese",
-    }
-    target_tokens -= generic
-
-    scored = []
-    for food in foods:
-        description = normalize_text(food.get("description"))
-        food_brand = normalize_text(food.get("brandOwner") or food.get("brandName"))
-
-        if not description:
-            continue
-
-        desc_tokens = set(description.split())
-        name_overlap = len(target_tokens & desc_tokens)
-        name_ratio = name_overlap / max(1, len(target_tokens))
-
-        brand_match = bool(target_brand and (
-            target_brand in food_brand or food_brand in target_brand
-        ))
-
-        cal = nutrition_calories(food)
-        if cal is None:
-            continue
-
-        score = name_ratio * 100
-        if brand_match:
-            score += 35
-
-        # Exact/near-exact UPC is handled separately; this is a text fallback.
-        scored.append((score, name_overlap, brand_match, food, cal))
-
-    if not scored:
-        return None
-
-    scored.sort(key=lambda x: (x[0], x[1], x[2]), reverse=True)
-    return scored[0][4]
-
-
-def find_usda_barcode_match(upc, debug=False):
-    """
-    USDA barcode lookup using text search, followed by explicit gtinUpc
-    comparison. FoodData Central does not provide a reliable standalone
-    exact-GTIN endpoint, so the search endpoint is used defensively.
-    """
-    for candidate in upc_variants(upc):
-        try:
-            resp = usda_search(candidate, page_size=10)
-        except urllib.error.HTTPError as e:
-            if debug:
-                print(
-                    f"    [USDA] barcode='{candidate}' -> HTTPError {e.code}",
-                    file=sys.stderr,
-                )
-            continue
-
-        foods = resp.get("foods", [])
-        if debug:
-            sample = [
-                (f.get("description"), f.get("gtinUpc"))
-                for f in foods[:3]
-            ]
-            print(
-                f"    [USDA] barcode='{candidate}' -> {len(foods)} foods, "
-                f"sample: {sample}",
-                file=sys.stderr,
-            )
-
-        wanted = candidate.lstrip("0")
-        for food in foods:
-            gtin = str(food.get("gtinUpc") or "").strip()
-            if gtin and gtin.lstrip("0") == wanted:
-                cal = nutrition_calories(food)
-                if cal is not None:
-                    if debug:
-                        print(
-                            f"    [USDA] exact gtinUpc match -> {cal} cal",
-                            file=sys.stderr,
-                        )
-                    return cal, "exact"
-
-    return None, None
-
-
 def lookup_calories_off(upc, debug=False):
-    """Fallback to Open Food Facts with one normalized barcode first."""
-    # A UPC-A is the most useful form for OFF. Avoid making four requests
-    # for every product; try variants only when necessary.
-    candidates = upc_variants(upc)
-
-    for candidate in candidates:
+    """Fallback nutrition source: Open Food Facts. Free, no API key, and does
+    a direct exact-barcode lookup rather than a fuzzy text search -- better
+    coverage for store-brand/private-label items USDA's branded database
+    tends to miss."""
+    for candidate in upc_variants(upc):
         url = f"https://world.openfoodfacts.org/api/v2/product/{candidate}.json"
         try:
-            resp = http_json(
-                url,
-                headers={
-                    "User-Agent": (
-                        "freezer-week-planner/1.1 "
-                        "(github.com/mzaiger/SportsDashboard)"
-                    )
-                },
-            )
+            resp = http_json(url, headers={"User-Agent": "freezer-week-planner/1.0 (github.com marc meal planner)"})
         except urllib.error.HTTPError as e:
             if debug:
-                print(
-                    f"    [OFF] barcode='{candidate}' -> HTTPError {e.code}",
-                    file=sys.stderr,
-                )
-            if e.code == 429:
-                # Give OFF a chance to recover before trying another product.
-                time.sleep(2.0)
-            else:
-                time.sleep(0.2)
+                print(f"    [OFF] barcode='{candidate}' -> HTTPError {e.code}: {e.reason}", file=sys.stderr)
+            time.sleep(0.4)
             continue
         except urllib.error.URLError as e:
             if debug:
-                print(
-                    f"    [OFF] barcode='{candidate}' -> URLError: {e.reason}",
-                    file=sys.stderr,
-                )
+                print(f"    [OFF] barcode='{candidate}' -> URLError: {e.reason}", file=sys.stderr)
+            continue
+        except Exception as e:
+            if debug:
+                print(f"    [OFF] barcode='{candidate}' -> unexpected error: {e!r}", file=sys.stderr)
             continue
 
         if debug:
@@ -360,24 +204,12 @@ def lookup_calories_off(upc, debug=False):
         if resp.get("status") != 1:
             continue
 
-        product = resp.get("product") or {}
-        nutriments = product.get("nutriments") or {}
-
-        cal = (
-            nutriments.get("energy-kcal_serving")
-            or nutriments.get("energy-kcal_value")
-        )
-        if cal is not None:
-            try:
-                return round(float(cal))
-            except (TypeError, ValueError):
-                pass
-
+        product = resp.get("product", {})
+        nutriments = product.get("nutriments", {})
+        cal = nutriments.get("energy-kcal_serving") or nutriments.get("energy-kcal_value")
+        if cal:
+            return round(cal)
     return None
-
-
-_usda_cache = {}
-_off_cache = {}
 
 
 _usda_error_count = 0
@@ -386,15 +218,18 @@ DEBUG_BUDGET = 8  # unique products given full verbose treatment across the whol
 
 
 def lookup_calories(upc, name=None, brand=None, force_debug=False):
+    """Look up calories for a UPC. Three tiers, in order:
+      1. USDA FoodData Central, exact UPC (a few digit-padding variants)
+      2. Open Food Facts, exact barcode
+      3. USDA FoodData Central, brand+name TEXT search (approximate --
+         barcode-exact matching against these two free databases misses a
+         lot of real Kroger inventory, so this trades some precision for
+         actually returning a usable pool. Flagged in the output as
+         calorie_source: "approximate".)
+    Returns (calories, source) where source is "exact" or "approximate", or
+    (None, None) if nothing was found anywhere.
     """
-    Look up calories using:
-      1. USDA Branded exact GTIN comparison
-      2. USDA brand + product-name text match
-      3. Open Food Facts exact barcode
-
-    Results are cached for the duration of the build.
-    Returns (calories, source).
-    """
+    global _usda_error_count
     global _debug_used
 
     debug = force_debug
@@ -405,84 +240,88 @@ def lookup_calories(upc, name=None, brand=None, force_debug=False):
     if not USDA_API_KEY or not upc:
         return None, None
 
-    cache_key = str(upc).strip()
-    if cache_key in _usda_cache:
-        return _usda_cache[cache_key]
-
     if debug:
-        print(
-            f"  [debug] ---- {name!r} (upc={upc}) ----",
-            file=sys.stderr,
+        print(f"  [debug] ---- {name!r} (upc={upc}) ----", file=sys.stderr)
+
+    for candidate in upc_variants(upc):
+        params = urllib.parse.urlencode(
+            {"api_key": USDA_API_KEY, "query": candidate, "dataType": "Branded", "pageSize": 5}
         )
-
-    # Tier 1: USDA exact GTIN.
-    result = find_usda_barcode_match(upc, debug=debug)
-    if result[0] is not None:
-        _usda_cache[cache_key] = result
-        return result
-
-    # Tier 2: USDA text search. This is intentionally before OFF because
-    # branded packaged foods are much more likely to be represented in USDA.
-    query = " ".join(
-        p for p in [brand, name] if p and str(p).strip()
-    ).strip()
-
-    if query:
+        url = f"{USDA_BASE}/foods/search?{params}"
         try:
-            resp = usda_search(query, page_size=10)
+            resp = http_json(url)
         except urllib.error.HTTPError as e:
-            if debug:
-                print(
-                    f"    [USDA name-search] query={query!r} "
-                    f"-> HTTPError {e.code}",
-                    file=sys.stderr,
-                )
-            resp = {}
-
-        foods = resp.get("foods", [])
-        cal = best_calories_from_foods(
-            foods,
-            product_name=name,
-            brand=brand,
-        )
+            _usda_error_count += 1
+            if _usda_error_count <= 3 or debug:
+                print(f"    [USDA] query='{candidate}' -> HTTPError: {e}", file=sys.stderr)
+                if e.code in (401, 403):
+                    print(
+                        "    -> looks like an invalid/unauthorized USDA_API_KEY, "
+                        "not a bad UPC. Check the secret value.",
+                        file=sys.stderr,
+                    )
+            continue
 
         if debug:
-            best_names = [
-                f.get("description")
-                for f in foods[:3]
-                if f.get("description")
-            ]
+            foods = resp.get("foods", [])
+            sample = [(f.get("description"), f.get("gtinUpc")) for f in foods[:3]]
             print(
-                f"    [USDA name-search] query={query!r} -> "
-                f"{len(foods)} foods, candidates={best_names}, calories={cal}",
+                f"    [USDA] query='{candidate}' -> {len(foods)} foods, sample: {sample}",
                 file=sys.stderr,
             )
 
-        if cal is not None:
-            result = (cal, "approximate")
-            _usda_cache[cache_key] = result
-            return result
+        for food in resp.get("foods", []):
+            # Prefer a food whose own gtinUpc actually matches this candidate
+            # (search is fuzzy text match, not an exact UPC filter) before
+            # falling back to "first result with a calorie value".
+            label = food.get("labelNutrients", {})
+            cal = label.get("calories", {}).get("value")
+            if cal and food.get("gtinUpc", "").lstrip("0") == candidate.lstrip("0"):
+                if debug:
+                    print(f"    [USDA] matched by gtinUpc -> {cal} cal", file=sys.stderr)
+                return round(cal), "exact"
 
-    # Tier 3: Open Food Facts.
-    if cache_key in _off_cache:
-        off_cal = _off_cache[cache_key]
-    else:
-        off_cal = lookup_calories_off(upc, debug=debug)
-        _off_cache[cache_key] = off_cal
+        for food in resp.get("foods", []):
+            label = food.get("labelNutrients", {})
+            cal = label.get("calories", {}).get("value")
+            if cal:
+                if debug:
+                    print(f"    [USDA] no gtinUpc match, using first result with calories -> {cal} cal", file=sys.stderr)
+                return round(cal), "exact"
 
-    if off_cal is not None:
+    off_cal = lookup_calories_off(upc, debug=debug)
+    if off_cal:
         if debug:
             print(f"    [OFF] matched -> {off_cal} cal", file=sys.stderr)
-        result = (off_cal, "exact")
-        _usda_cache[cache_key] = result
-        return result
+        return off_cal, "exact"
+
+    # Tier 3: neither source has this exact barcode. Fall back to a
+    # brand+name text search on USDA -- approximate (could match a
+    # different size/flavor of the same product) but produces a usable
+    # pool instead of dropping the item entirely.
+    query = " ".join(p for p in [brand, name] if p).strip()
+    if query:
+        try:
+            resp = usda_search(query, page_size=5)
+        except urllib.error.HTTPError as e:
+            if debug:
+                print(f"    [USDA name-search] query={query!r} -> HTTPError: {e}", file=sys.stderr)
+            resp = {}
+        foods = resp.get("foods", [])
+        cal = best_calories_from_foods(foods)
+        if debug:
+            print(
+                f"    [USDA name-search] query={query!r} -> {len(foods)} foods, "
+                f"calories={cal}",
+                file=sys.stderr,
+            )
+        if cal:
+            return cal, "approximate"
 
     if debug:
-        print("    -> no calorie match from any source", file=sys.stderr)
+        print(f"    -> no calorie match from any source", file=sys.stderr)
 
-    result = (None, None)
-    _usda_cache[cache_key] = result
-    return result
+    return None, None
 
 
 FORCE_DEBUG_TERMS = {"lean cuisine", "stouffer's", "healthy choice frozen"}
@@ -513,12 +352,7 @@ def build_pool(token, location_id, terms):
             if force_debug:
                 forced_this_term = True
 
-            calories, calorie_source = lookup_calories(
-                upc,
-                name=product.get("description"),
-                brand=product.get("brandName"),
-                force_debug=force_debug,
-            )
+            calories = lookup_calories(upc, name=product.get("description"), force_debug=force_debug)
             time.sleep(REQUEST_PAUSE_SECONDS)
             if calories is None:
                 continue  # skip items we can't get real calorie data for
@@ -533,7 +367,6 @@ def build_pool(token, location_id, terms):
                     "price": extract_price(product),
                     "image": extract_image(product),
                     "calories": calories,
-                    "calorie_source": calorie_source,
                 }
             )
         print(
