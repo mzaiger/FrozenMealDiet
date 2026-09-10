@@ -1,17 +1,13 @@
 """
 build_meal_pool.py
 
-Pulls a fresh pool of frozen-meal candidates from Kroger's Products API,
-splits them into a "breakfast" pool and a "general" pool, then looks up
-calories from Open Food Facts.
-
 Strategy:
 1. Try exact BARCODE lookup first (most accurate).
-   - Fixes previous bug where 13-digit Kroger UPCs were not properly 
-     generating 12-digit standard UPC variants.
+   - Mathematically calculates missing GS1 check digits that Kroger drops.
+   - Falls back to wildcard prefix search (e.g., `code:7790070615*`).
 2. If barcode is missing from OFF, fallback to TEXT SEARCH.
-3. If text search finds a product but the UPC doesn't match Kroger's UPC, 
-   it is flagged as "fuzzy_text" so you know it might be a different flavor.
+3. Strict Category Filtering prevents the text search from matching 
+   "yogurt" to "pancakes" or "raw sausage" to "sandwiches".
 
 Writes candidate_pool.json.
 """
@@ -54,7 +50,7 @@ OFF_MAX_QUERIES_PER_ITEM = int(os.environ.get("OFF_MAX_QUERIES_PER_ITEM", "3"))
 
 USER_AGENT = os.environ.get(
     "USER_AGENT",
-    "kroger-meal-pool/2.3 (Barcode Variant Fix + Search-a-licious API)",
+    "kroger-meal-pool/2.5 (GS1 Check Digit Math + Wildcards)",
 )
 
 BREAKFAST_TERMS = [
@@ -66,6 +62,31 @@ GENERAL_TERMS = [
     "frozen meal ", "frozen dinner ", "frozen entree ", "lean cuisine ",
     "stouffer's ", "healthy choice frozen ", "frozen bowl meal ",
 ]
+
+# --- Strict Category Filtering Rules ---
+MAINS = {"pancake", "waffle", "sandwich", "burrito", "bowl", "biscuit", "croissant", "wrap", "bagel", "muffin", "toast", "scramble", "hash", "pizza", "pasta", "meal", "entree", "dinner", "taco", "chimichanga"}
+INGREDIENTS = {"sausage", "bacon", "egg", "cheese", "chicken", "beef", "pork", "turkey", "potato", "gravy", "steak"}
+BAD_WORDS = {"yogurt", "shake", "milk", "cereal", "bread", "loaf", "sauce", "dip", "spread", "soup", "juice", "coffee", "tea", "water", "soda", "cookie", "pie", "donut", "bar"}
+
+def get_categories(name):
+    name_lower = (name or "").lower()
+    mains = {m for m in MAINS if m in name_lower}
+    ings = {i for i in INGREDIENTS if i in name_lower}
+    return mains, ings
+
+def is_valid_fuzzy_match(kroger_name, off_name):
+    k_mains, k_ings = get_categories(kroger_name)
+    o_mains, o_ings = get_categories(off_name)
+    
+    if k_mains and not o_mains: return False
+    if k_mains and o_mains and not (k_mains & o_mains): return False
+        
+    for bw in BAD_WORDS:
+        if bw in (off_name or "").lower() and bw not in (kroger_name or "").lower():
+            return False
+            
+    return True
+# --------------------------------------------
 
 def setup_logging():
     handlers = [logging.StreamHandler(sys.stdout)]
@@ -289,35 +310,71 @@ def score_off_candidate(candidate, query, brand):
     if safe_float(candidate.get("product_quantity")): score += 5.0
     return score
 
+# --- NEW GS1 CHECK DIGIT MATH ---
+def calculate_gs1_check_digit(payload_str):
+    """Calculates standard GS1 check digit for a numeric string."""
+    total = 0
+    for i, char in enumerate(reversed(payload_str)):
+        if i % 2 == 0:
+            total += int(char) * 3
+        else:
+            total += int(char) * 1
+    return str((10 - (total % 10)) % 10)
+
+def get_gtin_variants_and_wildcards(upc):
+    variants = set()
+    wildcards = set()
+    
+    if not upc or not upc.isdigit():
+        return list(variants), list(wildcards)
+        
+    variants.add(upc)
+    core = upc.lstrip('0')
+    if not core:
+        return list(variants), list(wildcards)
+        
+    wildcards.add(core)
+    
+    # Check if original string padded to standard lengths is already a valid GTIN
+    for length in [8, 12, 13, 14]:
+        test_str = core.zfill(length)
+        if len(test_str) == length and len(test_str) >= 2:
+            payload = test_str[:-1]
+            expected_check = calculate_gs1_check_digit(payload)
+            if test_str[-1] == expected_check:
+                variants.add(test_str)
+                if length == 12:
+                    variants.add("0" + test_str)
+                    variants.add("00" + test_str)
+                elif length == 13:
+                    variants.add("0" + test_str)
+                    
+    # If not valid, assume it's a payload missing the check digit
+    if len(core) <= 11:
+        payload_11 = core.zfill(11)
+        check = calculate_gs1_check_digit(payload_11)
+        gtin_12 = payload_11 + check
+        variants.add(gtin_12)
+        variants.add("0" + gtin_12)
+        variants.add("00" + gtin_12)
+    elif len(core) == 12:
+        payload_12 = core
+        check = calculate_gs1_check_digit(payload_12)
+        gtin_13 = payload_12 + check
+        variants.add(gtin_13)
+        variants.add("0" + gtin_13)
+        
+    return list(variants), list(wildcards)
+# -------------------------------
+
 def lookup_by_barcode(upc, kroger_mass_g):
-    """Attempt exact barcode lookup first. Tries common zero-padding variants."""
     if not upc: return None
     
-    variants = set()
+    variants, wildcards = get_gtin_variants_and_wildcards(upc)
     
-    # Strip ALL leading zeros to get the core number
-    # e.g. '0007100714478' -> '7100714478'
-    stripped = upc.lstrip('0')
-    if not stripped:
-        return None
-        
-    variants.add(stripped)
+    logging.info("Trying exact barcode variants for UPC %s: %s", upc, sorted(variants))
     
-    # Pad to standard barcode lengths (8, 12, 13, 14)
-    # This fixes the bug where zfill(12) did nothing on a 13-char string
-    for length in [8, 12, 13, 14]:
-        if len(stripped) <= length:
-            variants.add(stripped.zfill(length))
-            
-    # Also try the exact original string Kroger gave us
-    variants.add(upc)
-    
-    # Filter out empty strings just in case
-    variants = [v for v in variants if v]
-    
-    logging.info("Trying barcode variants for UPC %s: %s", upc, sorted(variants))
-    
-    for code in variants:
+    for code in sorted(variants):
         params = {
             "q": f"code:{code}",
             "page_size": 1,
@@ -336,12 +393,7 @@ def lookup_by_barcode(upc, kroger_mass_g):
         if hits:
             candidate = hits[0]
             returned_code = str(candidate.get("code"))
-            
-            # Strict check: ensure OFF actually returned the barcode we searched for
-            # (Prevents search engine from doing weird fuzzy matching on exact code queries)
-            if returned_code not in variants:
-                logging.info("Barcode search for %s returned a different code %s, skipping.", code, returned_code)
-                continue
+            if returned_code not in variants: continue
 
             calories, basis = extract_off_calories(candidate, kroger_mass_g)
             if calories is not None:
@@ -355,20 +407,55 @@ def lookup_by_barcode(upc, kroger_mass_g):
                     "off_query": f"barcode:{code}",
                     "match_type": "exact_barcode"
                 }
+
+    # Wildcard fallback
+    for wc in wildcards:
+        if len(wc) >= 8:
+            logging.info("Trying wildcard barcode search for UPC core %s*", wc)
+            params = {
+                "q": f"code:{wc}*",
+                "page_size": 5,
+                "fields": "code,product_name,brands,nutriments,serving_quantity,product_quantity",
+            }
+            url = f"{OFF_SEARCH_BASE}/search?{urllib.parse.urlencode(params)}"
+            time.sleep(OFF_PAUSE_SECONDS)
+            
+            try:
+                resp = http_json(url, headers={"Accept": "application/json"}, label=f"OFF wildcard {wc}*")
+            except Exception as e:
+                continue
+                
+            hits = resp.get("hits") or []
+            for candidate in hits:
+                returned_code = str(candidate.get("code"))
+                if not returned_code.startswith(wc) and not returned_code.lstrip('0').startswith(wc):
+                    continue
+                    
+                calories, basis = extract_off_calories(candidate, kroger_mass_g)
+                if calories is not None:
+                    logging.info("Wildcard Barcode match found! code=%s calories=%s", returned_code, calories)
+                    return {
+                        "calories": calories, "calories_basis": basis,
+                        "off_upc": returned_code,
+                        "off_url": f"{OFF_PRODUCT_BASE}/product/{returned_code}",
+                        "off_name": candidate.get("product_name"),
+                        "off_brand": candidate.get("brands"),
+                        "off_query": f"wildcard:{wc}*",
+                        "match_type": "wildcard_barcode"
+                    }
+                    
     return None
 
 def lookup_open_food_facts(name, brand, size_text, upc):
     kroger_mass_g = parse_mass_grams(size_text)
     logging.info("OFF lookup start: upc=%s name=%r brand=%r size=%r parsed_mass_g=%s", upc, name, brand, size_text, kroger_mass_g)
 
-    # 1. Try exact barcode lookup first (most accurate)
     barcode_result = lookup_by_barcode(upc, kroger_mass_g)
     if barcode_result:
         return barcode_result
 
     logging.info("Barcode lookup found no exact match. Falling back to text search...")
 
-    # 2. Fallback to text search
     queries = build_off_queries(name, brand)
     if not queries:
         logging.info("OFF lookup skipped: no usable query could be built.")
@@ -393,6 +480,11 @@ def lookup_open_food_facts(name, brand, size_text, upc):
         for idx, candidate in enumerate(products):
             off_code = str(candidate.get("code") or candidate.get("_id") or "")
             candidate_name = candidate.get("product_name") or ""
+            
+            if not is_valid_fuzzy_match(name, candidate_name):
+                logging.info("OFF candidate %s skipped CATEGORY MISMATCH: kroger=%r off=%r", idx, name, candidate_name)
+                continue
+
             candidate_brand = candidate.get("brands") or ""
             if isinstance(candidate_brand, list): candidate_brand = ", ".join(candidate_brand)
             calories, basis = extract_off_calories(candidate, kroger_mass_g)
@@ -411,13 +503,12 @@ def lookup_open_food_facts(name, brand, size_text, upc):
             best_brand = best.get("brands") or ""
             if isinstance(best_brand, list): best_brand = ", ".join(best_brand)
                 
-            # Determine match type to warn about fuzzy matches
             match_type = "fuzzy_text"
             if best_code and upc:
                 if best_code == upc or best_code == upc.lstrip('0') or best_code == upc.zfill(13):
                     match_type = "text_search_barcode_match"
                 else:
-                    logging.warning("FUZZY MATCH: Text search found a product, but OFF UPC (%s) differs from Kroger UPC (%s). Name: %r", best_code, upc, best_name)
+                    logging.info("FUZZY MATCH (Approved by category filter): OFF UPC (%s) differs from Kroger UPC (%s). Name: %r", best_code, upc, best_name)
 
             logging.info("OFF selected: query=%r code=%s name=%r calories=%s match_type=%s", query, best_code, best_name, best_calories, match_type)
 
@@ -481,7 +572,7 @@ def build_pool(token, location_id, terms):
 
 def main():
     setup_logging()
-    logging.info("Starting meal pool build. Strategy: Barcode First -> Text Fallback.")
+    logging.info("Starting meal pool build. Strategy: Barcode Math + Wildcards -> Filtered Text Fallback.")
     token = get_kroger_token()
     location_id = find_location_id(token, KROGER_ZIP)
     
