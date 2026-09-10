@@ -1,5 +1,5 @@
 """
-build_meal_pool.py
+build_meal_pool2.py
 
 Pulls a fresh pool of frozen-meal candidates from Kroger's Products API,
 splits them into a "breakfast" pool and a "general" pool, then looks up
@@ -16,7 +16,7 @@ Required environment variables:
 
 Optional environment variables:
     KROGER_ZIP
-    OFF_BASE
+    OFF_SEARCH_BASE
     OFF_PAUSE_SECONDS
     OFF_PAGE_SIZE
     OFF_MAX_QUERIES_PER_ITEM
@@ -31,8 +31,8 @@ Optional environment variables:
 
 Open Food Facts rate limiting notes:
     - Open Food Facts is a shared public API.
-    - There is not always a strict published rate limit, but the polite
-      default is to stay around 1 request per second or slower.
+    - The legacy search endpoint (cgi/search.pl) is currently returning global 503 errors.
+    - This script uses the new Search-a-licious API (search.openfoodfacts.org).
     - If Open Food Facts returns HTTP 429, this script respects Retry-After
       when present and backs off exponentially with jitter.
     - Adjust OFF_PAUSE_SECONDS if you need to be more conservative.
@@ -58,7 +58,9 @@ KROGER_CLIENT_ID = os.environ.get("KROGER_CLIENT_ID")
 KROGER_CLIENT_SECRET = os.environ.get("KROGER_CLIENT_SECRET")
 
 KROGER_BASE = "https://api.kroger.com/v1"
-OFF_BASE = os.environ.get("OFF_BASE", "https://world.openfoodfacts.org")
+# Use the new Search-a-licious API for text search
+OFF_SEARCH_BASE = os.environ.get("OFF_SEARCH_BASE", "https://search.openfoodfacts.org")
+OFF_PRODUCT_BASE = "https://world.openfoodfacts.org"
 
 PRODUCTS_PER_TERM = int(os.environ.get("PRODUCTS_PER_TERM", "20"))
 
@@ -66,8 +68,7 @@ PRODUCTS_PER_TERM = int(os.environ.get("PRODUCTS_PER_TERM", "20"))
 KROGER_PAUSE_SECONDS = float(os.environ.get("KROGER_PAUSE_SECONDS", "0.3"))
 
 # Pause before every Open Food Facts request.
-# Open Food Facts is public/shared; 1 second is a conservative default.
-OFF_PAUSE_SECONDS = float(os.environ.get("OFF_PAUSE_SECONDS", "1.0"))
+OFF_PAUSE_SECONDS = float(os.environ.get("OFF_PAUSE_SECONDS", "1.5"))
 
 HTTP_TIMEOUT_SECONDS = float(os.environ.get("HTTP_TIMEOUT_SECONDS", "30"))
 MAX_RETRIES = int(os.environ.get("HTTP_MAX_RETRIES", "5"))
@@ -78,14 +79,11 @@ MAX_BACKOFF_SECONDS = float(os.environ.get("HTTP_MAX_BACKOFF_SECONDS", "60.0"))
 OFF_PAGE_SIZE = int(os.environ.get("OFF_PAGE_SIZE", "25"))
 
 # How many Open Food Facts text queries to try per Kroger item.
-# Example:
-#   1. brand + cleaned product name
-#   2. cleaned product name
-OFF_MAX_QUERIES_PER_ITEM = int(os.environ.get("OFF_MAX_QUERIES_PER_ITEM", "2"))
+OFF_MAX_QUERIES_PER_ITEM = int(os.environ.get("OFF_MAX_QUERIES_PER_ITEM", "3"))
 
 USER_AGENT = os.environ.get(
     "USER_AGENT",
-    "kroger-meal-pool/2.0 (Open Food Facts text search; set USER_AGENT env var with contact info)",
+    "kroger-meal-pool/2.1 (Search-a-licious API; set USER_AGENT env var with contact info)",
 )
 
 
@@ -109,11 +107,7 @@ GENERAL_TERMS = [
 
 
 def setup_logging():
-    """
-    Logs to stdout always, and optionally to a file if LOG_FILE is set.
-    """
     handlers = [logging.StreamHandler(sys.stdout)]
-
     log_file = os.environ.get("LOG_FILE")
     if log_file:
         handlers.append(logging.FileHandler(log_file, encoding="utf-8"))
@@ -136,18 +130,12 @@ def safe_float(value):
 
 
 def parse_retry_after(value):
-    """
-    Parse Retry-After header. Supports seconds and HTTP-date.
-    Returns seconds to wait, or None if not parseable.
-    """
     if not value:
         return None
-
     try:
         return max(0.0, float(value))
     except ValueError:
         pass
-
     try:
         retry_dt = parsedate_to_datetime(value)
         if retry_dt.tzinfo is None:
@@ -158,21 +146,10 @@ def parse_retry_after(value):
 
 
 def should_retry_http_error(status):
-    return status in {408, 429} or 500 <= status <= 599
+    return status in {408, 429, 503} or 500 <= status <= 599
 
 
 def http_json(url, data=None, headers=None, method=None, timeout=HTTP_TIMEOUT_SECONDS, label="HTTP"):
-    """
-    Fetch JSON with retries and rate-limit handling.
-
-    Retries on:
-        - HTTP 408
-        - HTTP 429
-        - HTTP 5xx
-        - Network errors / timeouts
-
-    Respects Retry-After when present.
-    """
     headers = dict(headers or {})
     headers.setdefault("User-Agent", USER_AGENT)
 
@@ -392,19 +369,10 @@ def extract_size(product):
 
 
 MASS_UNIT_TO_GRAMS = {
-    "g": 1.0,
-    "gram": 1.0,
-    "grams": 1.0,
-    "kg": 1000.0,
-    "kilogram": 1000.0,
-    "kilograms": 1000.0,
-    "oz": 28.3495,
-    "ounce": 28.3495,
-    "ounces": 28.3495,
-    "lb": 453.592,
-    "lbs": 453.592,
-    "pound": 453.592,
-    "pounds": 453.592,
+    "g": 1.0, "gram": 1.0, "grams": 1.0,
+    "kg": 1000.0, "kilogram": 1000.0, "kilograms": 1000.0,
+    "oz": 28.3495, "ounce": 28.3495, "ounces": 28.3495,
+    "lb": 453.592, "lbs": 453.592, "pound": 453.592, "pounds": 453.592,
 }
 
 MASS_RE = re.compile(
@@ -413,21 +381,7 @@ MASS_RE = re.compile(
     re.IGNORECASE,
 )
 
-SIZE_TOKEN_RE = re.compile(
-    r"\b\d+(?:\.\d+)?\s*"
-    r"(?:fl\.?\s*oz|fluid\s+ounce|fluid\s+ounces|oz|ounce|ounces|lb|lbs|pound|pounds|"
-    r"kg|kilogram|kilograms|g|gr|gram|grams|ml|milliliter|milliliters|l|liter|liters|"
-    r"ct|count|pack|packs|package|packages|tray|trays|bag|bags|box|boxes)\b",
-    re.IGNORECASE,
-)
-
-
 def parse_mass_grams(size_text):
-    """
-    Attempts to parse a Kroger size like '9.5 oz', '12 OZ', '1.2 LB' into grams.
-    Used to estimate total calories from Open Food Facts 100g calories when
-    serving calories are not available.
-    """
     if not size_text:
         return None
 
@@ -445,75 +399,55 @@ def parse_mass_grams(size_text):
     return amount * MASS_UNIT_TO_GRAMS[unit]
 
 
-def normalize_text(value):
-    value = (value or "").lower()
-    value = re.sub(r"[^a-z0-9&'/]+", " ", value)
-    return re.sub(r"\s+", " ", value).strip()
-
-
-def base_name_from_description(description):
-    """
-    Kroger product descriptions often include package size at the end.
-    Example:
-        Healthy Choice Cafe Steamers General Tso's Chicken Frozen Meal, 9.5 oz
-
-    This reduces it to something more searchable:
-        healthy choice cafe steamers general tso's chicken frozen meal
-    """
-    if not description:
-        return ""
-
-    text = str(description)
-
-    # Many Kroger names put the size after a comma.
-    if "," in text:
-        text = text.split(",", 1)[0]
-
-    # Remove obvious size/count/package tokens.
-    text = SIZE_TOKEN_RE.sub(" ", text)
-    text = re.sub(r"\s+", " ", text)
-
-    return normalize_text(text)
-
-
 def build_off_queries(name, brand):
     """
     Build Open Food Facts text-search queries from Kroger product name/brand.
+    Cleans up filler words and symbols for the new Search-a-licious API.
     """
-    base = base_name_from_description(name)
-    full_name = normalize_text(name)
-    brand_norm = normalize_text(brand)
-
-    variants = []
-
-    if brand_norm and base:
-        variants.append(f"{brand_norm} {base}")
-
-    if base:
-        variants.append(base)
-
-    if brand_norm and full_name and full_name != base:
-        variants.append(f"{brand_norm} {full_name}")
-
-    if full_name and full_name != base:
-        variants.append(full_name)
-
+    name_clean = re.sub(r'[®™&]', ' ', name or '')
+    brand_clean = re.sub(r'[®™&]', ' ', brand or '')
+    
+    # Remove common filler words and package sizes
+    fillers = r'\b(frozen|breakfast|sandwich|sandwiches|bowl|bowls|burrito|burritos|meal|meals|entree|entrees|dinner|dinners|lunch|snack|size|delights|signature|ct|oz|lbs|lb|g|kg|ml|l|and|on|a|the|with|for|of|in)\b'
+    name_clean = re.sub(fillers, ' ', name_clean, flags=re.IGNORECASE)
+    name_clean = re.sub(r'\s+', ' ', name_clean).strip()
+    
+    # Extract brand from name if missing
+    if not brand_clean:
+        words = name_clean.split()
+        if len(words) >= 2:
+            brand_clean = f"{words[0]} {words[1]}"
+        elif words:
+            brand_clean = words[0]
+            
+    # Remove brand from name to avoid redundancy
+    if brand_clean and name_clean.lower().startswith(brand_clean.lower()):
+        name_clean = name_clean[len(brand_clean):].strip()
+        
+    # Limit words to avoid overly long queries
+    name_words = name_clean.split()[:6]
+    name_short = ' '.join(name_words)
+    
+    queries = []
+    if brand_clean and name_short:
+        queries.append(f"{brand_clean} {name_short}")
+    if name_short:
+        queries.append(name_short)
+    if brand_clean:
+        queries.append(brand_clean)
+        
     unique = []
     seen = set()
-
-    for variant in variants:
-        variant = re.sub(r"\s+", " ", variant).strip()
-        if len(variant) >= 3 and variant not in seen:
-            seen.add(variant)
-            unique.append(variant)
-
-    return unique[: max(0, OFF_MAX_QUERIES_PER_ITEM)]
+    for q in queries:
+        q = q.strip()
+        if len(q) >= 3 and q not in seen:
+            seen.add(q)
+            unique.append(q)
+            
+    return unique[: max(1, OFF_MAX_QUERIES_PER_ITEM)]
 
 
 def get_off_kcal_100g(nutriments):
-    """
-    Extract kcal per 100g from Open Food Facts nutriments.
-    """
     kcal = safe_float(nutriments.get("energy-kcal_100g"))
     if kcal and kcal > 0:
         return kcal
@@ -525,33 +459,14 @@ def get_off_kcal_100g(nutriments):
     energy = safe_float(nutriments.get("energy_100g"))
     if energy and energy > 0:
         energy_unit = str(nutriments.get("energy_unit") or "").lower()
-
-        # If explicitly kJ, convert. If value looks too large to be kcal,
-        # assume kJ. This is imperfect but helps for many OFF entries.
         if "kj" in energy_unit or energy > 900:
             return energy / 4.184
-
         return energy
 
     return None
 
 
 def extract_off_calories(off_product, kroger_mass_g=None):
-    """
-    Extract calories from an Open Food Facts product.
-
-    Preference order:
-        1. energy-kcal_serving
-        2. energy-kj_serving
-        3. energy_serving, with unit guessing
-        4. 100g calories multiplied by OFF serving_quantity
-        5. 100g calories multiplied by parsed Kroger package weight
-        6. 100g calories multiplied by OFF product_quantity
-        7. 100g calories alone
-
-    Returns:
-        (calories, basis)
-    """
     nutriments = off_product.get("nutriments") or {}
 
     kcal_serving = safe_float(nutriments.get("energy-kcal_serving"))
@@ -565,10 +480,8 @@ def extract_off_calories(off_product, kroger_mass_g=None):
     energy_serving = safe_float(nutriments.get("energy_serving"))
     if energy_serving and energy_serving > 0:
         energy_unit = str(nutriments.get("energy_unit") or "").lower()
-
         if "kj" in energy_unit or energy_serving > 900:
             return round(energy_serving / 4.184), "off_serving_kj"
-
         return round(energy_serving), "off_serving"
 
     kcal_100g = get_off_kcal_100g(nutriments)
@@ -584,7 +497,6 @@ def extract_off_calories(off_product, kroger_mass_g=None):
 
     product_g = safe_float(off_product.get("product_quantity"))
     if product_g and product_g > 0:
-        # product_quantity is often grams, but sometimes ml. Treat ml as g.
         return round(kcal_100g * product_g / 100.0), "off_package_estimated_from_100g"
 
     return round(kcal_100g), "per_100g"
@@ -595,13 +507,12 @@ def token_set(value):
 
 
 def score_off_candidate(candidate, query, brand):
-    """
-    Very lightweight relevance score for Open Food Facts candidates.
-    """
     score = 0.0
 
     name = candidate.get("product_name") or candidate.get("generic_name") or ""
     brands = candidate.get("brands") or ""
+    if isinstance(brands, list):
+        brands = " ".join(brands)
 
     q_tokens = token_set(query)
     n_tokens = token_set(name)
@@ -626,30 +537,16 @@ def score_off_candidate(candidate, query, brand):
 
 
 def lookup_open_food_facts(name, brand, size_text):
-    """
-    Look up calories from Open Food Facts by product name.
-
-    Returns dict with:
-        calories
-        calories_basis
-        off_upc
-        off_url
-        off_name
-        off_brand
-        off_query
-
-    or None if no usable calories are found.
-    """
     queries = build_off_queries(name, brand)
     kroger_mass_g = parse_mass_grams(size_text)
 
     logging.info(
-        "Open Food Facts lookup start: name=%r brand=%r size=%r parsed_mass_g=%s query_count=%s",
+        "Open Food Facts lookup start: name=%r brand=%r size=%r parsed_mass_g=%s queries=%r",
         name,
         brand,
         size_text,
         kroger_mass_g,
-        len(queries),
+        queries,
     )
 
     if not queries:
@@ -661,18 +558,15 @@ def lookup_open_food_facts(name, brand, size_text):
         return None
 
     for query in queries:
+        # New Search-a-licious API parameters
         params = {
-            "search_terms": query,
-            "search_simple": 1,
-            "action": "process",
-            "json": 1,
+            "q": query,
             "page_size": OFF_PAGE_SIZE,
             "fields": "code,product_name,brands,nutriments,serving_quantity,product_quantity",
         }
 
-        url = f"{OFF_BASE}/cgi/search.pl?{urllib.parse.urlencode(params)}"
+        url = f"{OFF_SEARCH_BASE}/search?{urllib.parse.urlencode(params)}"
 
-        # Simple rate-limit delay before every Open Food Facts request.
         time.sleep(OFF_PAUSE_SECONDS)
 
         try:
@@ -685,7 +579,8 @@ def lookup_open_food_facts(name, brand, size_text):
             logging.error("Open Food Facts search failed query=%r error=%r", query, exc)
             continue
 
-        products = resp.get("products") or []
+        # The new API returns "hits" instead of "products"
+        products = resp.get("hits") or []
         api_count = resp.get("count", len(products))
 
         logging.info(
@@ -701,6 +596,8 @@ def lookup_open_food_facts(name, brand, size_text):
             off_code = str(candidate.get("code") or candidate.get("_id") or "")
             candidate_name = candidate.get("product_name") or ""
             candidate_brand = candidate.get("brands") or ""
+            if isinstance(candidate_brand, list):
+                candidate_brand = ", ".join(candidate_brand)
 
             calories, basis = extract_off_calories(candidate, kroger_mass_g)
 
@@ -745,6 +642,8 @@ def lookup_open_food_facts(name, brand, size_text):
             best_code = str(best.get("code") or best.get("_id") or "")
             best_name = best.get("product_name") or ""
             best_brand = best.get("brands") or ""
+            if isinstance(best_brand, list):
+                best_brand = ", ".join(best_brand)
 
             logging.info(
                 "Open Food Facts selected: query=%r code=%s name=%r brand=%r calories=%s basis=%s score=%.1f candidates_with_calories=%s",
@@ -762,7 +661,7 @@ def lookup_open_food_facts(name, brand, size_text):
                 "calories": best_calories,
                 "calories_basis": best_basis,
                 "off_upc": best_code or None,
-                "off_url": f"{OFF_BASE}/product/{best_code}" if best_code else None,
+                "off_url": f"{OFF_PRODUCT_BASE}/product/{best_code}" if best_code else None,
                 "off_name": best_name,
                 "off_brand": best_brand,
                 "off_query": query,
@@ -829,11 +728,8 @@ def build_pool(token, location_id, terms):
                 continue
 
             item = {
-                # Existing field, kept for compatibility.
                 "upc": upc,
-                # Explicit Kroger UPC.
                 "kroger_upc": upc,
-                # Explicit Open Food Facts code / UPC.
                 "open_food_facts_upc": off_result.get("off_upc"),
                 "off_upc": off_result.get("off_upc"),
                 "open_food_facts_url": off_result.get("off_url"),
@@ -871,7 +767,7 @@ def main():
     setup_logging()
 
     logging.info(
-        "Starting meal pool build. Calories source: Open Food Facts text search by name."
+        "Starting meal pool build. Calories source: Open Food Facts Search-a-licious API."
     )
 
     token = get_kroger_token()
