@@ -63,8 +63,13 @@ REQUEST_PAUSE_SECONDS = 0.3
 
 def http_json(url, data=None, headers=None, method=None):
     headers = headers or {}
+    
+    # Mandatory User-Agent string to prevent Kroger's API firewall from dropping connections
+    headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    
     if data is not None and not isinstance(data, (bytes, bytearray)):
         data = urllib.parse.urlencode(data).encode("utf-8")
+        
     req = urllib.request.Request(url, data=data, headers=headers, method=method)
     with urllib.request.urlopen(req, timeout=30) as resp:
         return json.loads(resp.read().decode("utf-8"))
@@ -188,7 +193,6 @@ def build_pool(token, location_id, terms):
 
 
 def main():
-    # Diagnostic check for environmental secrets
     print("Checking Environment Configurations...")
     print(f"  Kroger Client ID present: {bool(KROGER_CLIENT_ID)}")
     print(f"  Kroger Secret present:    {bool(KROGER_CLIENT_SECRET)}")
