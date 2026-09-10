@@ -1,0 +1,36 @@
+name: Update meal pool
+
+on:
+  schedule:
+    # Every Monday at 09:00 UTC (~3-4am Central, adjust as you like)
+    - cron: "0 9 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch fresh meal pool
+        env:
+          KROGER_CLIENT_ID: ${{ secrets.KROGER_CLIENT_ID }}
+          KROGER_CLIENT_SECRET: ${{ secrets.KROGER_CLIENT_SECRET }}
+          USDA_API_KEY: ${{ secrets.USDA_API_KEY }}
+          KROGER_ZIP: ${{ secrets.KROGER_ZIP }}
+        run: python build_meal_pool.py
+
+      - name: Commit updated pool
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add candidate_pool.json
+          git diff --quiet --cached || git commit -m "Update meal pool"
+          git push
