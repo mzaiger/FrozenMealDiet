@@ -56,9 +56,8 @@ ENABLE_USDA_FALLBACK = os.environ.get("ENABLE_USDA_FALLBACK", "1").strip().lower
 )
 
 # Rate limiting / pacing.
-# Open Food Facts is the most likely source of 429s. Default to a conservative
-# minimum interval between OFF barcode lookups.
-OFF_REQUEST_PAUSE_SECONDS = float(os.environ.get("OFF_REQUEST_PAUSE_SECONDS", "1.5"))
+# Open Food Facts limits unauthenticated users to ~100 req/min. 2.5s keeps us safe.
+OFF_REQUEST_PAUSE_SECONDS = float(os.environ.get("OFF_REQUEST_PAUSE_SECONDS", "2.5"))
 KROGER_REQUEST_PAUSE_SECONDS = float(os.environ.get("KROGER_REQUEST_PAUSE_SECONDS", "1.0"))
 USDA_REQUEST_PAUSE_SECONDS = float(os.environ.get("USDA_REQUEST_PAUSE_SECONDS", "0.75"))
 BETWEEN_PRODUCTS_PAUSE_SECONDS = float(os.environ.get("BETWEEN_PRODUCTS_PAUSE_SECONDS", "0.25"))
@@ -92,12 +91,12 @@ DEFAULT_HEADERS = {
     "Accept": "application/json",
 }
 
-# Open Food Facts appreciates a descriptive UA. If you have a contact email,
-# put it in OFF_USER_AGENT, for example:
-# OFF_USER_AGENT="my-app/1.0 (https://example.com; me@example.com)"
+# Open Food Facts appreciates a descriptive UA and actively blocks generic/fake emails.
+# Set OFF_USER_AGENT in your environment to something like:
+# "my-app/1.0 (https://example.com; me@example.com)"
 OFF_USER_AGENT = os.environ.get(
     "OFF_USER_AGENT",
-    "frozen-meal-planner/1.0 (barcode nutrition lookup; contact: you@example.com)",
+    "frozen-meal-planner/1.0 (barcode nutrition lookup; contact: contact@example.com)",
 )
 
 OFF_HEADERS = {
@@ -141,7 +140,6 @@ def _retry_after_seconds(http_error, default_wait):
         if retry_after:
             retry_after = str(retry_after).strip()
 
-            # Simple numeric Retry-After, including decimals.
             if retry_after.replace(".", "", 1).isdigit():
                 wait = max(wait, float(retry_after))
     except Exception:
@@ -222,22 +220,12 @@ def _off_throttle():
 
 
 def _off_mark_rate_limited():
-    """
-    If Open Food Facts starts returning 429s, automatically slow down future
-    requests for the remainder of the run.
-    """
     global _off_slowdown_factor
-
     _off_slowdown_factor = min(_off_slowdown_factor * 1.5, 8.0)
 
 
 def _off_mark_success():
-    """
-    If requests are succeeding, gently relax the slowdown factor, but never
-    below 1.0.
-    """
     global _off_slowdown_factor
-
     _off_slowdown_factor = max(1.0, _off_slowdown_factor / 1.1)
 
 
@@ -320,10 +308,6 @@ def extract_image(product):
 
 
 def _as_number(value):
-    """
-    Convert JSON values that may be numbers or stringified numbers into float.
-    Returns None if not parseable.
-    """
     if value is None:
         return None
 
@@ -342,16 +326,6 @@ def _as_number(value):
 
 
 def _off_barcode_variants(upc):
-    """
-    Build a small set of barcode candidates for Open Food Facts.
-
-    Kroger often gives UPC-A style 12-digit codes. Open Food Facts frequently
-    stores EAN-13/GTIN-13 codes, so a 12-digit UPC usually needs one leading
-    zero added.
-
-    This version intentionally limits the number of variants to reduce request
-    volume and avoid 429s.
-    """
     digits = "".join(ch for ch in str(upc).strip() if ch.isdigit())
 
     if not digits:
@@ -360,7 +334,6 @@ def _off_barcode_variants(upc):
     candidates = []
 
     if len(digits) == 12:
-        # Most likely Open Food Facts form first.
         candidates.append("0" + digits)
         candidates.append(digits)
 
@@ -391,18 +364,10 @@ def _off_barcode_variants(upc):
             seen.add(variant)
             variants.append(variant)
 
-    # Hard cap to keep request volume predictable.
     return variants[:3]
 
 
 def _parse_serving_grams(product):
-    """
-    Try to determine serving size in grams from Open Food Facts data.
-
-    Preference:
-      1. nutriments.serving_quantity
-      2. parse grams/ml from serving_size text
-    """
     nutriments = product.get("nutriments") or {}
 
     serving_quantity = _as_number(nutriments.get("serving_quantity"))
@@ -413,17 +378,12 @@ def _parse_serving_grams(product):
     if not serving_size_text:
         return None
 
-    # Examples:
-    #   "1 sandwich (129 g)"
-    #   "1 package (269g)"
-    #   "1/2 meal 260 grams"
     match = re.search(r"(\d+(?:[.,]\d+)?)\s*(?:g|grams?|gram)\b", serving_size_text)
     if match:
         parsed = _as_number(match.group(1))
         if parsed is not None and parsed > 0:
             return parsed
 
-    # Treat ml roughly as g for calorie-per-serving estimation.
     match = re.search(
         r"(\d+(?:[.,]\d+)?)\s*(?:ml|milliliters?|millilitres?)\b",
         serving_size_text,
@@ -437,18 +397,12 @@ def _parse_serving_grams(product):
 
 
 def _parse_product_grams(product):
-    """
-    Try to determine total package weight in grams from Open Food Facts data.
-    """
     quantity = _as_number(product.get("product_quantity"))
     unit = str(product.get("product_quantity_unit") or "").strip().lower()
 
     if quantity is None or quantity <= 0:
         return None
 
-    # If no unit is present, OFF often still means grams for many foods.
-    # Accept common metric units; avoid oz/lb because conversion is more
-    # likely to be wrong for food shape/density.
     if not unit or unit in {
         "g",
         "gram",
@@ -465,17 +419,6 @@ def _parse_product_grams(product):
 
 
 def _extract_off_calories(product):
-    """
-    Extract calories from an Open Food Facts product dict.
-
-    Preference:
-      1. kcal per serving, if available
-      2. kJ per serving converted to kcal
-      3. kcal per 100g scaled to serving size
-      4. kcal per 100g scaled to package weight
-      5. kcal per 100g as-is, if nothing better exists
-      6. kJ per 100g converted/scaled
-    """
     if not isinstance(product, dict):
         return None
 
@@ -491,7 +434,6 @@ def _extract_off_calories(product):
     serving_qty = _parse_serving_grams(product)
     product_qty = _parse_product_grams(product)
 
-    # 1. Direct kcal per serving.
     kcal_serving = num(
         "energy-kcal_serving",
         "energy-kcal_serving_value",
@@ -499,7 +441,6 @@ def _extract_off_calories(product):
     if kcal_serving is not None and kcal_serving > 0:
         return round(kcal_serving)
 
-    # 2. kJ per serving.
     kj_serving = num(
         "energy_serving",
         "energy_serving_value",
@@ -507,7 +448,6 @@ def _extract_off_calories(product):
     if kj_serving is not None and kj_serving > 0:
         return round(kj_serving / 4.184)
 
-    # 3/4/5. kcal per 100g.
     kcal_100 = num(
         "energy-kcal_100g",
         "energy-kcal_value",
@@ -521,12 +461,8 @@ def _extract_off_calories(product):
         if product_qty is not None and product_qty > 0:
             return round(kcal_100 * product_qty / 100.0)
 
-        # Less ideal: return per-100g calories if no package/serving weight
-        # is available. This keeps more items usable, but may understate
-        # calories for multi-serving packages.
         return round(kcal_100)
 
-    # 6. kJ per 100g.
     kj_100 = num(
         "energy_100g",
         "energy_value",
@@ -572,12 +508,13 @@ def lookup_calories_off(upc):
 
         url = f"{OFF_BASE}/api/v2/product/{barcode}.json?{fields_params}"
 
+        resp = None
         try:
             resp = http_json(
                 url,
                 headers=OFF_HEADERS,
-                retries=5,
-                backoff=3.0,
+                retries=3,
+                backoff=5.0,
             )
 
         except urllib.error.HTTPError as e:
@@ -585,25 +522,29 @@ def lookup_calories_off(upc):
                 continue
 
             if e.code == 429:
-                _off_stats["http_error"] += 1
                 _off_stats["rate_limited"] += 1
-                _off_mark_rate_limited()
-
                 print(
-                    "  Open Food Facts rate limit persisted after retries; "
-                    "pausing 20s and skipping this barcode lookup.",
+                    "  !! Open Food Facts rate limit (429) hit. Sleeping 60s to let limit reset...",
                     file=sys.stderr,
                 )
-
-                time.sleep(20)
-                return None
-
-            print(
-                f"  Open Food Facts lookup failed for barcode {barcode}: {e}",
-                file=sys.stderr,
-            )
-            _off_stats["http_error"] += 1
-            continue
+                time.sleep(60)
+                
+                # Try one more time after the long sleep
+                try:
+                    _off_throttle()
+                    resp = http_json(url, headers=OFF_HEADERS, retries=2, backoff=5.0)
+                except Exception as retry_e:
+                    print(f"  Still failed after 60s sleep: {retry_e}", file=sys.stderr)
+                    _off_stats["http_error"] += 1
+                    return None  # Skip this UPC to avoid infinite loops
+                    
+            else:
+                print(
+                    f"  Open Food Facts lookup failed for barcode {barcode}: {e}",
+                    file=sys.stderr,
+                )
+                _off_stats["http_error"] += 1
+                continue
 
         except urllib.error.URLError as e:
             print(
@@ -644,12 +585,6 @@ def lookup_calories_off(upc):
 
 
 def _upc_variants_usda(upc):
-    """
-    USDA FoodData Central stores barcodes as GTIN-14 (often zero-padded),
-    while Kroger returns plain UPC-A (12-digit, sometimes without leading
-    zeros). Build the set of formats a given code might appear as so we
-    can try them all: bare digits, and zero-padded to 12/13/14 digits.
-    """
     digits = "".join(ch for ch in str(upc).strip() if ch.isdigit())
 
     if not digits:
@@ -676,10 +611,6 @@ def _upc_variants_usda(upc):
 
 
 def lookup_calories_usda(upc):
-    """
-    Optional fallback: look up calories via USDA FoodData Central.
-    Returns int calories or None.
-    """
     if not USDA_API_KEY or not upc:
         return None
 
@@ -688,8 +619,6 @@ def lookup_calories_usda(upc):
     if not variants:
         return None
 
-    # Compare on the zero-stripped form so "011110001234" and its GTIN-14
-    # padded equivalent "00011110001234" are recognized as the same code.
     target_bare_forms = {v.lstrip("0") or "0" for v in variants}
 
     _usda_stats["attempted"] += 1
@@ -732,7 +661,6 @@ def lookup_calories_usda(upc):
             food_bare = food_gtin.lstrip("0") or "0"
 
             if food_bare not in target_bare_forms:
-                # Query matched on text relevance, not actually this barcode.
                 continue
 
             label_nutrients = food.get("labelNutrients", {}) or {}
@@ -749,10 +677,6 @@ def lookup_calories_usda(upc):
 
 
 def lookup_calories(upc):
-    """
-    Primary: Open Food Facts.
-    Fallback: USDA FoodData Central, if enabled and configured.
-    """
     global _usda_missing_key_warned
 
     calories = lookup_calories_off(upc)
@@ -784,7 +708,6 @@ def build_pool(token, location_id, terms):
 
         products = search_products(token, location_id, term)
 
-        # Small pause between Kroger search terms.
         time.sleep(KROGER_REQUEST_PAUSE_SECONDS)
 
         for product in products:
@@ -797,8 +720,6 @@ def build_pool(token, location_id, terms):
 
             calories = lookup_calories(upc)
 
-            # A tiny pause between products helps keep overall pacing calm,
-            # especially if USDA fallback ends up being used.
             time.sleep(BETWEEN_PRODUCTS_PAUSE_SECONDS)
 
             if calories is None or calories <= 0:
