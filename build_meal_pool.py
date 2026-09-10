@@ -4,15 +4,8 @@ build_meal_pool.py
 Pulls a fresh pool of frozen-meal candidates from Kroger's Products API,
 splits them into a "breakfast" pool (name/category contains "breakfast")
 and a "general" pool (everything else, used for lunch and dinner), then
-looks up calories for each item.
-
-Primary calorie lookup:
-  Open Food Facts barcode endpoint:
-    https://world.openfoodfacts.org/api/v2/product/{barcode}.json
-
-Optional fallback calorie lookup:
-  USDA FoodData Central, used only if Open Food Facts does not return
-  usable calorie data and ENABLE_USDA_FALLBACK is enabled.
+looks up calories for each item from USDA FoodData Central using the
+Kroger product name / description / brand as a text search.
 
 Writes candidate_pool.json, which the static front-end (index.html) uses
 to build a 7-day / 21-meal plan entirely in the browser.
@@ -20,21 +13,16 @@ to build a 7-day / 21-meal plan entirely in the browser.
 Required environment variables:
   KROGER_CLIENT_ID
   KROGER_CLIENT_SECRET
+  USDA_API_KEY
 
 Optional environment variables:
   KROGER_ZIP
-  USDA_API_KEY
-  ENABLE_USDA_FALLBACK
-  OFF_REQUEST_PAUSE_SECONDS
-  KROGER_REQUEST_PAUSE_SECONDS
-  USDA_REQUEST_PAUSE_SECONDS
-  OFF_USER_AGENT
+  REQUEST_PAUSE_SECONDS
 """
 
 import base64
 import json
 import os
-import random
 import re
 import sys
 import time
@@ -48,23 +36,8 @@ KROGER_CLIENT_ID = os.environ.get("KROGER_CLIENT_ID")
 KROGER_CLIENT_SECRET = os.environ.get("KROGER_CLIENT_SECRET")
 USDA_API_KEY = os.environ.get("USDA_API_KEY")
 
-ENABLE_USDA_FALLBACK = os.environ.get("ENABLE_USDA_FALLBACK", "1").strip().lower() not in (
-    "0",
-    "false",
-    "no",
-    "off",
-)
-
-# Rate limiting / pacing.
-# Open Food Facts limits unauthenticated users to ~100 req/min. 2.5s keeps us safe.
-OFF_REQUEST_PAUSE_SECONDS = float(os.environ.get("OFF_REQUEST_PAUSE_SECONDS", "2.5"))
-KROGER_REQUEST_PAUSE_SECONDS = float(os.environ.get("KROGER_REQUEST_PAUSE_SECONDS", "1.0"))
-USDA_REQUEST_PAUSE_SECONDS = float(os.environ.get("USDA_REQUEST_PAUSE_SECONDS", "0.75"))
-BETWEEN_PRODUCTS_PAUSE_SECONDS = float(os.environ.get("BETWEEN_PRODUCTS_PAUSE_SECONDS", "0.25"))
-
 KROGER_BASE = "https://api.kroger.com/v1"
 USDA_BASE = "https://api.nal.usda.gov/fdc/v1"
-OFF_BASE = "https://world.openfoodfacts.org"
 
 BREAKFAST_TERMS = [
     "frozen breakfast ",
@@ -86,69 +59,26 @@ GENERAL_TERMS = [
 
 PRODUCTS_PER_TERM = 20
 
+# USDA can throttle api.data.gov traffic if requests are too fast.
+# 0.45s is a conservative default for text-search lookups.
+REQUEST_PAUSE_SECONDS = float(os.environ.get("REQUEST_PAUSE_SECONDS", "0.45"))
+
+USDA_PAGE_SIZE = 8
+
 DEFAULT_HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; frozen-meal-planner/1.0)",
     "Accept": "application/json",
 }
 
-# Open Food Facts appreciates a descriptive UA and actively blocks generic/fake emails.
-# Set OFF_USER_AGENT in your environment to something like:
-# "my-app/1.0 (https://example.com; me@example.com)"
-OFF_USER_AGENT = os.environ.get(
-    "OFF_USER_AGENT",
-    "frozen-meal-planner/1.0 (barcode nutrition lookup; contact: contact@example.com)",
-)
-
-OFF_HEADERS = {
-    **DEFAULT_HEADERS,
-    "User-Agent": OFF_USER_AGENT,
-}
-
-OFF_FIELDS = "nutriments,serving_size,product_quantity,product_quantity_unit"
-
-_off_stats = {
-    "attempted": 0,
-    "http_error": 0,
-    "rate_limited": 0,
-    "not_found": 0,
-    "found_no_calories": 0,
-    "matched": 0,
-}
-
 _usda_stats = {
     "attempted": 0,
     "http_error": 0,
-    "no_match": 0,
+    "no_foods_returned": 0,
     "matched": 0,
 }
 
-_usda_missing_key_warned = False
 
-_last_off_request = 0.0
-_off_slowdown_factor = 1.0
-
-
-def _retry_after_seconds(http_error, default_wait):
-    """
-    Parse a Retry-After header if present. If it cannot be parsed, fall back
-    to the provided default wait. Adds a little jitter.
-    """
-    wait = default_wait
-
-    try:
-        retry_after = http_error.headers.get("Retry-After")
-        if retry_after:
-            retry_after = str(retry_after).strip()
-
-            if retry_after.replace(".", "", 1).isdigit():
-                wait = max(wait, float(retry_after))
-    except Exception:
-        pass
-
-    return wait + random.uniform(0.0, 0.5)
-
-
-def http_json(url, data=None, headers=None, method=None, retries=4, backoff=2.0):
+def http_json(url, data=None, headers=None, method=None, retries=3, backoff=1.5):
     merged_headers = {**DEFAULT_HEADERS, **(headers or {})}
 
     if data is not None and not isinstance(data, (bytes, bytearray)):
@@ -168,14 +98,11 @@ def http_json(url, data=None, headers=None, method=None, retries=4, backoff=2.0)
 
             # Transient/throttling responses: retry with backoff.
             if e.code in (429, 502, 503, 504) and attempt < retries - 1:
-                default_wait = backoff * (2 ** attempt)
-                wait = _retry_after_seconds(e, default_wait)
-
+                wait = backoff * (2 ** attempt)
                 print(
                     f"    got HTTP {e.code} for {url}, retrying in {wait:.1f}s...",
                     file=sys.stderr,
                 )
-
                 time.sleep(wait)
                 continue
 
@@ -185,13 +112,11 @@ def http_json(url, data=None, headers=None, method=None, retries=4, backoff=2.0)
             last_error = e
 
             if attempt < retries - 1:
-                wait = backoff * (2 ** attempt) + random.uniform(0.0, 0.5)
-
+                wait = backoff * (2 ** attempt)
                 print(
                     f"    URL error for {url}, retrying in {wait:.1f}s...",
                     file=sys.stderr,
                 )
-
                 time.sleep(wait)
                 continue
 
@@ -201,32 +126,6 @@ def http_json(url, data=None, headers=None, method=None, retries=4, backoff=2.0)
         raise last_error
 
     raise RuntimeError("HTTP request failed for an unknown reason.")
-
-
-def _off_throttle():
-    """
-    Enforce a minimum interval between Open Food Facts requests.
-    """
-    global _last_off_request
-
-    interval = OFF_REQUEST_PAUSE_SECONDS * _off_slowdown_factor
-    now = time.monotonic()
-    wait = interval - (now - _last_off_request)
-
-    if wait > 0:
-        time.sleep(wait)
-
-    _last_off_request = time.monotonic()
-
-
-def _off_mark_rate_limited():
-    global _off_slowdown_factor
-    _off_slowdown_factor = min(_off_slowdown_factor * 1.5, 8.0)
-
-
-def _off_mark_success():
-    global _off_slowdown_factor
-    _off_slowdown_factor = max(1.0, _off_slowdown_factor / 1.1)
 
 
 def get_kroger_token():
@@ -308,6 +207,10 @@ def extract_image(product):
 
 
 def _as_number(value):
+    """
+    Convert JSON values that may be numbers or stringified numbers into float.
+    Returns None if not parseable.
+    """
     if value is None:
         return None
 
@@ -325,314 +228,98 @@ def _as_number(value):
         return None
 
 
-def _off_barcode_variants(upc):
-    digits = "".join(ch for ch in str(upc).strip() if ch.isdigit())
+def _clean_text(text):
+    if not text:
+        return ""
 
-    if not digits:
-        return []
-
-    candidates = []
-
-    if len(digits) == 12:
-        candidates.append("0" + digits)
-        candidates.append(digits)
-
-    elif len(digits) == 13:
-        candidates.append(digits)
-
-    elif len(digits) == 14:
-        stripped = digits.lstrip("0") or "0"
-
-        candidates.append(digits)
-        candidates.append(stripped)
-
-        if len(stripped) == 12:
-            candidates.append("0" + stripped)
-
-    elif len(digits) < 13:
-        candidates.append(digits.zfill(13))
-        candidates.append(digits)
-
-    else:
-        candidates.append(digits)
-
-    seen = set()
-    variants = []
-
-    for variant in candidates:
-        if variant and variant not in seen:
-            seen.add(variant)
-            variants.append(variant)
-
-    return variants[:3]
+    text = str(text)
+    text = text.replace("\n", " ")
+    text = text.replace("\r", " ")
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
 
 
-def _parse_serving_grams(product):
-    nutriments = product.get("nutriments") or {}
-
-    serving_quantity = _as_number(nutriments.get("serving_quantity"))
-    if serving_quantity is not None and serving_quantity > 0:
-        return serving_quantity
-
-    serving_size_text = str(product.get("serving_size") or "").lower()
-    if not serving_size_text:
-        return None
-
-    match = re.search(r"(\d+(?:[.,]\d+)?)\s*(?:g|grams?|gram)\b", serving_size_text)
-    if match:
-        parsed = _as_number(match.group(1))
-        if parsed is not None and parsed > 0:
-            return parsed
-
-    match = re.search(
-        r"(\d+(?:[.,]\d+)?)\s*(?:ml|milliliters?|millilitres?)\b",
-        serving_size_text,
-    )
-    if match:
-        parsed = _as_number(match.group(1))
-        if parsed is not None and parsed > 0:
-            return parsed
-
-    return None
-
-
-def _parse_product_grams(product):
-    quantity = _as_number(product.get("product_quantity"))
-    unit = str(product.get("product_quantity_unit") or "").strip().lower()
-
-    if quantity is None or quantity <= 0:
-        return None
-
-    if not unit or unit in {
-        "g",
-        "gram",
-        "grams",
-        "ml",
-        "milliliter",
-        "milliliters",
-        "millilitre",
-        "millilitres",
-    }:
-        return quantity
-
-    return None
-
-
-def _extract_off_calories(product):
-    if not isinstance(product, dict):
-        return None
-
-    nutriments = product.get("nutriments") or {}
-
-    def num(*keys):
-        for key in keys:
-            value = _as_number(nutriments.get(key))
-            if value is not None:
-                return value
-        return None
-
-    serving_qty = _parse_serving_grams(product)
-    product_qty = _parse_product_grams(product)
-
-    kcal_serving = num(
-        "energy-kcal_serving",
-        "energy-kcal_serving_value",
-    )
-    if kcal_serving is not None and kcal_serving > 0:
-        return round(kcal_serving)
-
-    kj_serving = num(
-        "energy_serving",
-        "energy_serving_value",
-    )
-    if kj_serving is not None and kj_serving > 0:
-        return round(kj_serving / 4.184)
-
-    kcal_100 = num(
-        "energy-kcal_100g",
-        "energy-kcal_value",
-        "energy-kcal",
-    )
-
-    if kcal_100 is not None and kcal_100 > 0:
-        if serving_qty is not None and serving_qty > 0:
-            return round(kcal_100 * serving_qty / 100.0)
-
-        if product_qty is not None and product_qty > 0:
-            return round(kcal_100 * product_qty / 100.0)
-
-        return round(kcal_100)
-
-    kj_100 = num(
-        "energy_100g",
-        "energy_value",
-        "energy",
-    )
-
-    if kj_100 is not None and kj_100 > 0:
-        kcal_100_from_kj = kj_100 / 4.184
-
-        if serving_qty is not None and serving_qty > 0:
-            return round(kcal_100_from_kj * serving_qty / 100.0)
-
-        if product_qty is not None and product_qty > 0:
-            return round(kcal_100_from_kj * product_qty / 100.0)
-
-        return round(kcal_100_from_kj)
-
-    return None
-
-
-def lookup_calories_off(upc):
+def _tokenize(text):
     """
-    Look up calories via Open Food Facts barcode endpoint.
+    Simple tokenization for matching Kroger product text against USDA text.
+    """
+    return {
+        token
+        for token in re.findall(r"[a-z0-9]+", str(text).lower())
+        if len(token) > 1
+    }
+
+
+def _match_score(kroger_name, kroger_brand, usda_food):
+    """
+    Very lightweight relevance score.
+
+    USDA text search can return close-but-not-exact items, so this prefers
+    candidates whose description/brand shares more words with the Kroger
+    product name.
+    """
+    kroger_text = f"{kroger_brand or ''} {kroger_name or ''}"
+    usda_text = " ".join(
+        [
+            str(usda_food.get("brandName") or usda_food.get("brandOwner") or ""),
+            str(usda_food.get("description") or ""),
+        ]
+    )
+
+    kroger_tokens = _tokenize(kroger_text)
+    usda_tokens = _tokenize(usda_text)
+
+    if not kroger_tokens or not usda_tokens:
+        return 0.0
+
+    overlap = len(kroger_tokens & usda_tokens)
+    return overlap / len(kroger_tokens)
+
+
+def lookup_calories_by_name(name, brand=None):
+    """
+    Look up calories via USDA FoodData Central text search using the Kroger
+    product name/description and optional brand.
+
     Returns int calories or None.
     """
-    global _off_slowdown_factor
-
-    if not upc:
+    if not USDA_API_KEY or not name:
         return None
 
-    variants = _off_barcode_variants(upc)
+    name = _clean_text(name)
+    brand = _clean_text(brand)
 
-    if not variants:
+    if not name:
         return None
 
-    _off_stats["attempted"] += 1
+    # Keep queries reasonably short for USDA.
+    name_query = name[:140]
 
-    found_product = False
-    fields_params = urllib.parse.urlencode({"fields": OFF_FIELDS})
+    queries = []
 
-    for barcode in variants:
-        _off_throttle()
+    # If the brand is not already part of the product description, try
+    # "Brand Product Name" first. This often improves USDA Branded Foods
+    # search relevance.
+    if brand and brand.lower() not in name.lower():
+        queries.append(f"{brand} {name_query}".strip()[:150])
 
-        url = f"{OFF_BASE}/api/v2/product/{barcode}.json?{fields_params}"
-
-        resp = None
-        try:
-            resp = http_json(
-                url,
-                headers=OFF_HEADERS,
-                retries=3,
-                backoff=5.0,
-            )
-
-        except urllib.error.HTTPError as e:
-            if e.code == 404:
-                continue
-
-            if e.code == 429:
-                _off_stats["rate_limited"] += 1
-                print(
-                    "  !! Open Food Facts rate limit (429) hit. Sleeping 60s to let limit reset...",
-                    file=sys.stderr,
-                )
-                time.sleep(60)
-                
-                # Try one more time after the long sleep
-                try:
-                    _off_throttle()
-                    resp = http_json(url, headers=OFF_HEADERS, retries=2, backoff=5.0)
-                except Exception as retry_e:
-                    print(f"  Still failed after 60s sleep: {retry_e}", file=sys.stderr)
-                    _off_stats["http_error"] += 1
-                    return None  # Skip this UPC to avoid infinite loops
-                    
-            else:
-                print(
-                    f"  Open Food Facts lookup failed for barcode {barcode}: {e}",
-                    file=sys.stderr,
-                )
-                _off_stats["http_error"] += 1
-                continue
-
-        except urllib.error.URLError as e:
-            print(
-                f"  Open Food Facts lookup failed for barcode {barcode}: {e}",
-                file=sys.stderr,
-            )
-            _off_stats["http_error"] += 1
-            continue
-
-        if not isinstance(resp, dict):
-            continue
-
-        if resp.get("status") == 1:
-            _off_mark_success()
-
-        if resp.get("status") != 1:
-            continue
-
-        product = resp.get("product")
-
-        if not isinstance(product, dict) or not product:
-            continue
-
-        found_product = True
-
-        calories = _extract_off_calories(product)
-
-        if calories is not None and calories > 0:
-            _off_stats["matched"] += 1
-            return calories
-
-    if found_product:
-        _off_stats["found_no_calories"] += 1
-    else:
-        _off_stats["not_found"] += 1
-
-    return None
-
-
-def _upc_variants_usda(upc):
-    digits = "".join(ch for ch in str(upc).strip() if ch.isdigit())
-
-    if not digits:
-        return []
-
-    bare = digits.lstrip("0") or "0"
-
-    candidates = [
-        bare.zfill(14),
-        digits,
-        bare,
-        bare.zfill(13),
-    ]
-
-    seen = set()
-    variants = []
-
-    for variant in candidates:
-        if variant not in seen:
-            seen.add(variant)
-            variants.append(variant)
-
-    return variants
-
-
-def lookup_calories_usda(upc):
-    if not USDA_API_KEY or not upc:
-        return None
-
-    variants = _upc_variants_usda(upc)
-
-    if not variants:
-        return None
-
-    target_bare_forms = {v.lstrip("0") or "0" for v in variants}
+    queries.append(name_query)
 
     _usda_stats["attempted"] += 1
 
-    for i, variant in enumerate(variants):
+    best_calories = None
+    best_score = -1.0
+
+    for i, query in enumerate(queries):
         if i > 0:
-            time.sleep(USDA_REQUEST_PAUSE_SECONDS)
+            time.sleep(REQUEST_PAUSE_SECONDS)
 
         params = urllib.parse.urlencode(
             {
                 "api_key": USDA_API_KEY,
-                "query": variant,
+                "query": query,
                 "dataType": "Branded",
-                "pageSize": 5,
+                "pageSize": USDA_PAGE_SIZE,
             }
         )
 
@@ -640,14 +327,12 @@ def lookup_calories_usda(upc):
 
         try:
             resp = http_json(url)
-
         except urllib.error.HTTPError as e:
-            print(f"  USDA lookup failed for UPC {variant}: {e}", file=sys.stderr)
+            print(f"  USDA name lookup failed for query '{query}': {e}", file=sys.stderr)
             _usda_stats["http_error"] += 1
             continue
-
         except urllib.error.URLError as e:
-            print(f"  USDA lookup failed for UPC {variant}: {e}", file=sys.stderr)
+            print(f"  USDA name lookup failed for query '{query}': {e}", file=sys.stderr)
             _usda_stats["http_error"] += 1
             continue
 
@@ -657,46 +342,30 @@ def lookup_calories_usda(upc):
             continue
 
         for food in foods:
-            food_gtin = str(food.get("gtinUpc") or "")
-            food_bare = food_gtin.lstrip("0") or "0"
-
-            if food_bare not in target_bare_forms:
-                continue
-
             label_nutrients = food.get("labelNutrients", {}) or {}
             calories_value = (label_nutrients.get("calories") or {}).get("value")
 
             calories_number = _as_number(calories_value)
 
-            if calories_number is not None and calories_number > 0:
-                _usda_stats["matched"] += 1
-                return round(calories_number)
+            if calories_number is None or calories_number <= 0:
+                continue
 
-    _usda_stats["no_match"] += 1
+            score = _match_score(name, brand, food)
+
+            if score > best_score:
+                best_score = score
+                best_calories = round(calories_number)
+
+        # If we found a reasonably strong match, stop trying fallback queries.
+        if best_calories is not None and best_score >= 0.45:
+            break
+
+    if best_calories is not None:
+        _usda_stats["matched"] += 1
+        return best_calories
+
+    _usda_stats["no_foods_returned"] += 1
     return None
-
-
-def lookup_calories(upc):
-    global _usda_missing_key_warned
-
-    calories = lookup_calories_off(upc)
-
-    if calories is not None and calories > 0:
-        return calories
-
-    if not ENABLE_USDA_FALLBACK:
-        return None
-
-    if not USDA_API_KEY:
-        if not _usda_missing_key_warned:
-            print(
-                "  USDA fallback is enabled but USDA_API_KEY is not set; skipping USDA fallback.",
-                file=sys.stderr,
-            )
-            _usda_missing_key_warned = True
-        return None
-
-    return lookup_calories_usda(upc)
 
 
 def build_pool(token, location_id, terms):
@@ -708,8 +377,6 @@ def build_pool(token, location_id, terms):
 
         products = search_products(token, location_id, term)
 
-        time.sleep(KROGER_REQUEST_PAUSE_SECONDS)
-
         for product in products:
             upc = product.get("upc")
 
@@ -718,9 +385,21 @@ def build_pool(token, location_id, terms):
 
             seen_upcs.add(upc)
 
-            calories = lookup_calories(upc)
+            name = product.get("description")
+            brand = product.get("brandName")
 
-            time.sleep(BETWEEN_PRODUCTS_PAUSE_SECONDS)
+            # Some Kroger payloads may put useful text in items.
+            if not name:
+                items = product.get("items") or []
+                if items:
+                    name = items[0].get("description")
+
+            if not name:
+                continue
+
+            calories = lookup_calories_by_name(name, brand)
+
+            time.sleep(REQUEST_PAUSE_SECONDS)
 
             if calories is None or calories <= 0:
                 continue
@@ -730,8 +409,8 @@ def build_pool(token, location_id, terms):
             pool.append(
                 {
                     "upc": upc,
-                    "name": product.get("description"),
-                    "brand": product.get("brandName"),
+                    "name": name,
+                    "brand": brand,
                     "size": items[0].get("size"),
                     "price": extract_price(product),
                     "image": extract_image(product),
@@ -772,12 +451,7 @@ def main():
         f"{len(general_pool)} general items."
     )
 
-    print(f"Open Food Facts stats: {_off_stats}")
-
-    if ENABLE_USDA_FALLBACK:
-        print(f"USDA fallback stats: {_usda_stats}")
-    else:
-        print("USDA fallback disabled.")
+    print(f"USDA name-search stats: {_usda_stats}")
 
 
 if __name__ == "__main__":
