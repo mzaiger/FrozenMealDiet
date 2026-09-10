@@ -7,6 +7,8 @@ calories from Open Food Facts.
 
 Strategy:
 1. Try exact BARCODE lookup first (most accurate).
+   - Fixes previous bug where 13-digit Kroger UPCs were not properly 
+     generating 12-digit standard UPC variants.
 2. If barcode is missing from OFF, fallback to TEXT SEARCH.
 3. If text search finds a product but the UPC doesn't match Kroger's UPC, 
    it is flagged as "fuzzy_text" so you know it might be a different flavor.
@@ -52,7 +54,7 @@ OFF_MAX_QUERIES_PER_ITEM = int(os.environ.get("OFF_MAX_QUERIES_PER_ITEM", "3"))
 
 USER_AGENT = os.environ.get(
     "USER_AGENT",
-    "kroger-meal-pool/2.2 (Barcode + Search-a-licious API; set USER_AGENT env var)",
+    "kroger-meal-pool/2.3 (Barcode Variant Fix + Search-a-licious API)",
 )
 
 BREAKFAST_TERMS = [
@@ -292,13 +294,28 @@ def lookup_by_barcode(upc, kroger_mass_g):
     if not upc: return None
     
     variants = set()
-    variants.add(upc)
-    variants.add(upc.lstrip('0'))
-    if len(upc) <= 13:
-        variants.add(upc.zfill(12))
-        variants.add(upc.zfill(13))
+    
+    # Strip ALL leading zeros to get the core number
+    # e.g. '0007100714478' -> '7100714478'
+    stripped = upc.lstrip('0')
+    if not stripped:
+        return None
         
+    variants.add(stripped)
+    
+    # Pad to standard barcode lengths (8, 12, 13, 14)
+    # This fixes the bug where zfill(12) did nothing on a 13-char string
+    for length in [8, 12, 13, 14]:
+        if len(stripped) <= length:
+            variants.add(stripped.zfill(length))
+            
+    # Also try the exact original string Kroger gave us
+    variants.add(upc)
+    
+    # Filter out empty strings just in case
     variants = [v for v in variants if v]
+    
+    logging.info("Trying barcode variants for UPC %s: %s", upc, sorted(variants))
     
     for code in variants:
         params = {
@@ -318,13 +335,21 @@ def lookup_by_barcode(upc, kroger_mass_g):
         hits = resp.get("hits") or []
         if hits:
             candidate = hits[0]
+            returned_code = str(candidate.get("code"))
+            
+            # Strict check: ensure OFF actually returned the barcode we searched for
+            # (Prevents search engine from doing weird fuzzy matching on exact code queries)
+            if returned_code not in variants:
+                logging.info("Barcode search for %s returned a different code %s, skipping.", code, returned_code)
+                continue
+
             calories, basis = extract_off_calories(candidate, kroger_mass_g)
             if calories is not None:
-                logging.info("Barcode EXACT match found! code=%s calories=%s", candidate.get("code"), calories)
+                logging.info("Barcode EXACT match found! code=%s calories=%s", returned_code, calories)
                 return {
                     "calories": calories, "calories_basis": basis,
-                    "off_upc": str(candidate.get("code")),
-                    "off_url": f"{OFF_PRODUCT_BASE}/product/{candidate.get('code')}",
+                    "off_upc": returned_code,
+                    "off_url": f"{OFF_PRODUCT_BASE}/product/{returned_code}",
                     "off_name": candidate.get("product_name"),
                     "off_brand": candidate.get("brands"),
                     "off_query": f"barcode:{code}",
