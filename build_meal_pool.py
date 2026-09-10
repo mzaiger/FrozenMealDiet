@@ -61,13 +61,37 @@ PRODUCTS_PER_TERM = 20
 REQUEST_PAUSE_SECONDS = 0.3
 
 
-def http_json(url, data=None, headers=None, method=None):
-    headers = headers or {}
+DEFAULT_HEADERS = {
+    # Federal API gateways (api.data.gov, which fronts USDA FDC) are more
+    # likely to throttle/reject the default "Python-urllib/3.x" UA as bot
+    # traffic. A normal-looking UA + explicit Accept header avoids that.
+    "User-Agent": "Mozilla/5.0 (compatible; frozen-meal-planner/1.0)",
+    "Accept": "application/json",
+}
+
+
+def http_json(url, data=None, headers=None, method=None, retries=3, backoff=1.5):
+    merged_headers = {**DEFAULT_HEADERS, **(headers or {})}
     if data is not None and not isinstance(data, (bytes, bytearray)):
         data = urllib.parse.urlencode(data).encode("utf-8")
-    req = urllib.request.Request(url, data=data, headers=headers, method=method)
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        return json.loads(resp.read().decode("utf-8"))
+
+    last_error = None
+    for attempt in range(retries):
+        req = urllib.request.Request(url, data=data, headers=merged_headers, method=method)
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            last_error = e
+            # 503/502/429 are transient/throttling — worth a retry with
+            # backoff. Anything else (401, 403, 404...) won't fix itself.
+            if e.code in (429, 502, 503, 504) and attempt < retries - 1:
+                wait = backoff * (2 ** attempt)
+                print(f"    got HTTP {e.code}, retrying in {wait:.1f}s...", file=sys.stderr)
+                time.sleep(wait)
+                continue
+            raise
+    raise last_error
 
 
 def get_kroger_token():
@@ -142,7 +166,10 @@ def _upc_variants(upc):
     if not digits:
         return []
     bare = digits.lstrip("0") or "0"
-    candidates = [digits, bare, bare.zfill(12), bare.zfill(13), bare.zfill(14)]
+    # Most Branded Foods entries store gtinUpc as a 14-digit, zero-padded
+    # GTIN, so try that first — it's the most likely hit — then fall back
+    # to the as-received UPC and the bare/13-digit forms.
+    candidates = [bare.zfill(14), digits, bare, bare.zfill(13)]
     seen = set()
     variants = []
     for v in candidates:
@@ -164,7 +191,9 @@ def lookup_calories(upc):
     # padded equivalent "00011110001234" are recognized as the same code.
     target_bare_forms = {v.lstrip("0") or "0" for v in variants}
 
-    for variant in variants:
+    for i, variant in enumerate(variants):
+        if i > 0:
+            time.sleep(REQUEST_PAUSE_SECONDS)  # pace successive USDA calls
         params = urllib.parse.urlencode(
             {"api_key": USDA_API_KEY, "query": variant, "dataType": "Branded", "pageSize": 5}
         )
