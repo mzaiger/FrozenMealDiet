@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Freezer Week — 7-Day Frozen Meal Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --frost: #EAF3F6;
+    --card: #FFFFFF;
+    --ink: #12232E;
+    --ink-soft: #4C6270;
+    --line: #D3E3E9;
+    --blue: #1E5F8C;
+    --blue-deep: #123B57;
+    --ice: #8FD9E8;
+    --good: #2C8C5E;
+    --warn: #C1443C;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    background:var(--frost);
+    background-image:
+      radial-gradient(circle at 10% 0%, rgba(143,217,232,0.35), transparent 45%),
+      radial-gradient(circle at 90% 15%, rgba(30,95,140,0.10), transparent 40%);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    padding:0 0 80px;
+  }
+
+  header{
+    max-width:1080px;
+    margin:0 auto;
+    padding:56px 24px 32px;
+  }
+
+  .kicker{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--blue);
+  }
+
+  h1{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(40px, 7vw, 64px);
+    letter-spacing:0.01em;
+    margin:6px 0 8px;
+    color:var(--blue-deep);
+    line-height:0.95;
+  }
+
+  .sub{
+    color:var(--ink-soft);
+    max-width:560px;
+    font-size:15px;
+    line-height:1.5;
+    margin:0 0 28px;
+  }
+
+  .controls{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    gap:20px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:20px 24px;
+  }
+
+  .field label{
+    display:block;
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+
+  .field input{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:22px;
+    font-weight:600;
+    color:var(--blue-deep);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:8px 12px;
+    width:120px;
+    background:var(--frost);
+  }
+
+  .field input:focus{
+    outline:2px solid var(--blue);
+    outline-offset:1px;
+  }
+
+  .tolerance{
+    font-size:13px;
+    color:var(--ink-soft);
+    align-self:center;
+    padding-bottom:10px;
+  }
+
+  button#generate{
+    font-family:'Inter', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    background:var(--blue);
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    padding:13px 22px;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+
+  button#generate:hover{ background:var(--blue-deep); }
+  button#generate:focus-visible{ outline:2px solid var(--blue-deep); outline-offset:2px; }
+
+  .pool-status{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:14px;
+    font-family:'IBM Plex Mono', monospace;
+  }
+
+  main{
+    max-width:1080px;
+    margin:0 auto;
+    padding:8px 24px;
+  }
+
+  #week{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+    gap:18px;
+    margin-top:28px;
+  }
+
+  .day-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:20px 22px 18px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .day-name{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:26px;
+    color:var(--blue-deep);
+    letter-spacing:0.02em;
+  }
+
+  .meal-row{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px 0;
+    border-top:1px solid var(--line);
+  }
+
+  .meal-row:first-of-type{ border-top:none; }
+
+  .meal-info{ flex:1; min-width:0; }
+
+  .meal-slot{
+    font-size:11px;
+    color:var(--blue);
+    font-weight:600;
+    text-transform:lowercase;
+  }
+
+  .meal-name{
+    font-size:14px;
+    color:var(--ink);
+    line-height:1.35;
+    margin-top:2px;
+  }
+
+  .meal-cal{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14px;
+    font-weight:600;
+    color:var(--ink-soft);
+    white-space:nowrap;
+    padding-top:1px;
+  }
+
+  .day-total{
+    margin-top:2px;
+    padding-top:12px;
+    border-top:2px solid var(--ink);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+
+  .day-total .label{ font-size:12px; color:var(--ink-soft); }
+
+  .day-total .value{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:18px;
+    font-weight:700;
+  }
+
+  .value.in-range{ color:var(--good); }
+  .value.off-range{ color:var(--warn); }
+
+  .flag{
+    font-size:11px;
+    color:var(--warn);
+    margin-top:-6px;
+  }
+
+  .empty-state{
+    border:1px dashed var(--line);
+    border-radius:10px;
+    padding:40px 24px;
+    text-align:center;
+    color:var(--ink-soft);
+    margin-top:28px;
+  }
+
+  .empty-state code{
+    font-family:'IBM Plex Mono', monospace;
+    background:var(--frost);
+    padding:2px 6px;
+    border-radius:4px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker">FROZEN &middot; WEEKLY</div>
+  <h1>Freezer Week</h1>
+  <p class="sub">Seven days, twenty-one meals, pulled from your local Kroger's frozen aisle. Set a daily calorie goal and each day lands within 250 calories of it.</p>
+
+  <div class="controls">
+    <div class="field">
+      <label for="calorie-target">Calories / day</label>
+      <input type="number" id="calorie-target" value="1500" min="800" max="4000" step="50" />
+    </div>
+    <div class="tolerance">&plusmn; 250 cal window</div>
+    <button id="generate">Generate week</button>
+  </div>
+  <div class="pool-status" id="pool-status">Loading meal pool&hellip;</div>
+</header>
+
+<main>
+  <div id="week"></div>
+  <div class="empty-state" id="empty-state" style="display:none;">
+    Meal pool not found yet. Run <code>build_meal_pool.py</code> (or wait for the weekly GitHub Action) to generate <code>candidate_pool.json</code>.
+  </div>
+</main>
+
+<script>
+const TOLERANCE = 250;
+const DAY_NAMES = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+
+let pool = { breakfast: [], general: [] };
+
+async function loadPool(){
+  try{
+    const res = await fetch('candidate_pool.json', { cache: 'no-store' });
+    if(!res.ok) throw new Error('not found');
+    pool = await res.json();
+    const status = document.getElementById('pool-status');
+    status.textContent = `Pool updated ${new Date(pool.generated_at).toLocaleDateString()} — ${pool.breakfast.length} breakfast items, ${pool.general.length} lunch/dinner items.`;
+    generateWeek();
+  }catch(err){
+    document.getElementById('pool-status').textContent = '';
+    document.getElementById('empty-state').style.display = 'block';
+  }
+}
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Find a lunch+dinner pair (distinct items) from `general` whose combined
+// calories fall within [low, high]. Returns {pair, sum} or null.
+function findPairInRange(general, low, high){
+  const sorted = general
+    .map((item, idx) => ({ item, idx }))
+    .sort((a, b) => a.item.calories - b.item.calories);
+
+  const order = shuffle(sorted);
+  for(const a of order){
+    const needLow = low - a.item.calories;
+    const needHigh = high - a.item.calories;
+    if(needHigh < 0) continue;
+
+    // binary search for first candidate with calories >= needLow
+    let lo = 0, hi = sorted.length;
+    while(lo < hi){
+      const mid = (lo + hi) >> 1;
+      if(sorted[mid].item.calories < needLow) lo = mid + 1; else hi = mid;
+    }
+    const candidates = [];
+    for(let i = lo; i < sorted.length && sorted[i].item.calories <= needHigh; i++){
+      if(sorted[i].idx !== a.idx) candidates.push(sorted[i]);
+    }
+    if(candidates.length){
+      const b = candidates[Math.floor(Math.random() * candidates.length)];
+      return { pair: [a.item, b.item], sum: a.item.calories + b.item.calories };
+    }
+  }
+  return null;
+}
+
+// Closest-effort fallback when no exact-window combo exists: sample random
+// pairs and keep the one nearest the target window.
+function closestPair(general, low, high, attempts = 400){
+  let best = null;
+  for(let i = 0; i < attempts; i++){
+    const a = general[Math.floor(Math.random() * general.length)];
+    let b = general[Math.floor(Math.random() * general.length)];
+    if(general.length > 1){
+      while(b === a) b = general[Math.floor(Math.random() * general.length)];
+    }
+    const sum = a.calories + b.calories;
+    const dist = sum < low ? low - sum : (sum > high ? sum - high : 0);
+    if(!best || dist < best.dist){
+      best = { pair: [a, b], sum, dist };
+    }
+    if(dist === 0) break;
+  }
+  return best;
+}
+
+function buildDay(target){
+  const low = target - TOLERANCE;
+  const high = target + TOLERANCE;
+  const breakfasts = shuffle(pool.breakfast);
+
+  for(const b of breakfasts){
+    const remLow = low - b.calories;
+    const remHigh = high - b.calories;
+    if(remHigh < 0) continue;
+    const found = findPairInRange(pool.general, remLow, remHigh);
+    if(found){
+      const [lunch, dinner] = shuffle(found.pair);
+      const total = b.calories + found.sum;
+      return { breakfast: b, lunch, dinner, total, inRange: true };
+    }
+  }
+
+  // Fallback: no exact combo hit the window anywhere in the pool.
+  const b = breakfasts[0];
+  const fallback = closestPair(pool.general, low - b.calories, high - b.calories);
+  const [lunch, dinner] = shuffle(fallback.pair);
+  const total = b.calories + fallback.sum;
+  return { breakfast: b, lunch, dinner, total, inRange: total >= low && total <= high };
+}
+
+function generateWeek(){
+  if(!pool.breakfast.length || pool.general.length < 2){
+    document.getElementById('empty-state').style.display = 'block';
+    return;
+  }
+  document.getElementById('empty-state').style.display = 'none';
+
+  const target = parseInt(document.getElementById('calorie-target').value, 10) || 1500;
+  const weekEl = document.getElementById('week');
+  weekEl.innerHTML = '';
+
+  DAY_NAMES.forEach(dayName => {
+    const day = buildDay(target);
+    weekEl.appendChild(renderDayCard(dayName, day, target));
+  });
+}
+
+function mealRow(slot, meal){
+  const row = document.createElement('div');
+  row.className = 'meal-row';
+  row.innerHTML = `
+    <div class="meal-info">
+      <div class="meal-slot">${slot}</div>
+      <div class="meal-name">${meal.name || 'Unnamed item'}</div>
+    </div>
+    <div class="meal-cal">${meal.calories} cal</div>
+  `;
+  return row;
+}
+
+function renderDayCard(dayName, day, target){
+  const card = document.createElement('div');
+  card.className = 'day-card';
+
+  const heading = document.createElement('div');
+  heading.className = 'day-name';
+  heading.textContent = dayName;
+  card.appendChild(heading);
+
+  card.appendChild(mealRow('breakfast', day.breakfast));
+  card.appendChild(mealRow('lunch', day.lunch));
+  card.appendChild(mealRow('dinner', day.dinner));
+
+  const totalRow = document.createElement('div');
+  totalRow.className = 'day-total';
+  totalRow.innerHTML = `
+    <span class="label">Daily total</span>
+    <span class="value ${day.inRange ? 'in-range' : 'off-range'}">${day.total} cal</span>
+  `;
+  card.appendChild(totalRow);
+
+  if(!day.inRange){
+    const flag = document.createElement('div');
+    flag.className = 'flag';
+    flag.textContent = `Outside the ±250 window around ${target} — pool didn't have a closer combo today.`;
+    card.appendChild(flag);
+  }
+
+  return card;
+}
+
+document.getElementById('generate').addEventListener('click', generateWeek);
+loadPool();
+</script>
+
+</body>
+</html>
