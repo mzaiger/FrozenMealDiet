@@ -1,0 +1,44 @@
+name: Check Walmart active URLs
+
+on:
+  schedule:
+    # :17 past the hour rather than :00, since :00 is the most congested
+    # minute for scheduled Actions runs across all of GitHub and gets
+    # delayed/dropped more often.
+    - cron: "17 * * * *"
+  workflow_dispatch:
+    inputs:
+      batch_size:
+        description: "How many unresolved items to check this run"
+        required: false
+        default: "20"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: check-active-urls
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check next batch of unresolved URLs
+        run: |
+          python check_active_urls.py --only-unknown \
+            --limit "${{ github.event.inputs.batch_size || 20 }}"
+
+      - name: Commit updated pool
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add candidate_pool.json
+          git diff --quiet --cached || git commit -m "Check next batch of Walmart URLs"
+          git push
