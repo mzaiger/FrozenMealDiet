@@ -454,6 +454,13 @@ async function loadPool(){
     
     let items = Array.isArray(rawData) ? rawData : (rawData.general || []);
 
+    const totalCount = items.length;
+    // Drop confirmed-dead links (active === false). Items that are still
+    // unchecked (active === null/undefined) stay eligible — only a
+    // confirmed dead result excludes them.
+    items = items.filter(item => item.active !== false);
+    const deadCount = totalCount - items.length;
+
     const breakfastItems = items.filter(item => 
       (item.PRODUCT_NAME || item.name || '').toLowerCase().includes('breakfast') ||
       item.CATEGORY === 'Frozen Breakfast' || item.category === 'Frozen Breakfast'
@@ -480,7 +487,8 @@ async function loadPool(){
 
     const status = document.getElementById('pool-status');
     const dateStr = pool.generated_at ? new Date(pool.generated_at).toLocaleDateString() : 'recently';
-    status.textContent = `Pool updated ${dateStr} — ${(pool.breakfast || []).length} breakfast items, ${(pool.general || []).length} lunch/dinner items.`;
+    const deadNote = deadCount ? ` — ${deadCount} dead link${deadCount === 1 ? '' : 's'} excluded` : '';
+    status.textContent = `Pool updated ${dateStr} — ${(pool.breakfast || []).length} breakfast items, ${(pool.general || []).length} lunch/dinner items${deadNote}.`;
     generateWeek();
   }catch(err){
     document.getElementById('pool-status').textContent = '';
