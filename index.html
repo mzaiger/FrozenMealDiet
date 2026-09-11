@@ -285,6 +285,7 @@ let pool = { generated_at: "", source: "", calories_source: "", breakfast: [], g
 
 function getMealCalories(meal){
   if(typeof meal.calories === 'number') return meal.calories;
+  if(meal.calories && !isNaN(Number(meal.calories))) return Number(meal.calories);
   if(meal.open_food_facts && typeof meal.open_food_facts.calories === 'number'){
     return meal.open_food_facts.calories;
   }
@@ -292,6 +293,7 @@ function getMealCalories(meal){
 }
 
 function getMealServing(meal){
+  if(meal.PRODUCT_SIZE) return meal.PRODUCT_SIZE;
   if(meal.serving_size) return meal.serving_size;
   if(meal.serving) return meal.serving;
   if(meal.open_food_facts && meal.open_food_facts.serving_size){
@@ -300,8 +302,15 @@ function getMealServing(meal){
   return '1 serving';
 }
 
+function getMealPrice(meal){
+  const price = meal.PRICE_CURRENT ?? meal.price ?? meal.PRICE_RETAIL;
+  if(price === undefined || price === null || price === 0 || price === '0') return 'N/A';
+  const num = parseFloat(price);
+  return isNaN(num) ? 'N/A' : `$${num.toFixed(2)}`;
+}
+
 function getMealUrl(meal){
-  return meal.product_url || (meal.open_food_facts ? meal.open_food_facts.url : '');
+  return meal.PRODUCT_URL || meal.product_url || (meal.open_food_facts ? meal.open_food_facts.url : '');
 }
 
 async function loadPool(){
@@ -310,16 +319,31 @@ async function loadPool(){
     if(!res.ok) throw new Error('not found');
     const rawData = await res.json();
     
-    // Support either the root-level array schema or the object schema
-    if(Array.isArray(rawData)){
-      pool = {
-        generated_at: new Date().toISOString(),
-        breakfast: rawData.filter(item => item.category === 'Frozen Breakfast'),
-        general: rawData.filter(item => item.category !== 'Frozen Breakfast')
-      };
-    } else {
-      pool = rawData;
-    }
+    let items = Array.isArray(rawData) ? rawData : (rawData.general || []);
+
+    const breakfastItems = items.filter(item => 
+      (item.PRODUCT_NAME || item.name || '').toLowerCase().includes('breakfast') ||
+      item.CATEGORY === 'Frozen Breakfast' || item.category === 'Frozen Breakfast'
+    );
+
+    const generalItems = items.filter(item => 
+      !(item.PRODUCT_NAME || item.name || '').toLowerCase().includes('breakfast') &&
+      item.CATEGORY !== 'Frozen Breakfast' && item.category !== 'Frozen Breakfast'
+    );
+
+    // Fallback if no breakfast items found in dataset: default to N/A @ 400 cal
+    const fallbackBreakfast = [{
+      PRODUCT_NAME: 'N/A',
+      calories: 400,
+      PRICE_CURRENT: 0,
+      PRODUCT_SIZE: 'N/A'
+    }];
+
+    pool = {
+      generated_at: new Date().toISOString(),
+      breakfast: breakfastItems.length ? breakfastItems : fallbackBreakfast,
+      general: generalItems
+    };
 
     const status = document.getElementById('pool-status');
     const dateStr = pool.generated_at ? new Date(pool.generated_at).toLocaleDateString() : 'recently';
@@ -353,7 +377,6 @@ function findPairInRange(general, low, high){
     const needHigh = high - a.calories;
     if(needHigh < 0) continue;
 
-    // binary search for first candidate with calories >= needLow
     let lo = 0, hi = sorted.length;
     while(lo < hi){
       const mid = (lo + hi) >> 1;
@@ -371,8 +394,6 @@ function findPairInRange(general, low, high){
   return null;
 }
 
-// Closest-effort fallback when no exact-window combo exists: sample random
-// pairs and keep the one nearest the target window.
 function closestPair(general, low, high, attempts = 400){
   let best = null;
   for(let i = 0; i < attempts; i++){
@@ -409,7 +430,6 @@ function buildDay(target){
     }
   }
 
-  // Fallback: no exact combo hit the window anywhere in the pool.
   const b = breakfasts[0];
   const bCal = getMealCalories(b);
   const fallback = closestPair(pool.general, low - bCal, high - bCal);
@@ -441,16 +461,23 @@ function mealRow(slot, meal){
   const url = getMealUrl(meal);
   const calories = getMealCalories(meal);
   const serving = getMealServing(meal);
+  const price = getMealPrice(meal);
+  const name = meal.PRODUCT_NAME || meal.name || 'Unnamed item';
+
   const link = url
     ? `<a class="meal-link" href="${url}" target="_blank" rel="noopener noreferrer">view &rarr;</a>`
     : '';
+
   row.innerHTML = `
     <div class="meal-info">
       <div class="meal-slot">${slot}</div>
-      <div class="meal-name">${meal.name || 'Unnamed item'}${link}</div>
+      <div class="meal-name">${name}${link}</div>
       <div class="meal-serving">Serving: ${serving}</div>
     </div>
-    <div class="meal-cal">${calories} cal</div>
+    <div style="text-align:right;">
+      <div class="meal-cal">${calories} cal</div>
+      <div style="font-size:12px; color:var(--ink-soft); margin-top:2px;">${price}</div>
+    </div>
   `;
   return row;
 }
@@ -468,10 +495,21 @@ function renderDayCard(dayName, day, target){
   card.appendChild(mealRow('lunch', day.lunch));
   card.appendChild(mealRow('dinner', day.dinner));
 
+  const totalPrice = [day.breakfast, day.lunch, day.dinner].reduce((sum, meal) => {
+    const raw = meal.PRICE_CURRENT ?? meal.price ?? meal.PRICE_RETAIL;
+    const p = parseFloat(raw);
+    return sum + (isNaN(p) ? 0 : p);
+  }, 0);
+
+  const priceStr = totalPrice > 0 ? `$${totalPrice.toFixed(2)}` : 'N/A';
+
   const totalRow = document.createElement('div');
   totalRow.className = 'day-total';
   totalRow.innerHTML = `
-    <span class="label">Daily total</span>
+    <div>
+      <div class="label">Daily total</div>
+      <div style="font-size:12px; color:var(--ink-soft); font-family:'IBM Plex Mono', monospace; font-weight:600;">${priceStr}</div>
+    </div>
     <span class="value ${day.inRange ? 'in-range' : 'off-range'}">${day.total} cal</span>
   `;
   card.appendChild(totalRow);
