@@ -184,6 +184,12 @@
     margin-top:2px;
   }
 
+  .meal-serving{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:3px;
+  }
+
   .meal-link{
     font-size:11px;
     color:var(--blue);
@@ -275,15 +281,49 @@
 const TOLERANCE = 250;
 const DAY_NAMES = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
 
-let pool = { breakfast: [], general: [] };
+let pool = { generated_at: "", source: "", calories_source: "", breakfast: [], general: [] };
+
+function getMealCalories(meal){
+  if(typeof meal.calories === 'number') return meal.calories;
+  if(meal.open_food_facts && typeof meal.open_food_facts.calories === 'number'){
+    return meal.open_food_facts.calories;
+  }
+  return 0;
+}
+
+function getMealServing(meal){
+  if(meal.serving_size) return meal.serving_size;
+  if(meal.serving) return meal.serving;
+  if(meal.open_food_facts && meal.open_food_facts.serving_size){
+    return meal.open_food_facts.serving_size;
+  }
+  return '1 serving';
+}
+
+function getMealUrl(meal){
+  return meal.product_url || (meal.open_food_facts ? meal.open_food_facts.url : '');
+}
 
 async function loadPool(){
   try{
     const res = await fetch('candidate_pool.json', { cache: 'no-store' });
     if(!res.ok) throw new Error('not found');
-    pool = await res.json();
+    const rawData = await res.json();
+    
+    // Support either the root-level array schema or the object schema
+    if(Array.isArray(rawData)){
+      pool = {
+        generated_at: new Date().toISOString(),
+        breakfast: rawData.filter(item => item.category === 'Frozen Breakfast'),
+        general: rawData.filter(item => item.category !== 'Frozen Breakfast')
+      };
+    } else {
+      pool = rawData;
+    }
+
     const status = document.getElementById('pool-status');
-    status.textContent = `Pool updated ${new Date(pool.generated_at).toLocaleDateString()} — ${pool.breakfast.length} breakfast items, ${pool.general.length} lunch/dinner items.`;
+    const dateStr = pool.generated_at ? new Date(pool.generated_at).toLocaleDateString() : 'recently';
+    status.textContent = `Pool updated ${dateStr} — ${(pool.breakfast || []).length} breakfast items, ${(pool.general || []).length} lunch/dinner items.`;
     generateWeek();
   }catch(err){
     document.getElementById('pool-status').textContent = '';
@@ -304,28 +344,28 @@ function shuffle(arr){
 // calories fall within [low, high]. Returns {pair, sum} or null.
 function findPairInRange(general, low, high){
   const sorted = general
-    .map((item, idx) => ({ item, idx }))
-    .sort((a, b) => a.item.calories - b.item.calories);
+    .map((item, idx) => ({ item, idx, calories: getMealCalories(item) }))
+    .sort((a, b) => a.calories - b.calories);
 
   const order = shuffle(sorted);
   for(const a of order){
-    const needLow = low - a.item.calories;
-    const needHigh = high - a.item.calories;
+    const needLow = low - a.calories;
+    const needHigh = high - a.calories;
     if(needHigh < 0) continue;
 
     // binary search for first candidate with calories >= needLow
     let lo = 0, hi = sorted.length;
     while(lo < hi){
       const mid = (lo + hi) >> 1;
-      if(sorted[mid].item.calories < needLow) lo = mid + 1; else hi = mid;
+      if(sorted[mid].calories < needLow) lo = mid + 1; else hi = mid;
     }
     const candidates = [];
-    for(let i = lo; i < sorted.length && sorted[i].item.calories <= needHigh; i++){
+    for(let i = lo; i < sorted.length && sorted[i].calories <= needHigh; i++){
       if(sorted[i].idx !== a.idx) candidates.push(sorted[i]);
     }
     if(candidates.length){
       const b = candidates[Math.floor(Math.random() * candidates.length)];
-      return { pair: [a.item, b.item], sum: a.item.calories + b.item.calories };
+      return { pair: [a.item, b.item], sum: a.calories + b.calories };
     }
   }
   return null;
@@ -341,7 +381,7 @@ function closestPair(general, low, high, attempts = 400){
     if(general.length > 1){
       while(b === a) b = general[Math.floor(Math.random() * general.length)];
     }
-    const sum = a.calories + b.calories;
+    const sum = getMealCalories(a) + getMealCalories(b);
     const dist = sum < low ? low - sum : (sum > high ? sum - high : 0);
     if(!best || dist < best.dist){
       best = { pair: [a, b], sum, dist };
@@ -357,27 +397,29 @@ function buildDay(target){
   const breakfasts = shuffle(pool.breakfast);
 
   for(const b of breakfasts){
-    const remLow = low - b.calories;
-    const remHigh = high - b.calories;
+    const bCal = getMealCalories(b);
+    const remLow = low - bCal;
+    const remHigh = high - bCal;
     if(remHigh < 0) continue;
     const found = findPairInRange(pool.general, remLow, remHigh);
     if(found){
       const [lunch, dinner] = shuffle(found.pair);
-      const total = b.calories + found.sum;
+      const total = bCal + found.sum;
       return { breakfast: b, lunch, dinner, total, inRange: true };
     }
   }
 
   // Fallback: no exact combo hit the window anywhere in the pool.
   const b = breakfasts[0];
-  const fallback = closestPair(pool.general, low - b.calories, high - b.calories);
+  const bCal = getMealCalories(b);
+  const fallback = closestPair(pool.general, low - bCal, high - bCal);
   const [lunch, dinner] = shuffle(fallback.pair);
-  const total = b.calories + fallback.sum;
+  const total = bCal + fallback.sum;
   return { breakfast: b, lunch, dinner, total, inRange: total >= low && total <= high };
 }
 
 function generateWeek(){
-  if(!pool.breakfast.length || pool.general.length < 2){
+  if(!pool.breakfast || !pool.general || !pool.breakfast.length || pool.general.length < 2){
     document.getElementById('empty-state').style.display = 'block';
     return;
   }
@@ -396,15 +438,19 @@ function generateWeek(){
 function mealRow(slot, meal){
   const row = document.createElement('div');
   row.className = 'meal-row';
-  const link = meal.product_url
-    ? `<a class="meal-link" href="${meal.product_url}" target="_blank" rel="noopener noreferrer">view &rarr;</a>`
+  const url = getMealUrl(meal);
+  const calories = getMealCalories(meal);
+  const serving = getMealServing(meal);
+  const link = url
+    ? `<a class="meal-link" href="${url}" target="_blank" rel="noopener noreferrer">view &rarr;</a>`
     : '';
   row.innerHTML = `
     <div class="meal-info">
       <div class="meal-slot">${slot}</div>
       <div class="meal-name">${meal.name || 'Unnamed item'}${link}</div>
+      <div class="meal-serving">Serving: ${serving}</div>
     </div>
-    <div class="meal-cal">${meal.calories} cal</div>
+    <div class="meal-cal">${calories} cal</div>
   `;
   return row;
 }
