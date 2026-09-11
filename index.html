@@ -332,8 +332,8 @@
     </div>
     <div class="tolerance">&plusmn; 250 cal window</div>
     <div class="field">
-      <label for="meal-budget">Budget / meal ($)</label>
-      <input type="number" id="meal-budget" value="3.00" min="0" max="50" step="0.25" />
+      <label for="max-per-meal">Max per meal ($)</label>
+      <input type="number" id="max-per-meal" value="3.00" min="0" max="50" step="0.25" />
     </div>
     <button id="generate">Generate week</button>
   </div>
@@ -511,17 +511,17 @@ function closestPair(general, low, high, attempts = 400){
   return best;
 }
 
-function buildDay(target){
+function buildDay(target, breakfastPool, generalPool){
   const low = target - TOLERANCE;
   const high = target + TOLERANCE;
-  const breakfasts = shuffle(pool.breakfast);
+  const breakfasts = shuffle(breakfastPool);
 
   for(const b of breakfasts){
     const bCal = getMealCalories(b);
     const remLow = low - bCal;
     const remHigh = high - bCal;
     if(remHigh < 0) continue;
-    const found = findPairInRange(pool.general, remLow, remHigh);
+    const found = findPairInRange(generalPool, remLow, remHigh);
     if(found){
       const [lunch, dinner] = shuffle(found.pair);
       const total = bCal + found.sum;
@@ -531,7 +531,7 @@ function buildDay(target){
 
   const b = breakfasts[0];
   const bCal = getMealCalories(b);
-  const fallback = closestPair(pool.general, low - bCal, high - bCal);
+  const fallback = closestPair(generalPool, low - bCal, high - bCal);
   const [lunch, dinner] = shuffle(fallback.pair);
   const total = bCal + fallback.sum;
   return { breakfast: b, lunch, dinner, total, inRange: total >= low && total <= high };
@@ -545,34 +545,61 @@ function generateWeek(){
   document.getElementById('empty-state').style.display = 'none';
 
   const target = parseInt(document.getElementById('calorie-target').value, 10) || 1500;
+  const maxPrice = parseFloat(document.getElementById('max-per-meal').value);
+  const capActive = !isNaN(maxPrice) && maxPrice > 0;
+
+  let breakfastPool = pool.breakfast;
+  let generalPool = pool.general;
+  let capFallback = false;
+
+  if(capActive){
+    const cappedBreakfast = pool.breakfast.filter(m => getMealPriceNumber(m) <= maxPrice);
+    const cappedGeneral = pool.general.filter(m => getMealPriceNumber(m) <= maxPrice);
+    if(cappedBreakfast.length && cappedGeneral.length >= 2){
+      breakfastPool = cappedBreakfast;
+      generalPool = cappedGeneral;
+    }else{
+      capFallback = true;
+    }
+  }
+
   const weekEl = document.getElementById('week');
   weekEl.innerHTML = '';
 
-  let weekPriceTotal = 0;
+  let overCapCount = 0;
   DAY_NAMES.forEach(dayName => {
-    const day = buildDay(target);
-    weekPriceTotal += [day.breakfast, day.lunch, day.dinner]
-      .reduce((sum, meal) => sum + getMealPriceNumber(meal), 0);
+    const day = buildDay(target, breakfastPool, generalPool);
+    if(capActive){
+      [day.breakfast, day.lunch, day.dinner].forEach(meal => {
+        if(getMealPriceNumber(meal) > maxPrice) overCapCount++;
+      });
+    }
     weekEl.appendChild(renderDayCard(dayName, day, target));
   });
 
-  updateBudgetSummary(weekPriceTotal);
+  updateBudgetSummary(capActive, maxPrice, overCapCount, capFallback);
 }
 
-// Sums all 21 meals' prices for the week (day totals combined) and averages by 21
-// against the per-meal budget, flagging whether it lands within $1.
-function updateBudgetSummary(weekPriceTotal){
+// Each meal is filtered against the max-per-meal cap before selection, rather
+// than checking the week's average against a +/- tolerance.
+function updateBudgetSummary(capActive, maxPrice, overCapCount, capFallback){
   const summary = document.getElementById('budget-summary');
-  const budget = parseFloat(document.getElementById('meal-budget').value) || 0;
-  const avgPerMeal = weekPriceTotal / 21;
-  const diff = Math.abs(avgPerMeal - budget);
-  const inRange = diff <= 1;
+  if(!capActive){
+    summary.style.display = 'none';
+    return;
+  }
 
   summary.style.display = 'inline-block';
-  summary.className = 'budget-summary ' + (inRange ? 'in-range' : 'off-range');
-  summary.textContent = inRange
-    ? `Avg $${avgPerMeal.toFixed(2)}/meal — within $1 of your $${budget.toFixed(2)} target`
-    : `Avg $${avgPerMeal.toFixed(2)}/meal — off your $${budget.toFixed(2)} target by $${diff.toFixed(2)}`;
+  if(capFallback){
+    summary.className = 'budget-summary off-range';
+    summary.textContent = `Not enough meals priced at $${maxPrice.toFixed(2)} or under in the pool — showing the closest calorie matches instead, some may be over cap.`;
+  }else if(overCapCount > 0){
+    summary.className = 'budget-summary off-range';
+    summary.textContent = `${overCapCount} meal${overCapCount === 1 ? '' : 's'} this week landed over the $${maxPrice.toFixed(2)} cap.`;
+  }else{
+    summary.className = 'budget-summary in-range';
+    summary.textContent = `Every meal this week is at or under $${maxPrice.toFixed(2)}.`;
+  }
 }
 
 function mealRow(slot, meal){
