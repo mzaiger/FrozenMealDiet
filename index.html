@@ -173,6 +173,30 @@
     background:rgba(193,68,60,0.1);
   }
 
+  .week-totals{
+    display:flex;
+    flex-wrap:wrap;
+    gap:32px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 24px;
+    margin-bottom:8px;
+  }
+
+  .week-totals .total-item .label{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-bottom:4px;
+  }
+
+  .week-totals .total-item .value{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:24px;
+    font-weight:700;
+    color:var(--blue-deep);
+  }
+
   main{
     max-width:1080px;
     margin:0 auto;
@@ -343,6 +367,16 @@
 </header>
 
 <main>
+  <div class="week-totals" id="week-totals" style="display:none;">
+    <div class="total-item">
+      <div class="label">Total calories / week</div>
+      <div class="value" id="total-calories">0</div>
+    </div>
+    <div class="total-item">
+      <div class="label">Total cost / week</div>
+      <div class="value" id="total-cost">$0.00</div>
+    </div>
+  </div>
   <div id="week"></div>
   <div class="empty-state" id="empty-state" style="display:none;">
     Meal pool not found yet. Run <code>build_meal_pool.py</code> (or wait for the weekly GitHub Action) to generate <code>candidate_pool.json</code>.
@@ -540,6 +574,7 @@ function buildDay(target, breakfastPool, generalPool){
 function generateWeek(){
   if(!pool.breakfast || !pool.general || !pool.breakfast.length || pool.general.length < 2){
     document.getElementById('empty-state').style.display = 'block';
+    document.getElementById('week-totals').style.display = 'none';
     return;
   }
   document.getElementById('empty-state').style.display = 'none';
@@ -567,8 +602,13 @@ function generateWeek(){
   weekEl.innerHTML = '';
 
   let overCapCount = 0;
+  let weekCalories = 0;
+  let weekCost = 0;
   DAY_NAMES.forEach(dayName => {
     const day = buildDay(target, breakfastPool, generalPool);
+    weekCalories += day.total;
+    weekCost += [day.breakfast, day.lunch, day.dinner]
+      .reduce((sum, meal) => sum + getMealPriceNumber(meal), 0);
     if(capActive){
       [day.breakfast, day.lunch, day.dinner].forEach(meal => {
         if(getMealPriceNumber(meal) > maxPrice) overCapCount++;
@@ -576,6 +616,10 @@ function generateWeek(){
     }
     weekEl.appendChild(renderDayCard(dayName, day, target));
   });
+
+  document.getElementById('week-totals').style.display = 'flex';
+  document.getElementById('total-calories').textContent = weekCalories.toLocaleString();
+  document.getElementById('total-cost').textContent = `$${weekCost.toFixed(2)}`;
 
   updateBudgetSummary(capActive, maxPrice, overCapCount, capFallback);
 }
