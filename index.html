@@ -128,6 +128,33 @@
     font-family:'IBM Plex Mono', monospace;
   }
 
+  .calc-note{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:14px;
+    line-height:1.5;
+  }
+
+  .budget-summary{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    font-weight:600;
+    margin-top:10px;
+    padding:10px 14px;
+    border-radius:6px;
+    display:inline-block;
+  }
+
+  .budget-summary.in-range{
+    color:var(--good);
+    background:rgba(44,140,94,0.1);
+  }
+
+  .budget-summary.off-range{
+    color:var(--warn);
+    background:rgba(193,68,60,0.1);
+  }
+
   main{
     max-width:1080px;
     margin:0 auto;
@@ -261,13 +288,31 @@
 
   <div class="controls">
     <div class="field">
-      <label for="calorie-target">Calories / day</label>
+      <label for="weight">Weight (lbs)</label>
+      <input type="number" id="weight" value="180" min="50" max="600" step="1" />
+    </div>
+    <div class="field">
+      <label for="calories-burned">Calories burned / day</label>
+      <input type="number" id="calories-burned" value="2700" min="800" max="6000" step="10" />
+    </div>
+    <div class="field">
+      <label for="lose-per-week">Lose / week (lbs)</label>
+      <input type="number" id="lose-per-week" value="1" min="0" max="5" step="0.25" />
+    </div>
+    <div class="field">
+      <label for="calorie-target">Daily calorie target</label>
       <input type="number" id="calorie-target" value="1500" min="800" max="4000" step="50" />
     </div>
     <div class="tolerance">&plusmn; 250 cal window</div>
+    <div class="field">
+      <label for="meal-budget">Budget / meal ($)</label>
+      <input type="number" id="meal-budget" value="3.00" min="0" max="50" step="0.25" />
+    </div>
     <button id="generate">Generate week</button>
   </div>
+  <div class="calc-note" id="calc-note"></div>
   <div class="pool-status" id="pool-status">Loading meal pool&hellip;</div>
+  <div class="budget-summary" id="budget-summary" style="display:none;"></div>
 </header>
 
 <main>
@@ -311,6 +356,32 @@ function getMealPrice(meal){
 
 function getMealUrl(meal){
   return meal.PRODUCT_URL || meal.product_url || (meal.open_food_facts ? meal.open_food_facts.url : '');
+}
+
+function getMealPriceNumber(meal){
+  const raw = meal.PRICE_CURRENT ?? meal.price ?? meal.PRICE_RETAIL;
+  const num = parseFloat(raw);
+  return isNaN(num) ? 0 : num;
+}
+
+// Weight-based estimate: ~15 cal/lb/day is a standard moderate-activity TDEE rule of thumb.
+function recalcCaloriesBurned(){
+  const weight = parseFloat(document.getElementById('weight').value) || 0;
+  document.getElementById('calories-burned').value = Math.round(weight * 15);
+  recalcDailyTarget();
+}
+
+// weekly calories burned - 3500 cal per pound they want to lose = weekly target, / 7 = daily target
+function recalcDailyTarget(){
+  const burned = parseFloat(document.getElementById('calories-burned').value) || 0;
+  const loseRate = parseFloat(document.getElementById('lose-per-week').value) || 0;
+  const weeklyBurn = burned * 7;
+  const weeklyTarget = weeklyBurn - (3500 * loseRate);
+  const dailyTarget = Math.round(weeklyTarget / 7);
+  document.getElementById('calorie-target').value = dailyTarget;
+
+  const note = document.getElementById('calc-note');
+  note.textContent = `${burned} cal/day burned × 7 − (3500 × ${loseRate} lb) = ${Math.round(weeklyTarget)} cal/week → ${dailyTarget} cal/day. Daily target and calories burned can both be typed over directly.`;
 }
 
 async function loadPool(){
@@ -449,10 +520,31 @@ function generateWeek(){
   const weekEl = document.getElementById('week');
   weekEl.innerHTML = '';
 
+  let weekPriceTotal = 0;
   DAY_NAMES.forEach(dayName => {
     const day = buildDay(target);
+    weekPriceTotal += [day.breakfast, day.lunch, day.dinner]
+      .reduce((sum, meal) => sum + getMealPriceNumber(meal), 0);
     weekEl.appendChild(renderDayCard(dayName, day, target));
   });
+
+  updateBudgetSummary(weekPriceTotal);
+}
+
+// Sums all 21 meals' prices for the week (day totals combined) and averages by 21
+// against the per-meal budget, flagging whether it lands within $1.
+function updateBudgetSummary(weekPriceTotal){
+  const summary = document.getElementById('budget-summary');
+  const budget = parseFloat(document.getElementById('meal-budget').value) || 0;
+  const avgPerMeal = weekPriceTotal / 21;
+  const diff = Math.abs(avgPerMeal - budget);
+  const inRange = diff <= 1;
+
+  summary.style.display = 'inline-block';
+  summary.className = 'budget-summary ' + (inRange ? 'in-range' : 'off-range');
+  summary.textContent = inRange
+    ? `Avg $${avgPerMeal.toFixed(2)}/meal — within $1 of your $${budget.toFixed(2)} target`
+    : `Avg $${avgPerMeal.toFixed(2)}/meal — off your $${budget.toFixed(2)} target by $${diff.toFixed(2)}`;
 }
 
 function mealRow(slot, meal){
@@ -525,6 +617,11 @@ function renderDayCard(dayName, day, target){
 }
 
 document.getElementById('generate').addEventListener('click', generateWeek);
+document.getElementById('weight').addEventListener('input', recalcCaloriesBurned);
+document.getElementById('lose-per-week').addEventListener('input', recalcDailyTarget);
+document.getElementById('calories-burned').addEventListener('input', recalcDailyTarget);
+
+recalcCaloriesBurned();
 loadPool();
 </script>
 
