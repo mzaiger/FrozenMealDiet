@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Freezer Week — 7-Day Frozen Meal Planner</title>
+<title>Poor Man's Walmart Frozen Meal Diet</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
@@ -340,6 +340,14 @@
 
   .tab-btn:hover:not(.active){ color:var(--blue); }
 
+  .tab-clear{
+    color:var(--warn);
+    border-color:var(--warn);
+    background:var(--card);
+  }
+
+  .tab-clear:hover{ background:rgba(193,68,60,0.08); }
+
   .regen-btn{
     font-family:'IBM Plex Mono', monospace;
     font-size:10px;
@@ -405,8 +413,8 @@
 
 <header>
   <div class="kicker">FROZEN &middot; WEEKLY</div>
-  <h1>Freezer Week</h1>
-  <p class="sub">Seven days, twenty-one meals, pulled from the frozen aisle. Set a daily calorie goal and each day lands within 250 calories of it.</p>
+  <h1>Poor Man's Walmart Frozen Meal Diet</h1>
+  <p class="sub">Seven days of meals pulled from the frozen aisle — 3 to 5 meals a day depending on your calorie target, each day landing within 250 calories of goal.</p>
 
   <div class="controls">
     <div class="field">
@@ -441,13 +449,14 @@
     <div class="tolerance">&plusmn; 250 cal window</div>
     <div class="field">
       <label for="max-per-meal">Max per meal ($)</label>
-      <input type="number" id="max-per-meal" value="3.00" min="0" max="50" step="0.25" />
+      <input type="number" id="max-per-meal" value="5.00" min="0" max="50" step="0.25" />
     </div>
     <button id="generate">Generate week</button>
   </div>
   <div class="calc-note" id="calc-note"></div>
   <div class="pool-status" id="pool-status">Loading meal pool&hellip;</div>
   <div class="budget-summary" id="budget-summary" style="display:none;"></div>
+  <div class="calc-note">* Calorie and price figures come from product/retailer data and may be out of date or inaccurate — always double-check at the store.</div>
 </header>
 
 <main>
@@ -600,6 +609,11 @@ async function loadPool(){
     items = items.filter(item => item.active !== false);
     const deadCount = totalCount - items.length;
 
+    // Anything under this is too small to count as a real meal.
+    const MIN_MEAL_CALORIES = 150;
+    const tooSmallCount = items.filter(item => getMealCalories(item) < MIN_MEAL_CALORIES).length;
+    items = items.filter(item => getMealCalories(item) >= MIN_MEAL_CALORIES);
+
     const breakfastItems = items.filter(item => 
       (item.PRODUCT_NAME || item.name || '').toLowerCase().includes('breakfast') ||
       item.CATEGORY === 'Frozen Breakfast' || item.category === 'Frozen Breakfast'
@@ -626,8 +640,11 @@ async function loadPool(){
 
     const status = document.getElementById('pool-status');
     const dateStr = pool.generated_at ? new Date(pool.generated_at).toLocaleDateString() : 'recently';
-    const deadNote = deadCount ? ` — ${deadCount} dead link${deadCount === 1 ? '' : 's'} excluded` : '';
-    status.textContent = `Pool updated ${dateStr} — ${(pool.breakfast || []).length} breakfast items, ${(pool.general || []).length} lunch/dinner items${deadNote}.`;
+    const notes = [];
+    if(deadCount) notes.push(`${deadCount} dead link${deadCount === 1 ? '' : 's'} excluded`);
+    if(tooSmallCount) notes.push(`${tooSmallCount} item${tooSmallCount === 1 ? '' : 's'} under ${MIN_MEAL_CALORIES} cal excluded`);
+    const extraNote = notes.length ? ` — ${notes.join(', ')}` : '';
+    status.textContent = `Pool updated ${dateStr} — ${(pool.breakfast || []).length} breakfast items, ${(pool.general || []).length} lunch/dinner items${extraNote}.`;
     generateWeek();
   }catch(err){
     document.getElementById('pool-status').textContent = '';
@@ -644,84 +661,75 @@ function shuffle(arr){
   return a;
 }
 
-// Find a lunch+dinner pair (distinct items) from `general` whose combined
-// calories fall within [low, high]. Returns {pair, sum} or null.
-function findPairInRange(general, low, high){
-  const sorted = general
-    .map((item, idx) => ({ item, idx, calories: getMealCalories(item) }))
-    .sort((a, b) => a.calories - b.calories);
-
-  const order = shuffle(sorted);
-  for(const a of order){
-    const needLow = low - a.calories;
-    const needHigh = high - a.calories;
-    if(needHigh < 0) continue;
-
-    let lo = 0, hi = sorted.length;
-    while(lo < hi){
-      const mid = (lo + hi) >> 1;
-      if(sorted[mid].calories < needLow) lo = mid + 1; else hi = mid;
-    }
-    const candidates = [];
-    for(let i = lo; i < sorted.length && sorted[i].calories <= needHigh; i++){
-      if(sorted[i].idx !== a.idx) candidates.push(sorted[i]);
-    }
-    if(candidates.length){
-      const b = candidates[Math.floor(Math.random() * candidates.length)];
-      return { pair: [a.item, b.item], sum: a.calories + b.calories };
-    }
+// Meal count scales with the daily calorie target:
+//  <=1400        -> 3 meals: breakfast, lunch, dinner
+//  1400-2000     -> 4 meals: + a late night meal (general pool)
+//  2000+         -> 5 meals: + a brunch too (drawn from the breakfast pool)
+// Slots are listed in the order they should render, chronologically.
+function getMealSlotsForTarget(target){
+  if(target <= 1400){
+    return { breakfastSlots: ['breakfast'], generalSlots: ['lunch', 'dinner'] };
+  }else if(target <= 2000){
+    return { breakfastSlots: ['breakfast'], generalSlots: ['lunch', 'dinner', 'late night'] };
+  }else{
+    return { breakfastSlots: ['breakfast', 'brunch'], generalSlots: ['lunch', 'dinner', 'late night'] };
   }
-  return null;
 }
 
-function closestPair(general, low, high, attempts = 400){
+function poolForSlot(slot){
+  return (slot === 'breakfast' || slot === 'brunch') ? activeBreakfastPool : activeGeneralPool;
+}
+
+// Pick `n` items from a pool, preferring distinct items but allowing repeats
+// if the pool is smaller than what's needed.
+function pickDistinct(poolArr, n){
+  if(poolArr.length >= n) return shuffle(poolArr).slice(0, n);
+  const result = [];
+  for(let i = 0; i < n; i++){
+    result.push(poolArr[Math.floor(Math.random() * poolArr.length)]);
+  }
+  return result;
+}
+
+// Randomly samples combinations of breakfast-pool items (for breakfastSlots)
+// and general-pool items (for generalSlots) and keeps the closest-to-target
+// combo found. Works for any slot count (3, 4, or 5 meals).
+function buildDay(target, breakfastPool, generalPool, breakfastSlots, generalSlots){
+  const low = target - TOLERANCE;
+  const high = target + TOLERANCE;
+  const bCount = breakfastSlots.length;
+  const gCount = generalSlots.length;
+
   let best = null;
+  const attempts = 600;
   for(let i = 0; i < attempts; i++){
-    const a = general[Math.floor(Math.random() * general.length)];
-    let b = general[Math.floor(Math.random() * general.length)];
-    if(general.length > 1){
-      while(b === a) b = general[Math.floor(Math.random() * general.length)];
-    }
-    const sum = getMealCalories(a) + getMealCalories(b);
+    const bItems = pickDistinct(breakfastPool, bCount);
+    const gItems = pickDistinct(generalPool, gCount);
+    const sum = [...bItems, ...gItems].reduce((s, m) => s + getMealCalories(m), 0);
     const dist = sum < low ? low - sum : (sum > high ? sum - high : 0);
     if(!best || dist < best.dist){
-      best = { pair: [a, b], sum, dist };
+      best = { bItems, gItems, sum, dist };
     }
     if(dist === 0) break;
   }
-  return best;
-}
 
-function buildDay(target, breakfastPool, generalPool){
-  const low = target - TOLERANCE;
-  const high = target + TOLERANCE;
-  const breakfasts = shuffle(breakfastPool);
+  const meals = {};
+  breakfastSlots.forEach((slot, idx) => { meals[slot] = best.bItems[idx]; });
+  generalSlots.forEach((slot, idx) => { meals[slot] = best.gItems[idx]; });
 
-  for(const b of breakfasts){
-    const bCal = getMealCalories(b);
-    const remLow = low - bCal;
-    const remHigh = high - bCal;
-    if(remHigh < 0) continue;
-    const found = findPairInRange(generalPool, remLow, remHigh);
-    if(found){
-      const [lunch, dinner] = shuffle(found.pair);
-      const total = bCal + found.sum;
-      return { breakfast: b, lunch, dinner, total, inRange: true };
-    }
-  }
-
-  const b = breakfasts[0];
-  const bCal = getMealCalories(b);
-  const fallback = closestPair(generalPool, low - bCal, high - bCal);
-  const [lunch, dinner] = shuffle(fallback.pair);
-  const total = bCal + fallback.sum;
-  return { breakfast: b, lunch, dinner, total, inRange: total >= low && total <= high };
+  return {
+    meals,
+    slotOrder: [...breakfastSlots, ...generalSlots],
+    total: best.sum,
+    inRange: best.sum >= low && best.sum <= high
+  };
 }
 
 function generateWeek(){
   if(!pool.breakfast || !pool.general || !pool.breakfast.length || pool.general.length < 2){
     document.getElementById('empty-state').style.display = 'block';
     document.getElementById('week-totals').style.display = 'none';
+    document.getElementById('save-bar').style.display = 'none';
     return;
   }
   document.getElementById('empty-state').style.display = 'none';
@@ -745,30 +753,38 @@ function generateWeek(){
     }
   }
 
-  const weekEl = document.getElementById('week');
-  weekEl.innerHTML = '';
+  activeBreakfastPool = breakfastPool;
+  activeGeneralPool = generalPool;
+  currentTargetGlobal = target;
+  activeCapInfo = { capActive, maxPrice, capFallback };
 
-  let overCapCount = 0;
-  let weekCalories = 0;
-  let weekCost = 0;
-  DAY_NAMES.forEach(dayName => {
-    const day = buildDay(target, breakfastPool, generalPool);
-    weekCalories += day.total;
-    weekCost += [day.breakfast, day.lunch, day.dinner]
-      .reduce((sum, meal) => sum + getMealPriceNumber(meal), 0);
-    if(capActive){
-      [day.breakfast, day.lunch, day.dinner].forEach(meal => {
-        if(getMealPriceNumber(meal) > maxPrice) overCapCount++;
-      });
-    }
-    weekEl.appendChild(renderDayCard(dayName, day, target));
+  const { breakfastSlots, generalSlots } = getMealSlotsForTarget(target);
+  currentWeek = DAY_NAMES.map(dayName => ({ dayName, ...buildDay(target, breakfastPool, generalPool, breakfastSlots, generalSlots) }));
+
+  activeTab = 'current';
+  renderTabs();
+  renderCurrentOrSaved();
+  updateSaveButton();
+}
+
+function countOverCap(days, capActive, maxPrice){
+  if(!capActive) return 0;
+  let count = 0;
+  days.forEach(day => {
+    Object.values(day.meals).forEach(meal => {
+      if(getMealPriceNumber(meal) > maxPrice) count++;
+    });
   });
+  return count;
+}
 
-  document.getElementById('week-totals').style.display = 'flex';
-  document.getElementById('total-calories').textContent = weekCalories.toLocaleString();
-  document.getElementById('total-cost').textContent = `$${weekCost.toFixed(2)}`;
-
-  updateBudgetSummary(capActive, maxPrice, overCapCount, capFallback);
+function weekTotals(days){
+  let calories = 0, cost = 0;
+  days.forEach(day => {
+    calories += day.total;
+    cost += Object.values(day.meals).reduce((s, m) => s + getMealPriceNumber(m), 0);
+  });
+  return { calories, cost };
 }
 
 // Each meal is filtered against the max-per-meal cap before selection, rather
@@ -793,17 +809,22 @@ function updateBudgetSummary(capActive, maxPrice, overCapCount, capFallback){
   }
 }
 
-function mealRow(slot, meal){
+function mealRow(slot, meal, editable, dayIndex){
   const row = document.createElement('div');
   row.className = 'meal-row';
   const url = getMealUrl(meal);
   const calories = getMealCalories(meal);
   const servingsPerContainer = getMealServingsPerContainer(meal);
   const price = getMealPrice(meal);
+  const priceDisplay = price === 'N/A' ? price : `${price}*`;
   const name = meal.PRODUCT_NAME || meal.name || 'Unnamed item';
 
   const link = url
     ? `<a class="meal-link" href="${url}" target="_blank" rel="noopener noreferrer">view &rarr;</a>`
+    : '';
+
+  const regenBtn = editable
+    ? `<button type="button" class="regen-btn" data-day="${dayIndex}" data-slot="${slot}" title="Swap this meal for another option">regenerate</button>`
     : '';
 
   row.innerHTML = `
@@ -811,16 +832,17 @@ function mealRow(slot, meal){
       <div class="meal-slot">${slot}</div>
       <div class="meal-name">${name}${link}</div>
       <div class="meal-serving">Serving: ${servingsPerContainer}</div>
+      ${regenBtn}
     </div>
     <div style="text-align:right;">
-      <div class="meal-cal">${calories} cal</div>
-      <div style="font-size:12px; color:var(--ink-soft); margin-top:2px;">${price}</div>
+      <div class="meal-cal">${calories} cal*</div>
+      <div style="font-size:12px; color:var(--ink-soft); margin-top:2px;">${priceDisplay}</div>
     </div>
   `;
   return row;
 }
 
-function renderDayCard(dayName, day, target){
+function renderDayCard(dayName, day, target, editable, dayIndex){
   const card = document.createElement('div');
   card.className = 'day-card';
 
@@ -829,17 +851,12 @@ function renderDayCard(dayName, day, target){
   heading.textContent = dayName;
   card.appendChild(heading);
 
-  card.appendChild(mealRow('breakfast', day.breakfast));
-  card.appendChild(mealRow('lunch', day.lunch));
-  card.appendChild(mealRow('dinner', day.dinner));
+  day.slotOrder.forEach(slot => {
+    card.appendChild(mealRow(slot, day.meals[slot], editable, dayIndex));
+  });
 
-  const totalPrice = [day.breakfast, day.lunch, day.dinner].reduce((sum, meal) => {
-    const raw = meal.PRICE_CURRENT ?? meal.price ?? meal.PRICE_RETAIL;
-    const p = parseFloat(raw);
-    return sum + (isNaN(p) ? 0 : p);
-  }, 0);
-
-  const priceStr = totalPrice > 0 ? `$${totalPrice.toFixed(2)}` : 'N/A';
+  const totalPrice = Object.values(day.meals).reduce((sum, meal) => sum + getMealPriceNumber(meal), 0);
+  const priceStr = totalPrice > 0 ? `$${totalPrice.toFixed(2)}*` : 'N/A';
 
   const totalRow = document.createElement('div');
   totalRow.className = 'day-total';
@@ -848,7 +865,7 @@ function renderDayCard(dayName, day, target){
       <div class="label">Daily total</div>
       <div style="font-size:12px; color:var(--ink-soft); font-family:'IBM Plex Mono', monospace; font-weight:600;">${priceStr}</div>
     </div>
-    <span class="value ${day.inRange ? 'in-range' : 'off-range'}">${day.total} cal</span>
+    <span class="value ${day.inRange ? 'in-range' : 'off-range'}">${day.total} cal*</span>
   `;
   card.appendChild(totalRow);
 
@@ -862,12 +879,154 @@ function renderDayCard(dayName, day, target){
   return card;
 }
 
+// Draws whichever tab is active — the live editable week, or a saved
+// read-only snapshot — into #week, and updates totals/budget summary to match.
+function renderCurrentOrSaved(){
+  const weekEl = document.getElementById('week');
+  weekEl.innerHTML = '';
+
+  let days, target, editable;
+  if(activeTab === 'current'){
+    days = currentWeek;
+    target = currentTargetGlobal;
+    editable = true;
+  }else{
+    const saved = savedWeeks[activeTab];
+    if(!saved){ activeTab = 'current'; days = currentWeek; target = currentTargetGlobal; editable = true; }
+    else{ days = saved.days; target = saved.target; editable = false; }
+  }
+
+  days.forEach((day, idx) => {
+    weekEl.appendChild(renderDayCard(day.dayName, day, target, editable, idx));
+  });
+
+  const totals = weekTotals(days);
+  document.getElementById('week-totals').style.display = 'flex';
+  document.getElementById('total-calories').textContent = `${totals.calories.toLocaleString()}*`;
+  document.getElementById('total-cost').textContent = `$${totals.cost.toFixed(2)}*`;
+
+  document.getElementById('save-bar').style.display = editable ? 'flex' : 'none';
+
+  if(editable){
+    updateBudgetSummary(activeCapInfo.capActive, activeCapInfo.maxPrice, countOverCap(days, activeCapInfo.capActive, activeCapInfo.maxPrice), activeCapInfo.capFallback);
+  }else{
+    document.getElementById('budget-summary').style.display = 'none';
+  }
+}
+
+function regenerateMeal(dayIndex, slot){
+  if(activeTab !== 'current' || !currentWeek[dayIndex]) return;
+  const day = currentWeek[dayIndex];
+  const sourcePool = poolForSlot(slot);
+  if(!sourcePool || !sourcePool.length) return;
+
+  const used = Object.values(day.meals);
+  let choices = sourcePool.filter(m => !used.includes(m));
+  if(!choices.length) choices = sourcePool;
+
+  day.meals[slot] = choices[Math.floor(Math.random() * choices.length)];
+  day.total = Object.values(day.meals).reduce((s, m) => s + getMealCalories(m), 0);
+  const low = currentTargetGlobal - TOLERANCE;
+  const high = currentTargetGlobal + TOLERANCE;
+  day.inRange = day.total >= low && day.total <= high;
+
+  renderCurrentOrSaved();
+}
+
+function updateSaveButton(){
+  const btn = document.getElementById('save-week');
+  if(!btn) return;
+  btn.textContent = `Save as Week ${savedWeeks.length + 1}`;
+  btn.disabled = !(currentWeek && currentWeek.length === DAY_NAMES.length);
+}
+
+function saveCurrentWeek(){
+  if(!currentWeek || currentWeek.length !== DAY_NAMES.length) return;
+
+  const label = `Week ${savedWeeks.length + 1}`;
+  const days = currentWeek.map(day => {
+    const meals = {};
+    Object.keys(day.meals).forEach(slot => { meals[slot] = compactMeal(day.meals[slot]); });
+    return { dayName: day.dayName, total: day.total, inRange: day.inRange, slotOrder: day.slotOrder, meals };
+  });
+
+  savedWeeks.push({ label, target: currentTargetGlobal, savedAt: new Date().toISOString(), days });
+  persistSavedWeeks();
+
+  activeTab = savedWeeks.length - 1;
+  renderTabs();
+  renderCurrentOrSaved();
+  updateSaveButton();
+
+  document.getElementById('save-note').textContent = `Saved as ${label} — it'll stick around in this browser's cookies until you clear it.`;
+}
+
+function renderTabs(){
+  const bar = document.getElementById('tab-bar');
+  bar.innerHTML = '';
+
+  const currentBtn = document.createElement('button');
+  currentBtn.type = 'button';
+  currentBtn.className = 'tab-btn' + (activeTab === 'current' ? ' active' : '');
+  currentBtn.textContent = 'This week';
+  currentBtn.addEventListener('click', () => { activeTab = 'current'; renderTabs(); renderCurrentOrSaved(); });
+  bar.appendChild(currentBtn);
+
+  savedWeeks.forEach((week, idx) => {
+    const tab = document.createElement('button');
+    tab.type = 'button';
+    tab.className = 'tab-btn' + (activeTab === idx ? ' active' : '');
+    tab.innerHTML = `${week.label}<span class="tab-delete" title="Delete this saved week">&times;</span>`;
+    tab.addEventListener('click', (e) => {
+      if(e.target.classList.contains('tab-delete')){
+        savedWeeks.splice(idx, 1);
+        persistSavedWeeks();
+        activeTab = 'current';
+        renderTabs();
+        renderCurrentOrSaved();
+        updateSaveButton();
+        return;
+      }
+      activeTab = idx;
+      renderTabs();
+      renderCurrentOrSaved();
+    });
+    bar.appendChild(tab);
+  });
+
+  if(savedWeeks.length){
+    const clearBtn = document.createElement('button');
+    clearBtn.type = 'button';
+    clearBtn.className = 'tab-btn tab-clear';
+    clearBtn.textContent = 'Clear weeks';
+    clearBtn.addEventListener('click', () => {
+      if(!confirm('Delete all saved weeks from this browser?')) return;
+      savedWeeks = [];
+      persistSavedWeeks();
+      activeTab = 'current';
+      renderTabs();
+      renderCurrentOrSaved();
+      updateSaveButton();
+    });
+    bar.appendChild(clearBtn);
+  }
+}
+
 document.getElementById('generate').addEventListener('click', generateWeek);
 document.getElementById('weight').addEventListener('input', recalcCaloriesBurned);
+document.getElementById('age').addEventListener('input', recalcCaloriesBurned);
 document.getElementById('activity-level').addEventListener('change', recalcCaloriesBurned);
 document.getElementById('lose-per-week').addEventListener('input', recalcDailyTarget);
 document.getElementById('calories-burned').addEventListener('input', recalcDailyTarget);
+document.getElementById('save-week').addEventListener('click', saveCurrentWeek);
+document.getElementById('week').addEventListener('click', (e) => {
+  const btn = e.target.closest('.regen-btn');
+  if(!btn) return;
+  regenerateMeal(parseInt(btn.dataset.day, 10), btn.dataset.slot);
+});
 
+loadSavedWeeks();
+renderTabs();
 recalcCaloriesBurned();
 loadPool();
 </script>
