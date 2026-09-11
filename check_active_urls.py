@@ -30,6 +30,7 @@ import argparse
 import json
 import random
 import time
+import playwright
 from collections import Counter
 
 from playwright.sync_api import sync_playwright
