@@ -292,14 +292,14 @@ function getMealCalories(meal){
   return 0;
 }
 
-function getMealServing(meal){
-  if(meal.PRODUCT_SIZE) return meal.PRODUCT_SIZE;
-  if(meal.serving_size) return meal.serving_size;
-  if(meal.serving) return meal.serving;
-  if(meal.open_food_facts && meal.open_food_facts.serving_size){
-    return meal.open_food_facts.serving_size;
+function getMealServingsPerContainer(meal){
+  if(meal.SERVINGS_PER_CONTAINER) return meal.SERVINGS_PER_CONTAINER;
+  if(meal.servings_per_container) return meal.servings_per_container;
+  if(meal.servings) return meal.servings;
+  if(meal.open_food_facts && meal.open_food_facts.servings_per_container){
+    return meal.open_food_facts.servings_per_container;
   }
-  return '1 serving';
+  return 'N/A';
 }
 
 function getMealPrice(meal){
@@ -336,7 +336,7 @@ async function loadPool(){
       PRODUCT_NAME: 'N/A',
       calories: 400,
       PRICE_CURRENT: 0,
-      PRODUCT_SIZE: 'N/A'
+      SERVINGS_PER_CONTAINER: 'N/A'
     }];
 
     pool = {
@@ -460,7 +460,7 @@ function mealRow(slot, meal){
   row.className = 'meal-row';
   const url = getMealUrl(meal);
   const calories = getMealCalories(meal);
-  const serving = getMealServing(meal);
+  const servingsPerContainer = getMealServingsPerContainer(meal);
   const price = getMealPrice(meal);
   const name = meal.PRODUCT_NAME || meal.name || 'Unnamed item';
 
@@ -472,7 +472,7 @@ function mealRow(slot, meal){
     <div class="meal-info">
       <div class="meal-slot">${slot}</div>
       <div class="meal-name">${name}${link}</div>
-      <div class="meal-serving">Serving: ${serving}</div>
+      <div class="meal-serving">Servings per container: ${servingsPerContainer}</div>
     </div>
     <div style="text-align:right;">
       <div class="meal-cal">${calories} cal</div>
