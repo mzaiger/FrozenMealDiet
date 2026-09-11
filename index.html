@@ -93,6 +93,24 @@
     background:var(--frost);
   }
 
+  .field select{
+    font-family:'Inter', sans-serif;
+    font-size:13px;
+    font-weight:600;
+    color:var(--blue-deep);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:9px 10px;
+    width:210px;
+    background:var(--frost);
+    cursor:pointer;
+  }
+
+  .field select:focus{
+    outline:2px solid var(--blue);
+    outline-offset:1px;
+  }
+
   .field input:focus{
     outline:2px solid var(--blue);
     outline-offset:1px;
@@ -292,6 +310,15 @@
       <input type="number" id="weight" value="180" min="50" max="600" step="1" />
     </div>
     <div class="field">
+      <label for="activity-level">Activity level</label>
+      <select id="activity-level">
+        <option value="13">Sedentary (desk job, little exercise)</option>
+        <option value="14">Lightly active (light exercise 1-3x/wk)</option>
+        <option value="15" selected>Moderately active (exercise 3-5x/wk)</option>
+        <option value="17">Very active (hard exercise 6-7x/wk)</option>
+      </select>
+    </div>
+    <div class="field">
       <label for="calories-burned">Calories burned / day</label>
       <input type="number" id="calories-burned" value="2700" min="800" max="6000" step="10" />
     </div>
@@ -364,10 +391,11 @@ function getMealPriceNumber(meal){
   return isNaN(num) ? 0 : num;
 }
 
-// Weight-based estimate: ~15 cal/lb/day is a standard moderate-activity TDEE rule of thumb.
+// Weight-based estimate: cal/lb/day multiplier varies with activity level.
 function recalcCaloriesBurned(){
   const weight = parseFloat(document.getElementById('weight').value) || 0;
-  document.getElementById('calories-burned').value = Math.round(weight * 15);
+  const multiplier = parseFloat(document.getElementById('activity-level').value) || 15;
+  document.getElementById('calories-burned').value = Math.round(weight * multiplier);
   recalcDailyTarget();
 }
 
@@ -618,6 +646,7 @@ function renderDayCard(dayName, day, target){
 
 document.getElementById('generate').addEventListener('click', generateWeek);
 document.getElementById('weight').addEventListener('input', recalcCaloriesBurned);
+document.getElementById('activity-level').addEventListener('change', recalcCaloriesBurned);
 document.getElementById('lose-per-week').addEventListener('input', recalcDailyTarget);
 document.getElementById('calories-burned').addEventListener('input', recalcDailyTarget);
 
