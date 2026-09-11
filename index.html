@@ -475,6 +475,9 @@
   <div class="empty-state" id="empty-state" style="display:none;">
     Meal pool not found yet. Run <code>build_meal_pool.py</code> (or wait for the weekly GitHub Action) to generate <code>candidate_pool.json</code>.
   </div>
+  <div class="empty-state" id="prompt-state" style="display:none;">
+    Set your numbers above, then click <code>Generate week</code> to build this week's meals.
+  </div>
   <div class="save-bar" id="save-bar" style="display:none;">
     <button id="save-week">Save this week</button>
     <span class="save-note" id="save-note">Saved weeks live in this browser's cookies and show up as tabs above.</span>
@@ -534,6 +537,117 @@ function compactMeal(meal){
   };
 }
 
+// Applies the max-per-meal cap (if any) to the raw pool, same rule used at
+// generation time and again when restoring the persisted current week.
+function computeActivePools(maxPrice, capActiveRequested){
+  let breakfastPool = pool.breakfast;
+  let generalPool = pool.general;
+  let capFallback = false;
+  if(capActiveRequested){
+    const cappedBreakfast = pool.breakfast.filter(m => getMealPriceNumber(m) <= maxPrice);
+    const cappedGeneral = pool.general.filter(m => getMealPriceNumber(m) <= maxPrice);
+    if(cappedBreakfast.length && cappedGeneral.length >= 2){
+      breakfastPool = cappedBreakfast;
+      generalPool = cappedGeneral;
+    }else{
+      capFallback = true;
+    }
+  }
+  return { breakfastPool, generalPool, capFallback };
+}
+
+// The live/current week persists across reloads so the site doesn't rebuild
+// it every visit — only "Generate week" or a per-meal "regenerate" changes it.
+function persistCurrentWeek(){
+  if(!currentWeek || !currentWeek.length) return;
+  const payload = {
+    target: currentTargetGlobal,
+    capInfo: activeCapInfo,
+    days: currentWeek.map(day => {
+      const meals = {};
+      Object.keys(day.meals).forEach(slot => { meals[slot] = compactMeal(day.meals[slot]); });
+      return { dayName: day.dayName, total: day.total, inRange: day.inRange, slotOrder: day.slotOrder, meals };
+    })
+  };
+  try{
+    setCookie('freezerCurrentWeek', JSON.stringify(payload), 365);
+  }catch(err){
+    console.warn('Could not save current week to cookies.', err);
+  }
+}
+
+function restoreCurrentWeek(){
+  const raw = getCookie('freezerCurrentWeek');
+  if(!raw) return false;
+  let payload;
+  try{ payload = JSON.parse(raw); }catch(err){ return false; }
+  if(!payload || !Array.isArray(payload.days) || !payload.days.length) return false;
+
+  currentTargetGlobal = payload.target || 1500;
+  activeCapInfo = payload.capInfo || { capActive: false, maxPrice: 0, capFallback: false };
+  const pools = computeActivePools(activeCapInfo.maxPrice, activeCapInfo.capActive);
+  activeBreakfastPool = pools.breakfastPool;
+  activeGeneralPool = pools.generalPool;
+
+  currentWeek = payload.days.map(day => ({
+    dayName: day.dayName,
+    total: day.total,
+    inRange: day.inRange,
+    slotOrder: day.slotOrder,
+    meals: day.meals
+  }));
+
+  return true;
+}
+
+// Form inputs persist too, restored as-typed (no recalculation) so a manual
+// override to calories-burned or the daily target survives a reload.
+function saveFormData(){
+  const data = {
+    weight: document.getElementById('weight').value,
+    age: document.getElementById('age').value,
+    activityLevel: document.getElementById('activity-level').value,
+    loseRate: document.getElementById('lose-per-week').value,
+    caloriesBurned: document.getElementById('calories-burned').value,
+    calorieTarget: document.getElementById('calorie-target').value,
+    maxPerMeal: document.getElementById('max-per-meal').value
+  };
+  try{
+    setCookie('freezerFormData', JSON.stringify(data), 365);
+  }catch(err){
+    console.warn('Could not save form data to cookies.', err);
+  }
+}
+
+function loadFormData(){
+  const raw = getCookie('freezerFormData');
+  if(!raw) return false;
+  try{
+    const data = JSON.parse(raw);
+    if(data.weight !== undefined) document.getElementById('weight').value = data.weight;
+    if(data.age !== undefined) document.getElementById('age').value = data.age;
+    if(data.activityLevel !== undefined) document.getElementById('activity-level').value = data.activityLevel;
+    if(data.loseRate !== undefined) document.getElementById('lose-per-week').value = data.loseRate;
+    if(data.caloriesBurned !== undefined) document.getElementById('calories-burned').value = data.caloriesBurned;
+    if(data.calorieTarget !== undefined) document.getElementById('calorie-target').value = data.calorieTarget;
+    if(data.maxPerMeal !== undefined) document.getElementById('max-per-meal').value = data.maxPerMeal;
+    return true;
+  }catch(err){
+    return false;
+  }
+}
+
+// Refreshes the calc-note text from whatever is currently in the fields,
+// without recalculating/overwriting calories-burned or the daily target.
+function refreshCalcNoteOnly(){
+  const burned = parseFloat(document.getElementById('calories-burned').value) || 0;
+  const loseRate = parseFloat(document.getElementById('lose-per-week').value) || 0;
+  const dailyTarget = parseInt(document.getElementById('calorie-target').value, 10) || 0;
+  const weeklyTarget = burned * 7 - (3500 * loseRate);
+  const note = document.getElementById('calc-note');
+  note.textContent = `${burned} cal/day burned × 7 − (3500 × ${loseRate} lb) = ${Math.round(weeklyTarget)} cal/week → ${dailyTarget} cal/day. Daily target and calories burned can both be typed over directly.`;
+}
+
 function getMealCalories(meal){
   if(typeof meal.calories === 'number') return meal.calories;
   if(meal.calories && !isNaN(Number(meal.calories))) return Number(meal.calories);
@@ -561,7 +675,7 @@ function getMealPrice(meal){
 }
 
 function getMealUrl(meal){
-  return meal.PRODUCT_URL || meal.product_url || (meal.open_food_facts ? meal.open_food_facts.url : '');
+  return meal.PRODUCT_URL || meal.product_url || meal.url || (meal.open_food_facts ? meal.open_food_facts.url : '');
 }
 
 function getMealPriceNumber(meal){
@@ -645,9 +759,17 @@ async function loadPool(){
     if(tooSmallCount) notes.push(`${tooSmallCount} item${tooSmallCount === 1 ? '' : 's'} under ${MIN_MEAL_CALORIES} cal excluded`);
     const extraNote = notes.length ? ` — ${notes.join(', ')}` : '';
     status.textContent = `Pool updated ${dateStr} — ${(pool.breakfast || []).length} breakfast items, ${(pool.general || []).length} lunch/dinner items${extraNote}.`;
-    generateWeek();
+
+    document.getElementById('empty-state').style.display = 'none';
+    if(restoreCurrentWeek()){
+      activeTab = 'current';
+    }
+    renderTabs();
+    renderCurrentOrSaved();
+    updateSaveButton();
   }catch(err){
     document.getElementById('pool-status').textContent = '';
+    document.getElementById('prompt-state').style.display = 'none';
     document.getElementById('empty-state').style.display = 'block';
   }
 }
@@ -728,6 +850,7 @@ function buildDay(target, breakfastPool, generalPool, breakfastSlots, generalSlo
 function generateWeek(){
   if(!pool.breakfast || !pool.general || !pool.breakfast.length || pool.general.length < 2){
     document.getElementById('empty-state').style.display = 'block';
+    document.getElementById('prompt-state').style.display = 'none';
     document.getElementById('week-totals').style.display = 'none';
     document.getElementById('save-bar').style.display = 'none';
     return;
@@ -738,20 +861,7 @@ function generateWeek(){
   const maxPrice = parseFloat(document.getElementById('max-per-meal').value);
   const capActive = !isNaN(maxPrice) && maxPrice > 0;
 
-  let breakfastPool = pool.breakfast;
-  let generalPool = pool.general;
-  let capFallback = false;
-
-  if(capActive){
-    const cappedBreakfast = pool.breakfast.filter(m => getMealPriceNumber(m) <= maxPrice);
-    const cappedGeneral = pool.general.filter(m => getMealPriceNumber(m) <= maxPrice);
-    if(cappedBreakfast.length && cappedGeneral.length >= 2){
-      breakfastPool = cappedBreakfast;
-      generalPool = cappedGeneral;
-    }else{
-      capFallback = true;
-    }
-  }
+  const { breakfastPool, generalPool, capFallback } = computeActivePools(maxPrice, capActive);
 
   activeBreakfastPool = breakfastPool;
   activeGeneralPool = generalPool;
@@ -765,6 +875,7 @@ function generateWeek(){
   renderTabs();
   renderCurrentOrSaved();
   updateSaveButton();
+  persistCurrentWeek();
 }
 
 function countOverCap(days, capActive, maxPrice){
@@ -885,6 +996,15 @@ function renderCurrentOrSaved(){
   const weekEl = document.getElementById('week');
   weekEl.innerHTML = '';
 
+  if(activeTab === 'current' && (!currentWeek || !currentWeek.length)){
+    document.getElementById('prompt-state').style.display = 'block';
+    document.getElementById('week-totals').style.display = 'none';
+    document.getElementById('save-bar').style.display = 'none';
+    document.getElementById('budget-summary').style.display = 'none';
+    return;
+  }
+  document.getElementById('prompt-state').style.display = 'none';
+
   let days, target, editable;
   if(activeTab === 'current'){
     days = currentWeek;
@@ -931,6 +1051,7 @@ function regenerateMeal(dayIndex, slot){
   day.inRange = day.total >= low && day.total <= high;
 
   renderCurrentOrSaved();
+  persistCurrentWeek();
 }
 
 function updateSaveButton(){
@@ -1013,11 +1134,13 @@ function renderTabs(){
 }
 
 document.getElementById('generate').addEventListener('click', generateWeek);
-document.getElementById('weight').addEventListener('input', recalcCaloriesBurned);
-document.getElementById('age').addEventListener('input', recalcCaloriesBurned);
-document.getElementById('activity-level').addEventListener('change', recalcCaloriesBurned);
-document.getElementById('lose-per-week').addEventListener('input', recalcDailyTarget);
-document.getElementById('calories-burned').addEventListener('input', recalcDailyTarget);
+document.getElementById('weight').addEventListener('input', () => { recalcCaloriesBurned(); saveFormData(); });
+document.getElementById('age').addEventListener('input', () => { recalcCaloriesBurned(); saveFormData(); });
+document.getElementById('activity-level').addEventListener('change', () => { recalcCaloriesBurned(); saveFormData(); });
+document.getElementById('lose-per-week').addEventListener('input', () => { recalcDailyTarget(); saveFormData(); });
+document.getElementById('calories-burned').addEventListener('input', () => { recalcDailyTarget(); saveFormData(); });
+document.getElementById('calorie-target').addEventListener('input', saveFormData);
+document.getElementById('max-per-meal').addEventListener('input', saveFormData);
 document.getElementById('save-week').addEventListener('click', saveCurrentWeek);
 document.getElementById('week').addEventListener('click', (e) => {
   const btn = e.target.closest('.regen-btn');
@@ -1027,7 +1150,12 @@ document.getElementById('week').addEventListener('click', (e) => {
 
 loadSavedWeeks();
 renderTabs();
-recalcCaloriesBurned();
+if(loadFormData()){
+  refreshCalcNoteOnly();
+}else{
+  recalcCaloriesBurned();
+}
+saveFormData();
 loadPool();
 </script>
 
