@@ -501,8 +501,13 @@ let activeCapInfo = { capActive: false, maxPrice: 0, capFallback: false };
 let savedWeeks = [];
 let activeTab = 'current';
 
+// Browsers (Chrome, etc.) cap cookie lifetime at 400 days and silently clamp
+// anything longer, so we clamp here too rather than relying on that.
+const MAX_COOKIE_DAYS = 400;
+
 function setCookie(name, value, days){
-  const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
+  const clampedDays = Math.min(days, MAX_COOKIE_DAYS);
+  const expires = new Date(Date.now() + clampedDays * 24 * 60 * 60 * 1000).toUTCString();
   document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
 }
 
@@ -521,7 +526,7 @@ function loadSavedWeeks(){
 // under the ~4KB-per-cookie limit most browsers enforce.
 function persistSavedWeeks(){
   try{
-    setCookie('freezerSavedWeeks', JSON.stringify(savedWeeks), 365);
+    setCookie('freezerSavedWeeks', JSON.stringify(savedWeeks), MAX_COOKIE_DAYS);
   }catch(err){
     console.warn('Could not save week to cookies — this browser may be low on cookie space.', err);
   }
@@ -570,7 +575,7 @@ function persistCurrentWeek(){
     })
   };
   try{
-    setCookie('freezerCurrentWeek', JSON.stringify(payload), 365);
+    setCookie('freezerCurrentWeek', JSON.stringify(payload), MAX_COOKIE_DAYS);
   }catch(err){
     console.warn('Could not save current week to cookies.', err);
   }
@@ -613,7 +618,7 @@ function saveFormData(){
     maxPerMeal: document.getElementById('max-per-meal').value
   };
   try{
-    setCookie('freezerFormData', JSON.stringify(data), 365);
+    setCookie('freezerFormData', JSON.stringify(data), MAX_COOKIE_DAYS);
   }catch(err){
     console.warn('Could not save form data to cookies.', err);
   }
