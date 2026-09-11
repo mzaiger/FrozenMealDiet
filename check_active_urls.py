@@ -13,6 +13,14 @@ here). Walmart's bot blocking means this WILL mark some genuinely-live
 pages as null rather than true; rerun on just the null items later
 (--only-unknown) to whittle those down.
 
+Each run prints a "Reason breakdown" - if you see a mix of numeric status
+codes (e.g. "blocked (403)") that's a real server-side block. If you see
+mostly one repeated text-marker reason (e.g. "blocked (captcha/bot check)")
+across every single item including ones you know are live, that marker
+phrase is likely present in Walmart's normal page boilerplate, not just
+challenge pages - which means it's a false positive worth tightening in
+BLOCKED_MARKERS rather than a real block.
+
 Usage:
     python3 check_active_urls.py                # check every item
     python3 check_active_urls.py --only-unknown  # re-check only active=null
@@ -26,6 +34,7 @@ import random
 import time
 import urllib.error
 import urllib.request
+from collections import Counter
 
 INPUT_JSON = "candidate_pool.json"
 OUTPUT_JSON = "candidate_pool.json"  # overwritten in place; back it up first if you want to diff
@@ -161,6 +170,11 @@ def main():
     print(f"  Blocked by bot detection:  {blocked_this_run}")
     if other_unresolved_this_run:
         print(f"  Unresolved, other reason:  {other_unresolved_this_run}")
+
+    reason_counts = Counter(i.get("_active_check_reason") for i in to_check)
+    print("  Reason breakdown:")
+    for reason, count in reason_counts.most_common():
+        print(f"    {count:>3}  {reason}")
 
     print("\n=== Overall progress ===")
     print(f"Total items:                 {total_items}")
