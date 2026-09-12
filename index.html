@@ -925,7 +925,7 @@ function updateBudgetSummary(capActive, maxPrice, overCapCount, capFallback){
   }
 }
 
-function mealRow(slot, meal, editable, dayIndex){
+function mealRow(slot, meal, canRegenerate, dayIndex){
   const row = document.createElement('div');
   row.className = 'meal-row';
   const url = getMealUrl(meal);
@@ -939,7 +939,7 @@ function mealRow(slot, meal, editable, dayIndex){
     ? `<a class="meal-link" href="${url}" target="_blank" rel="noopener noreferrer">view &rarr;</a>`
     : '';
 
-  const regenBtn = editable
+  const regenBtn = canRegenerate
     ? `<button type="button" class="regen-btn" data-day="${dayIndex}" data-slot="${slot}" title="Swap this meal for another option">regenerate</button>`
     : '';
 
@@ -967,8 +967,11 @@ function renderDayCard(dayName, day, target, editable, dayIndex){
   heading.textContent = dayName;
   card.appendChild(heading);
 
+  // Regenerate works on saved weeks too, as long as the meal pool itself
+  // has loaded — it's independent of whether this is the "live" tab.
+  const canRegenerate = !!(pool.breakfast && pool.breakfast.length && pool.general && pool.general.length);
   day.slotOrder.forEach(slot => {
-    card.appendChild(mealRow(slot, day.meals[slot], editable, dayIndex));
+    card.appendChild(mealRow(slot, day.meals[slot], canRegenerate, dayIndex));
   });
 
   const totalPrice = Object.values(day.meals).reduce((sum, meal) => sum + getMealPriceNumber(meal), 0);
@@ -1039,24 +1042,56 @@ function renderCurrentOrSaved(){
   }
 }
 
+// Returns the breakfast/general pools to draw from for a given cap setting —
+// used to regenerate meals on both the live week and any saved week.
+function poolsForCapInfo(capInfo){
+  if(!capInfo) return { breakfastPool: pool.breakfast, generalPool: pool.general };
+  return computeActivePools(capInfo.maxPrice, capInfo.capActive);
+}
+
 function regenerateMeal(dayIndex, slot){
-  if(activeTab !== 'current' || !currentWeek[dayIndex]) return;
-  const day = currentWeek[dayIndex];
-  const sourcePool = poolForSlot(slot);
+  if(activeTab === 'current'){
+    if(!currentWeek[dayIndex]) return;
+    const day = currentWeek[dayIndex];
+    const sourcePool = poolForSlot(slot);
+    if(!sourcePool || !sourcePool.length) return;
+
+    const used = Object.values(day.meals);
+    let choices = sourcePool.filter(m => !used.includes(m));
+    if(!choices.length) choices = sourcePool;
+
+    day.meals[slot] = choices[Math.floor(Math.random() * choices.length)];
+    day.total = Object.values(day.meals).reduce((s, m) => s + getMealCalories(m), 0);
+    const low = currentTargetGlobal - TOLERANCE;
+    const high = currentTargetGlobal + TOLERANCE;
+    day.inRange = day.total >= low && day.total <= high;
+
+    renderCurrentOrSaved();
+    persistCurrentWeek();
+    return;
+  }
+
+  // Saved week: pull from the pool/cap that was active when it was saved
+  // (older saves without a stored cap just use the full pool).
+  const saved = savedWeeks[activeTab];
+  if(!saved || !saved.days[dayIndex]) return;
+  const day = saved.days[dayIndex];
+  const { breakfastPool, generalPool } = poolsForCapInfo(saved.capInfo);
+  const sourcePool = (slot === 'breakfast' || slot === 'brunch') ? breakfastPool : generalPool;
   if(!sourcePool || !sourcePool.length) return;
 
-  const used = Object.values(day.meals);
-  let choices = sourcePool.filter(m => !used.includes(m));
+  const usedNames = Object.values(day.meals).map(m => m.name);
+  let choices = sourcePool.filter(m => !usedNames.includes(m.PRODUCT_NAME || m.name));
   if(!choices.length) choices = sourcePool;
 
-  day.meals[slot] = choices[Math.floor(Math.random() * choices.length)];
+  day.meals[slot] = compactMeal(choices[Math.floor(Math.random() * choices.length)]);
   day.total = Object.values(day.meals).reduce((s, m) => s + getMealCalories(m), 0);
-  const low = currentTargetGlobal - TOLERANCE;
-  const high = currentTargetGlobal + TOLERANCE;
+  const low = saved.target - TOLERANCE;
+  const high = saved.target + TOLERANCE;
   day.inRange = day.total >= low && day.total <= high;
 
   renderCurrentOrSaved();
-  persistCurrentWeek();
+  persistSavedWeeks();
 }
 
 function updateSaveButton(){
@@ -1076,7 +1111,7 @@ function saveCurrentWeek(){
     return { dayName: day.dayName, total: day.total, inRange: day.inRange, slotOrder: day.slotOrder, meals };
   });
 
-  savedWeeks.push({ label, target: currentTargetGlobal, savedAt: new Date().toISOString(), days });
+  savedWeeks.push({ label, target: currentTargetGlobal, capInfo: activeCapInfo, savedAt: new Date().toISOString(), days });
   persistSavedWeeks();
 
   activeTab = savedWeeks.length - 1;
