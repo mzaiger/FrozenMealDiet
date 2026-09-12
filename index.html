@@ -1,389 +1,1203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Poor Man's Walmart Frozen Meal Diet</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9D%84%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#12283a; --muted:#5b7186; --line:#dbe6f0; --card:#ffffff;
-    --blue:#0b6bcb; --blue-d:#085aa8; --ice:#e3f1fb;
-    --radius:14px; --shadow:0 10px 30px rgba(18,40,58,.08);
+    --frost: #EAF3F6;
+    --card: #FFFFFF;
+    --ink: #12232E;
+    --ink-soft: #4C6270;
+    --line: #D3E3E9;
+    --blue: #1E5F8C;
+    --blue-deep: #123B57;
+    --ice: #8FD9E8;
+    --good: #2C8C5E;
+    --warn: #C1443C;
   }
-  *{box-sizing:border-box}
+
+  *{ box-sizing:border-box; }
+
   body{
-    margin:0; color:var(--ink);
-    font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:linear-gradient(180deg,#f6fafd,#e8f0f7 60%,#e3edf5); min-height:100vh;
+    margin:0;
+    background:var(--frost);
+    background-image:
+      radial-gradient(circle at 10% 0%, rgba(143,217,232,0.35), transparent 45%),
+      radial-gradient(circle at 90% 15%, rgba(30,95,140,0.10), transparent 40%);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    padding:0 0 80px;
   }
-  .wrap{max-width:1080px; margin:0 auto; padding:28px 20px 60px}
 
-  /* ---------- Header ---------- */
-  header.hero{text-align:center; margin-bottom:22px}
-  .badge{
-    display:inline-block; background:var(--ice); color:var(--blue-d);
-    border:1px solid #cfe4f5; font-size:11px; letter-spacing:.14em;
-    font-weight:700; padding:4px 12px; border-radius:999px;
+  header{
+    max-width:1080px;
+    margin:0 auto;
+    padding:56px 24px 32px;
   }
-  h1{font-size:clamp(26px,4vw,38px); margin:10px 0 8px; letter-spacing:-.02em}
-  .tag{color:var(--muted); max-width:660px; margin:0 auto; font-size:15px}
 
-  /* ---------- Cards / settings ---------- */
-  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px}
-  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px}
-  .field label{display:block; font-size:11.5px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px}
-  .field input,.field select{
-    width:100%; padding:9px 10px; border:1px solid var(--line); border-radius:10px;
-    background:#fbfdfe; font:inherit; color:var(--ink);
+  .kicker{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--blue);
   }
-  .field .readout{padding:9px 10px; border:1px dashed #c9d9e6; border-radius:10px; background:var(--ice); font-weight:700; color:var(--blue-d); font-size:15px}
-  .actions{display:flex; align-items:center; gap:14px; margin-top:16px; flex-wrap:wrap}
-  button{font:inherit; cursor:pointer}
-  .btn{background:var(--blue); color:#fff; border:0; border-radius:10px; padding:11px 18px; font-weight:700; box-shadow:0 6px 16px rgba(11,107,203,.25)}
-  .btn:hover{background:var(--blue-d)}
-  .btn:disabled{opacity:.5; cursor:not-allowed; box-shadow:none}
-  .btn.ghost{background:#fff; color:var(--blue-d); border:1px solid var(--line); box-shadow:none}
-  .status{color:var(--muted); font-size:14px}
-  .fineprint{color:var(--muted); font-size:12.5px; margin:14px 2px 0}
 
-  /* ---------- Stats ---------- */
-  .stats{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:18px 0}
-  .stat{background:#fff; border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:14px 18px; text-align:center}
-  .stat .v{font-size:26px; font-weight:800}
-  .stat .k{font-size:11.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; font-weight:700; margin-top:2px}
-
-  /* ---------- Tabs (saved weeks) ---------- */
-  .tabs{display:flex; gap:8px; flex-wrap:wrap; margin:0 0 14px}
-  .tab{background:#fff; border:1px solid var(--line); border-radius:999px; padding:7px 14px; font-size:13.5px; font-weight:600; color:var(--muted)}
-  .tab.active{background:var(--blue); border-color:var(--blue); color:#fff}
-  .tab .x{margin-left:8px; opacity:.6; font-weight:800}
-  .tab .x:hover{opacity:1}
-
-  /* ---------- Notices ---------- */
-  .notice{border:1px dashed #c9d9e6; background:#f7fbff; border-radius:var(--radius); padding:16px 18px; color:var(--muted); margin-bottom:14px}
-  .notice code{background:var(--ice); border:1px solid #cfe4f5; border-radius:6px; padding:1px 6px; color:var(--blue-d); font-size:12.5px}
-
-  /* ---------- Plan / day cards ---------- */
-  .plan-head{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin:4px 0 14px}
-  .plan-head h2{margin:0; font-size:20px}
-  .days{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px}
-  .day{background:#fff; border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px}
-  .day-head{display:flex; justify-content:space-between; gap:10px; align-items:baseline; border-bottom:2px solid var(--ice); padding-bottom:8px; margin-bottom:6px}
-  .day-head h3{margin:0; font-size:16px}
-  .day-date{color:var(--muted); font-size:12.5px}
-  .day-totals{text-align:right; font-size:12.5px; color:var(--muted); font-weight:700; white-space:nowrap}
-  .day-totals .cal{color:var(--blue-d)}
-  .meals{list-style:none; margin:0; padding:0}
-
-  /* ---------- Meal row: IMAGE NEXT TO PRODUCT ---------- */
-  .meal{display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-bottom:1px dashed var(--line)}
-  .meal:last-child{border-bottom:0; padding-bottom:2px}
-  /* All images: SAME width, height stays proportional (no distortion) */
-  .meal-img{
-    width:84px; flex:0 0 84px;   /* uniform width for every image */
-    height:auto;                 /* proportional height -> no stretching */
-    display:block; border-radius:10px; border:1px solid var(--line); background:#f4f9fd;
+  h1{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(40px, 7vw, 64px);
+    letter-spacing:0.01em;
+    margin:6px 0 8px;
+    color:var(--blue-deep);
+    line-height:0.95;
   }
-  .meal-img.ph{aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; font-size:30px; color:#9db8cc}
-  .meal-info{display:flex; flex-direction:column; gap:3px; min-width:0}
-  .meal-name{color:var(--blue); text-decoration:none; font-weight:600; font-size:14.5px; line-height:1.35}
-  .meal-name:hover{text-decoration:underline}
-  .meal-meta{color:var(--muted); font-size:12.5px}
-  .meal-price{font-weight:800; font-size:14px}
-  .save-note{color:var(--muted); font-size:12.5px; margin-top:12px}
+
+  .sub{
+    color:var(--ink-soft);
+    max-width:560px;
+    font-size:15px;
+    line-height:1.5;
+    margin:0 0 28px;
+  }
+
+  .controls{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    gap:20px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:20px 24px;
+  }
+
+  .field label{
+    display:block;
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+
+  .field input{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:22px;
+    font-weight:600;
+    color:var(--blue-deep);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:8px 12px;
+    width:120px;
+    background:var(--frost);
+  }
+
+  .field select{
+    font-family:'Inter', sans-serif;
+    font-size:13px;
+    font-weight:600;
+    color:var(--blue-deep);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:9px 10px;
+    width:210px;
+    background:var(--frost);
+    cursor:pointer;
+  }
+
+  .field select:focus{
+    outline:2px solid var(--blue);
+    outline-offset:1px;
+  }
+
+  .field input:focus{
+    outline:2px solid var(--blue);
+    outline-offset:1px;
+  }
+
+  .tolerance{
+    font-size:13px;
+    color:var(--ink-soft);
+    align-self:center;
+    padding-bottom:10px;
+  }
+
+  button#generate{
+    font-family:'Inter', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    background:var(--blue);
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    padding:13px 22px;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+
+  button#generate:hover{ background:var(--blue-deep); }
+  button#generate:focus-visible{ outline:2px solid var(--blue-deep); outline-offset:2px; }
+
+  .pool-status{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:14px;
+    font-family:'IBM Plex Mono', monospace;
+  }
+
+  .calc-note{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:14px;
+    line-height:1.5;
+  }
+
+  .budget-summary{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    font-weight:600;
+    margin-top:10px;
+    padding:10px 14px;
+    border-radius:6px;
+    display:inline-block;
+  }
+
+  .budget-summary.in-range{
+    color:var(--good);
+    background:rgba(44,140,94,0.1);
+  }
+
+  .budget-summary.off-range{
+    color:var(--warn);
+    background:rgba(193,68,60,0.1);
+  }
+
+  .week-totals{
+    display:flex;
+    flex-wrap:wrap;
+    gap:32px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 24px;
+    margin-bottom:8px;
+  }
+
+  .week-totals .total-item .label{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-bottom:4px;
+  }
+
+  .week-totals .total-item .value{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:24px;
+    font-weight:700;
+    color:var(--blue-deep);
+  }
+
+  main{
+    max-width:1080px;
+    margin:0 auto;
+    padding:8px 24px;
+  }
+
+  #week{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+    gap:18px;
+    margin-top:28px;
+  }
+
+  .day-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:20px 22px 18px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .day-name{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:26px;
+    color:var(--blue-deep);
+    letter-spacing:0.02em;
+  }
+
+  .meal-row{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px 0;
+    border-top:1px solid var(--line);
+  }
+
+  .meal-row:first-of-type{ border-top:none; }
+
+  .meal-info{ flex:1; min-width:0; }
+
+  .meal-slot{
+    font-size:11px;
+    color:var(--blue);
+    font-weight:600;
+    text-transform:lowercase;
+  }
+
+  .meal-name{
+    font-size:14px;
+    color:var(--ink);
+    line-height:1.35;
+    margin-top:2px;
+  }
+
+  .meal-serving{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:3px;
+  }
+
+  .meal-link{
+    font-size:11px;
+    color:var(--blue);
+    text-decoration:none;
+    margin-left:6px;
+    white-space:nowrap;
+  }
+
+  .meal-link:hover{ text-decoration:underline; }
+
+  .meal-cal{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14px;
+    font-weight:600;
+    color:var(--ink-soft);
+    white-space:nowrap;
+    padding-top:1px;
+  }
+
+  .day-total{
+    margin-top:2px;
+    padding-top:12px;
+    border-top:2px solid var(--ink);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+
+  .day-total .label{ font-size:12px; color:var(--ink-soft); }
+
+  .day-total .value{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:18px;
+    font-weight:700;
+  }
+
+  .value.in-range{ color:var(--good); }
+  .value.off-range{ color:var(--warn); }
+
+  .flag{
+    font-size:11px;
+    color:var(--warn);
+    margin-top:-6px;
+  }
+
+  .empty-state{
+    border:1px dashed var(--line);
+    border-radius:10px;
+    padding:40px 24px;
+    text-align:center;
+    color:var(--ink-soft);
+    margin-top:28px;
+  }
+
+  .tab-bar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:28px;
+  }
+
+  .tab-btn{
+    font-family:'Inter', sans-serif;
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink-soft);
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:8px 8px 0 0;
+    padding:10px 16px;
+    cursor:pointer;
+  }
+
+  .tab-btn.active{
+    color:var(--blue-deep);
+    background:var(--frost);
+    border-bottom:2px solid var(--blue);
+  }
+
+  .tab-btn:hover:not(.active){ color:var(--blue); }
+
+  .tab-clear{
+    color:var(--warn);
+    border-color:var(--warn);
+    background:var(--card);
+  }
+
+  .tab-clear:hover{ background:rgba(193,68,60,0.08); }
+
+  .regen-btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--blue);
+    background:var(--frost);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:3px 7px;
+    margin-top:5px;
+    cursor:pointer;
+    text-transform:uppercase;
+  }
+
+  .regen-btn:hover{ background:var(--ice); border-color:var(--blue); }
+
+  .save-bar{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:24px;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+  }
+
+  button#save-week{
+    font-family:'Inter', sans-serif;
+    font-weight:600;
+    font-size:14px;
+    background:var(--blue-deep);
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    padding:11px 18px;
+    cursor:pointer;
+  }
+
+  button#save-week:hover{ background:var(--blue); }
+  button#save-week:disabled{ background:var(--line); color:var(--ink-soft); cursor:default; }
+
+  .save-note{
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+
+  .tab-delete{
+    margin-left:8px;
+    color:var(--warn);
+    font-weight:700;
+    cursor:pointer;
+  }
+
+  .empty-state code{
+    font-family:'IBM Plex Mono', monospace;
+    background:var(--frost);
+    padding:2px 6px;
+    border-radius:4px;
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <header class="hero">
-    <span class="badge">FROZEN · WEEKLY</span>
-    <h1>Poor Man's Walmart Frozen Meal Diet</h1>
-    <p class="tag">Seven days of meals pulled from the frozen aisle — 3 to 5 meals a day depending on your calorie target, each day landing within 250 calories of goal.</p>
-  </header>
+<header>
+  <div class="kicker">FROZEN &middot; WEEKLY</div>
+  <h1>Poor Man's Walmart Frozen Meal Diet</h1>
+  <p class="sub">Seven days of meals pulled from the frozen aisle — 3 to 5 meals a day depending on your calorie target, each day landing within 250 calories of goal.</p>
 
-  <!-- ============ Settings ============ -->
-  <section class="card settings">
-    <div class="grid">
-      <div class="field"><label for="weight">Weight (lbs)</label><input id="weight" type="number" min="80" max="500" step="1" value="180"></div>
-      <div class="field"><label for="age">Age</label><input id="age" type="number" min="14" max="90" step="1" value="35"></div>
-      <div class="field"><label for="activity">Activity level</label>
-        <select id="activity">
-          <option value="sedentary">Sedentary (desk job, little exercise)</option>
-          <option value="light">Lightly active (light exercise 1-3x/wk)</option>
-          <option value="moderate" selected>Moderately active (exercise 3-5x/wk)</option>
-          <option value="very">Very active (hard exercise 6-7x/wk)</option>
-        </select>
-      </div>
-      <div class="field"><label for="roBurned">Calories burned / day</label><div class="readout" id="roBurned">—</div></div>
-      <div class="field"><label for="lose">Lose / week (lbs)</label><input id="lose" type="number" min="0" max="5" step="0.5" value="1"></div>
-      <div class="field"><label for="roTarget">Daily calorie target</label><div class="readout" id="roTarget">—</div></div>
-      <div class="field"><label for="roWindow">± 250 cal window</label><div class="readout" id="roWindow">—</div></div>
-      <div class="field"><label for="maxPrice">Max per meal ($)</label><input id="maxPrice" type="number" min="0.5" max="20" step="0.25" value="3.50"></div>
+  <div class="controls">
+    <div class="field">
+      <label for="weight">Weight (lbs)</label>
+      <input type="number" id="weight" value="180" min="50" max="600" step="1" />
     </div>
-    <div class="actions">
-      <button class="btn" id="generateBtn">Generate week</button>
-      <span class="status" id="poolStatus">Loading meal pool …</span>
+    <div class="field">
+      <label for="age">Age</label>
+      <input type="number" id="age" value="30" min="13" max="100" step="1" />
     </div>
-    <p class="fineprint">* Calorie and price figures come from product/retailer data and may be out of date or inaccurate — always double-check at the store.</p>
-  </section>
-
-  <!-- ============ Weekly stats ============ -->
-  <div class="stats">
-    <div class="stat"><div class="v" id="statCal">0</div><div class="k">Total calories / week</div></div>
-    <div class="stat"><div class="v" id="statCost">$0.00</div><div class="k">Total cost / week</div></div>
+    <div class="field">
+      <label for="activity-level">Activity level</label>
+      <select id="activity-level">
+        <option value="13">Sedentary (desk job, little exercise)</option>
+        <option value="14">Lightly active (light exercise 1-3x/wk)</option>
+        <option value="15" selected>Moderately active (exercise 3-5x/wk)</option>
+        <option value="17">Very active (hard exercise 6-7x/wk)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="calories-burned">Calories burned / day</label>
+      <input type="number" id="calories-burned" value="2700" min="800" max="6000" step="10" />
+    </div>
+    <div class="field">
+      <label for="lose-per-week">Lose / week (lbs)</label>
+      <input type="number" id="lose-per-week" value="1" min="0" max="5" step="0.25" />
+    </div>
+    <div class="field">
+      <label for="calorie-target">Daily calorie target</label>
+      <input type="number" id="calorie-target" value="1500" min="800" max="4000" step="50" />
+    </div>
+    <div class="tolerance">&plusmn; 250 cal window</div>
+    <div class="field">
+      <label for="max-per-meal">Max per meal ($)</label>
+      <input type="number" id="max-per-meal" value="5.00" min="0" max="50" step="0.25" />
+    </div>
+    <button id="generate">Generate week</button>
   </div>
+  <div class="calc-note" id="calc-note"></div>
+  <div class="pool-status" id="pool-status">Loading meal pool&hellip;</div>
+  <div class="budget-summary" id="budget-summary" style="display:none;"></div>
+  <div class="calc-note">* Calorie and price figures come from product/retailer data and may be out of date or inaccurate — always double-check at the store.</div>
+</header>
 
-  <!-- ============ Saved-week tabs ============ -->
-  <div class="tabs" id="tabBar" hidden></div>
-
-  <!-- ============ Plan area ============ -->
-  <div id="noticePool" class="notice" hidden>
+<main>
+  <div class="tab-bar" id="tab-bar"></div>
+  <div class="week-totals" id="week-totals" style="display:none;">
+    <div class="total-item">
+      <div class="label">Total calories / week</div>
+      <div class="value" id="total-calories">0</div>
+    </div>
+    <div class="total-item">
+      <div class="label">Total cost / week</div>
+      <div class="value" id="total-cost">$0.00</div>
+    </div>
+  </div>
+  <div id="week"></div>
+  <div class="empty-state" id="empty-state" style="display:none;">
     Meal pool not found yet. Run <code>build_meal_pool.py</code> (or wait for the weekly GitHub Action) to generate <code>candidate_pool.json</code>.
   </div>
-  <div id="noticeEmpty" class="notice">
-    Set your numbers above, then click <strong>Generate week</strong> to build this week's meals.
+  <div class="empty-state" id="prompt-state" style="display:none;">
+    Set your numbers above, then click <code>Generate week</code> to build this week's meals.
   </div>
-
-  <div id="planWrap" hidden>
-    <div class="plan-head">
-      <h2 id="planTitle">This week's plan</h2>
-      <button class="btn" id="saveBtn" disabled>Save this week</button>
-    </div>
-    <div class="days" id="daysGrid"></div>
-    <p class="save-note">Saved weeks live in this browser's cookies and show up as tabs above.</p>
+  <div class="save-bar" id="save-bar" style="display:none;">
+    <button id="save-week">Save this week</button>
+    <span class="save-note" id="save-note">Saved weeks live in this browser's cookies and show up as tabs above.</span>
   </div>
-
-</div>
+</main>
 
 <script>
-"use strict";
-/* ---------------- helpers ---------------- */
-const $ = s => document.querySelector(s);
-const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const money = n => "$" + (Number(n)||0).toFixed(2);
-const cals  = n => (Number(n)||0).toLocaleString("en-US");
-const price = p => parseFloat(p.PRICE_CURRENT) || 0;
-
-function setCookie(name, value, days=365){
-  const d = new Date(Date.now() + days*864e5).toUTCString();
-  document.cookie = name + "=" + encodeURIComponent(value) + ";expires=" + d + ";path=;SameSite=Lax";
-}
-function getCookie(name){
-  const m = document.cookie.match(new RegExp("(?:^|; )" + name + "=([^;]*)"));
-  return m ? decodeURIComponent(m[1]) : null;
-}
-function delCookie(name){ document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=;"; }
-
-/* Fallback picture if a product image fails to load (keeps same width) */
-const FALLBACK_IMG = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="168" height="168"><rect width="168" height="168" fill="#eef4fa"/><text x="84" y="104" font-size="60" text-anchor="middle" fill="#9db8cc">&#10052;</text></svg>'
-);
-window.__imgFail = el => { el.onerror = null; el.src = FALLBACK_IMG; };
-
-/* ---------------- state ---------------- */
-const state = { pool: [], bySku: new Map(), plan: null, tab: "current" };
+const TOLERANCE = 250;
 const DAY_NAMES = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-const MULT = { sedentary: 11, light: 12.5, moderate: 14, very: 16 };
 
-/* ---------------- calorie estimates ---------------- */
-function updateEstimates(){
-  const lbs  = Math.max(80,  parseFloat($("#weight").value) || 180);
-  const age  = Math.max(14,  parseFloat($("#age").value)    || 35);
-  const lose = Math.max(0,   parseFloat($("#lose").value)   || 0);
-  const mult = MULT[$("#activity").value] ?? 14;
-  const ageFactor = 1 - Math.max(0, age - 30) * 0.005;      // metabolism taper
-  const burned = Math.round(lbs * mult * ageFactor);
-  const target = Math.max(1200, Math.round(burned - lose * 500));
-  $("#roBurned").textContent = cals(burned) + " cal";
-  $("#roTarget").textContent = cals(target) + " cal";
-  $("#roWindow").textContent = cals(target-250) + " – " + cals(target+250);
-  return { burned, target };
+let pool = { generated_at: "", source: "", calories_source: "", breakfast: [], general: [] };
+
+// Live generated week (editable — supports per-meal regenerate).
+let currentWeek = [];
+let currentTargetGlobal = 1500;
+let activeBreakfastPool = [];
+let activeGeneralPool = [];
+let activeCapInfo = { capActive: false, maxPrice: 0, capFallback: false };
+
+// Weeks the user has saved to cookies, plus which tab is showing.
+let savedWeeks = [];
+let activeTab = 'current';
+
+// Browsers (Chrome, etc.) cap cookie lifetime at 400 days and silently clamp
+// anything longer, so we clamp here too rather than relying on that.
+const MAX_COOKIE_DAYS = 400;
+
+function setCookie(name, value, days){
+  const clampedDays = Math.min(days, MAX_COOKIE_DAYS);
+  const expires = new Date(Date.now() + clampedDays * 24 * 60 * 60 * 1000).toUTCString();
+  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
 }
-["weight","age","activity","lose","maxPrice"].forEach(id =>
-  $("#"+id).addEventListener("input", updateEstimates));
 
-/* ---------------- meal pool ---------------- */
+function getCookie(name){
+  const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+function loadSavedWeeks(){
+  const raw = getCookie('freezerSavedWeeks');
+  if(!raw) return;
+  try{ savedWeeks = JSON.parse(raw) || []; }catch(err){ savedWeeks = []; }
+}
+
+// Only the fields needed to redraw a saved day card are kept, to stay well
+// under the ~4KB-per-cookie limit most browsers enforce.
+function persistSavedWeeks(){
+  try{
+    setCookie('freezerSavedWeeks', JSON.stringify(savedWeeks), MAX_COOKIE_DAYS);
+  }catch(err){
+    console.warn('Could not save week to cookies — this browser may be low on cookie space.', err);
+  }
+}
+
+function compactMeal(meal){
+  return {
+    name: meal.PRODUCT_NAME || meal.name || 'Unnamed item',
+    calories: getMealCalories(meal),
+    price: getMealPriceNumber(meal) || null,
+    servings: getMealServingsPerContainer(meal),
+    url: getMealUrl(meal)
+  };
+}
+
+// Applies the max-per-meal cap (if any) to the raw pool, same rule used at
+// generation time and again when restoring the persisted current week.
+function computeActivePools(maxPrice, capActiveRequested){
+  let breakfastPool = pool.breakfast;
+  let generalPool = pool.general;
+  let capFallback = false;
+  if(capActiveRequested){
+    const cappedBreakfast = pool.breakfast.filter(m => getMealPriceNumber(m) <= maxPrice);
+    const cappedGeneral = pool.general.filter(m => getMealPriceNumber(m) <= maxPrice);
+    if(cappedBreakfast.length && cappedGeneral.length >= 2){
+      breakfastPool = cappedBreakfast;
+      generalPool = cappedGeneral;
+    }else{
+      capFallback = true;
+    }
+  }
+  return { breakfastPool, generalPool, capFallback };
+}
+
+// The live/current week persists across reloads so the site doesn't rebuild
+// it every visit — only "Generate week" or a per-meal "regenerate" changes it.
+function persistCurrentWeek(){
+  if(!currentWeek || !currentWeek.length) return;
+  const payload = {
+    target: currentTargetGlobal,
+    capInfo: activeCapInfo,
+    days: currentWeek.map(day => {
+      const meals = {};
+      Object.keys(day.meals).forEach(slot => { meals[slot] = compactMeal(day.meals[slot]); });
+      return { dayName: day.dayName, total: day.total, inRange: day.inRange, slotOrder: day.slotOrder, meals };
+    })
+  };
+  try{
+    setCookie('freezerCurrentWeek', JSON.stringify(payload), MAX_COOKIE_DAYS);
+  }catch(err){
+    console.warn('Could not save current week to cookies.', err);
+  }
+}
+
+function restoreCurrentWeek(){
+  const raw = getCookie('freezerCurrentWeek');
+  if(!raw) return false;
+  let payload;
+  try{ payload = JSON.parse(raw); }catch(err){ return false; }
+  if(!payload || !Array.isArray(payload.days) || !payload.days.length) return false;
+
+  currentTargetGlobal = payload.target || 1500;
+  activeCapInfo = payload.capInfo || { capActive: false, maxPrice: 0, capFallback: false };
+  const pools = computeActivePools(activeCapInfo.maxPrice, activeCapInfo.capActive);
+  activeBreakfastPool = pools.breakfastPool;
+  activeGeneralPool = pools.generalPool;
+
+  currentWeek = payload.days.map(day => ({
+    dayName: day.dayName,
+    total: day.total,
+    inRange: day.inRange,
+    slotOrder: day.slotOrder,
+    meals: day.meals
+  }));
+
+  return true;
+}
+
+// Form inputs persist too, restored as-typed (no recalculation) so a manual
+// override to calories-burned or the daily target survives a reload.
+function saveFormData(){
+  const data = {
+    weight: document.getElementById('weight').value,
+    age: document.getElementById('age').value,
+    activityLevel: document.getElementById('activity-level').value,
+    loseRate: document.getElementById('lose-per-week').value,
+    caloriesBurned: document.getElementById('calories-burned').value,
+    calorieTarget: document.getElementById('calorie-target').value,
+    maxPerMeal: document.getElementById('max-per-meal').value
+  };
+  try{
+    setCookie('freezerFormData', JSON.stringify(data), MAX_COOKIE_DAYS);
+  }catch(err){
+    console.warn('Could not save form data to cookies.', err);
+  }
+}
+
+function loadFormData(){
+  const raw = getCookie('freezerFormData');
+  if(!raw) return false;
+  try{
+    const data = JSON.parse(raw);
+    if(data.weight !== undefined) document.getElementById('weight').value = data.weight;
+    if(data.age !== undefined) document.getElementById('age').value = data.age;
+    if(data.activityLevel !== undefined) document.getElementById('activity-level').value = data.activityLevel;
+    if(data.loseRate !== undefined) document.getElementById('lose-per-week').value = data.loseRate;
+    if(data.caloriesBurned !== undefined) document.getElementById('calories-burned').value = data.caloriesBurned;
+    if(data.calorieTarget !== undefined) document.getElementById('calorie-target').value = data.calorieTarget;
+    if(data.maxPerMeal !== undefined) document.getElementById('max-per-meal').value = data.maxPerMeal;
+    return true;
+  }catch(err){
+    return false;
+  }
+}
+
+// Refreshes the calc-note text from whatever is currently in the fields,
+// without recalculating/overwriting calories-burned or the daily target.
+function refreshCalcNoteOnly(){
+  const burned = parseFloat(document.getElementById('calories-burned').value) || 0;
+  const loseRate = parseFloat(document.getElementById('lose-per-week').value) || 0;
+  const dailyTarget = parseInt(document.getElementById('calorie-target').value, 10) || 0;
+  const weeklyTarget = burned * 7 - (3500 * loseRate);
+  const note = document.getElementById('calc-note');
+  note.textContent = `${burned} cal/day burned × 7 − (3500 × ${loseRate} lb) = ${Math.round(weeklyTarget)} cal/week → ${dailyTarget} cal/day. Daily target and calories burned can both be typed over directly.`;
+}
+
+function getMealCalories(meal){
+  if(typeof meal.calories === 'number') return meal.calories;
+  if(meal.calories && !isNaN(Number(meal.calories))) return Number(meal.calories);
+  if(meal.open_food_facts && typeof meal.open_food_facts.calories === 'number'){
+    return meal.open_food_facts.calories;
+  }
+  return 0;
+}
+
+function getMealServingsPerContainer(meal){
+  if(meal.SERVINGS_PER_CONTAINER) return meal.SERVINGS_PER_CONTAINER;
+  if(meal.servings_per_container) return meal.servings_per_container;
+  if(meal.servings) return meal.servings;
+  if(meal.open_food_facts && meal.open_food_facts.servings_per_container){
+    return meal.open_food_facts.servings_per_container;
+  }
+  return 'N/A';
+}
+
+function getMealPrice(meal){
+  const price = meal.PRICE_CURRENT ?? meal.price ?? meal.PRICE_RETAIL;
+  if(price === undefined || price === null || price === 0 || price === '0') return 'N/A';
+  const num = parseFloat(price);
+  return isNaN(num) ? 'N/A' : `$${num.toFixed(2)}`;
+}
+
+function getMealUrl(meal){
+  return meal.PRODUCT_URL || meal.product_url || meal.url || (meal.open_food_facts ? meal.open_food_facts.url : '');
+}
+
+function getMealPriceNumber(meal){
+  const raw = meal.PRICE_CURRENT ?? meal.price ?? meal.PRICE_RETAIL;
+  const num = parseFloat(raw);
+  return isNaN(num) ? 0 : num;
+}
+
+// Weight-based estimate: cal/lb/day multiplier varies with activity level,
+// then nudged down for age since resting metabolism slows gradually past 25.
+function recalcCaloriesBurned(){
+  const weight = parseFloat(document.getElementById('weight').value) || 0;
+  const age = parseFloat(document.getElementById('age').value) || 25;
+  const multiplier = parseFloat(document.getElementById('activity-level').value) || 15;
+  const ageFactor = Math.max(0.8, 1 - Math.max(0, age - 25) * 0.0025);
+  document.getElementById('calories-burned').value = Math.round(weight * multiplier * ageFactor);
+  recalcDailyTarget();
+}
+
+// weekly calories burned - 3500 cal per pound they want to lose = weekly target, / 7 = daily target
+function recalcDailyTarget(){
+  const burned = parseFloat(document.getElementById('calories-burned').value) || 0;
+  const loseRate = parseFloat(document.getElementById('lose-per-week').value) || 0;
+  const weeklyBurn = burned * 7;
+  const weeklyTarget = weeklyBurn - (3500 * loseRate);
+  const dailyTarget = Math.round(weeklyTarget / 7);
+  document.getElementById('calorie-target').value = dailyTarget;
+
+  const note = document.getElementById('calc-note');
+  note.textContent = `${burned} cal/day burned × 7 − (3500 × ${loseRate} lb) = ${Math.round(weeklyTarget)} cal/week → ${dailyTarget} cal/day. Daily target and calories burned can both be typed over directly.`;
+}
+
 async function loadPool(){
   try{
-    const r = await fetch("candidate_pool.json", { cache: "no-store" });
-    if(!r.ok) throw new Error(r.status);
-    const data = await r.json();
-    const list = Array.isArray(data) ? data : (data.products || data.pool || []);
-    state.pool = list.filter(p => p && p.SKU && Number(p.calories) > 0 && p.active !== false);
-    state.bySku = new Map(state.pool.map(p => [String(p.SKU), p]));
-    $("#poolStatus").textContent = "Meal pool ready — " + state.pool.length + " products.";
-    $("#noticePool").hidden = true;
-  }catch(e){
-    state.pool = []; state.bySku = new Map();
-    $("#poolStatus").textContent = "Meal pool not found.";
-    $("#noticePool").hidden = false;
+    const res = await fetch('candidate_pool.json', { cache: 'no-store' });
+    if(!res.ok) throw new Error('not found');
+    const rawData = await res.json();
+    
+    let items = Array.isArray(rawData) ? rawData : (rawData.general || []);
+
+    const totalCount = items.length;
+    // Drop confirmed-dead links (active === false). Items that are still
+    // unchecked (active === null/undefined) stay eligible — only a
+    // confirmed dead result excludes them.
+    items = items.filter(item => item.active !== false);
+    const deadCount = totalCount - items.length;
+
+    // Anything under this is too small to count as a real meal.
+    const MIN_MEAL_CALORIES = 150;
+    const tooSmallCount = items.filter(item => getMealCalories(item) < MIN_MEAL_CALORIES).length;
+    items = items.filter(item => getMealCalories(item) >= MIN_MEAL_CALORIES);
+
+    const breakfastItems = items.filter(item => 
+      (item.PRODUCT_NAME || item.name || '').toLowerCase().includes('breakfast') ||
+      item.CATEGORY === 'Frozen Breakfast' || item.category === 'Frozen Breakfast'
+    );
+
+    const generalItems = items.filter(item => 
+      !(item.PRODUCT_NAME || item.name || '').toLowerCase().includes('breakfast') &&
+      item.CATEGORY !== 'Frozen Breakfast' && item.category !== 'Frozen Breakfast'
+    );
+
+    // Fallback if no breakfast items found in dataset: default to N/A @ 400 cal
+    const fallbackBreakfast = [{
+      PRODUCT_NAME: 'N/A',
+      calories: 400,
+      PRICE_CURRENT: 0,
+      SERVINGS_PER_CONTAINER: 'N/A'
+    }];
+
+    pool = {
+      generated_at: new Date().toISOString(),
+      breakfast: breakfastItems.length ? breakfastItems : fallbackBreakfast,
+      general: generalItems
+    };
+
+    const status = document.getElementById('pool-status');
+    const dateStr = pool.generated_at ? new Date(pool.generated_at).toLocaleDateString() : 'recently';
+    const notes = [];
+    if(deadCount) notes.push(`${deadCount} dead link${deadCount === 1 ? '' : 's'} excluded`);
+    if(tooSmallCount) notes.push(`${tooSmallCount} item${tooSmallCount === 1 ? '' : 's'} under ${MIN_MEAL_CALORIES} cal excluded`);
+    const extraNote = notes.length ? ` — ${notes.join(', ')}` : '';
+    status.textContent = `Pool updated ${dateStr} — ${(pool.breakfast || []).length} breakfast items, ${(pool.general || []).length} lunch/dinner items${extraNote}.`;
+
+    document.getElementById('empty-state').style.display = 'none';
+    if(restoreCurrentWeek()){
+      activeTab = 'current';
+    }
+    renderTabs();
+    renderCurrentOrSaved();
+    updateSaveButton();
+  }catch(err){
+    document.getElementById('pool-status').textContent = '';
+    document.getElementById('prompt-state').style.display = 'none';
+    document.getElementById('empty-state').style.display = 'block';
   }
 }
 
-/* ---------------- week generation ---------------- */
-function weekStartISO(){
-  const now = new Date(); const off = (now.getDay() + 6) % 7;   // Monday start
-  const mon = new Date(now); mon.setDate(now.getDate() - off);
-  return mon.toISOString().slice(0,10);
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
-function mealsPerDay(target){ return target < 1600 ? 3 : target < 2000 ? 4 : 5; }
 
-function pickCombo(list, n){
-  const a = list.slice();
-  for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; }
-  return a.slice(0, n);
+// Meal count scales with the daily calorie target:
+//  <=1400        -> 3 meals: breakfast, lunch, dinner
+//  1400-2000     -> 4 meals: + a late night meal (general pool)
+//  2000+         -> 5 meals: + a brunch too (drawn from the breakfast pool)
+// Slots are listed in the order they should render, chronologically.
+function getMealSlotsForTarget(target){
+  if(target <= 1400){
+    return { breakfastSlots: ['breakfast'], generalSlots: ['lunch', 'dinner'] };
+  }else if(target <= 2000){
+    return { breakfastSlots: ['breakfast'], generalSlots: ['lunch', 'dinner', 'late night'] };
+  }else{
+    return { breakfastSlots: ['breakfast', 'brunch'], generalSlots: ['lunch', 'dinner', 'late night'] };
+  }
 }
-function buildDay(list, target, n, usage){
+
+function poolForSlot(slot){
+  return (slot === 'breakfast' || slot === 'brunch') ? activeBreakfastPool : activeGeneralPool;
+}
+
+// Pick `n` items from a pool, preferring distinct items but allowing repeats
+// if the pool is smaller than what's needed.
+function pickDistinct(poolArr, n){
+  if(poolArr.length >= n) return shuffle(poolArr).slice(0, n);
+  const result = [];
+  for(let i = 0; i < n; i++){
+    result.push(poolArr[Math.floor(Math.random() * poolArr.length)]);
+  }
+  return result;
+}
+
+// Randomly samples combinations of breakfast-pool items (for breakfastSlots)
+// and general-pool items (for generalSlots) and keeps the closest-to-target
+// combo found. Works for any slot count (3, 4, or 5 meals).
+function buildDay(target, breakfastPool, generalPool, breakfastSlots, generalSlots){
+  const low = target - TOLERANCE;
+  const high = target + TOLERANCE;
+  const bCount = breakfastSlots.length;
+  const gCount = generalSlots.length;
+
   let best = null;
-  for(let t = 0; t < 600; t++){
-    const combo = pickCombo(list, n);
-    const sum = combo.reduce((s,p) => s + Number(p.calories), 0);
-    const reps = combo.reduce((s,p) => s + (usage[p.SKU] > 0 ? 1 : 0), 0);
-    const score = Math.abs(sum - target) + 30 * reps;
-    if(!best || score < best.score) best = { combo, sum, score };
-    if(Math.abs(sum - target) <= 250 && reps === 0) break;   // inside ±250 window, no repeats
+  const attempts = 600;
+  for(let i = 0; i < attempts; i++){
+    const bItems = pickDistinct(breakfastPool, bCount);
+    const gItems = pickDistinct(generalPool, gCount);
+    const sum = [...bItems, ...gItems].reduce((s, m) => s + getMealCalories(m), 0);
+    const dist = sum < low ? low - sum : (sum > high ? sum - high : 0);
+    if(!best || dist < best.dist){
+      best = { bItems, gItems, sum, dist };
+    }
+    if(dist === 0) break;
   }
-  best.combo.forEach(p => usage[p.SKU] = (usage[p.SKU]||0) + 1);
-  return best.combo;
-}
-function generate(){
-  if(!state.pool.length){ $("#noticePool").hidden = false; return; }
-  const { target } = updateEstimates();
-  const cap = parseFloat($("#maxPrice").value) || 3.5;
-  const list = state.pool.filter(p => price(p) <= cap);
-  if(!list.length){ alert("No products within your $" + cap.toFixed(2) + " per-meal cap. Raise the cap and try again."); return; }
 
-  const n = Math.min(mealsPerDay(target), list.length);
-  const mon = new Date(weekStartISO() + "T12:00:00");
-  const usage = {}; const days = []; let totalCal = 0, totalCost = 0;
+  const meals = {};
+  breakfastSlots.forEach((slot, idx) => { meals[slot] = best.bItems[idx]; });
+  generalSlots.forEach((slot, idx) => { meals[slot] = best.gItems[idx]; });
 
-  for(let d = 0; d < 7; d++){
-    const meals = buildDay(list, target, n, usage);
-    const cal  = meals.reduce((s,p) => s + Number(p.calories), 0);
-    const cost = meals.reduce((s,p) => s + price(p), 0);
-    const date = new Date(mon); date.setDate(mon.getDate() + d);
-    days.push({ name: DAY_NAMES[d], dateStr: date.toLocaleDateString("en-US",{month:"short",day:"numeric"}), meals, cal, cost });
-    totalCal += cal; totalCost += cost;
-  }
-  state.plan = { id: weekStartISO(), target, days, totalCal, totalCost };
-  state.tab = "current";
-  $("#noticeEmpty").hidden = true; $("#noticePool").hidden = true;
-  $("#saveBtn").disabled = false;
-  renderView();
-}
-
-/* ---------------- rendering ---------------- */
-function mealHTML(p){
-  const img = p.image_url
-    ? '<img class="meal-img" src="' + esc(p.image_url) + '" alt="' + esc(p.PRODUCT_NAME) + '" loading="lazy" onerror="__imgFail(this)">'
-    : '<div class="meal-img ph" aria-hidden="true">&#10052;</div>';
-  
-  // Show servings per container instead of brand and size
-  const servings = p.servings_per_container ? "Servings: " + esc(p.servings_per_container) : "";
-  
-  return '<li class="meal">' + img +
-    '<div class="meal-info">' +
-      '<a class="meal-name" href="' + esc(p.PRODUCT_URL || "#") + '" target="_blank" rel="noopener">' + esc(p.PRODUCT_NAME) + '</a>' +
-      '<span class="meal-meta">' + servings + ' · ' + cals(p.calories) + ' cal</span>' +
-      '<span class="meal-price">' + money(price(p)) + '</span>' +
-    '</div></li>';
-}
-function renderView(){
-  const saved = state.tab !== "current" ? loadSavedWeek(state.tab) : null;
-  const plan  = state.tab === "current" ? state.plan : saved;
-
-  renderTabs();
-  if(!plan){ $("#planWrap").hidden = true; $("#statCal").textContent = "0"; $("#statCost").textContent = "$0.00"; return; }
-
-  $("#planWrap").hidden = false;
-  $("#noticeEmpty").hidden = true;
-  $("#planTitle").textContent = state.tab === "current" ? "This week's plan" : saved.label;
-  $("#saveBtn").disabled = state.tab !== "current";
-  $("#daysGrid").innerHTML = plan.days.map(d =>
-    '<section class="day"><header class="day-head">' +
-      '<div><h3>' + esc(d.name) + '</h3><span class="day-date">' + esc(d.dateStr) + '</span></div>' +
-      '<div class="day-totals"><span class="cal">' + cals(d.cal) + ' cal</span><br>' + money(d.cost) + '</div>' +
-    '</header><ul class="meals">' + d.meals.map(mealHTML).join("") + '</ul></section>'
-  ).join("");
-  $("#statCal").textContent  = cals(plan.totalCal);
-  $("#statCost").textContent = money(plan.totalCost);
-}
-
-/* ---------------- saved weeks (cookies) ---------------- */
-const IDX = "pmwfd_index";
-function savedIndex(){ try{ return JSON.parse(getCookie(IDX)) || []; }catch(e){ return []; } }
-function writeIndex(list){ setCookie(IDX, JSON.stringify(list)); }
-function loadSavedWeek(id){
-  try{
-    const w = JSON.parse(getCookie("pmwfd_w_" + id));
-    if(!w) return null;
-    w.days = w.days.map((skus, i) => {
-      const meals = skus.map(sku => state.bySku.get(String(sku)) || {
-        SKU: sku, PRODUCT_NAME: "(SKU " + sku + " no longer in pool)", BRAND: "—",
-        PRODUCT_URL: "#", calories: 0, PRICE_CURRENT: "0.00", image_url: null, servings_per_container: null
-      });
-      const cal  = meals.reduce((s,p) => s + Number(p.calories), 0);
-      const cost = meals.reduce((s,p) => s + price(p), 0);
-      const date = new Date(w.id + "T12:00:00"); date.setDate(date.getDate() + i);
-      return { name: DAY_NAMES[i], dateStr: date.toLocaleDateString("en-US",{month:"short",day:"numeric"}), meals, cal, cost };
-    });
-    w.totalCal  = w.days.reduce((s,d) => s + d.cal, 0);
-    w.totalCost = w.days.reduce((s,d) => s + d.cost, 0);
-    return w;
-  }catch(e){ return null; }
-}
-function saveWeek(){
-  if(!state.plan) return;
-  const p = state.plan;
-  const week = {
-    id: p.id,
-    label: "Week of " + new Date(p.id + "T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"}),
-    days: p.days.map(d => d.meals.map(m => String(m.SKU)))
+  return {
+    meals,
+    slotOrder: [...breakfastSlots, ...generalSlots],
+    total: best.sum,
+    inRange: best.sum >= low && best.sum <= high
   };
-  setCookie("pmwfd_w_" + p.id, JSON.stringify(week));
-  let idx = savedIndex().filter(w => w.id !== p.id);
-  idx.push({ id: p.id, label: week.label });
-  while(idx.length > 8){ const old = idx.shift(); delCookie("pmwfd_w_" + old.id); }
-  writeIndex(idx);
-  state.tab = p.id;
-  renderView();
 }
-function deleteWeek(id){
-  if(!confirm("Delete this saved week?")) return;
-  delCookie("pmwfd_w_" + id);
-  writeIndex(savedIndex().filter(w => w.id !== id));
-  if(state.tab === id) state.tab = "current";
-  renderView();
+
+function generateWeek(){
+  if(!pool.breakfast || !pool.general || !pool.breakfast.length || pool.general.length < 2){
+    document.getElementById('empty-state').style.display = 'block';
+    document.getElementById('prompt-state').style.display = 'none';
+    document.getElementById('week-totals').style.display = 'none';
+    document.getElementById('save-bar').style.display = 'none';
+    return;
+  }
+  document.getElementById('empty-state').style.display = 'none';
+
+  const target = parseInt(document.getElementById('calorie-target').value, 10) || 1500;
+  const maxPrice = parseFloat(document.getElementById('max-per-meal').value);
+  const capActive = !isNaN(maxPrice) && maxPrice > 0;
+
+  const { breakfastPool, generalPool, capFallback } = computeActivePools(maxPrice, capActive);
+
+  activeBreakfastPool = breakfastPool;
+  activeGeneralPool = generalPool;
+  currentTargetGlobal = target;
+  activeCapInfo = { capActive, maxPrice, capFallback };
+
+  const { breakfastSlots, generalSlots } = getMealSlotsForTarget(target);
+  currentWeek = DAY_NAMES.map(dayName => ({ dayName, ...buildDay(target, breakfastPool, generalPool, breakfastSlots, generalSlots) }));
+
+  activeTab = 'current';
+  renderTabs();
+  renderCurrentOrSaved();
+  updateSaveButton();
+  persistCurrentWeek();
 }
+
+function countOverCap(days, capActive, maxPrice){
+  if(!capActive) return 0;
+  let count = 0;
+  days.forEach(day => {
+    Object.values(day.meals).forEach(meal => {
+      if(getMealPriceNumber(meal) > maxPrice) count++;
+    });
+  });
+  return count;
+}
+
+function weekTotals(days){
+  let calories = 0, cost = 0;
+  days.forEach(day => {
+    calories += day.total;
+    cost += Object.values(day.meals).reduce((s, m) => s + getMealPriceNumber(m), 0);
+  });
+  return { calories, cost };
+}
+
+// Each meal is filtered against the max-per-meal cap before selection, rather
+// than checking the week's average against a +/- tolerance.
+function updateBudgetSummary(capActive, maxPrice, overCapCount, capFallback){
+  const summary = document.getElementById('budget-summary');
+  if(!capActive){
+    summary.style.display = 'none';
+    return;
+  }
+
+  summary.style.display = 'inline-block';
+  if(capFallback){
+    summary.className = 'budget-summary off-range';
+    summary.textContent = `Not enough meals priced at $${maxPrice.toFixed(2)} or under in the pool — showing the closest calorie matches instead, some may be over cap.`;
+  }else if(overCapCount > 0){
+    summary.className = 'budget-summary off-range';
+    summary.textContent = `${overCapCount} meal${overCapCount === 1 ? '' : 's'} this week landed over the $${maxPrice.toFixed(2)} cap.`;
+  }else{
+    summary.className = 'budget-summary in-range';
+    summary.textContent = `Every meal this week is at or under $${maxPrice.toFixed(2)}.`;
+  }
+}
+
+function mealRow(slot, meal, canRegenerate, dayIndex){
+  const row = document.createElement('div');
+  row.className = 'meal-row';
+  const url = getMealUrl(meal);
+  const calories = getMealCalories(meal);
+  const servingsPerContainer = getMealServingsPerContainer(meal);
+  const price = getMealPrice(meal);
+  const priceDisplay = price === 'N/A' ? price : `${price}*`;
+  const name = meal.PRODUCT_NAME || meal.name || 'Unnamed item';
+
+  const link = url
+    ? `<a class="meal-link" href="${url}" target="_blank" rel="noopener noreferrer">view &rarr;</a>`
+    : '';
+
+  const regenBtn = canRegenerate
+    ? `<button type="button" class="regen-btn" data-day="${dayIndex}" data-slot="${slot}" title="Swap this meal for another option">regenerate</button>`
+    : '';
+
+  row.innerHTML = `
+    <div class="meal-info">
+      <div class="meal-slot">${slot}</div>
+      <div class="meal-name">${name}${link}</div>
+      <div class="meal-serving">Serving: ${servingsPerContainer}</div>
+      ${regenBtn}
+    </div>
+    <div style="text-align:right;">
+      <div class="meal-cal">${calories} cal*</div>
+      <div style="font-size:12px; color:var(--ink-soft); margin-top:2px;">${priceDisplay}</div>
+    </div>
+  `;
+  return row;
+}
+
+function renderDayCard(dayName, day, target, editable, dayIndex){
+  const card = document.createElement('div');
+  card.className = 'day-card';
+
+  const heading = document.createElement('div');
+  heading.className = 'day-name';
+  heading.textContent = dayName;
+  card.appendChild(heading);
+
+  // Regenerate works on saved weeks too, as long as the meal pool itself
+  // has loaded — it's independent of whether this is the "live" tab.
+  const canRegenerate = !!(pool.breakfast && pool.breakfast.length && pool.general && pool.general.length);
+  day.slotOrder.forEach(slot => {
+    card.appendChild(mealRow(slot, day.meals[slot], canRegenerate, dayIndex));
+  });
+
+  const totalPrice = Object.values(day.meals).reduce((sum, meal) => sum + getMealPriceNumber(meal), 0);
+  const priceStr = totalPrice > 0 ? `$${totalPrice.toFixed(2)}*` : 'N/A';
+
+  const totalRow = document.createElement('div');
+  totalRow.className = 'day-total';
+  totalRow.innerHTML = `
+    <div>
+      <div class="label">Daily total</div>
+      <div style="font-size:12px; color:var(--ink-soft); font-family:'IBM Plex Mono', monospace; font-weight:600;">${priceStr}</div>
+    </div>
+    <span class="value ${day.inRange ? 'in-range' : 'off-range'}">${day.total} cal*</span>
+  `;
+  card.appendChild(totalRow);
+
+  if(!day.inRange){
+    const flag = document.createElement('div');
+    flag.className = 'flag';
+    flag.textContent = `Outside the ±250 window around ${target} — pool didn't have a closer combo today.`;
+    card.appendChild(flag);
+  }
+
+  return card;
+}
+
+// Draws whichever tab is active — the live editable week, or a saved
+// read-only snapshot — into #week, and updates totals/budget summary to match.
+function renderCurrentOrSaved(){
+  const weekEl = document.getElementById('week');
+  weekEl.innerHTML = '';
+
+  if(activeTab === 'current' && (!currentWeek || !currentWeek.length)){
+    document.getElementById('prompt-state').style.display = 'block';
+    document.getElementById('week-totals').style.display = 'none';
+    document.getElementById('save-bar').style.display = 'none';
+    document.getElementById('budget-summary').style.display = 'none';
+    return;
+  }
+  document.getElementById('prompt-state').style.display = 'none';
+
+  let days, target, editable;
+  if(activeTab === 'current'){
+    days = currentWeek;
+    target = currentTargetGlobal;
+    editable = true;
+  }else{
+    const saved = savedWeeks[activeTab];
+    if(!saved){ activeTab = 'current'; days = currentWeek; target = currentTargetGlobal; editable = true; }
+    else{ days = saved.days; target = saved.target; editable = false; }
+  }
+
+  days.forEach((day, idx) => {
+    weekEl.appendChild(renderDayCard(day.dayName, day, target, editable, idx));
+  });
+
+  const totals = weekTotals(days);
+  document.getElementById('week-totals').style.display = 'flex';
+  document.getElementById('total-calories').textContent = `${totals.calories.toLocaleString()}*`;
+  document.getElementById('total-cost').textContent = `$${totals.cost.toFixed(2)}*`;
+
+  document.getElementById('save-bar').style.display = editable ? 'flex' : 'none';
+
+  if(editable){
+    updateBudgetSummary(activeCapInfo.capActive, activeCapInfo.maxPrice, countOverCap(days, activeCapInfo.capActive, activeCapInfo.maxPrice), activeCapInfo.capFallback);
+  }else{
+    document.getElementById('budget-summary').style.display = 'none';
+  }
+}
+
+// Returns the breakfast/general pools to draw from for a given cap setting —
+// used to regenerate meals on both the live week and any saved week.
+function poolsForCapInfo(capInfo){
+  if(!capInfo) return { breakfastPool: pool.breakfast, generalPool: pool.general };
+  return computeActivePools(capInfo.maxPrice, capInfo.capActive);
+}
+
+function regenerateMeal(dayIndex, slot){
+  if(activeTab === 'current'){
+    if(!currentWeek[dayIndex]) return;
+    const day = currentWeek[dayIndex];
+    const sourcePool = poolForSlot(slot);
+    if(!sourcePool || !sourcePool.length) return;
+
+    const used = Object.values(day.meals);
+    let choices = sourcePool.filter(m => !used.includes(m));
+    if(!choices.length) choices = sourcePool;
+
+    day.meals[slot] = choices[Math.floor(Math.random() * choices.length)];
+    day.total = Object.values(day.meals).reduce((s, m) => s + getMealCalories(m), 0);
+    const low = currentTargetGlobal - TOLERANCE;
+    const high = currentTargetGlobal + TOLERANCE;
+    day.inRange = day.total >= low && day.total <= high;
+
+    renderCurrentOrSaved();
+    persistCurrentWeek();
+    return;
+  }
+
+  // Saved week: pull from the pool/cap that was active when it was saved
+  // (older saves without a stored cap just use the full pool).
+  const saved = savedWeeks[activeTab];
+  if(!saved || !saved.days[dayIndex]) return;
+  const day = saved.days[dayIndex];
+  const { breakfastPool, generalPool } = poolsForCapInfo(saved.capInfo);
+  const sourcePool = (slot === 'breakfast' || slot === 'brunch') ? breakfastPool : generalPool;
+  if(!sourcePool || !sourcePool.length) return;
+
+  const usedNames = Object.values(day.meals).map(m => m.name);
+  let choices = sourcePool.filter(m => !usedNames.includes(m.PRODUCT_NAME || m.name));
+  if(!choices.length) choices = sourcePool;
+
+  day.meals[slot] = compactMeal(choices[Math.floor(Math.random() * choices.length)]);
+  day.total = Object.values(day.meals).reduce((s, m) => s + getMealCalories(m), 0);
+  const low = saved.target - TOLERANCE;
+  const high = saved.target + TOLERANCE;
+  day.inRange = day.total >= low && day.total <= high;
+
+  renderCurrentOrSaved();
+  persistSavedWeeks();
+}
+
+function updateSaveButton(){
+  const btn = document.getElementById('save-week');
+  if(!btn) return;
+  btn.textContent = `Save as Week ${savedWeeks.length + 1}`;
+  btn.disabled = !(currentWeek && currentWeek.length === DAY_NAMES.length);
+}
+
+function saveCurrentWeek(){
+  if(!currentWeek || currentWeek.length !== DAY_NAMES.length) return;
+
+  const label = `Week ${savedWeeks.length + 1}`;
+  const days = currentWeek.map(day => {
+    const meals = {};
+    Object.keys(day.meals).forEach(slot => { meals[slot] = compactMeal(day.meals[slot]); });
+    return { dayName: day.dayName, total: day.total, inRange: day.inRange, slotOrder: day.slotOrder, meals };
+  });
+
+  savedWeeks.push({ label, target: currentTargetGlobal, capInfo: activeCapInfo, savedAt: new Date().toISOString(), days });
+  persistSavedWeeks();
+
+  activeTab = savedWeeks.length - 1;
+  renderTabs();
+  renderCurrentOrSaved();
+  updateSaveButton();
+
+  document.getElementById('save-note').textContent = `Saved as ${label} — it'll stick around in this browser's cookies until you clear it.`;
+}
+
 function renderTabs(){
-  const idx = savedIndex();
-  const bar = $("#tabBar");
-  const showCurrent = !!state.plan;
-  if(!idx.length && !showCurrent){ bar.hidden = true; bar.innerHTML = ""; return; }
-  bar.hidden = false;
-  let html = showCurrent
-    ? '<button class="tab' + (state.tab === "current" ? " active" : "") + '" data-tab="current">This week</button>'
-    : "";
-  html += idx.map(w =>
-    '<button class="tab' + (state.tab === w.id ? " active" : "") + '" data-tab="' + esc(w.id) + '">' +
-      esc(w.label) + '<span class="x" data-del="' + esc(w.id) + '" title="Delete saved week">×</span></button>'
-  ).join("");
-  bar.innerHTML = html;
+  const bar = document.getElementById('tab-bar');
+  bar.innerHTML = '';
+
+  const currentBtn = document.createElement('button');
+  currentBtn.type = 'button';
+  currentBtn.className = 'tab-btn' + (activeTab === 'current' ? ' active' : '');
+  currentBtn.textContent = 'This week';
+  currentBtn.addEventListener('click', () => { activeTab = 'current'; renderTabs(); renderCurrentOrSaved(); });
+  bar.appendChild(currentBtn);
+
+  savedWeeks.forEach((week, idx) => {
+    const tab = document.createElement('button');
+    tab.type = 'button';
+    tab.className = 'tab-btn' + (activeTab === idx ? ' active' : '');
+    tab.innerHTML = `${week.label}<span class="tab-delete" title="Delete this saved week">&times;</span>`;
+    tab.addEventListener('click', (e) => {
+      if(e.target.classList.contains('tab-delete')){
+        savedWeeks.splice(idx, 1);
+        persistSavedWeeks();
+        activeTab = 'current';
+        renderTabs();
+        renderCurrentOrSaved();
+        updateSaveButton();
+        return;
+      }
+      activeTab = idx;
+      renderTabs();
+      renderCurrentOrSaved();
+    });
+    bar.appendChild(tab);
+  });
+
+  if(savedWeeks.length){
+    const clearBtn = document.createElement('button');
+    clearBtn.type = 'button';
+    clearBtn.className = 'tab-btn tab-clear';
+    clearBtn.textContent = 'Clear weeks';
+    clearBtn.addEventListener('click', () => {
+      if(!confirm('Delete all saved weeks from this browser?')) return;
+      savedWeeks = [];
+      persistSavedWeeks();
+      activeTab = 'current';
+      renderTabs();
+      renderCurrentOrSaved();
+      updateSaveButton();
+    });
+    bar.appendChild(clearBtn);
+  }
 }
-$("#tabBar").addEventListener("click", e => {
-  const del = e.target.closest("[data-del]");
-  if(del){ e.stopPropagation(); deleteWeek(del.dataset.del); return; }
-  const tab = e.target.closest("[data-tab]");
-  if(tab){ state.tab = tab.dataset.tab; renderView(); }
+
+document.getElementById('generate').addEventListener('click', generateWeek);
+document.getElementById('weight').addEventListener('input', () => { recalcCaloriesBurned(); saveFormData(); });
+document.getElementById('age').addEventListener('input', () => { recalcCaloriesBurned(); saveFormData(); });
+document.getElementById('activity-level').addEventListener('change', () => { recalcCaloriesBurned(); saveFormData(); });
+document.getElementById('lose-per-week').addEventListener('input', () => { recalcDailyTarget(); saveFormData(); });
+document.getElementById('calories-burned').addEventListener('input', () => { recalcDailyTarget(); saveFormData(); });
+document.getElementById('calorie-target').addEventListener('input', saveFormData);
+document.getElementById('max-per-meal').addEventListener('input', saveFormData);
+document.getElementById('save-week').addEventListener('click', saveCurrentWeek);
+document.getElementById('week').addEventListener('click', (e) => {
+  const btn = e.target.closest('.regen-btn');
+  if(!btn) return;
+  regenerateMeal(parseInt(btn.dataset.day, 10), btn.dataset.slot);
 });
 
-/* ---------------- wire up ---------------- */
-$("#generateBtn").addEventListener("click", generate);
-$("#saveBtn").addEventListener("click", saveWeek);
-updateEstimates();
-loadPool().then(renderView);
+loadSavedWeeks();
+renderTabs();
+if(loadFormData()){
+  refreshCalcNoteOnly();
+}else{
+  recalcCaloriesBurned();
+}
+saveFormData();
+loadPool();
 </script>
+
 </body>
 </html>
