@@ -149,7 +149,7 @@
   <div id="planWrap" hidden>
     <div class="plan-head">
       <h2 id="planTitle">This week's plan</h2>
-      <button class="btn ghost" id="saveBtn" disabled>Save this week</button>
+      <button class="btn" id="saveBtn" disabled>Save this week</button>
     </div>
     <div class="days" id="daysGrid"></div>
     <p class="save-note">Saved weeks live in this browser's cookies and show up as tabs above.</p>
@@ -279,11 +279,14 @@ function mealHTML(p){
   const img = p.image_url
     ? '<img class="meal-img" src="' + esc(p.image_url) + '" alt="' + esc(p.PRODUCT_NAME) + '" loading="lazy" onerror="__imgFail(this)">'
     : '<div class="meal-img ph" aria-hidden="true">&#10052;</div>';
-  const size = p.PRODUCT_SIZE ? " · " + esc(p.PRODUCT_SIZE) + " oz" : "";
+  
+  // Show servings per container instead of brand and size
+  const servings = p.servings_per_container ? "Servings: " + esc(p.servings_per_container) : "";
+  
   return '<li class="meal">' + img +
     '<div class="meal-info">' +
       '<a class="meal-name" href="' + esc(p.PRODUCT_URL || "#") + '" target="_blank" rel="noopener">' + esc(p.PRODUCT_NAME) + '</a>' +
-      '<span class="meal-meta">' + esc(p.BRAND || "") + size + ' · ' + cals(p.calories) + ' cal</span>' +
+      '<span class="meal-meta">' + servings + ' · ' + cals(p.calories) + ' cal</span>' +
       '<span class="meal-price">' + money(price(p)) + '</span>' +
     '</div></li>';
 }
@@ -319,7 +322,7 @@ function loadSavedWeek(id){
     w.days = w.days.map((skus, i) => {
       const meals = skus.map(sku => state.bySku.get(String(sku)) || {
         SKU: sku, PRODUCT_NAME: "(SKU " + sku + " no longer in pool)", BRAND: "—",
-        PRODUCT_URL: "#", calories: 0, PRICE_CURRENT: "0.00", image_url: null
+        PRODUCT_URL: "#", calories: 0, PRICE_CURRENT: "0.00", image_url: null, servings_per_container: null
       });
       const cal  = meals.reduce((s,p) => s + Number(p.calories), 0);
       const cost = meals.reduce((s,p) => s + price(p), 0);
