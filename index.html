@@ -314,31 +314,20 @@
   .meal-thumb-link{ flex-shrink:0; display:block; }
 
   .meal-thumb{
-    width:64px;
+    width:90px;
     height:auto;
-    max-height:110px;
+    max-height:150px;
     border-radius:8px;
     object-fit:contain;
     display:block;
-    border:1px solid var(--line);
     background:var(--card);
   }
 
   .meal-thumb-empty{
-    width:64px;
-    height:64px;
+    width:90px;
+    height:90px;
     background:linear-gradient(135deg, var(--frost), var(--ice));
     opacity:0.6;
-  }
-
-  .meal-name-link{
-    color:inherit;
-    text-decoration:none;
-  }
-
-  .meal-name-link:hover{
-    color:var(--blue);
-    text-decoration:underline;
   }
 
   .meal-view-link{
@@ -445,7 +434,8 @@
     border-top:1px solid var(--line);
   }
 
-  button#save-week{
+  button#save-week,
+  button#save-week-top{
     font-family:'Inter', sans-serif;
     font-weight:600;
     font-size:14px;
@@ -457,8 +447,10 @@
     cursor:pointer;
   }
 
-  button#save-week:hover{ background:var(--blue); }
-  button#save-week:disabled{ background:var(--line); color:var(--ink-soft); cursor:default; }
+  button#save-week:hover,
+  button#save-week-top:hover{ background:var(--blue); }
+  button#save-week:disabled,
+  button#save-week-top:disabled{ background:var(--line); color:var(--ink-soft); cursor:default; }
 
   .save-note{
     font-size:12px;
@@ -1016,9 +1008,7 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
   const priceDisplay = price === 'N/A' ? price : `${price}*`;
   const name = meal.PRODUCT_NAME || meal.name || 'Unnamed item';
 
-  const nameHtml = url
-    ? `<a class="meal-name-link" href="${url}" target="_blank" rel="noopener noreferrer">${name}</a>`
-    : name;
+  const nameHtml = name;
 
   const viewLink = url
     ? `<div class="meal-view-link"><a class="meal-link" href="${url}" target="_blank" rel="noopener noreferrer">View on walmart.com &rarr;</a></div>`
