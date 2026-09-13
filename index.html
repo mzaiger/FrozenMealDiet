@@ -73,7 +73,7 @@
     flex-wrap:wrap;
     align-items:flex-end;
     gap:20px;
-    max-width:580px;
+    max-width:600px;
     background:var(--card);
     border:1px solid var(--line);
     border-radius:10px;
@@ -99,7 +99,7 @@
 
   @media (max-width:640px){
     .controls{
-      max-width:340px;
+      max-width:365px;
       padding:20px 16px;
     }
     .controls .field,
@@ -113,14 +113,14 @@
 
   .field label{
     display:block;
-    font-size:12px;
+    font-size:11px;
     color:var(--ink-soft);
     margin-bottom:6px;
   }
 
   .field input{
     font-family:'IBM Plex Mono', monospace;
-    font-size:22px;
+    font-size:20px;
     font-weight:600;
     color:var(--blue-deep);
     border:1px solid var(--line);
@@ -132,7 +132,7 @@
 
   .field select{
     font-family:'Inter', sans-serif;
-    font-size:13px;
+    font-size:12px;
     font-weight:600;
     color:var(--blue-deep);
     border:1px solid var(--line);
@@ -154,21 +154,24 @@
   }
 
   .tolerance{
-    font-size:13px;
+    font-size:12px;
     color:var(--ink-soft);
     align-self:center;
     padding-bottom:10px;
+    width:120px;
   }
 
   button#generate{
     font-family:'Inter', sans-serif;
     font-weight:600;
-    font-size:15px;
+    font-size:14px;
     background:var(--blue);
     color:#fff;
     border:none;
     border-radius:6px;
     padding:13px 22px;
+    width:170px;
+    text-align:center;
     cursor:pointer;
     transition:background 0.15s ease;
   }
