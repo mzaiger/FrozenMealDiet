@@ -278,6 +278,23 @@
     padding-top:1px;
   }
 
+  .meal-thumb-link{ flex-shrink:0; }
+
+  .meal-thumb{
+    width:56px;
+    height:56px;
+    border-radius:8px;
+    object-fit:cover;
+    display:block;
+    border:1px solid var(--line);
+    background:var(--card);
+  }
+
+  .meal-thumb-empty{
+    background:linear-gradient(135deg, var(--frost), var(--ice));
+    opacity:0.6;
+  }
+
   .day-total{
     margin-top:2px;
     padding-top:12px;
@@ -683,6 +700,10 @@ function getMealUrl(meal){
   return meal.PRODUCT_URL || meal.product_url || meal.url || (meal.open_food_facts ? meal.open_food_facts.url : '');
 }
 
+function getMealImage(meal){
+  return meal.image_url || meal.IMAGE_URL || meal.thumbnail || meal.THUMBNAIL || '';
+}
+
 function getMealPriceNumber(meal){
   const raw = meal.PRICE_CURRENT ?? meal.price ?? meal.PRICE_RETAIL;
   const num = parseFloat(raw);
@@ -929,6 +950,7 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
   const row = document.createElement('div');
   row.className = 'meal-row';
   const url = getMealUrl(meal);
+  const image = getMealImage(meal);
   const calories = getMealCalories(meal);
   const servingsPerContainer = getMealServingsPerContainer(meal);
   const price = getMealPrice(meal);
@@ -939,11 +961,19 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
     ? `<a class="meal-link" href="${url}" target="_blank" rel="noopener noreferrer">view &rarr;</a>`
     : '';
 
+  const thumbImg = image
+    ? `<img class="meal-thumb" src="${image}" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;meal-thumb meal-thumb-empty&quot;></div>';" />`
+    : `<div class="meal-thumb meal-thumb-empty"></div>`;
+  const thumb = url
+    ? `<a class="meal-thumb-link" href="${url}" target="_blank" rel="noopener noreferrer">${thumbImg}</a>`
+    : `<div class="meal-thumb-link">${thumbImg}</div>`;
+
   const regenBtn = canRegenerate
     ? `<button type="button" class="regen-btn" data-day="${dayIndex}" data-slot="${slot}" title="Swap this meal for another option">regenerate</button>`
     : '';
 
   row.innerHTML = `
+    ${thumb}
     <div class="meal-info">
       <div class="meal-slot">${slot}</div>
       <div class="meal-name">${name}${link}</div>
