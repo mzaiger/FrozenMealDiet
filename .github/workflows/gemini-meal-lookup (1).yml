@@ -1,0 +1,52 @@
+name: Gemini meal price/calorie lookup
+
+on:
+  schedule:
+    # Every 4 hours, on the hour (00:00/04:00/08:00/... UTC). GitHub
+    # Actions cron is always UTC, so the actual local hours this lands on
+    # drift by an hour during DST -- still 6 evenly-spaced runs a day.
+    - cron: "0 */4 * * *"
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "How many candidate_pool.json items to check this run"
+        required: false
+        default: "10"
+
+concurrency:
+  group: gemini-meal-lookup
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  lookup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests pyyaml
+
+      - name: Run Gemini meal lookup
+        env:
+          GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
+        run: |
+          python gemini_meal_lookup.py --limit "${{ github.event.inputs.limit || 10 }}"
+
+      - name: Commit updated pool
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add candidate_pool.json
+          git diff --staged --quiet || git commit -m "Gemini meal price/calorie lookup [automated]"
+          git push
