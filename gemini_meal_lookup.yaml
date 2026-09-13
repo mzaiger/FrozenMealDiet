@@ -1,10 +1,12 @@
 # Configuration for gemini_meal_lookup.py.
 #
 # Every run, the script picks the N least-recently-checked eligible items
-# out of candidate_pool.json, asks Gemini (with Google Search grounding, so
-# it can actually browse walmart.com rather than guess from training data)
-# for each item's current calories-per-serving and current price, and
-# writes the results back into candidate_pool.json.
+# out of candidate_pool.json and asks Gemini -- from its own training
+# knowledge, no Google Search grounding -- for each item's estimated
+# calories-per-serving and price, writing the results back into
+# candidate_pool.json. Since Gemini isn't actually browsing walmart.com
+# here, treat "price" as a rough estimate rather than today's real price;
+# calories tends to be more reliable since nutrition facts rarely change.
 
 gemini:
   # Tried top to bottom, falling back to the next model immediately
@@ -14,8 +16,6 @@ gemini:
   models:
     - gemini-3.5-flash-lite
     - gemini-3.1-flash-lite
-    - gemini-2.5-flash-lite
-    - gemini-2.0-flash-lite
   timeout_seconds: 30
   # One request every N seconds, to stay well under per-minute rate limits.
   min_call_interval_seconds: 10
@@ -43,30 +43,34 @@ pool:
 # {product_name}, {brand}, {product_url}, {sku} are filled in per item.
 prompt:
   template: |
-    You are checking current information for a frozen food product sold on
-    walmart.com.
+    You are estimating information for a frozen food product sold at
+    Walmart, based on what you already know -- you do NOT have the
+    ability to browse the web or visit walmart.com right now, so do not
+    claim to have looked anything up live.
 
     Product: {product_name}
     Brand: {brand}
     Walmart SKU: {sku}
     Walmart product URL (may be stale or redirected): {product_url}
 
-    Search walmart.com for this exact product and determine:
-    1. Whether you can find this listing on walmart.com right now (it does
-       not matter whether it's in stock -- only whether the listing exists).
-    2. The calories per serving, exactly as shown on the product's
-       nutrition facts / product page.
-    3. The current price in USD as shown on walmart.com right now.
+    From your own knowledge, determine your best estimate of:
+    1. Whether you recognize this specific product well enough to give a
+       real estimate (as opposed to guessing blindly).
+    2. The calories per serving, as it would appear on the product's
+       nutrition facts.
+    3. A typical/recent price in USD for this product at Walmart. Treat
+       this as an approximate estimate, not a live price -- it may be
+       out of date.
 
     Return ONLY a valid JSON object with exactly these keys, and nothing
     else -- no markdown code fences, no commentary before or after it:
-    - "found": boolean
+    - "recognized": boolean -- true only if you actually recognize this
+      specific product, false if you'd just be guessing
     - "calories": integer or JSON null if unknown
     - "price": number or JSON null if unknown (e.g. 3.98, no dollar sign)
-    - "source_url": string or JSON null -- the walmart.com URL you found
-      this listing at
-    - "notes": string -- one short sentence on what you found, or why not
+    - "notes": string -- one short sentence on your confidence or
+      reasoning, or why you don't recognize it
 
-    If you cannot find the product on walmart.com, set "found" to false and
-    "calories"/"price"/"source_url" to null, with "notes" briefly
-    explaining why (discontinued, renamed, no matching listing, etc).
+    Do not invent a source URL or claim to have verified this on
+    walmart.com. If you do not recognize the product, set "recognized" to
+    false and "calories"/"price" to null.
