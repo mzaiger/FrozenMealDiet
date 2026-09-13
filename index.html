@@ -169,8 +169,8 @@
     color:#fff;
     border:none;
     border-radius:6px;
-    padding:13px 22px;
-    width:170px;
+    padding:13px 14px;
+    width:140px;
     text-align:center;
     cursor:pointer;
     transition:background 0.15s ease;
@@ -214,13 +214,14 @@
   }
 
   .week-totals{
-    display:flex;
+    display:inline-flex;
     flex-wrap:wrap;
     gap:32px;
     background:var(--card);
     border:1px solid var(--line);
     border-radius:10px;
     padding:18px 24px;
+    margin-top:16px;
     margin-bottom:8px;
   }
 
@@ -477,6 +478,7 @@
     border-radius:6px;
     padding:10px 14px;
     margin-top:16px;
+    margin-bottom:16px;
     display:inline-block;
   }
 
@@ -1127,7 +1129,7 @@ function renderCurrentOrSaved(){
   });
 
   const totals = weekTotals(days);
-  document.getElementById('week-totals').style.display = 'flex';
+  document.getElementById('week-totals').style.display = 'inline-flex';
   document.getElementById('total-calories').textContent = `${totals.calories.toLocaleString()}*`;
   document.getElementById('total-cost').textContent = `$${totals.cost.toFixed(2)}*`;
 
