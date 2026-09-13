@@ -1,0 +1,72 @@
+# Configuration for gemini_meal_lookup.py.
+#
+# Every run, the script picks the N least-recently-checked eligible items
+# out of candidate_pool.json, asks Gemini (with Google Search grounding, so
+# it can actually browse walmart.com rather than guess from training data)
+# for each item's current calories-per-serving and current price, and
+# writes the results back into candidate_pool.json.
+
+gemini:
+  # Tried top to bottom, falling back to the next model immediately
+  # whenever a model reports itself rate-limited, over quota, or
+  # otherwise unavailable (any 4xx) -- same fallback behavior as
+  # SportsDashboard's scripts/gemini_predictions.py.
+  models:
+    - gemini-3.5-flash
+    - gemini-3.1-flash
+    - gemini-2.5-flash
+    - gemini-2.0-flash
+  timeout_seconds: 30
+  # One request every N seconds, to stay well under per-minute rate limits.
+  min_call_interval_seconds: 10
+  # Non-rate-limit errors (network errors, 5xx, unusable response) retry
+  # the SAME model after this many seconds.
+  retry_delay_seconds: 60
+  max_retries: 3
+
+batch:
+  # How many candidate_pool.json items to look up per run. At
+  # min_call_interval_seconds=10, 10 items takes ~1-2 minutes, well
+  # inside a 4-hour window.
+  items_per_run: 10
+  # Skip items already confirmed dead (active === false) -- no point
+  # spending a Gemini call on a listing that's already gone.
+  skip_inactive: true
+  # How many items between incremental saves, so a long/interrupted run
+  # doesn't lose progress.
+  save_every: 5
+
+pool:
+  input_path: candidate_pool.json
+  output_path: candidate_pool.json
+
+# {product_name}, {brand}, {product_url}, {sku} are filled in per item.
+prompt:
+  template: |
+    You are checking current information for a frozen food product sold on
+    walmart.com.
+
+    Product: {product_name}
+    Brand: {brand}
+    Walmart SKU: {sku}
+    Walmart product URL (may be stale or redirected): {product_url}
+
+    Search walmart.com for this exact product and determine:
+    1. Whether you can find this listing on walmart.com right now (it does
+       not matter whether it's in stock -- only whether the listing exists).
+    2. The calories per serving, exactly as shown on the product's
+       nutrition facts / product page.
+    3. The current price in USD as shown on walmart.com right now.
+
+    Return ONLY a valid JSON object with exactly these keys, and nothing
+    else -- no markdown code fences, no commentary before or after it:
+    - "found": boolean
+    - "calories": integer or JSON null if unknown
+    - "price": number or JSON null if unknown (e.g. 3.98, no dollar sign)
+    - "source_url": string or JSON null -- the walmart.com URL you found
+      this listing at
+    - "notes": string -- one short sentence on what you found, or why not
+
+    If you cannot find the product on walmart.com, set "found" to false and
+    "calories"/"price"/"source_url" to null, with "notes" briefly
+    explaining why (discontinued, renamed, no matching listing, etc).
