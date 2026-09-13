@@ -1,16 +1,28 @@
 """
-Looks up current calories-per-serving and price for a rotating batch of
-candidate_pool.json items by asking Gemini -- with Google Search grounding
-turned on, so it actually browses walmart.com instead of guessing from
-training data -- and writes the results back into candidate_pool.json.
+Looks up an estimated calories-per-serving and price for a rotating batch
+of candidate_pool.json items by asking Gemini from its own training
+knowledge -- no Google Search grounding -- and writes the results back
+into candidate_pool.json.
+
+NOTE: without search grounding, Gemini cannot actually browse
+walmart.com. It answers from what it saw during training, which means:
+  - Prices will often be stale or approximate, not today's real price.
+  - Newer or less common products may come back "not found" even if
+    they're really on the site.
+  - Calories-per-serving tends to be more reliable than price, since
+    nutrition facts change far less often than pricing.
+Grounding was dropped specifically to avoid the separate "Grounding with
+Google Search" quota (which returns 429s independently of, and often
+well below, the plain per-model RPM/RPD limits on the free tier -- see
+2026-09 conversation). If/when billing is set up and that quota stops
+being the bottleneck, re-adding `"tools": [{"google_search": {}}]` to
+the request body in call_gemini_single() below restores live lookups.
 
 Modeled on SportsDashboard's scripts/gemini_predictions.py: same model
 fallback chain / rate limiter / retry shape, adapted here for a single
-sequential per-item lookup instead of per-game predictions, and using the
-Google Search tool instead of forced JSON response mode (the Gemini API
-does not reliably support responseMimeType="application/json" together
-with the google_search tool, so this script asks for bare JSON in the
-prompt and parses it leniently instead).
+sequential per-item lookup instead of per-game predictions. Unlike that
+script, this one CAN use forced JSON response mode (responseMimeType) --
+that only conflicts with the google_search tool, which isn't in use here.
 
 Config: gemini_meal_lookup.yaml (models, batch size, rate limiting, the
 per-item prompt template).
@@ -148,7 +160,7 @@ def normalize_result(raw):
     if not isinstance(raw, dict):
         raise ValueError("Gemini response was not a JSON object")
 
-    found = bool(raw.get("found"))
+    recognized = bool(raw.get("recognized"))
 
     calories = raw.get("calories")
     if calories is not None:
@@ -164,17 +176,12 @@ def normalize_result(raw):
         except (TypeError, ValueError):
             price = None
 
-    source_url = raw.get("source_url")
-    if source_url is not None:
-        source_url = str(source_url).strip() or None
-
     notes = str(raw.get("notes", "")).strip()
 
     return {
-        "found": found,
+        "recognized": recognized,
         "calories": calories,
         "price": price,
-        "source_url": source_url,
         "notes": notes,
     }
 
@@ -204,8 +211,10 @@ def call_gemini_single(prompt, gemini_key, model, cfg, rate_limiter):
                 params={"key": gemini_key},
                 json={
                     "contents": [{"parts": [{"text": prompt}]}],
-                    "tools": [{"google_search": {}}],
-                    "generationConfig": {"temperature": 0.1},
+                    "generationConfig": {
+                        "temperature": 0.1,
+                        "responseMimeType": "application/json",
+                    },
                 },
                 timeout=timeout,
             )
@@ -322,7 +331,7 @@ def main():
 
     rate_limiter = _RateLimiter(cfg["gemini"]["min_call_interval_seconds"])
     quota_exhausted = False
-    checked, failed, skipped, found_count = 0, 0, 0, 0
+    checked, failed, skipped, recognized_count = 0, 0, 0, 0
 
     for i, item in enumerate(batch, start=1):
         label = item.get("PRODUCT_NAME", item.get("SKU", "unknown item"))
@@ -349,26 +358,31 @@ def main():
         checked_at = datetime.now(timezone.utc).isoformat()
         item["_gemini_checked_at"] = checked_at
         item["_gemini_model"] = model_used
-        item["_gemini_found"] = result["found"]
+        item["_gemini_recognized"] = result["recognized"]
         item["_gemini_notes"] = result["notes"]
-        item["_gemini_source_url"] = result["source_url"]
+        # No source_url here -- without search grounding Gemini can't verify
+        # a real walmart.com link, so we don't ask it for one (see module
+        # docstring). Price is likewise an estimate, not a live price --
+        # flagged explicitly so downstream consumers (e.g. index.html) can
+        # treat it differently from a confirmed-active-URL price.
+        item["_gemini_price_is_estimate"] = True
 
-        if result["found"] and result["calories"] is not None:
+        if result["recognized"] and result["calories"] is not None:
             item["calories"] = result["calories"]
-        if result["found"] and result["price"] is not None:
+        if result["recognized"] and result["price"] is not None:
             item["PRICE_CURRENT"] = f"{result['price']:.2f}"
 
-        if result["found"]:
-            found_count += 1
+        if result["recognized"]:
+            recognized_count += 1
 
         checked += 1
-        log(f"  [{i}/{len(batch)}] {label}: found={result['found']} "
+        log(f"  [{i}/{len(batch)}] {label}: recognized={result['recognized']} "
             f"calories={result['calories']} price={result['price']} ({model_used})")
 
         if checked % save_every == 0:
             save_pool(output_path, pool)
 
-    log(f"Gemini meal lookup: {checked} checked ({found_count} found), "
+    log(f"Gemini meal lookup: {checked} checked ({recognized_count} recognized), "
         f"{failed} failed, {skipped} skipped (fallback chain exhausted).")
 
     if checked:
