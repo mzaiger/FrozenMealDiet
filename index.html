@@ -355,7 +355,9 @@
   }
 
   .day-header-totals{
-    text-align:right;
+    display:flex;
+    align-items:baseline;
+    gap:8px;
     flex-shrink:0;
   }
 
@@ -363,13 +365,14 @@
     font-family:'IBM Plex Mono', monospace;
     font-size:16px;
     font-weight:700;
+    white-space:nowrap;
   }
 
   .day-header-totals .price{
     font-size:12px;
     color:var(--ink-soft);
     font-family:'IBM Plex Mono', monospace;
-    margin-top:2px;
+    white-space:nowrap;
   }
 
   .value.in-range{ color:var(--good); }
