@@ -73,6 +73,7 @@
     flex-wrap:wrap;
     align-items:flex-end;
     gap:20px;
+    max-width:580px;
     background:var(--card);
     border:1px solid var(--line);
     border-radius:10px;
@@ -97,6 +98,10 @@
   .row-break.mobile-only{ display:none; }
 
   @media (max-width:640px){
+    .controls{
+      max-width:340px;
+      padding:20px 16px;
+    }
     .controls .field,
     .controls .tolerance,
     .controls button,
@@ -434,6 +439,10 @@
     border-top:1px solid var(--line);
   }
 
+  #save-bar-top{
+    margin-bottom:20px;
+  }
+
   button#save-week,
   button#save-week-top{
     font-family:'Inter', sans-serif;
@@ -500,6 +509,7 @@
       <label for="age">Age</label>
       <input type="number" id="age" value="30" min="13" max="100" step="1" />
     </div>
+    <div class="row-break mobile-only" style="--o-m:3;"></div>
     <div class="field" style="--o-d:3; --o-m:4;">
       <label for="activity-level">Activity level</label>
       <select id="activity-level">
@@ -509,8 +519,8 @@
         <option value="17">Very active (hard exercise 6-7x/wk)</option>
       </select>
     </div>
-    <div class="row-break" style="--o-d:4; --o-m:3;"></div>
-    <div class="field" style="--o-d:5; --o-m:5;">
+    <div class="row-break" style="--o-d:4; --o-m:5;"></div>
+    <div class="field" style="--o-d:5; --o-m:6;">
       <label for="calories-burned">Calories burned / day</label>
       <input type="number" id="calories-burned" value="2700" min="800" max="6000" step="10" />
     </div>
@@ -518,18 +528,18 @@
       <label for="lose-per-week">Lose / week (lbs)</label>
       <input type="number" id="lose-per-week" value="1" min="0" max="5" step="0.25" />
     </div>
-    <div class="field" style="--o-d:7; --o-m:8;">
+    <div class="row-break mobile-only" style="--o-m:8;"></div>
+    <div class="field" style="--o-d:7; --o-m:9;">
       <label for="calorie-target">Daily calorie target</label>
       <input type="number" id="calorie-target" value="1500" min="800" max="4000" step="50" />
     </div>
-    <div class="tolerance" style="--o-d:8; --o-m:9;">&plusmn; 250 cal window</div>
-    <div class="row-break" style="--o-d:9; --o-m:6;"></div>
-    <div class="row-break mobile-only" style="--o-m:10;"></div>
-    <div class="field" style="--o-d:10; --o-m:11;">
+    <div class="tolerance" style="--o-d:8; --o-m:10;">&plusmn; 250 cal window</div>
+    <div class="row-break" style="--o-d:9; --o-m:11;"></div>
+    <div class="field" style="--o-d:10; --o-m:12;">
       <label for="max-per-meal">Max per meal ($)</label>
       <input type="number" id="max-per-meal" value="5.00" min="0" max="50" step="0.25" />
     </div>
-    <button id="generate" style="--o-d:11; --o-m:12;">Generate week</button>
+    <button id="generate" style="--o-d:11; --o-m:13;">Generate week</button>
   </div>
   </div>
   <div class="pool-status" id="pool-status">Loading meal pool&hellip;</div>
