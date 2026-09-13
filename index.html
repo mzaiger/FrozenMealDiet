@@ -479,7 +479,8 @@
     padding:10px 14px;
     margin-top:16px;
     margin-bottom:16px;
-    display:inline-block;
+    display:block;
+    width:fit-content;
   }
 
   .tab-delete{
@@ -1219,10 +1220,10 @@ function saveCurrentWeek(){
   persistSavedWeeks();
 
   // Saving clears the live builder back to blank, ready for a new week —
-  // the just-saved week lives on as its own tab above.
+  // but we land on the just-saved tab first so its totals/meals stay visible.
   currentWeek = [];
   clearPersistedCurrentWeek();
-  activeTab = 'current';
+  activeTab = savedWeeks.length - 1;
 
   renderTabs();
   renderCurrentOrSaved();
@@ -1230,7 +1231,7 @@ function saveCurrentWeek(){
 
   const confirmation = document.getElementById('save-confirmation');
   confirmation.textContent = `Saved as ${label} — find it in the tabs above.`;
-  confirmation.style.display = 'inline-block';
+  confirmation.style.display = 'block';
 }
 
 function renderTabs(){
