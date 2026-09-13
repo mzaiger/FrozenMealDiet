@@ -63,6 +63,11 @@
     margin:0 0 28px;
   }
 
+  .controls-wrap{
+    display:flex;
+    justify-content:center;
+  }
+
   .controls{
     display:flex;
     flex-wrap:wrap;
@@ -72,6 +77,33 @@
     border:1px solid var(--line);
     border-radius:10px;
     padding:20px 24px;
+  }
+
+  .controls .field,
+  .controls .tolerance,
+  .controls button,
+  .controls .row-break{
+    order:var(--o-d);
+  }
+
+  .row-break{
+    flex-basis:100%;
+    width:0;
+    height:0;
+    margin:0;
+    padding:0;
+  }
+
+  .row-break.mobile-only{ display:none; }
+
+  @media (max-width:640px){
+    .controls .field,
+    .controls .tolerance,
+    .controls button,
+    .controls .row-break{
+      order:var(--o-m);
+    }
+    .row-break.mobile-only{ display:block; }
   }
 
   .field label{
@@ -229,6 +261,7 @@
 
   .meal-row{
     display:flex;
+    align-items:flex-start;
     justify-content:space-between;
     gap:12px;
     padding:10px 0;
@@ -278,21 +311,42 @@
     padding-top:1px;
   }
 
-  .meal-thumb-link{ flex-shrink:0; }
+  .meal-thumb-link{ flex-shrink:0; display:block; }
 
   .meal-thumb{
-    width:56px;
-    height:56px;
+    width:64px;
+    height:auto;
+    max-height:110px;
     border-radius:8px;
-    object-fit:cover;
+    object-fit:contain;
     display:block;
     border:1px solid var(--line);
     background:var(--card);
   }
 
   .meal-thumb-empty{
+    width:64px;
+    height:64px;
     background:linear-gradient(135deg, var(--frost), var(--ice));
     opacity:0.6;
+  }
+
+  .meal-name-link{
+    color:inherit;
+    text-decoration:none;
+  }
+
+  .meal-name-link:hover{
+    color:var(--blue);
+    text-decoration:underline;
+  }
+
+  .meal-view-link{
+    margin-top:3px;
+  }
+
+  .meal-view-link .meal-link{
+    margin-left:0;
   }
 
   .day-total{
@@ -411,6 +465,17 @@
     color:var(--ink-soft);
   }
 
+  .save-confirmation{
+    font-size:13px;
+    font-weight:600;
+    color:var(--good);
+    background:rgba(44,140,94,0.1);
+    border-radius:6px;
+    padding:10px 14px;
+    margin-top:16px;
+    display:inline-block;
+  }
+
   .tab-delete{
     margin-left:8px;
     color:var(--warn);
@@ -433,16 +498,17 @@
   <h1>Poor Man's Walmart Frozen Meal Diet</h1>
   <p class="sub">Seven days of meals pulled from the frozen aisle — 3 to 5 meals a day depending on your calorie target, each day landing within 250 calories of goal.</p>
 
+  <div class="controls-wrap">
   <div class="controls">
-    <div class="field">
+    <div class="field" style="--o-d:1; --o-m:1;">
       <label for="weight">Weight (lbs)</label>
       <input type="number" id="weight" value="180" min="50" max="600" step="1" />
     </div>
-    <div class="field">
+    <div class="field" style="--o-d:2; --o-m:2;">
       <label for="age">Age</label>
       <input type="number" id="age" value="30" min="13" max="100" step="1" />
     </div>
-    <div class="field">
+    <div class="field" style="--o-d:3; --o-m:4;">
       <label for="activity-level">Activity level</label>
       <select id="activity-level">
         <option value="13">Sedentary (desk job, little exercise)</option>
@@ -451,26 +517,29 @@
         <option value="17">Very active (hard exercise 6-7x/wk)</option>
       </select>
     </div>
-    <div class="field">
+    <div class="row-break" style="--o-d:4; --o-m:3;"></div>
+    <div class="field" style="--o-d:5; --o-m:5;">
       <label for="calories-burned">Calories burned / day</label>
       <input type="number" id="calories-burned" value="2700" min="800" max="6000" step="10" />
     </div>
-    <div class="field">
+    <div class="field" style="--o-d:6; --o-m:7;">
       <label for="lose-per-week">Lose / week (lbs)</label>
       <input type="number" id="lose-per-week" value="1" min="0" max="5" step="0.25" />
     </div>
-    <div class="field">
+    <div class="field" style="--o-d:7; --o-m:8;">
       <label for="calorie-target">Daily calorie target</label>
       <input type="number" id="calorie-target" value="1500" min="800" max="4000" step="50" />
     </div>
-    <div class="tolerance">&plusmn; 250 cal window</div>
-    <div class="field">
+    <div class="tolerance" style="--o-d:8; --o-m:9;">&plusmn; 250 cal window</div>
+    <div class="row-break" style="--o-d:9; --o-m:6;"></div>
+    <div class="row-break mobile-only" style="--o-m:10;"></div>
+    <div class="field" style="--o-d:10; --o-m:11;">
       <label for="max-per-meal">Max per meal ($)</label>
       <input type="number" id="max-per-meal" value="5.00" min="0" max="50" step="0.25" />
     </div>
-    <button id="generate">Generate week</button>
+    <button id="generate" style="--o-d:11; --o-m:12;">Generate week</button>
   </div>
-  <div class="calc-note" id="calc-note"></div>
+  </div>
   <div class="pool-status" id="pool-status">Loading meal pool&hellip;</div>
   <div class="budget-summary" id="budget-summary" style="display:none;"></div>
   <div class="calc-note">* Calorie and price figures come from product/retailer data and may be out of date or inaccurate — always double-check at the store.</div>
@@ -478,6 +547,10 @@
 
 <main>
   <div class="tab-bar" id="tab-bar"></div>
+  <div class="save-confirmation" id="save-confirmation" style="display:none;"></div>
+  <div class="save-bar" id="save-bar-top" style="display:none;">
+    <button id="save-week-top">Save this week</button>
+  </div>
   <div class="week-totals" id="week-totals" style="display:none;">
     <div class="total-item">
       <div class="label">Total calories / week</div>
@@ -497,7 +570,7 @@
   </div>
   <div class="save-bar" id="save-bar" style="display:none;">
     <button id="save-week">Save this week</button>
-    <span class="save-note" id="save-note">Saved weeks live in this browser's cookies and show up as tabs above.</span>
+    <span class="save-note" id="save-note">Saved weeks live in this browser and show up as tabs above.</span>
   </div>
 </main>
 
@@ -518,35 +591,36 @@ let activeCapInfo = { capActive: false, maxPrice: 0, capFallback: false };
 let savedWeeks = [];
 let activeTab = 'current';
 
-// Browsers (Chrome, etc.) cap cookie lifetime at 400 days and silently clamp
-// anything longer, so we clamp here too rather than relying on that.
-const MAX_COOKIE_DAYS = 400;
-
-function setCookie(name, value, days){
-  const clampedDays = Math.min(days, MAX_COOKIE_DAYS);
-  const expires = new Date(Date.now() + clampedDays * 24 * 60 * 60 * 1000).toUTCString();
-  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
+function setStorage(name, value){
+  try{
+    localStorage.setItem(name, value);
+    return true;
+  }catch(err){
+    console.warn(`Could not save "${name}" to this browser's storage.`, err);
+    return false;
+  }
 }
 
-function getCookie(name){
-  const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
-  return match ? decodeURIComponent(match[1]) : null;
+function getStorage(name){
+  try{
+    return localStorage.getItem(name);
+  }catch(err){
+    return null;
+  }
+}
+
+function removeStorage(name){
+  try{ localStorage.removeItem(name); }catch(err){}
 }
 
 function loadSavedWeeks(){
-  const raw = getCookie('freezerSavedWeeks');
+  const raw = getStorage('freezerSavedWeeks');
   if(!raw) return;
   try{ savedWeeks = JSON.parse(raw) || []; }catch(err){ savedWeeks = []; }
 }
 
-// Only the fields needed to redraw a saved day card are kept, to stay well
-// under the ~4KB-per-cookie limit most browsers enforce.
 function persistSavedWeeks(){
-  try{
-    setCookie('freezerSavedWeeks', JSON.stringify(savedWeeks), MAX_COOKIE_DAYS);
-  }catch(err){
-    console.warn('Could not save week to cookies — this browser may be low on cookie space.', err);
-  }
+  setStorage('freezerSavedWeeks', JSON.stringify(savedWeeks));
 }
 
 function compactMeal(meal){
@@ -555,7 +629,8 @@ function compactMeal(meal){
     calories: getMealCalories(meal),
     price: getMealPriceNumber(meal) || null,
     servings: getMealServingsPerContainer(meal),
-    url: getMealUrl(meal)
+    url: getMealUrl(meal),
+    image: getMealImage(meal) || null
   };
 }
 
@@ -591,15 +666,15 @@ function persistCurrentWeek(){
       return { dayName: day.dayName, total: day.total, inRange: day.inRange, slotOrder: day.slotOrder, meals };
     })
   };
-  try{
-    setCookie('freezerCurrentWeek', JSON.stringify(payload), MAX_COOKIE_DAYS);
-  }catch(err){
-    console.warn('Could not save current week to cookies.', err);
-  }
+  setStorage('freezerCurrentWeek', JSON.stringify(payload));
+}
+
+function clearPersistedCurrentWeek(){
+  removeStorage('freezerCurrentWeek');
 }
 
 function restoreCurrentWeek(){
-  const raw = getCookie('freezerCurrentWeek');
+  const raw = getStorage('freezerCurrentWeek');
   if(!raw) return false;
   let payload;
   try{ payload = JSON.parse(raw); }catch(err){ return false; }
@@ -635,14 +710,14 @@ function saveFormData(){
     maxPerMeal: document.getElementById('max-per-meal').value
   };
   try{
-    setCookie('freezerFormData', JSON.stringify(data), MAX_COOKIE_DAYS);
+    setStorage('freezerFormData', JSON.stringify(data));
   }catch(err){
-    console.warn('Could not save form data to cookies.', err);
+    console.warn('Could not save form data.', err);
   }
 }
 
 function loadFormData(){
-  const raw = getCookie('freezerFormData');
+  const raw = getStorage('freezerFormData');
   if(!raw) return false;
   try{
     const data = JSON.parse(raw);
@@ -657,17 +732,6 @@ function loadFormData(){
   }catch(err){
     return false;
   }
-}
-
-// Refreshes the calc-note text from whatever is currently in the fields,
-// without recalculating/overwriting calories-burned or the daily target.
-function refreshCalcNoteOnly(){
-  const burned = parseFloat(document.getElementById('calories-burned').value) || 0;
-  const loseRate = parseFloat(document.getElementById('lose-per-week').value) || 0;
-  const dailyTarget = parseInt(document.getElementById('calorie-target').value, 10) || 0;
-  const weeklyTarget = burned * 7 - (3500 * loseRate);
-  const note = document.getElementById('calc-note');
-  note.textContent = `${burned} cal/day burned × 7 − (3500 × ${loseRate} lb) = ${Math.round(weeklyTarget)} cal/week → ${dailyTarget} cal/day. Daily target and calories burned can both be typed over directly.`;
 }
 
 function getMealCalories(meal){
@@ -701,7 +765,7 @@ function getMealUrl(meal){
 }
 
 function getMealImage(meal){
-  return meal.image_url || meal.IMAGE_URL || meal.thumbnail || meal.THUMBNAIL || '';
+  return meal.image_url || meal.image || '';
 }
 
 function getMealPriceNumber(meal){
@@ -729,9 +793,6 @@ function recalcDailyTarget(){
   const weeklyTarget = weeklyBurn - (3500 * loseRate);
   const dailyTarget = Math.round(weeklyTarget / 7);
   document.getElementById('calorie-target').value = dailyTarget;
-
-  const note = document.getElementById('calc-note');
-  note.textContent = `${burned} cal/day burned × 7 − (3500 × ${loseRate} lb) = ${Math.round(weeklyTarget)} cal/week → ${dailyTarget} cal/day. Daily target and calories burned can both be typed over directly.`;
 }
 
 async function loadPool(){
@@ -780,11 +841,8 @@ async function loadPool(){
 
     const status = document.getElementById('pool-status');
     const dateStr = pool.generated_at ? new Date(pool.generated_at).toLocaleDateString() : 'recently';
-    const notes = [];
-    if(deadCount) notes.push(`${deadCount} dead link${deadCount === 1 ? '' : 's'} excluded`);
-    if(tooSmallCount) notes.push(`${tooSmallCount} item${tooSmallCount === 1 ? '' : 's'} under ${MIN_MEAL_CALORIES} cal excluded`);
-    const extraNote = notes.length ? ` — ${notes.join(', ')}` : '';
-    status.textContent = `Pool updated ${dateStr} — ${(pool.breakfast || []).length} breakfast items, ${(pool.general || []).length} lunch/dinner items${extraNote}.`;
+    const totalPoolSize = (pool.breakfast || []).length + (pool.general || []).length;
+    status.textContent = `Pool size: ${totalPoolSize.toLocaleString()} items (updated ${dateStr}).`;
 
     document.getElementById('empty-state').style.display = 'none';
     if(restoreCurrentWeek()){
@@ -874,6 +932,7 @@ function buildDay(target, breakfastPool, generalPool, breakfastSlots, generalSlo
 }
 
 function generateWeek(){
+  document.getElementById('save-confirmation').style.display = 'none';
   if(!pool.breakfast || !pool.general || !pool.breakfast.length || pool.general.length < 2){
     document.getElementById('empty-state').style.display = 'block';
     document.getElementById('prompt-state').style.display = 'none';
@@ -957,8 +1016,12 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
   const priceDisplay = price === 'N/A' ? price : `${price}*`;
   const name = meal.PRODUCT_NAME || meal.name || 'Unnamed item';
 
-  const link = url
-    ? `<a class="meal-link" href="${url}" target="_blank" rel="noopener noreferrer">view &rarr;</a>`
+  const nameHtml = url
+    ? `<a class="meal-name-link" href="${url}" target="_blank" rel="noopener noreferrer">${name}</a>`
+    : name;
+
+  const viewLink = url
+    ? `<div class="meal-view-link"><a class="meal-link" href="${url}" target="_blank" rel="noopener noreferrer">View on walmart.com &rarr;</a></div>`
     : '';
 
   const thumbImg = image
@@ -976,7 +1039,8 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
     ${thumb}
     <div class="meal-info">
       <div class="meal-slot">${slot}</div>
-      <div class="meal-name">${name}${link}</div>
+      <div class="meal-name">${nameHtml}</div>
+      ${viewLink}
       <div class="meal-serving">Serving: ${servingsPerContainer}</div>
       ${regenBtn}
     </div>
@@ -1038,6 +1102,7 @@ function renderCurrentOrSaved(){
     document.getElementById('prompt-state').style.display = 'block';
     document.getElementById('week-totals').style.display = 'none';
     document.getElementById('save-bar').style.display = 'none';
+    document.getElementById('save-bar-top').style.display = 'none';
     document.getElementById('budget-summary').style.display = 'none';
     return;
   }
@@ -1064,6 +1129,7 @@ function renderCurrentOrSaved(){
   document.getElementById('total-cost').textContent = `$${totals.cost.toFixed(2)}*`;
 
   document.getElementById('save-bar').style.display = editable ? 'flex' : 'none';
+  document.getElementById('save-bar-top').style.display = editable ? 'flex' : 'none';
 
   if(editable){
     updateBudgetSummary(activeCapInfo.capActive, activeCapInfo.maxPrice, countOverCap(days, activeCapInfo.capActive, activeCapInfo.maxPrice), activeCapInfo.capFallback);
@@ -1125,10 +1191,13 @@ function regenerateMeal(dayIndex, slot){
 }
 
 function updateSaveButton(){
-  const btn = document.getElementById('save-week');
-  if(!btn) return;
-  btn.textContent = `Save as Week ${savedWeeks.length + 1}`;
-  btn.disabled = !(currentWeek && currentWeek.length === DAY_NAMES.length);
+  const label = `Save as Week ${savedWeeks.length + 1}`;
+  const disabled = !(currentWeek && currentWeek.length === DAY_NAMES.length);
+  [document.getElementById('save-week'), document.getElementById('save-week-top')].forEach(btn => {
+    if(!btn) return;
+    btn.textContent = label;
+    btn.disabled = disabled;
+  });
 }
 
 function saveCurrentWeek(){
@@ -1144,12 +1213,19 @@ function saveCurrentWeek(){
   savedWeeks.push({ label, target: currentTargetGlobal, capInfo: activeCapInfo, savedAt: new Date().toISOString(), days });
   persistSavedWeeks();
 
-  activeTab = savedWeeks.length - 1;
+  // Saving clears the live builder back to blank, ready for a new week —
+  // the just-saved week lives on as its own tab above.
+  currentWeek = [];
+  clearPersistedCurrentWeek();
+  activeTab = 'current';
+
   renderTabs();
   renderCurrentOrSaved();
   updateSaveButton();
 
-  document.getElementById('save-note').textContent = `Saved as ${label} — it'll stick around in this browser's cookies until you clear it.`;
+  const confirmation = document.getElementById('save-confirmation');
+  confirmation.textContent = `Saved as ${label} — find it in the tabs above.`;
+  confirmation.style.display = 'inline-block';
 }
 
 function renderTabs(){
@@ -1212,6 +1288,7 @@ document.getElementById('calories-burned').addEventListener('input', () => { rec
 document.getElementById('calorie-target').addEventListener('input', saveFormData);
 document.getElementById('max-per-meal').addEventListener('input', saveFormData);
 document.getElementById('save-week').addEventListener('click', saveCurrentWeek);
+document.getElementById('save-week-top').addEventListener('click', saveCurrentWeek);
 document.getElementById('week').addEventListener('click', (e) => {
   const btn = e.target.closest('.regen-btn');
   if(!btn) return;
@@ -1220,9 +1297,7 @@ document.getElementById('week').addEventListener('click', (e) => {
 
 loadSavedWeeks();
 renderTabs();
-if(loadFormData()){
-  refreshCalcNoteOnly();
-}else{
+if(!loadFormData()){
   recalcCaloriesBurned();
 }
 saveFormData();
