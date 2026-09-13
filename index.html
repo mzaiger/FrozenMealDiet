@@ -347,21 +347,29 @@
     margin-left:0;
   }
 
-  .day-total{
-    margin-top:2px;
-    padding-top:12px;
-    border-top:2px solid var(--ink);
+  .day-header{
     display:flex;
     justify-content:space-between;
-    align-items:center;
+    align-items:flex-start;
+    gap:12px;
   }
 
-  .day-total .label{ font-size:12px; color:var(--ink-soft); }
+  .day-header-totals{
+    text-align:right;
+    flex-shrink:0;
+  }
 
-  .day-total .value{
+  .day-header-totals .value{
     font-family:'IBM Plex Mono', monospace;
-    font-size:18px;
+    font-size:16px;
     font-weight:700;
+  }
+
+  .day-header-totals .price{
+    font-size:12px;
+    color:var(--ink-soft);
+    font-family:'IBM Plex Mono', monospace;
+    margin-top:2px;
   }
 
   .value.in-range{ color:var(--good); }
@@ -1062,10 +1070,19 @@ function renderDayCard(dayName, day, target, editable, dayIndex){
   const card = document.createElement('div');
   card.className = 'day-card';
 
-  const heading = document.createElement('div');
-  heading.className = 'day-name';
-  heading.textContent = dayName;
-  card.appendChild(heading);
+  const totalPrice = Object.values(day.meals).reduce((sum, meal) => sum + getMealPriceNumber(meal), 0);
+  const priceStr = totalPrice > 0 ? `$${totalPrice.toFixed(2)}*` : 'N/A';
+
+  const header = document.createElement('div');
+  header.className = 'day-header';
+  header.innerHTML = `
+    <div class="day-name">${dayName}</div>
+    <div class="day-header-totals">
+      <div class="value ${day.inRange ? 'in-range' : 'off-range'}">${day.total} cal*</div>
+      <div class="price">${priceStr}</div>
+    </div>
+  `;
+  card.appendChild(header);
 
   // Regenerate works on saved weeks too, as long as the meal pool itself
   // has loaded — it's independent of whether this is the "live" tab.
@@ -1073,20 +1090,6 @@ function renderDayCard(dayName, day, target, editable, dayIndex){
   day.slotOrder.forEach(slot => {
     card.appendChild(mealRow(slot, day.meals[slot], canRegenerate, dayIndex));
   });
-
-  const totalPrice = Object.values(day.meals).reduce((sum, meal) => sum + getMealPriceNumber(meal), 0);
-  const priceStr = totalPrice > 0 ? `$${totalPrice.toFixed(2)}*` : 'N/A';
-
-  const totalRow = document.createElement('div');
-  totalRow.className = 'day-total';
-  totalRow.innerHTML = `
-    <div>
-      <div class="label">Daily total</div>
-      <div style="font-size:12px; color:var(--ink-soft); font-family:'IBM Plex Mono', monospace; font-weight:600;">${priceStr}</div>
-    </div>
-    <span class="value ${day.inRange ? 'in-range' : 'off-range'}">${day.total} cal*</span>
-  `;
-  card.appendChild(totalRow);
 
   if(!day.inRange){
     const flag = document.createElement('div');
