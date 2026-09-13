@@ -1,82 +1,107 @@
-# Freezer Week — 7-Day Frozen Meal Planner
+# Poor Man's Walmart Frozen Meal Diet
 
-Pulls frozen breakfast items and frozen meals from your local Kroger,
-looks up real calorie counts from USDA FoodData Central, and generates a
-7-day / 21-meal plan where each day lands within ±250 calories of a target
-you set (default 1500/day).
+A 7-day frozen meal planner: `candidate_pool.json` holds ~1,800 Walmart
+frozen-food items (name, price, calories, image, link-liveness status),
+and `index.html` builds a randomized week of meals from that pool, kept
+within a calorie target and a per-meal price cap, all client-side.
 
-Same shape as your other trackers: a Python script exports data to JSON,
-a GitHub Action runs it on a schedule, and a static page reads the JSON.
-The one difference here is that assigning meals to days happens **in the
-browser**, not in Python — so changing the calorie target and hitting
-"Generate week" is instant and doesn't need your API keys to be present
-client-side.
+Nothing here talks to Kroger — that's an older description that no
+longer matches the code. The pool is sourced from a Walmart product CSV
+export and enriched with USDA calorie data.
 
-## How it works
+## Python scripts
 
-1. `build_meal_pool.py` (runs weekly via GitHub Actions):
-   - Authenticates with Kroger using a client-credentials OAuth flow
-   - Finds your nearest store by zip code
-   - Searches several frozen-breakfast terms and several general
-     frozen-meal terms, de-duping by UPC
-   - Looks up each item's calories from USDA FoodData Central by UPC
-   - Writes `candidate_pool.json` with two lists: `breakfast` and `general`
-2. `index.html`:
-   - Fetches `candidate_pool.json`
-   - You type a calorie target (default 1500)
-   - JS picks a breakfast item, then searches the general pool for a
-     lunch+dinner pair whose combined calories keep the whole day within
-     ±250 of your target, for all 7 days
-   - Hit "Generate week" any time for a new random plan against the same
-     pool
+| Script | What it does | Automated? |
+|---|---|---|
+| `Dedup.py` | Reads `frozen_food.csv`, drops a few unwanted categories (desserts, meat & seafood, produce, potatoes), de-dupes by SKU, writes `frozen_food_deduped.csv`. | No — run manually when you refresh the source CSV. |
+| `build_meal_pool.py` | Reads `frozen_food_deduped.csv`, cleans each product name, looks up calories + servings-per-container from the USDA FoodData Central API, writes `candidate_pool.json`. Needs `USDA_API_KEY`. | No — run manually to (re)build the pool from scratch. |
+| `AddImageUrl.py` | For every `active` item in `candidate_pool.json`, searches DuckDuckGo Images and writes the result to `image_url`. Rate-limit-conscious (jittered delays, backoff, per-name caching, checkpointing so it's safe to re-run). No API key needed. | No — run manually. |
+| `check_active_urls.py` | Uses Playwright (with stealth) to visit each item's `PRODUCT_URL` on walmart.com and tag it `active: true/false/null` (null = couldn't tell, e.g. bot-blocked). Writes reason/query/checked-URL metadata per item. | **Yes** — `.github/workflows/check-active-urls`, hourly, `--only-unknown --limit 100`. |
+| `check_walmart_links.py` | Alternate way to check link liveness: searches Google via Serper.dev for `site:walmart.com <product_id>` and checks whether walmart.com is the top result. Needs `SERPER_API_KEY`. | **No** — not wired into any workflow. Not currently in use; `check_active_urls.py` is the one actually running. |
+| `gemini_meal_lookup.py` *(new today)* | Asks Gemini for an estimated calories-per-serving and price for a rotating batch of pool items, from Gemini's own knowledge (no live web search — see "Today's session" below for why). Writes results back into `candidate_pool.json`. Needs `GEMINI_KEY`. Config lives in `gemini_meal_lookup.yaml`. | **Yes** — `.github/workflows/gemini-meal-lookup.yml`, every 4 hours. |
 
-## One-time setup
+## YAML files
 
-### 1. Kroger API credentials (free)
-1. Create an account at https://developer.kroger.com and register a new app.
-2. You'll get a **Client ID** and **Client Secret** — no manual approval
-   needed for the `product.compact` scope used here.
+| File | Purpose |
+|---|---|
+| `.github/workflows/check-active-urls` | GitHub Actions workflow. Runs `check_active_urls.py` hourly to keep dead Walmart links tagged `active: false`. |
+| `.github/workflows/gemini-meal-lookup.yml` *(new today)* | GitHub Actions workflow. Runs `gemini_meal_lookup.py` every 4 hours (`0 */4 * * *`), commits the updated `candidate_pool.json`. Also runnable manually from the Actions tab (`workflow_dispatch`, with an overridable `limit` input, default 10). |
+| `gemini_meal_lookup.yaml` *(new today)* | Config for `gemini_meal_lookup.py` — not a workflow file, just settings the script reads at runtime: which Gemini models to try (in fallback order), batch size, rate limiting, and the prompt template. |
 
-### 2. USDA FoodData Central API key (free, instant)
-1. Sign up at https://api.data.gov/signup/ — the key arrives immediately
-   by email, no approval wait.
+### Disabling a scheduled workflow
 
-### 3. GitHub repo secrets
-In your repo's Settings → Secrets and variables → Actions, add:
-- `KROGER_CLIENT_ID`
-- `KROGER_CLIENT_SECRET`
-- `USDA_API_KEY`
-- `KROGER_ZIP` (optional — defaults to `68508` / Lincoln, NE if unset)
+Two ways, without touching code:
+1. **GitHub UI** — repo → Actions tab → select the workflow → "..." menu →
+   "Disable workflow". Re-enable the same way. Nothing to commit.
+2. **Edit the YAML** — remove or comment out the `schedule:` block (the
+   `cron:` line). The `workflow_dispatch:` trigger, if left in place,
+   still lets you run it manually from the Actions tab.
 
-### 4. Enable GitHub Pages
-Settings → Pages → serve from the branch this repo lives on, root folder.
-(`index.html` needs to be fetched over http/https for `fetch()` to work —
-opening it directly as a local file will fail on the `candidate_pool.json`
-load due to browser CORS rules.)
+## Today's session (Sept 13, 2026)
 
-### 5. First run
-The workflow runs every Monday at 09:00 UTC automatically, or trigger it
-manually any time from the Actions tab ("Run workflow" on "Update meal
-pool") to generate the first `candidate_pool.json`.
+Built out the Gemini-based calorie/price lookup as a new leg of the pool,
+alongside the existing Playwright-based `check_active_urls.py`:
 
-## Notes / things worth knowing
+1. Created `gemini_meal_lookup.py`, `gemini_meal_lookup.yaml`, and
+   `.github/workflows/gemini-meal-lookup.yml` from scratch, modeled on
+   SportsDashboard's `scripts/gemini_predictions.py` (same model
+   fallback chain / rate limiter / retry shape).
+2. Batch size: started at 20 items/run, changed to **10**.
+3. Model chain went through a few rounds:
+   - Started with the non-lite `gemini-3.5-flash`, then bumped to the
+     newer `gemini-3.6-flash` → `3.7-flash` → `3.8-flash` as those
+     released.
+   - Switched to match SportsDashboard's actual convention: the
+     `-flash-lite` line, not full Flash.
+   - A real run then showed `gemini-2.5-flash-lite` and
+     `gemini-2.0-flash-lite` both returning **404** ("no longer
+     available to new users") — genuinely retired, not rate-limited —
+     so both were dropped from the chain. It's now just
+     `gemini-3.5-flash-lite` → `gemini-3.1-flash-lite`, the only two
+     that are actually live.
+4. That same run also hit **429s on the live models** despite the
+   per-model rate-limit dashboard showing plenty of headroom (6/15 RPM)
+   — a strong sign it was the separate "Grounding with Google Search"
+   quota, not the base model quota, and that quota effectively needs a
+   linked billing account to work past a small free allowance.
+5. Rather than chase billing setup, **removed the `google_search`
+   grounding tool entirely**. Consequences, all reflected in the
+   current prompt/code:
+   - Gemini now answers from training knowledge, not a live page visit.
+     **Price should be treated as a rough/stale estimate, not today's
+     real price.** Calories tends to hold up better since nutrition
+     facts change less often than pricing.
+   - Since nothing is verified against a real page anymore, the script
+     no longer asks for (or stores) a `source_url` — with no search,
+     that would just be a plausible-looking fabrication.
+   - Response schema changed: `found` → `recognized` (does Gemini
+     actually know this specific product, or would it be guessing).
+   - Forced JSON response mode (`responseMimeType: "application/json"`)
+     is now enabled — that only conflicts with the `google_search`
+     tool, which is no longer in use, so it's safe now and makes
+     parsing more reliable.
+   - Items written to the pool now get `_gemini_checked_at`,
+     `_gemini_model`, `_gemini_recognized`, `_gemini_notes`, and
+     `_gemini_price_is_estimate: true` (the last one exists so
+     `index.html` or any other consumer can tell a Gemini-estimated
+     price apart from a Walmart-confirmed one).
 
-- **Kroger's product search is a keyword search, not a strict category
-  filter.** The search terms in `build_meal_pool.py` (`BREAKFAST_TERMS`,
-  `GENERAL_TERMS`) are tuned to pull relevant frozen items, but you'll
-  likely want to skim `candidate_pool.json` after the first run and adjust
-  the term lists if anything odd sneaks in (e.g. a frozen breakfast search
-  returning a non-breakfast item that just has "breakfast" in a bundle
-  name).
-- **Items without a calorie match on USDA FoodData Central are dropped**
-  from the pool rather than included with a guessed value — so a thin pool
-  usually means USDA's branded-food database didn't have that UPC, not
-  that the script is broken.
-- **If a day can't hit the ±250 window** (pool too small/homogeneous that
-  week), the front end falls back to the closest combination it can find
-  and flags that day so you know it's outside the target rather than
-  silently showing a number that looks fine but isn't.
-- This hasn't been run against live Kroger/USDA traffic in the environment
-  that built it (sandboxed, no network access to those domains) — the
-  request shapes match both APIs' published contracts, but budget a first
-  debugging pass once real secrets are in place.
+If billing ever gets set up and the grounding quota stops being the
+blocker, re-adding `"tools": [{"google_search": {}}]` to the request
+body in `call_gemini_single()` (in `gemini_meal_lookup.py`) restores
+live lookups — that's called out in the script's module docstring too.
+
+## Required secrets / environment variables
+
+No API keys are hardcoded anywhere in this repo. Each script reads its
+key from an environment variable at runtime:
+
+| Variable | Used by | Required for |
+|---|---|---|
+| `USDA_API_KEY` | `build_meal_pool.py` | Calorie/serving lookups when (re)building the pool from CSV. |
+| `SERPER_API_KEY` | `check_walmart_links.py` | Only if you actually run this script — it's not wired into a workflow. |
+| `GEMINI_KEY` | `gemini_meal_lookup.py` | The new 4-hourly calorie/price estimate workflow. |
+
+For GitHub Actions, these need to be repo secrets (Settings → Secrets
+and variables → Actions), referenced in the relevant workflow's `env:`
+block. `check_active_urls.py` and `AddImageUrl.py` don't need any key.
