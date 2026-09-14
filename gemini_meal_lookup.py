@@ -1,37 +1,42 @@
 """
-Looks up an estimated calories-per-serving and price for a rotating batch
-of candidate_pool.json items by asking Gemini from its own training
-knowledge -- no Google Search grounding -- and writes the results back
-into candidate_pool.json.
-
-NOTE: without search grounding, Gemini cannot actually browse
-walmart.com. It answers from what it saw during training, which means:
-  - Prices will often be stale or approximate, not today's real price.
-  - Newer or less common products may come back "not found" even if
-    they're really on the site.
-  - Calories-per-serving tends to be more reliable than price, since
-    nutrition facts change far less often than pricing.
-Grounding was dropped specifically to avoid the separate "Grounding with
-Google Search" quota (which returns 429s independently of, and often
-well below, the plain per-model RPM/RPD limits on the free tier -- see
-2026-09 conversation). If/when billing is set up and that quota stops
-being the bottleneck, re-adding `"tools": [{"google_search": {}}]` to
-the request body in call_gemini_single() below restores live lookups.
+Estimates calories-per-serving and price for a rotating batch of
+candidate_pool.json items by asking Gemini from its own training
+knowledge -- no Google Search, no live walmart.com visit -- and writes
+back only the fields that turn out to differ from what's currently
+stored.
 
 Modeled on SportsDashboard's scripts/gemini_predictions.py: same model
-fallback chain / rate limiter / retry shape, adapted here for a single
-sequential per-item lookup instead of per-game predictions. Unlike that
-script, this one CAN use forced JSON response mode (responseMimeType) --
-that only conflicts with the google_search tool, which isn't in use here.
+fallback chain / rate limiter / retry shape. Bundles several items into
+each Gemini call (batching) instead of one call per item.
 
-Config: gemini_meal_lookup.yaml (models, batch size, rate limiting, the
-per-item prompt template).
+Why no search here: verifying whether a listing is still active, or
+finding its correct URL, genuinely requires a live web visit -- Gemini
+has no reliable knowledge of today's walmart.com state, or even of
+Walmart's catalog specifically, from training. So this version doesn't
+ask for "active" or "product_url" at all; asking without the ability to
+check would just produce confident-looking guesses. It only asks for
+calories and price, which Gemini can reasonably estimate for well-known
+products from general food knowledge -- treat "price" as an estimate,
+not today's real price. See gemini_meal_lookup.yaml's header comment for
+more, and for what to use instead if you want active/URL verification
+(check_active_urls.py, or the search-grounded version of this script).
 
-Selection: each run picks the `items_per_run` items with the oldest (or
-missing) "_gemini_checked_at" timestamp, so repeated runs rotate through
-the whole pool over time rather than hammering the same items. Items with
-active === false are skipped by default (see batch.skip_inactive) --
-already-confirmed-dead Walmart listings aren't worth a Gemini call.
+Why batching: at items_per_call=10 and calls_per_run=10 (config
+defaults), one run checks 100 items in 10 Gemini calls instead of 100.
+At 6 runs/day (every 4 hours) that's 600 items/day, so the pool's ~1800
+items get a full refresh pass roughly every 3 days.
+
+Config: gemini_meal_lookup.yaml (models, batch shape, rate limiting, the
+prompt template).
+
+Selection: each run picks items_per_call x calls_per_run items with the
+oldest (or missing) "_gemini_checked_at" timestamp, so repeated runs
+rotate through the whole pool over time. Items already active === false
+are skipped by default (batch.skip_inactive) -- this script can't
+un-delist something anyway, so there's no reason to spend a call there;
+that's a real difference from the search-grounded version, which leaves
+skip_inactive off so a delisted item gets a chance to be found active
+again.
 
 Env var required: GEMINI_KEY. If missing, the run is skipped entirely
 (exit 0), same as gemini_predictions.py.
@@ -108,35 +113,50 @@ def save_pool(path, pool):
         f.write("\n")
 
 
-def select_batch(pool, items_per_run, skip_inactive):
-    """Returns up to `items_per_run` entries, oldest-checked (or never
+def select_batch(pool, total_items, skip_inactive):
+    """Returns up to `total_items` entries, oldest-checked (or never
     checked) first, so runs rotate through the whole pool over time."""
     eligible = [
         item for item in pool
         if not (skip_inactive and item.get("active") is False)
     ]
     eligible.sort(key=lambda item: item.get("_gemini_checked_at", ""))
-    return eligible[:items_per_run]
+    return eligible[:total_items]
+
+
+def chunk(seq, size):
+    for i in range(0, len(seq), size):
+        yield seq[i:i + size]
 
 
 #---------------------------------------------------------------------------
-# Prompt + response parsing
+# Prompt building
 #---------------------------------------------------------------------------
 
-def build_prompt(template, item):
-    return template.format(
-        product_name=item.get("PRODUCT_NAME", ""),
-        brand=item.get("BRAND", ""),
-        sku=item.get("SKU", ""),
-        product_url=item.get("PRODUCT_URL", ""),
-    )
+def build_batch_prompt(cfg, items):
+    item_line_tmpl = cfg["prompt"]["item_line"]
+    lines = []
+    for n, item in enumerate(items, start=1):
+        lines.append(item_line_tmpl.format(
+            n=n,
+            product_name=item.get("PRODUCT_NAME", ""),
+            brand=item.get("BRAND", ""),
+            sku=item.get("SKU", ""),
+        ).rstrip("\n"))
+
+    products_block = "\n".join(lines)
+    return cfg["prompt"]["intro"].format(count=len(items), products_block=products_block)
 
 
-_JSON_OBJECT_RE = re.compile(r"\{.*\}", re.DOTALL)
+#---------------------------------------------------------------------------
+# Response parsing
+#---------------------------------------------------------------------------
+
+_JSON_ARRAY_RE = re.compile(r"\[.*\]", re.DOTALL)
 
 
-def extract_json(text):
-    """Leniently pulls a JSON object out of a Gemini response that may be
+def extract_json_array(text):
+    """Leniently pulls a JSON array out of a Gemini response that may be
     wrapped in ```json fences or have stray text around it."""
     text = text.strip()
     if text.startswith("```"):
@@ -145,20 +165,31 @@ def extract_json(text):
         text = text.strip()
 
     try:
-        return json.loads(text)
+        parsed = json.loads(text)
+        if isinstance(parsed, list):
+            return parsed
     except json.JSONDecodeError:
         pass
 
-    match = _JSON_OBJECT_RE.search(text)
+    match = _JSON_ARRAY_RE.search(text)
     if not match:
-        raise ValueError(f"no JSON object found in response: {text[:200]!r}")
+        raise ValueError(f"no JSON array found in response: {text[:200]!r}")
 
-    return json.loads(match.group(0))
+    parsed = json.loads(match.group(0))
+    if not isinstance(parsed, list):
+        raise ValueError("parsed JSON was not an array")
+    return parsed
 
 
 def normalize_result(raw):
     if not isinstance(raw, dict):
-        raise ValueError("Gemini response was not a JSON object")
+        raise ValueError(f"batch result entry was not a JSON object: {raw!r}")
+
+    index = raw.get("index")
+    try:
+        index = int(index)
+    except (TypeError, ValueError):
+        index = None
 
     recognized = bool(raw.get("recognized"))
 
@@ -179,6 +210,7 @@ def normalize_result(raw):
     notes = str(raw.get("notes", "")).strip()
 
     return {
+        "index": index,
         "recognized": recognized,
         "calories": calories,
         "price": price,
@@ -186,16 +218,72 @@ def normalize_result(raw):
     }
 
 
+def match_results_to_items(items, raw_results):
+    """Returns a list the same length as `items`, each slot either a
+    normalized result dict or None if no usable result was returned for
+    that position. Matches primarily by the "index" field Gemini echoes
+    back (1-based); falls back to raw list position if the counts line
+    up and indices look unreliable."""
+    normalized = []
+    for raw in raw_results:
+        try:
+            normalized.append(normalize_result(raw))
+        except ValueError as e:
+            log(f"    skipping unparseable batch result entry: {e}")
+
+    by_index = {r["index"]: r for r in normalized if r["index"] is not None}
+    use_index_matching = len(by_index) >= max(1, len(items) // 2)
+
+    matched = []
+    for i in range(1, len(items) + 1):
+        if use_index_matching and i in by_index:
+            matched.append(by_index[i])
+        elif not use_index_matching and i - 1 < len(normalized):
+            matched.append(normalized[i - 1])
+        else:
+            matched.append(None)
+    return matched
+
+
+#---------------------------------------------------------------------------
+# Diffing / applying updates
+#---------------------------------------------------------------------------
+
+def apply_result(item, result):
+    """Updates `item` in place with any fields from `result` that differ
+    from what's currently stored. Returns a list of (field, old, new)
+    tuples describing what actually changed. Only touches
+    calories/PRICE_CURRENT -- this no-search version never touches
+    active or PRODUCT_URL."""
+    changes = []
+
+    if not result["recognized"]:
+        return changes
+
+    if result["calories"] is not None and item.get("calories") != result["calories"]:
+        changes.append(("calories", item.get("calories"), result["calories"]))
+        item["calories"] = result["calories"]
+
+    if result["price"] is not None:
+        new_price_str = f"{result['price']:.2f}"
+        if item.get("PRICE_CURRENT") != new_price_str:
+            changes.append(("PRICE_CURRENT", item.get("PRICE_CURRENT"), new_price_str))
+            item["PRICE_CURRENT"] = new_price_str
+
+    return changes
+
+
 #---------------------------------------------------------------------------
 # Gemini API calls
 #---------------------------------------------------------------------------
 
-def call_gemini_single(prompt, gemini_key, model, cfg, rate_limiter):
-    """Try exactly one model. Raises _ModelUnavailable immediately (no
-    retry) on any 4xx response, so the caller can fall back to the next
-    model without burning this model's retry budget on a request that's
-    never going to succeed. Network errors / 5xx / unusable responses
-    retry the SAME model up to max_retries times."""
+def call_gemini_batch_single_model(prompt, gemini_key, model, cfg, rate_limiter):
+    """Try exactly one model for one batch prompt. Raises
+    _ModelUnavailable immediately (no retry) on any 4xx response, so the
+    caller can fall back to the next model without burning this model's
+    retry budget on a request that's never going to succeed. Network
+    errors / 5xx / unusable responses retry the SAME model up to
+    max_retries times."""
     api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
     max_retries = cfg["gemini"]["max_retries"]
     retry_delay = cfg["gemini"]["retry_delay_seconds"]
@@ -255,8 +343,7 @@ def call_gemini_single(prompt, gemini_key, model, cfg, rate_limiter):
         try:
             data = resp.json()
             text = data["candidates"][0]["content"]["parts"][0]["text"]
-            parsed = extract_json(text)
-            return normalize_result(parsed)
+            return extract_json_array(text)
         except Exception as e:
             last_err = e
             if attempt == max_retries - 1:
@@ -271,15 +358,15 @@ def call_gemini_single(prompt, gemini_key, model, cfg, rate_limiter):
     raise RuntimeError(f"Gemini call to {model} failed for unknown reason")
 
 
-def call_gemini(prompt, gemini_key, cfg, rate_limiter):
-    """Tries each model in cfg's fallback chain in order. Returns
-    (result_dict, model_used). Only once EVERY model has been tried and
-    rejected does this raise DailyQuotaExceeded."""
+def call_gemini_batch(prompt, gemini_key, cfg, rate_limiter):
+    """Tries each model in cfg's fallback chain in order for one batch
+    prompt. Returns (raw_results_list, model_used). Only once EVERY model
+    has been tried and rejected does this raise DailyQuotaExceeded."""
     last_unavailable = None
     for model in cfg["gemini"]["models"]:
         try:
-            result = call_gemini_single(prompt, gemini_key, model, cfg, rate_limiter)
-            return result, model
+            raw_results = call_gemini_batch_single_model(prompt, gemini_key, model, cfg, rate_limiter)
+            return raw_results, model
         except _ModelUnavailable as e:
             last_unavailable = e
             log(f"  {model} unavailable ({e}) -- falling back to next model in the chain.")
@@ -300,89 +387,98 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", default=DEFAULT_CONFIG_PATH,
                          help="Path to gemini_meal_lookup.yaml")
-    parser.add_argument("--limit", type=int, default=None,
-                         help="Override batch.items_per_run for this run")
+    parser.add_argument("--items-per-call", type=int, default=None,
+                         help="Override batch.items_per_call for this run")
+    parser.add_argument("--calls-per-run", type=int, default=None,
+                         help="Override batch.calls_per_run for this run")
     args = parser.parse_args()
 
     gemini_key = os.environ.get("GEMINI_KEY")
     if not gemini_key:
-        log("No GEMINI_KEY set -- skipping Gemini meal lookup.")
+        log("No GEMINI_KEY set -- skipping Gemini pool estimate.")
         return
 
     cfg = load_config(args.config)
-    items_per_run = args.limit or cfg["batch"]["items_per_run"]
+    items_per_call = args.items_per_call or cfg["batch"]["items_per_call"]
+    calls_per_run = args.calls_per_run or cfg["batch"]["calls_per_run"]
     skip_inactive = cfg["batch"]["skip_inactive"]
-    save_every = cfg["batch"]["save_every"]
+    save_every_calls = cfg["batch"]["save_every_calls"]
     input_path = os.path.join(_SCRIPT_DIR, cfg["pool"]["input_path"])
     output_path = os.path.join(_SCRIPT_DIR, cfg["pool"]["output_path"])
-    prompt_template = cfg["prompt"]["template"]
 
     pool = load_pool(input_path)
-    batch = select_batch(pool, items_per_run, skip_inactive)
+    total_items = items_per_call * calls_per_run
+    batch_items = select_batch(pool, total_items, skip_inactive)
 
-    if not batch:
-        log("Gemini meal lookup: no eligible items to check.")
+    if not batch_items:
+        log("Gemini pool estimate: no eligible items to check.")
         return
 
-    log(f"Gemini meal lookup: checking {len(batch)} item(s), starting with "
-        f"{cfg['gemini']['models'][0]} and falling back through "
-        f"{', '.join(cfg['gemini']['models'][1:])} if rate-limited "
-        f"(~{60.0 / cfg['gemini']['min_call_interval_seconds']:.0f}/min per model)...")
+    chunks = list(chunk(batch_items, items_per_call))
+    log(f"Gemini pool estimate: {len(batch_items)} item(s) across {len(chunks)} call(s) of "
+        f"up to {items_per_call} each, starting with {cfg['gemini']['models'][0]} and "
+        f"falling back through {', '.join(cfg['gemini']['models'][1:])} if rate-limited...")
 
     rate_limiter = _RateLimiter(cfg["gemini"]["min_call_interval_seconds"])
     quota_exhausted = False
-    checked, failed, skipped, recognized_count = 0, 0, 0, 0
+    checked, recognized_count, missing, failed, skipped = 0, 0, 0, 0, 0
+    field_change_counts = {"calories": 0, "PRICE_CURRENT": 0}
 
-    for i, item in enumerate(batch, start=1):
-        label = item.get("PRODUCT_NAME", item.get("SKU", "unknown item"))
-
+    for call_idx, items in enumerate(chunks, start=1):
         if quota_exhausted:
-            skipped += 1
-            log(f"  Skipping {label} -- fallback chain exhausted; will check on a future run.")
+            skipped += len(items)
+            log(f"  [call {call_idx}/{len(chunks)}] skipped -- fallback chain exhausted; "
+                f"will check on a future run.")
             continue
 
-        prompt = build_prompt(prompt_template, item)
+        prompt = build_batch_prompt(cfg, items)
 
         try:
-            result, model_used = call_gemini(prompt, gemini_key, cfg, rate_limiter)
+            raw_results, model_used = call_gemini_batch(prompt, gemini_key, cfg, rate_limiter)
         except DailyQuotaExceeded as e:
             quota_exhausted = True
-            skipped += 1
-            log(f"  Gemini fallback chain exhausted at {label}: {e}")
+            skipped += len(items)
+            log(f"  [call {call_idx}/{len(chunks)}] Gemini fallback chain exhausted: {e}")
             continue
-        except Exception as e:  # noqa: BLE001 -- one bad item shouldn't kill the run
-            failed += 1
-            log(f"  Gemini call failed for {label}: {e}")
+        except Exception as e:  # noqa: BLE001 -- one bad call shouldn't kill the run
+            failed += len(items)
+            log(f"  [call {call_idx}/{len(chunks)}] Gemini call failed: {e}")
             continue
 
+        matched = match_results_to_items(items, raw_results)
         checked_at = datetime.now(timezone.utc).isoformat()
-        item["_gemini_checked_at"] = checked_at
-        item["_gemini_model"] = model_used
-        item["_gemini_recognized"] = result["recognized"]
-        item["_gemini_notes"] = result["notes"]
-        # No source_url here -- without search grounding Gemini can't verify
-        # a real walmart.com link, so we don't ask it for one (see module
-        # docstring). Price is likewise an estimate, not a live price --
-        # flagged explicitly so downstream consumers (e.g. index.html) can
-        # treat it differently from a confirmed-active-URL price.
-        item["_gemini_price_is_estimate"] = True
 
-        if result["recognized"] and result["calories"] is not None:
-            item["calories"] = result["calories"]
-        if result["recognized"] and result["price"] is not None:
-            item["PRICE_CURRENT"] = f"{result['price']:.2f}"
+        for item, result in zip(items, matched):
+            label = item.get("PRODUCT_NAME", item.get("SKU", "unknown item"))
 
-        if result["recognized"]:
-            recognized_count += 1
+            if result is None:
+                missing += 1
+                log(f"    no usable result for {label} -- will retry on a future run.")
+                continue
 
-        checked += 1
-        log(f"  [{i}/{len(batch)}] {label}: recognized={result['recognized']} "
-            f"calories={result['calories']} price={result['price']} ({model_used})")
+            changes = apply_result(item, result)
+            item["_gemini_checked_at"] = checked_at
+            item["_gemini_model"] = model_used
+            item["_gemini_notes"] = result["notes"]
+            item["_gemini_price_is_estimate"] = True
 
-        if checked % save_every == 0:
+            for field, old, new in changes:
+                field_change_counts[field] += 1
+                log(f"    {label}: {field} changed {old!r} -> {new!r}")
+
+            if result["recognized"]:
+                recognized_count += 1
+            checked += 1
+
+        log(f"  [call {call_idx}/{len(chunks)}] {model_used}: {len(items)} item(s) processed.")
+
+        if call_idx % save_every_calls == 0:
             save_pool(output_path, pool)
 
-    log(f"Gemini meal lookup: {checked} checked ({recognized_count} recognized), "
+    total_changes = sum(field_change_counts.values())
+    log(f"Gemini pool estimate: {checked} checked ({recognized_count} recognized), "
+        f"{total_changes} field(s) updated (calories={field_change_counts['calories']}, "
+        f"price={field_change_counts['PRICE_CURRENT']}), {missing} missing results, "
         f"{failed} failed, {skipped} skipped (fallback chain exhausted).")
 
     if checked:
