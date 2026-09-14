@@ -1,23 +1,44 @@
 # Configuration for gemini_meal_lookup.py.
 #
-# Every run, the script picks the N least-recently-checked eligible items
-# out of candidate_pool.json and asks Gemini -- from its own training
-# knowledge, no Google Search grounding -- for each item's estimated
-# calories-per-serving and price, writing the results back into
-# candidate_pool.json. Since Gemini isn't actually browsing walmart.com
-# here, treat "price" as a rough estimate rather than today's real price;
-# calories tends to be more reliable since nutrition facts rarely change.
+# Each run makes several Gemini calls, each call bundling several
+# candidate_pool.json items into ONE prompt. Google Search grounding is
+# OFF here: Gemini answers from its own training knowledge, not a real
+# walmart.com visit.
+#
+# That has a real consequence for what's worth asking it:
+#   - "active" (is the listing still up) and "product_url" (the correct
+#     current URL) CANNOT be meaningfully answered without a real search
+#     -- Gemini has no way to know today's walmart.com state, and
+#     Walmart's own product catalog isn't something it saw in training
+#     in any reliable, current way either. Asking for these without
+#     search would just produce confident-looking guesses, so this
+#     version doesn't ask for them at all. Use check_active_urls.py
+#     (Playwright, already running hourly) for active-status checks, and
+#     the search-grounded version of this script (see git history /
+#     2026-09-13 conversation) if you want Gemini to verify URLs too --
+#     that version needs the Google Search grounding quota to work,
+#     which has previously required billing to be set up.
+#   - "calories" and "price" are still worth asking: Gemini generally
+#     has a reasonable sense of typical calories and roughly-recent
+#     pricing for well-known frozen-food products from training data,
+#     even without knowing today's exact walmart.com listing. Treat
+#     "price" as an estimate, not a live price -- it may be stale.
+#     "calories" tends to be more reliable since nutrition facts change
+#     far less often than pricing.
 
 gemini:
   # Tried top to bottom, falling back to the next model immediately
   # whenever a model reports itself rate-limited, over quota, or
   # otherwise unavailable (any 4xx) -- same fallback behavior as
-  # SportsDashboard's scripts/gemini_predictions.py.
+  # SportsDashboard's scripts/gemini_predictions.py. gemini-2.5-flash-lite
+  # and gemini-2.0-flash-lite both now 404 ("no longer available") as of
+  # 2026-09-13, so they're left out of this chain.
   models:
     - gemini-3.5-flash-lite
     - gemini-3.1-flash-lite
   timeout_seconds: 30
-  # One request every N seconds, to stay well under per-minute rate limits.
+  # One Gemini call (i.e. one batch of items_per_call products) every N
+  # seconds, to stay well under per-minute rate limits.
   min_call_interval_seconds: 10
   # Non-rate-limit errors (network errors, 5xx, unusable response) retry
   # the SAME model after this many seconds.
@@ -25,52 +46,60 @@ gemini:
   max_retries: 3
 
 batch:
-  # How many candidate_pool.json items to look up per run. At
-  # min_call_interval_seconds=10, 10 items takes ~1-2 minutes, well
-  # inside a 4-hour window.
-  items_per_run: 10
-  # Skip items already confirmed dead (active === false) -- no point
-  # spending a Gemini call on a listing that's already gone.
+  # Products bundled into a single Gemini prompt/call.
+  items_per_call: 10
+  # How many such calls to make in one run.
+  calls_per_run: 10
+  # items_per_call x calls_per_run = 100 items checked per run. At 6
+  # runs/day (every 4 hours) that's 600/day, so the ~1800-item pool gets
+  # a full pass roughly every 3 days, then the rotation starts over.
   skip_inactive: true
-  # How many items between incremental saves, so a long/interrupted run
-  # doesn't lose progress.
-  save_every: 5
+  # Save candidate_pool.json to disk after every N Gemini calls (not
+  # every N items), so a long or interrupted run doesn't lose progress.
+  save_every_calls: 2
 
 pool:
   input_path: candidate_pool.json
   output_path: candidate_pool.json
 
-# {product_name}, {brand}, {product_url}, {sku} are filled in per item.
+# Two templates: `item_line` is rendered once per product and joined
+# together into `products_block`; `intro` wraps the whole batch with
+# instructions. {n} in `item_line` is that product's 1-based position in
+# THIS batch (not its position in the whole pool) -- Gemini is asked to
+# echo it back per result so answers can be matched to products even if
+# it doesn't preserve list order.
 prompt:
-  template: |
-    You are estimating information for a frozen food product sold at
-    Walmart, based on what you already know -- you do NOT have the
+  item_line: |
+    {n}. {product_name} ({brand}, SKU {sku})
+  intro: |
+    You are estimating information for {count} frozen food products sold
+    at Walmart, based on what you already know -- you do NOT have the
     ability to browse the web or visit walmart.com right now, so do not
     claim to have looked anything up live.
 
-    Product: {product_name}
-    Brand: {brand}
-    Walmart SKU: {sku}
-    Walmart product URL (may be stale or redirected): {product_url}
+    Products:
+    {products_block}
 
-    From your own knowledge, determine your best estimate of:
-    1. Whether you recognize this specific product well enough to give a
-       real estimate (as opposed to guessing blindly).
-    2. The calories per serving, as it would appear on the product's
-       nutrition facts.
-    3. A typical/recent price in USD for this product at Walmart. Treat
-       this as an approximate estimate, not a live price -- it may be
-       out of date.
+    For each product, give your best estimate of:
+    1. "recognized" -- true only if you actually recognize this specific
+       product well enough to give a real estimate, false if you'd just
+       be guessing blindly.
+    2. "calories" -- calories per serving, as it would appear on the
+       product's nutrition facts.
+    3. "price" -- a typical/recent price in USD at Walmart. Treat this as
+       an approximate estimate, not a live price -- it may be out of date.
 
-    Return ONLY a valid JSON object with exactly these keys, and nothing
-    else -- no markdown code fences, no commentary before or after it:
-    - "recognized": boolean -- true only if you actually recognize this
-      specific product, false if you'd just be guessing
+    Return ONLY a JSON array with exactly {count} objects, in the same
+    order as the list above, and nothing else -- no markdown code
+    fences, no commentary before or after it. Each object must have
+    exactly these keys:
+    - "index": integer -- the product's number from the list above (1-based)
+    - "recognized": boolean
     - "calories": integer or JSON null if unknown
     - "price": number or JSON null if unknown (e.g. 3.98, no dollar sign)
     - "notes": string -- one short sentence on your confidence or
       reasoning, or why you don't recognize it
 
-    Do not invent a source URL or claim to have verified this on
-    walmart.com. If you do not recognize the product, set "recognized" to
-    false and "calories"/"price" to null.
+    Do not invent a source URL or claim to have verified anything on
+    walmart.com. If you do not recognize a product, set "recognized" to
+    false and "calories"/"price" to null for it.
