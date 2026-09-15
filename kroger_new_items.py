@@ -21,8 +21,10 @@ Pipeline per candidate product:
   1. Kroger Product API search (by term) -> brand, description,
      categories, size, UPC. No price/location lookup -- Kroger pricing
      isn't used anywhere here.
-  2. SerpApi (site:walmart.com <UPC>) -> a real Walmart PRODUCT_URL, and
-     a SKU extracted directly from that URL (never invented).
+  2. Serper.dev (site:walmart.com <UPC>) -- the same service
+     check_walmart_links.py already uses -- for a real Walmart
+     PRODUCT_URL, and a SKU extracted directly from that URL (never
+     invented).
   3. DuckDuckGo Images (same technique as AddImageUrl.py) -> image_url.
   4. Gemini, no search (same model chain/behavior as
      gemini_meal_lookup.py) -> calories, price estimate, servings text.
@@ -40,13 +42,13 @@ calories, price, and servings_per_container -- all three, not just
 some) all succeeded. Missing any one of those -> the candidate is
 skipped entirely, not added half-filled.
 
-New records get "active": True -- SerpApi already confirmed a live
+New records get "active": True -- Serper.dev already confirmed a live
 walmart.com page exists for the UPC before a record is ever assembled
 (that's step 2 below), and check_active_urls.py's Playwright-based
 checks are unreliable here since Walmart bot-blocks it, so that
 confirmation is trusted directly rather than leaving the item in limbo
 waiting on a check that mostly can't complete. This script's own check
-is still stored separately under "_serpapi_*" fields (as opposed to
+is still stored separately under "_serper_*" fields (as opposed to
 check_active_urls.py's "_active_check_*" fields) so it's clear which
 check actually set "active" for a given row -- and check_active_urls.py
 is still free to flip a row to False later if Walmart genuinely delists
@@ -54,7 +56,8 @@ it and a check happens to get through.
 
 Env vars required:
     KROGER_CLIENT_ID, KROGER_CLIENT_SECRET  -- api.kroger.com OAuth app
-    SERPAPI_KEY                             -- serpapi.com
+    SERPER_API_KEY                          -- serper.dev (same key
+                                                check_walmart_links.py uses)
     GEMINI_KEY                              -- Gemini calorie/price/sku fill-in
 If any are missing, the run is skipped entirely (exit 0), same pattern
 as gemini_meal_lookup.py.
@@ -294,32 +297,34 @@ def discover_new_candidates(token, cfg, existing_names, existing_upcs, max_new_i
 
 
 # ---------------------------------------------------------------------------
-# Step 2: SerpApi Walmart link lookup
+# Step 2: Serper.dev Walmart link lookup
 # ---------------------------------------------------------------------------
 
 def find_walmart_listing(upc, api_key, cfg):
-    """Searches 'site:walmart.com <upc>' via SerpApi. Returns a dict with
-    product_url/sku (both None if not found) plus query/reason/top-result
-    metadata, mirroring check_walmart_links.py's shape."""
+    """Searches 'site:walmart.com <upc>' via Serper.dev (google.serper.dev) --
+    the same service and POST/X-API-KEY shape check_walmart_links.py already
+    uses. Returns a dict with product_url/sku (both None if not found) plus
+    query/reason/top-result metadata."""
     query = f"site:walmart.com {upc}"
-    endpoint = cfg["serpapi"]["endpoint"]
-    timeout = cfg["serpapi"]["timeout_seconds"]
-    max_retries = cfg["serpapi"]["max_retries"]
-    retry_delay = cfg["serpapi"]["retry_delay_seconds"]
+    endpoint = cfg["serper"]["endpoint"]
+    timeout = cfg["serper"]["timeout_seconds"]
+    max_retries = cfg["serper"]["max_retries"]
+    retry_delay = cfg["serper"]["retry_delay_seconds"]
 
     last_error = None
     data = None
     for attempt in range(max_retries + 1):
         try:
-            resp = requests.get(
+            resp = requests.post(
                 endpoint,
-                params={"engine": "google", "q": query, "num": 5, "api_key": api_key},
+                headers={"X-API-KEY": api_key, "Content-Type": "application/json"},
+                json={"q": query, "num": 5},
                 timeout=timeout,
             )
             if resp.status_code in (401, 403):
                 return {
                     "product_url": None, "sku": None, "query": query,
-                    "reason": f"auth_error: check SERPAPI_KEY (status {resp.status_code})",
+                    "reason": f"auth_error: check SERPER_API_KEY (status {resp.status_code})",
                     "top_result_url": None,
                 }
             resp.raise_for_status()
@@ -336,7 +341,7 @@ def find_walmart_listing(upc, api_key, cfg):
             "reason": f"request_failed: {last_error}", "top_result_url": None,
         }
 
-    organic = data.get("organic_results") or []
+    organic = data.get("organic") or []
     if not organic:
         return {
             "product_url": None, "sku": None, "query": query,
@@ -639,7 +644,7 @@ def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
                               # the original 2022 Walmart-CSV rows, which have no
                               # SOURCE column at all (absent, not blank).
         "SUBCATEGORY": categories[0] if categories else "",
-        "active": True,  # SerpApi already confirmed a live walmart.com page for
+        "active": True,  # Serper.dev already confirmed a live walmart.com page for
                           # this UPC before this record was ever assembled (see
                           # find_walmart_listing) -- check_active_urls.py's
                           # Playwright checks are unreliable here (Walmart bot-
@@ -655,9 +660,9 @@ def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
         # separate from check_active_urls.py's own "_active_check_*" writes.
         "_kroger_upc": candidate["upc"],
         "_kroger_discovered_at": run_date,
-        "_serpapi_query": walmart["query"],
-        "_serpapi_reason": walmart["reason"],
-        "_serpapi_top_result_url": walmart["top_result_url"],
+        "_serper_query": walmart["query"],
+        "_serper_reason": walmart["reason"],
+        "_serper_top_result_url": walmart["top_result_url"],
         "_image_search_query": image_query,
         "_image_search_reason": image_reason,
         "_sku_is_estimate": sku_is_estimate,
@@ -683,17 +688,17 @@ def main():
     parser.add_argument("--max-new-items", type=int, default=None,
                          help="Override run.max_new_items for this run")
     parser.add_argument("--dry-run", action="store_true",
-                         help="Run Kroger discovery + dedup only; skip SerpApi/DDG/Gemini and don't write the pool")
+                         help="Run Kroger discovery + dedup only; skip Serper/DDG/Gemini and don't write the pool")
     args = parser.parse_args()
 
     kroger_id = os.environ.get("KROGER_CLIENT_ID")
     kroger_secret = os.environ.get("KROGER_CLIENT_SECRET")
-    serpapi_key = os.environ.get("SERPAPI_KEY")
+    serper_key = os.environ.get("SERPER_API_KEY")
     gemini_key = os.environ.get("GEMINI_KEY")
 
     missing = [name for name, val in [
         ("KROGER_CLIENT_ID", kroger_id), ("KROGER_CLIENT_SECRET", kroger_secret),
-        ("SERPAPI_KEY", serpapi_key), ("GEMINI_KEY", gemini_key),
+        ("SERPER_API_KEY", serper_key), ("GEMINI_KEY", gemini_key),
     ] if not val]
     if missing:
         log(f"Missing env var(s) {', '.join(missing)} -- skipping kroger_new_items run.")
@@ -722,13 +727,13 @@ def main():
             log(f"  [dry-run] would enrich: {c['brand']} {c['description']} (UPC {c['upc']})")
         return
 
-    # --- Step 2 + 3: SerpApi link + DDG image for every candidate first,
+    # --- Step 2 + 3: Serper.dev link + DDG image for every candidate first,
     # so Gemini is only ever spent on candidates that already cleared the
     # "must have both a link and an image" bar. ---
     ddgs = DDGS()
     enriched = []
     for c in candidates:
-        walmart = find_walmart_listing(c["upc"], serpapi_key, cfg)
+        walmart = find_walmart_listing(c["upc"], serper_key, cfg)
         if not walmart["product_url"]:
             log(f"  SKIP (no Walmart link): {c['brand']} {c['description']} -- {walmart['reason']}")
             continue
