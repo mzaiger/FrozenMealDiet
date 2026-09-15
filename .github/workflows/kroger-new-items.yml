@@ -42,7 +42,7 @@ jobs:
         env:
           KROGER_CLIENT_ID: ${{ secrets.KROGER_CLIENT_ID }}
           KROGER_CLIENT_SECRET: ${{ secrets.KROGER_CLIENT_SECRET }}
-          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+          SERPAPI_KEY: ${{ secrets.SERPER_API_KEY }}
           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
         run: |
           python kroger_new_items.py \
