@@ -9,13 +9,13 @@
 # the module docstring in kroger_new_items.py for the full reasoning.
 #
 # Kroger itself is only used for discovery (name/brand/categories/UPC) --
-# not price. A Walmart PRODUCT_URL comes from SerpApi (site:walmart.com
+# not price. A Walmart PRODUCT_URL comes from Serper.dev (site:walmart.com
 # <UPC>), image_url comes from DuckDuckGo, and calories/price/servings
 # come from Gemini (no search -- same as gemini_meal_lookup.py, so
 # treat price as a rough estimate, not a live price).
 #
 # An item is only added to the pool if it has ALL of: a Walmart
-# PRODUCT_URL (via SerpApi), an image_url (via DuckDuckGo), AND a
+# PRODUCT_URL (via Serper.dev), an image_url (via DuckDuckGo), AND a
 # complete Gemini result -- recognized, with calories, price, AND
 # servings_per_container all present, not just some of them. Missing
 # any one of those, and the candidate is dropped, not added with gaps.
@@ -51,8 +51,8 @@ kroger:
   pages_per_term: 1
   timeout_seconds: 15
 
-serpapi:
-  endpoint: "https://serpapi.com/search.json"
+serper:
+  endpoint: "https://google.serper.dev/search"
   timeout_seconds: 15
   max_retries: 2
   retry_delay_seconds: 3
@@ -81,8 +81,8 @@ batch:
   items_per_call: 8
 
 run:
-  # Brand-new items fully enriched (SerpApi + DDG + Gemini) per run.
-  # Kept small since each item costs one SerpApi call and one DDG
+  # Brand-new items fully enriched (Serper + DDG + Gemini) per run.
+  # Kept small since each item costs one Serper call and one DDG
   # image search, both of which are rate-limited/quota-limited services.
   max_new_items: 20
 
