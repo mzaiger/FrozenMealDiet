@@ -19,7 +19,7 @@ export and enriched with USDA calorie data.
 | `check_active_urls.py` | Uses Playwright (with stealth) to visit each item's `PRODUCT_URL` on walmart.com and tag it `active: true/false/null` (null = couldn't tell, e.g. bot-blocked). Writes reason/query/checked-URL metadata per item. | **Yes** — `.github/workflows/check-active-urls`, hourly, `--only-unknown --limit 100`. |
 | `check_walmart_links.py` | Alternate way to check link liveness: searches Google via Serper.dev for `site:walmart.com <product_id>` and checks whether walmart.com is the top result. Needs `SERPER_API_KEY`. | **No** — not wired into any workflow. Not currently in use; `check_active_urls.py` is the one actually running. |
 | `gemini_meal_lookup.py` | Asks Gemini for an estimated calories-per-serving and price for a rotating batch of pool items, from Gemini's own knowledge (no live web search — see "Sept 13" session below for why). Writes results back into `candidate_pool.json`. Needs `GEMINI_KEY`. Config lives in `gemini_meal_lookup.yaml`. | **Yes** — `.github/workflows/gemini-meal-lookup.yml`, every 4 hours. |
-| `kroger_new_items.py` *(new today)* | Finds frozen products NOT already in the pool by searching Kroger's live public catalog (Kroger has no "date added" field, so "new" = in Kroger's catalog today and not already in the pool by product name). For each candidate: resolves a real Walmart `PRODUCT_URL` + `SKU` via Serper.dev (`site:walmart.com <brand> <product name>`, checking each result for the actual `/ip/<slug>/<id>` product-page shape — same service `check_walmart_links.py` uses), reads `PRODUCT_NAME` from that same URL's slug rather than Kroger's description, finds an `image_url` via DuckDuckGo, and asks Gemini (no search, same model chain as `gemini_meal_lookup.py`) for calories/price/servings. An item is only added if it got a real Walmart link, an image, AND complete calories/price/servings — no half-filled entries. Needs `KROGER_CLIENT_ID`, `KROGER_CLIENT_SECRET`, `SERPER_API_KEY`, `GEMINI_KEY`. Config lives in `kroger_new_items.yaml`. | **Yes** — `.github/workflows/kroger-new-items.yml`, daily. |
+| `kroger_new_items.py` *(new today)* | Finds frozen products NOT already in the pool by searching Kroger's live public catalog with broad terms (`bowl`, `meal`, `breakfast`, `dinner`, `pizza`, etc.), keeping only results whose Kroger category labels actually mention "frozen" (Kroger has no "date added" field, so "new" = in Kroger's catalog today, category-filtered to frozen, and not already in the pool by product name). For each candidate: resolves a real Walmart `PRODUCT_URL` + `SKU` via Serper.dev (`site:walmart.com <brand> <product name>`, checking each result for the actual `/ip/<slug>/<id>` product-page shape — same service `check_walmart_links.py` uses), reads `PRODUCT_NAME` from that same URL's slug rather than Kroger's description, finds an `image_url` via DuckDuckGo, and asks Gemini (no search, same model chain as `gemini_meal_lookup.py`) for calories/price/servings. An item is only added if it got a real Walmart link, an image, AND complete calories/price/servings — no half-filled entries. Needs `KROGER_CLIENT_ID`, `KROGER_CLIENT_SECRET`, `SERPER_API_KEY`, `GEMINI_KEY`. Config lives in `kroger_new_items.yaml`. | **Yes** — `.github/workflows/kroger-new-items.yml`, daily. |
 
 ## YAML files
 
@@ -104,7 +104,17 @@ refreshing/verifying what's already in it:
    as: returned by a live Kroger Product API search today AND not already
    in the pool (matched by normalized product name / Kroger UPC). Kroger
    is used purely for discovery — brand, description, categories, size,
-   UPC — never for price.
+   UPC — never for price. Search terms are deliberately broad/generic
+   (`bowl`, `meal`, `breakfast`, `dinner`, `pizza`, etc. — not `frozen
+   bowl`), since Kroger's term search is a literal text match on the
+   product description and an over-narrow phrase wasted most of a
+   50-result page on near-duplicate matches. What actually keeps results
+   scoped to frozen items is a check against Kroger's own category
+   labels — a candidate is dropped unless at least one of its Kroger
+   categories mentions "frozen" — not the search term itself, so
+   broadening the terms doesn't let non-frozen products slip in. Pulls
+   up to 3 pages (150 results) per term now instead of 1 (50), since the
+   broader terms return far more than a single page's worth.
 2. Each candidate's real Walmart page is found via Serper.dev
    (`site:walmart.com <brand> <product name>`), the exact same service
    and request shape `check_walmart_links.py` already uses — reuses

@@ -30,27 +30,39 @@
 
 kroger:
   # Kroger's own department groupings don't map 1:1 to Walmart's, so
-  # this is a set of plain search terms run against filter.term instead
-  # of a category ID. Covers both "frozen meal" and "frozen breakfast
-  # aisle" per the original ask.
+  # this is a set of search terms run against filter.term instead of a
+  # category ID. Deliberately broad/generic (e.g. "bowl", "meal" --
+  # not "frozen bowl") so each term's 50-result page isn't wasted on an
+  # over-narrow phrase match -- kroger_product_to_candidate() is what
+  # actually keeps results scoped to frozen items, by checking Kroger's
+  # own category labels for "frozen" rather than trusting the term.
+  # Covers both "frozen meal" and "frozen breakfast aisle" per the
+  # original ask.
   search_terms:
-    - "frozen dinner"
-    - "frozen meal"
-    - "frozen entree"
-    - "frozen bowl"
-    - "frozen pizza"
-    - "frozen burrito"
-    - "frozen pasta"
-    - "frozen breakfast"
-    - "frozen waffles"
-    - "frozen pancakes"
-    - "frozen breakfast sandwich"
-    - "frozen breakfast burrito"
-    - "frozen french toast"
+    - "bowl"
+    - "meal"
+    - "breakfast"
+    - "dinner"
+    - "entree"
+    - "pizza"
+    - "burrito"
+    - "pasta"
+    - "waffles"
+    - "pancakes"
+    - "french toast"
+    - "breakfast sandwich"
+    - "lasagna"
+    - "chicken nuggets"
+    - "pot pie"
+    - "mac and cheese"
+    - "fried rice"
+    - "egg bites"
   # Kroger's product search caps at 50 results per page (filter.limit).
   results_per_term: 50
-  # How many pages (of results_per_term each) to pull per search term.
-  pages_per_term: 1
+  # How many pages (of results_per_term each) to pull per search term --
+  # with broader terms above returning far more than 50 total matches,
+  # one page per term left a lot of the catalog unseen.
+  pages_per_term: 3
   timeout_seconds: 15
 
 serper:

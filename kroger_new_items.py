@@ -19,8 +19,14 @@ the pool by normalized product name" as the practical definition of
 
 Pipeline per candidate product:
   1. Kroger Product API search (by term) -> brand, description,
-     categories, size, UPC. No price/location lookup -- Kroger pricing
-     isn't used anywhere here.
+     categories, size, UPC. Search terms are deliberately broad/generic
+     (e.g. "bowl", "meal" -- not "frozen bowl"), since Kroger's term
+     search is a literal text match and an over-narrow phrase wastes
+     most of a 50-result page on near-duplicates. What actually keeps
+     results scoped to frozen items is Kroger's own category labels --
+     a candidate is dropped unless at least one of its Kroger categories
+     mentions "frozen" -- not the search term. No price/location lookup
+     -- Kroger pricing isn't used anywhere here.
   2. Serper.dev (site:walmart.com <brand> <product name>) -- the same
      service check_walmart_links.py already uses -- for a real Walmart
      PRODUCT_URL, checking each result for the actual /ip/<slug>/<id>
@@ -242,14 +248,22 @@ def search_kroger_term(token, term, cfg):
 def kroger_product_to_candidate(product):
     """Normalizes one raw Kroger product dict into the loose fields this
     script cares about. Returns None if it's missing what we need
-    (UPC + a description)."""
+    (UPC + a description) OR if none of Kroger's own category labels for
+    it actually mention "frozen" -- this is what makes broader, shorter
+    search terms (like "bowl" or "meal" instead of "frozen bowl") safe to
+    use: the term casts a wide net, but only genuinely frozen-aisle
+    products make it through, based on Kroger's own categorization
+    rather than on the search term matching anything."""
     upc = product.get("upc")
     description = (product.get("description") or "").strip()
     if not upc or not description:
         return None
 
-    brand = (product.get("brand") or "").strip()
     categories = product.get("categories") or []
+    if not any("frozen" in cat.lower() for cat in categories):
+        return None
+
+    brand = (product.get("brand") or "").strip()
     items = product.get("items") or [{}]
     size = (items[0].get("size") or "").strip()
 
@@ -265,7 +279,11 @@ def kroger_product_to_candidate(product):
 def discover_new_candidates(token, cfg, existing_names, existing_upcs, max_new_items):
     """Runs every configured search term against Kroger, dedupes against
     the existing pool AND across terms within this run, and returns up to
-    max_new_items candidate dicts."""
+    max_new_items candidate dicts. Search terms are deliberately broad
+    (e.g. "bowl", "meal", "breakfast" rather than "frozen bowl") to catch
+    more of Kroger's actual catalog -- kroger_product_to_candidate() is
+    what keeps this from pulling in non-frozen products, by checking
+    Kroger's own category labels rather than relying on the search term."""
     seen_upcs_this_run = set()
     candidates = []
 
@@ -280,9 +298,11 @@ def discover_new_candidates(token, cfg, existing_names, existing_upcs, max_new_i
             continue
 
         found_this_term = 0
+        not_frozen_or_incomplete = 0
         for product in raw_products:
             candidate = kroger_product_to_candidate(product)
             if candidate is None:
+                not_frozen_or_incomplete += 1
                 continue
             if candidate["upc"] in seen_upcs_this_run or candidate["upc"] in existing_upcs:
                 continue
@@ -295,8 +315,8 @@ def discover_new_candidates(token, cfg, existing_names, existing_upcs, max_new_i
             if len(candidates) >= max_new_items:
                 break
 
-        log(f"  {len(raw_products)} result(s), {found_this_term} new candidate(s) "
-            f"(running total: {len(candidates)}/{max_new_items})")
+        log(f"  {len(raw_products)} result(s) ({not_frozen_or_incomplete} not frozen/incomplete), "
+            f"{found_this_term} new candidate(s) (running total: {len(candidates)}/{max_new_items})")
 
     return candidates
 
