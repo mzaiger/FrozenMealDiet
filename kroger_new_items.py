@@ -21,10 +21,11 @@ Pipeline per candidate product:
   1. Kroger Product API search (by term) -> brand, description,
      categories, size, UPC. No price/location lookup -- Kroger pricing
      isn't used anywhere here.
-  2. Serper.dev (site:walmart.com <UPC>) -- the same service
-     check_walmart_links.py already uses -- for a real Walmart
-     PRODUCT_URL, and a SKU extracted directly from that URL (never
-     invented).
+  2. Serper.dev (site:walmart.com <brand> <product name>) -- the same
+     service check_walmart_links.py already uses -- for a real Walmart
+     PRODUCT_URL, checking each result for the actual /ip/<slug>/<id>
+     product-page shape rather than trusting the top hit blindly. SKU is
+     extracted directly from that matched URL (never invented).
   3. DuckDuckGo Images (same technique as AddImageUrl.py) -> image_url.
   4. Gemini, no search (same model chain/behavior as
      gemini_meal_lookup.py) -> calories, price estimate, servings text.
@@ -109,8 +110,8 @@ DEFAULT_CONFIG_PATH = _SCRIPT_DIR / "kroger_new_items.yaml"
 KROGER_TOKEN_URL = "https://api.kroger.com/v1/connect/oauth2/token"
 KROGER_PRODUCTS_URL = "https://api.kroger.com/v1/products"
 
-# Same "grab the trailing numeric ID" pattern check_walmart_links.py uses.
-PRODUCT_ID_RE = re.compile(r"/(\d+)(?:[/?#]|$)")
+# (WALMART_IP_URL_RE, the pattern actually used for matching a Walmart
+# product-page URL, is defined just above find_walmart_listing() below.)
 
 
 def log(msg):
@@ -300,12 +301,28 @@ def discover_new_candidates(token, cfg, existing_names, existing_upcs, max_new_i
 # Step 2: Serper.dev Walmart link lookup
 # ---------------------------------------------------------------------------
 
-def find_walmart_listing(upc, api_key, cfg):
-    """Searches 'site:walmart.com <upc>' via Serper.dev (google.serper.dev) --
-    the same service and POST/X-API-KEY shape check_walmart_links.py already
-    uses. Returns a dict with product_url/sku (both None if not found) plus
+# Matches Walmart's actual product-page URL shape:
+# https://www.walmart.com/ip/<slug>/<numeric-id>  -- requiring the "/ip/"
+# segment (not just any trailing digits in the path) means a search-results
+# page, category page, or something on a totally different domain can't
+# accidentally get treated as a real product match.
+WALMART_IP_URL_RE = re.compile(r"/ip/[^/]+/(\d+)(?:[/?#]|$)")
+
+
+def find_walmart_listing(candidate, api_key, cfg):
+    """Searches 'site:walmart.com <brand> <product name>' via Serper.dev
+    (google.serper.dev) -- the same service and POST/X-API-KEY shape
+    check_walmart_links.py already uses. (An earlier version searched by
+    UPC instead of product name, but Walmart's product pages don't
+    reliably surface the raw UPC as indexable text, so that returned
+    no_search_results almost every time -- product name works far
+    better, same as searching for it by hand does.) Checks each organic
+    result in turn for the first one that's both on walmart.com AND
+    matches the real /ip/<slug>/<id> product-page shape, rather than
+    just trusting whatever the top result happens to be. Returns a dict
+    with product_url/sku (both None if nothing matched) plus
     query/reason/top-result metadata."""
-    query = f"site:walmart.com {upc}"
+    query = re.sub(r"\s+", " ", f"site:walmart.com {candidate['brand']} {candidate['description']}").strip()
     endpoint = cfg["serper"]["endpoint"]
     timeout = cfg["serper"]["timeout_seconds"]
     max_retries = cfg["serper"]["max_retries"]
@@ -348,26 +365,26 @@ def find_walmart_listing(upc, api_key, cfg):
             "reason": "no_search_results", "top_result_url": None,
         }
 
-    first_url = organic[0].get("link", "")
-    netloc = urlparse(first_url).netloc.lower().split(":")[0]
-    is_walmart_domain = netloc == "walmart.com" or netloc.endswith(".walmart.com")
-    id_in_url = str(upc) in first_url
-    match = PRODUCT_ID_RE.search(urlparse(first_url).path)
-    sku_from_url = match.group(1) if match else None
+    top_result_url = organic[0].get("link", "")
+    saw_walmart_domain = False
+    for result in organic:
+        url = result.get("link", "")
+        netloc = urlparse(url).netloc.lower().split(":")[0]
+        is_walmart_domain = netloc == "walmart.com" or netloc.endswith(".walmart.com")
+        if not is_walmart_domain:
+            continue
+        saw_walmart_domain = True
+        match = WALMART_IP_URL_RE.search(urlparse(url).path)
+        if match:
+            return {
+                "product_url": url, "sku": match.group(1), "query": query,
+                "reason": "ok", "top_result_url": top_result_url,
+            }
 
-    if not is_walmart_domain:
-        reason = "top_result_not_walmart"
-    elif not sku_from_url:
-        reason = "walmart_domain_but_no_parseable_id"
-    else:
-        reason = "ok"
-
+    reason = "walmart_domain_but_no_ip_pattern" if saw_walmart_domain else "no_walmart_result_in_top_results"
     return {
-        "product_url": first_url if is_walmart_domain else None,
-        "sku": sku_from_url if is_walmart_domain else None,
-        "query": query,
-        "reason": reason,
-        "top_result_url": first_url,
+        "product_url": None, "sku": None, "query": query,
+        "reason": reason, "top_result_url": top_result_url,
     }
 
 
@@ -733,7 +750,7 @@ def main():
     ddgs = DDGS()
     enriched = []
     for c in candidates:
-        walmart = find_walmart_listing(c["upc"], serper_key, cfg)
+        walmart = find_walmart_listing(c, serper_key, cfg)
         if not walmart["product_url"]:
             log(f"  SKIP (no Walmart link): {c['brand']} {c['description']} -- {walmart['reason']}")
             continue

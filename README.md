@@ -19,7 +19,7 @@ export and enriched with USDA calorie data.
 | `check_active_urls.py` | Uses Playwright (with stealth) to visit each item's `PRODUCT_URL` on walmart.com and tag it `active: true/false/null` (null = couldn't tell, e.g. bot-blocked). Writes reason/query/checked-URL metadata per item. | **Yes** — `.github/workflows/check-active-urls`, hourly, `--only-unknown --limit 100`. |
 | `check_walmart_links.py` | Alternate way to check link liveness: searches Google via Serper.dev for `site:walmart.com <product_id>` and checks whether walmart.com is the top result. Needs `SERPER_API_KEY`. | **No** — not wired into any workflow. Not currently in use; `check_active_urls.py` is the one actually running. |
 | `gemini_meal_lookup.py` | Asks Gemini for an estimated calories-per-serving and price for a rotating batch of pool items, from Gemini's own knowledge (no live web search — see "Sept 13" session below for why). Writes results back into `candidate_pool.json`. Needs `GEMINI_KEY`. Config lives in `gemini_meal_lookup.yaml`. | **Yes** — `.github/workflows/gemini-meal-lookup.yml`, every 4 hours. |
-| `kroger_new_items.py` *(new today)* | Finds frozen products NOT already in the pool by searching Kroger's live public catalog (Kroger has no "date added" field, so "new" = in Kroger's catalog today and not already in the pool by product name). For each candidate: resolves a real Walmart `PRODUCT_URL` + `SKU` via Serper.dev (`site:walmart.com <upc>` — same service `check_walmart_links.py` uses), finds an `image_url` via DuckDuckGo, and asks Gemini (no search, same model chain as `gemini_meal_lookup.py`) for calories/price/servings. An item is only added if it got a real Walmart link, an image, AND complete calories/price/servings — no half-filled entries. Needs `KROGER_CLIENT_ID`, `KROGER_CLIENT_SECRET`, `SERPER_API_KEY`, `GEMINI_KEY`. Config lives in `kroger_new_items.yaml`. | **Yes** — `.github/workflows/kroger-new-items.yml`, daily. |
+| `kroger_new_items.py` *(new today)* | Finds frozen products NOT already in the pool by searching Kroger's live public catalog (Kroger has no "date added" field, so "new" = in Kroger's catalog today and not already in the pool by product name). For each candidate: resolves a real Walmart `PRODUCT_URL` + `SKU` via Serper.dev (`site:walmart.com <brand> <product name>`, checking each result for the actual `/ip/<slug>/<id>` product-page shape — same service `check_walmart_links.py` uses), finds an `image_url` via DuckDuckGo, and asks Gemini (no search, same model chain as `gemini_meal_lookup.py`) for calories/price/servings. An item is only added if it got a real Walmart link, an image, AND complete calories/price/servings — no half-filled entries. Needs `KROGER_CLIENT_ID`, `KROGER_CLIENT_SECRET`, `SERPER_API_KEY`, `GEMINI_KEY`. Config lives in `kroger_new_items.yaml`. | **Yes** — `.github/workflows/kroger-new-items.yml`, daily. |
 
 ## YAML files
 
@@ -106,13 +106,18 @@ refreshing/verifying what's already in it:
    is used purely for discovery — brand, description, categories, size,
    UPC — never for price.
 2. Each candidate's real Walmart page is found via Serper.dev
-   (`site:walmart.com <upc>`), the exact same service and request shape
-   `check_walmart_links.py` already uses — reuses `SERPER_API_KEY` rather
-   than introducing a second search-API key. `SKU` is parsed straight out
-   of that real URL. (An earlier version of this script used SerpApi
-   instead — a different, unrelated service — but that key kept 401ing,
-   so it was swapped for Serper to match what's already working
-   elsewhere in this repo.)
+   (`site:walmart.com <brand> <product name>`), the exact same service
+   and request shape `check_walmart_links.py` already uses — reuses
+   `SERPER_API_KEY` rather than introducing a second search-API key.
+   Every organic result is checked (not just the top one) for the actual
+   `/ip/<slug>/<numeric-id>` product-page shape, and `SKU` is parsed
+   straight out of the first one that matches. (Two earlier versions of
+   this: it first used SerpApi — a different, unrelated service — but
+   that key kept 401ing, so it was swapped for Serper; searching by UPC
+   instead of product name was also tried first, but Walmart's product
+   pages don't reliably surface the raw UPC as indexable text, so that
+   returned `no_search_results` almost every time — product name works
+   the way searching for it by hand does.)
 3. `image_url` comes from DuckDuckGo Images, same technique/rate-limit
    handling as `AddImageUrl.py`.
 4. Calories/price/servings come from Gemini, no search — same model
@@ -152,7 +157,7 @@ key from an environment variable at runtime:
 | Variable | Used by | Required for |
 |---|---|---|
 | `USDA_API_KEY` | `build_meal_pool.py` | Calorie/serving lookups when (re)building the pool from CSV. |
-| `SERPER_API_KEY` | `check_walmart_links.py`, `kroger_new_items.py` | `check_walmart_links.py` only if you actually run it (not wired into a workflow); `kroger_new_items.py` needs it for the daily new-item-discovery workflow, to resolve each newly discovered product's real Walmart `PRODUCT_URL`/`SKU` via `site:walmart.com <upc>`. Same key, same serper.dev service, used by both scripts now. |
+| `SERPER_API_KEY` | `check_walmart_links.py`, `kroger_new_items.py` | `check_walmart_links.py` only if you actually run it (not wired into a workflow); `kroger_new_items.py` needs it for the daily new-item-discovery workflow, to resolve each newly discovered product's real Walmart `PRODUCT_URL`/`SKU` via `site:walmart.com <brand> <product name>`. Same key, same serper.dev service, used by both scripts now. |
 | `GEMINI_KEY` | `gemini_meal_lookup.py`, `kroger_new_items.py` | The 4-hourly calorie/price estimate workflow, and the daily new-item discovery workflow. |
 | `KROGER_CLIENT_ID` / `KROGER_CLIENT_SECRET` | `kroger_new_items.py` | Kroger's OAuth client-credentials app (register at developer.kroger.com) — used only to search Kroger's live product catalog for discovery, never for price/location. |
 

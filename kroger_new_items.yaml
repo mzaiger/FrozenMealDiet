@@ -9,10 +9,12 @@
 # the module docstring in kroger_new_items.py for the full reasoning.
 #
 # Kroger itself is only used for discovery (name/brand/categories/UPC) --
-# not price. A Walmart PRODUCT_URL comes from Serper.dev (site:walmart.com
-# <UPC>), image_url comes from DuckDuckGo, and calories/price/servings
-# come from Gemini (no search -- same as gemini_meal_lookup.py, so
-# treat price as a rough estimate, not a live price).
+# not price. A Walmart PRODUCT_URL comes from Serper.dev (searched by
+# brand + product name, not UPC -- Walmart's pages don't reliably surface
+# the raw UPC as indexable text), image_url comes from DuckDuckGo, and
+# calories/price/servings come from Gemini (no search -- same as
+# gemini_meal_lookup.py, so treat price as a rough estimate, not a live
+# price).
 #
 # An item is only added to the pool if it has ALL of: a Walmart
 # PRODUCT_URL (via Serper.dev), an image_url (via DuckDuckGo), AND a
