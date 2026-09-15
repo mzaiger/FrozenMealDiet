@@ -277,27 +277,47 @@ def kroger_product_to_candidate(product):
 
 
 def discover_new_candidates(token, cfg, existing_names, existing_upcs, max_new_items):
-    """Runs every configured search term against Kroger, dedupes against
-    the existing pool AND across terms within this run, and returns up to
-    max_new_items candidate dicts. Search terms are deliberately broad
-    (e.g. "bowl", "meal", "breakfast" rather than "frozen bowl") to catch
-    more of Kroger's actual catalog -- kroger_product_to_candidate() is
-    what keeps this from pulling in non-frozen products, by checking
-    Kroger's own category labels rather than relying on the search term."""
+    """Runs every configured search term against Kroger -- ALL of them,
+    with no early exit -- since Kroger's API is free discovery (unlike
+    the Serper/DDG/Image/Gemini steps that follow, which do cost per
+    item), so scanning the full term list costs nothing extra and gives
+    an accurate count of how much is actually out there. Search terms
+    are deliberately broad (e.g. "bowl", "meal", "breakfast" rather than
+    "frozen bowl") to catch more of Kroger's actual catalog --
+    kroger_product_to_candidate() is what keeps this from pulling in
+    non-frozen products, by checking Kroger's own category labels rather
+    than relying on the search term. A candidate is also dropped if its
+    Kroger UPC is already recorded on a pool item from a previous run of
+    this script (existing_upcs), OR if its normalized product name
+    already matches something in the pool at all -- including the
+    original 2022 Walmart-CSV rows, which predate this script and so
+    have no recorded Kroger UPC to match against (existing_names).
+
+    Results are then round-robined one candidate at a time across terms
+    -- term A's 1st match, term B's 1st, term C's 1st, ... then term A's
+    2nd, etc. -- before the max_new_items cap is applied, so an early,
+    generic term (like "bowl" or "meal") that happens to turn up a lot of
+    matches can't eat the entire day's cap on its own and starve out
+    later terms (like "breakfast").
+
+    Returns (candidates_to_enrich, total_found) -- total_found is the
+    full deduped, category-filtered count across every term, before the
+    cap; candidates_to_enrich is the first max_new_items of the
+    round-robined list, which is what actually goes on to the
+    Serper/DDG/Gemini enrichment steps this run."""
     seen_upcs_this_run = set()
-    candidates = []
+    per_term_candidates = {}
 
     for term in cfg["kroger"]["search_terms"]:
-        if len(candidates) >= max_new_items:
-            break
         log(f"Kroger search: {term!r}")
         try:
             raw_products = list(search_kroger_term(token, term, cfg))
         except requests.RequestException as e:
             log(f"  Kroger search failed for {term!r}: {e}")
+            per_term_candidates[term] = []
             continue
 
-        found_this_term = 0
+        term_candidates = []
         not_frozen_or_incomplete = 0
         for product in raw_products:
             candidate = kroger_product_to_candidate(product)
@@ -310,15 +330,27 @@ def discover_new_candidates(token, cfg, existing_names, existing_upcs, max_new_i
                 continue
 
             seen_upcs_this_run.add(candidate["upc"])
-            candidates.append(candidate)
-            found_this_term += 1
-            if len(candidates) >= max_new_items:
-                break
+            term_candidates.append(candidate)
 
+        per_term_candidates[term] = term_candidates
         log(f"  {len(raw_products)} result(s) ({not_frozen_or_incomplete} not frozen/incomplete), "
-            f"{found_this_term} new candidate(s) (running total: {len(candidates)}/{max_new_items})")
+            f"{len(term_candidates)} new candidate(s) for this term")
 
-    return candidates
+    # Round-robin merge: one from each term's list per pass, in search-term
+    # order, so every term gets a turn before any term gets a second pick.
+    term_lists = [per_term_candidates[t] for t in cfg["kroger"]["search_terms"]]
+    max_len = max((len(lst) for lst in term_lists), default=0)
+    all_candidates = [
+        lst[i] for i in range(max_len) for lst in term_lists if i < len(lst)
+    ]
+
+    total_found = len(all_candidates)
+    to_enrich = all_candidates[:max_new_items]
+    log(f"Total new candidate(s) across all {len(cfg['kroger']['search_terms'])} search term(s), "
+        f"frozen-category-filtered and deduped against the pool: {total_found}. "
+        f"Enriching {len(to_enrich)} this run (cap {max_new_items}).")
+
+    return to_enrich, total_found
 
 
 # ---------------------------------------------------------------------------
@@ -783,8 +815,9 @@ def main():
     log("Fetching Kroger OAuth token...")
     token = get_kroger_token(kroger_id, kroger_secret, cfg["kroger"]["timeout_seconds"])
 
-    candidates = discover_new_candidates(token, cfg, existing_names, existing_upcs, max_new_items)
-    log(f"Discovery done: {len(candidates)} new candidate(s) to enrich (cap {max_new_items}).")
+    candidates, total_found = discover_new_candidates(token, cfg, existing_names, existing_upcs, max_new_items)
+    log(f"Discovery done: {total_found} new candidate(s) found in total, "
+        f"{len(candidates)} selected to enrich this run (cap {max_new_items}).")
 
     if not candidates:
         log("Nothing new found this run.")

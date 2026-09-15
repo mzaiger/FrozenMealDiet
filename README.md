@@ -114,7 +114,17 @@ refreshing/verifying what's already in it:
    categories mentions "frozen" — not the search term itself, so
    broadening the terms doesn't let non-frozen products slip in. Pulls
    up to 3 pages (150 results) per term now instead of 1 (50), since the
-   broader terms return far more than a single page's worth.
+   broader terms return far more than a single page's worth. Every term
+   is searched in full each run (Kroger's API is free, unlike the steps
+   after it), and the results are round-robined one candidate per term
+   per pass — term A's 1st match, term B's 1st, term C's 1st, ... then
+   term A's 2nd, etc. — before the `run.max_new_items` cap is applied.
+   Without that, a generic early term like `bowl` or `meal` could supply
+   the whole day's cap by itself and a later term like `breakfast` would
+   never get reached at all. The log line also now reports the full
+   deduped total found across every term, not just however many made it
+   past the cap, so it's visible how much is actually out there on a
+   given day (e.g. "39 found, enriching 20").
 2. Each candidate's real Walmart page is found via Serper.dev
    (`site:walmart.com <brand> <product name>`), the exact same service
    and request shape `check_walmart_links.py` already uses — reuses
