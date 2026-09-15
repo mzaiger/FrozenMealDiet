@@ -1,10 +1,10 @@
-name: Discover new frozen items (Kroger + SerpApi + Gemini)
+name: Discover new frozen items (Kroger + Serper + Gemini)
 
 on:
   schedule:
     # Once daily. New-item discovery is a lower-frequency need than the
     # existing-item health checks (hourly active-URL check, 4-hourly
-    # Gemini refresh) -- there's no reason to spend SerpApi/DDG/Gemini
+    # Gemini refresh) -- there's no reason to spend Serper/DDG/Gemini
     # calls looking for brand-new products more than once a day.
     - cron: "45 7 * * *"
   workflow_dispatch:
