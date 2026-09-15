@@ -92,7 +92,10 @@ pool:
   path: candidate_pool.json
 
 # {n}/{product_name}/{brand}/{size} are filled in per item within a
-# batch; {count}/{products_block} wrap the whole batch.
+# batch; {count}/{products_block} wrap the whole batch. {product_name}
+# here is the name read off the matched Walmart URL's own slug (e.g.
+# "Banquet Salisbury Steak 9 oz"), not Kroger's raw description -- see
+# build_batch_prompt() in kroger_new_items.py.
 prompt:
   item_line: |
     {n}. {product_name} ({brand}, size: {size})

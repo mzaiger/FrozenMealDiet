@@ -25,7 +25,11 @@ Pipeline per candidate product:
      service check_walmart_links.py already uses -- for a real Walmart
      PRODUCT_URL, checking each result for the actual /ip/<slug>/<id>
      product-page shape rather than trusting the top hit blindly. SKU is
-     extracted directly from that matched URL (never invented).
+     extracted directly from that matched URL (never invented), and
+     PRODUCT_NAME is taken from that same URL's slug (hyphens/underscores
+     -> spaces, %XX-decoded) rather than Kroger's description -- Walmart's
+     own title for the exact page being linked to is more useful here
+     than Kroger's, which sometimes repeats the brand name twice.
   3. DuckDuckGo Images (same technique as AddImageUrl.py) -> image_url.
   4. Gemini, no search (same model chain/behavior as
      gemini_meal_lookup.py) -> calories, price estimate, servings text.
@@ -306,7 +310,25 @@ def discover_new_candidates(token, cfg, existing_names, existing_upcs, max_new_i
 # segment (not just any trailing digits in the path) means a search-results
 # page, category page, or something on a totally different domain can't
 # accidentally get treated as a real product match.
-WALMART_IP_URL_RE = re.compile(r"/ip/[^/]+/(\d+)(?:[/?#]|$)")
+# Matches Walmart's actual product-page URL shape:
+# https://www.walmart.com/ip/<slug>/<numeric-id>  -- requiring the "/ip/"
+# segment (not just any trailing digits in the path) means a search-results
+# page, category page, or something on a totally different domain can't
+# accidentally get treated as a real product match. Captures the slug too
+# (group 1), so the product's actual Walmart title can be read straight
+# out of its own URL.
+WALMART_IP_URL_RE = re.compile(r"/ip/([^/]+)/(\d+)(?:[/?#]|$)")
+
+
+def slug_to_product_name(slug):
+    """Turns a Walmart URL slug ('Banquet-Family-Size-Salisbury-Steaks-and-
+    Brown-Gravy-Frozen-Meal-27-oz-Frozen') into a readable product name
+    ('Banquet Family Size Salisbury Steaks and Brown Gravy Frozen Meal
+    27 oz Frozen') -- decodes any %XX URL-encoding first, then swaps
+    hyphens/underscores for spaces and collapses repeats."""
+    from urllib.parse import unquote
+    text = unquote(slug).replace("-", " ").replace("_", " ")
+    return re.sub(r"\s+", " ", text).strip()
 
 
 def find_walmart_listing(candidate, api_key, cfg):
@@ -340,7 +362,7 @@ def find_walmart_listing(candidate, api_key, cfg):
             )
             if resp.status_code in (401, 403):
                 return {
-                    "product_url": None, "sku": None, "query": query,
+                    "product_url": None, "sku": None, "product_name": None, "query": query,
                     "reason": f"auth_error: check SERPER_API_KEY (status {resp.status_code})",
                     "top_result_url": None,
                 }
@@ -354,14 +376,14 @@ def find_walmart_listing(candidate, api_key, cfg):
 
     if data is None:
         return {
-            "product_url": None, "sku": None, "query": query,
+            "product_url": None, "sku": None, "product_name": None, "query": query,
             "reason": f"request_failed: {last_error}", "top_result_url": None,
         }
 
     organic = data.get("organic") or []
     if not organic:
         return {
-            "product_url": None, "sku": None, "query": query,
+            "product_url": None, "sku": None, "product_name": None, "query": query,
             "reason": "no_search_results", "top_result_url": None,
         }
 
@@ -376,14 +398,16 @@ def find_walmart_listing(candidate, api_key, cfg):
         saw_walmart_domain = True
         match = WALMART_IP_URL_RE.search(urlparse(url).path)
         if match:
+            slug, sku = match.group(1), match.group(2)
             return {
-                "product_url": url, "sku": match.group(1), "query": query,
+                "product_url": url, "sku": sku,
+                "product_name": slug_to_product_name(slug), "query": query,
                 "reason": "ok", "top_result_url": top_result_url,
             }
 
     reason = "walmart_domain_but_no_ip_pattern" if saw_walmart_domain else "no_walmart_result_in_top_results"
     return {
-        "product_url": None, "sku": None, "query": query,
+        "product_url": None, "sku": None, "product_name": None, "query": query,
         "reason": reason, "top_result_url": top_result_url,
     }
 
@@ -462,16 +486,23 @@ def extract_json_array(text):
     return parsed
 
 
-def build_batch_prompt(cfg, candidates):
+def build_batch_prompt(cfg, enriched_batch):
+    """enriched_batch is a list of (candidate, walmart, image_url,
+    image_query, image_reason) tuples. Uses the product name read off the
+    matched Walmart URL's own slug (walmart["product_name"]) rather than
+    Kroger's description, since that's the actual title of the exact page
+    being priced/estimated -- falls back to Kroger's description only in
+    the unlikely case a link was found but its slug didn't parse."""
     item_line_tmpl = cfg["prompt"]["item_line"]
     lines = []
-    for n, c in enumerate(candidates, start=1):
+    for n, (c, walmart, *_rest) in enumerate(enriched_batch, start=1):
+        product_name = walmart.get("product_name") or c["description"]
         lines.append(item_line_tmpl.format(
-            n=n, product_name=c["description"], brand=c["brand"] or "unknown brand",
+            n=n, product_name=product_name, brand=c["brand"] or "unknown brand",
             size=c["size"] or "unknown size",
         ).rstrip("\n"))
     products_block = "\n".join(lines)
-    return cfg["prompt"]["intro"].format(count=len(candidates), products_block=products_block)
+    return cfg["prompt"]["intro"].format(count=len(enriched_batch), products_block=products_block)
 
 
 def normalize_gemini_result(raw):
@@ -650,7 +681,7 @@ def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
         "DEPARTMENT": "Frozen",
         "PRICE_CURRENT": f"{price:.2f}" if price is not None else "",
         "PRICE_RETAIL": "",
-        "PRODUCT_NAME": candidate["description"],
+        "PRODUCT_NAME": walmart.get("product_name") or candidate["description"],
         "PRODUCT_SIZE": candidate["size"],
         "PRODUCT_URL": walmart["product_url"] or "",
         "PROMOTION": "",
@@ -778,7 +809,7 @@ def main():
     gemini_model_used = None
 
     for i in range(0, len(enriched), items_per_call):
-        batch = [e[0] for e in enriched[i:i + items_per_call]]
+        batch = enriched[i:i + items_per_call]
         prompt = build_batch_prompt(cfg, batch)
         try:
             raw_results, model_used = call_gemini_batch(prompt, gemini_key, cfg, rate_limiter)
@@ -791,9 +822,9 @@ def main():
             continue
 
         matched = match_results_to_candidates(batch, raw_results)
-        for c, result in zip(batch, matched):
+        for entry, result in zip(batch, matched):
             if result is not None:
-                gemini_results_by_upc[c["upc"]] = result
+                gemini_results_by_upc[entry[0]["upc"]] = result
 
     # --- Assemble + append records. Only candidates with a COMPLETE
     # Gemini result (recognized, and calories + price + servings all

@@ -19,7 +19,7 @@ export and enriched with USDA calorie data.
 | `check_active_urls.py` | Uses Playwright (with stealth) to visit each item's `PRODUCT_URL` on walmart.com and tag it `active: true/false/null` (null = couldn't tell, e.g. bot-blocked). Writes reason/query/checked-URL metadata per item. | **Yes** — `.github/workflows/check-active-urls`, hourly, `--only-unknown --limit 100`. |
 | `check_walmart_links.py` | Alternate way to check link liveness: searches Google via Serper.dev for `site:walmart.com <product_id>` and checks whether walmart.com is the top result. Needs `SERPER_API_KEY`. | **No** — not wired into any workflow. Not currently in use; `check_active_urls.py` is the one actually running. |
 | `gemini_meal_lookup.py` | Asks Gemini for an estimated calories-per-serving and price for a rotating batch of pool items, from Gemini's own knowledge (no live web search — see "Sept 13" session below for why). Writes results back into `candidate_pool.json`. Needs `GEMINI_KEY`. Config lives in `gemini_meal_lookup.yaml`. | **Yes** — `.github/workflows/gemini-meal-lookup.yml`, every 4 hours. |
-| `kroger_new_items.py` *(new today)* | Finds frozen products NOT already in the pool by searching Kroger's live public catalog (Kroger has no "date added" field, so "new" = in Kroger's catalog today and not already in the pool by product name). For each candidate: resolves a real Walmart `PRODUCT_URL` + `SKU` via Serper.dev (`site:walmart.com <brand> <product name>`, checking each result for the actual `/ip/<slug>/<id>` product-page shape — same service `check_walmart_links.py` uses), finds an `image_url` via DuckDuckGo, and asks Gemini (no search, same model chain as `gemini_meal_lookup.py`) for calories/price/servings. An item is only added if it got a real Walmart link, an image, AND complete calories/price/servings — no half-filled entries. Needs `KROGER_CLIENT_ID`, `KROGER_CLIENT_SECRET`, `SERPER_API_KEY`, `GEMINI_KEY`. Config lives in `kroger_new_items.yaml`. | **Yes** — `.github/workflows/kroger-new-items.yml`, daily. |
+| `kroger_new_items.py` *(new today)* | Finds frozen products NOT already in the pool by searching Kroger's live public catalog (Kroger has no "date added" field, so "new" = in Kroger's catalog today and not already in the pool by product name). For each candidate: resolves a real Walmart `PRODUCT_URL` + `SKU` via Serper.dev (`site:walmart.com <brand> <product name>`, checking each result for the actual `/ip/<slug>/<id>` product-page shape — same service `check_walmart_links.py` uses), reads `PRODUCT_NAME` from that same URL's slug rather than Kroger's description, finds an `image_url` via DuckDuckGo, and asks Gemini (no search, same model chain as `gemini_meal_lookup.py`) for calories/price/servings. An item is only added if it got a real Walmart link, an image, AND complete calories/price/servings — no half-filled entries. Needs `KROGER_CLIENT_ID`, `KROGER_CLIENT_SECRET`, `SERPER_API_KEY`, `GEMINI_KEY`. Config lives in `kroger_new_items.yaml`. | **Yes** — `.github/workflows/kroger-new-items.yml`, daily. |
 
 ## YAML files
 
@@ -111,23 +111,34 @@ refreshing/verifying what's already in it:
    `SERPER_API_KEY` rather than introducing a second search-API key.
    Every organic result is checked (not just the top one) for the actual
    `/ip/<slug>/<numeric-id>` product-page shape, and `SKU` is parsed
-   straight out of the first one that matches. (Two earlier versions of
-   this: it first used SerpApi — a different, unrelated service — but
-   that key kept 401ing, so it was swapped for Serper; searching by UPC
-   instead of product name was also tried first, but Walmart's product
-   pages don't reliably surface the raw UPC as indexable text, so that
-   returned `no_search_results` almost every time — product name works
-   the way searching for it by hand does.)
+   straight out of the first one that matches. `PRODUCT_NAME` is also
+   read from that same URL's slug (hyphens/underscores → spaces, and any
+   `%XX` URL-encoding decoded, e.g. `%27` → `'`) rather than from
+   Kroger's description — Kroger sometimes repeats the brand name twice
+   in its description, so Walmart's own title for the exact linked page
+   is the more accurate name to display. Kroger's description is kept
+   only as a fallback for the rare case a link is found but the slug
+   somehow can't be parsed. (Two earlier versions of this: it first used
+   SerpApi — a different, unrelated service — but that key kept 401ing,
+   so it was swapped for Serper; searching by UPC instead of product name
+   was also tried first, but Walmart's product pages don't reliably
+   surface the raw UPC as indexable text, so that returned
+   `no_search_results` almost every time — product name works the way
+   searching for it by hand does.)
 3. `image_url` comes from DuckDuckGo Images, same technique/rate-limit
    handling as `AddImageUrl.py`.
 4. Calories/price/servings come from Gemini, no search — same model
    chain and "price is a rough estimate" caveat as `gemini_meal_lookup.py`.
-   Gemini is also allowed one fallback: if a real Walmart link was found
-   but no SKU could be parsed out of its URL, Gemini can supply a
-   plausible-looking `sku_guess` instead of leaving it blank — that guess
-   is written to `SKU` but flagged `_sku_is_estimate: true` so it's never
-   confused with a verified one. Gemini is never allowed to guess a SKU
-   when there's no real link at all.
+   The prompt asks about each product by its Walmart-slug-derived name
+   (the same one that goes in `PRODUCT_NAME`), not Kroger's raw
+   description, so Gemini is asked about the exact same title the linked
+   page and the pool record will show. Gemini is also allowed one
+   fallback: if a real Walmart link was found but no SKU could be parsed
+   out of its URL, Gemini can supply a plausible-looking `sku_guess`
+   instead of leaving it blank — that guess is written to `SKU` but
+   flagged `_sku_is_estimate: true` so it's never confused with a
+   verified one. Gemini is never allowed to guess a SKU when there's no
+   real link at all.
 5. **An item is only appended if the Serper link lookup, the DDG image
    lookup, AND a complete Gemini result (recognized, with calories,
    price, AND servings_per_container all present) all succeeded.**
