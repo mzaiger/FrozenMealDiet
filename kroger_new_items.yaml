@@ -1,0 +1,137 @@
+# Configuration for kroger_new_items.py.
+#
+# This script finds NEW frozen items (not already in candidate_pool.json)
+# by searching Kroger's live product catalog, since Kroger's API is the
+# one live, free, non-scraped source of "what frozen products currently
+# exist" available here. Kroger has no "date added" field, so "newer than
+# the 2022 pool" is approximated as: in Kroger's catalog today AND not
+# already present in candidate_pool.json by normalized product name. See
+# the module docstring in kroger_new_items.py for the full reasoning.
+#
+# Kroger itself is only used for discovery (name/brand/categories/UPC) --
+# not price. A Walmart PRODUCT_URL comes from SerpApi (site:walmart.com
+# <UPC>), image_url comes from DuckDuckGo, and calories/price/servings
+# come from Gemini (no search -- same as gemini_meal_lookup.py, so
+# treat price as a rough estimate, not a live price).
+#
+# An item is only added to the pool if it has ALL of: a Walmart
+# PRODUCT_URL (via SerpApi), an image_url (via DuckDuckGo), AND a
+# complete Gemini result -- recognized, with calories, price, AND
+# servings_per_container all present, not just some of them. Missing
+# any one of those, and the candidate is dropped, not added with gaps.
+# SKU is extracted from the real Walmart URL whenever possible; only if
+# that extraction fails does Gemini get asked to guess one, and that
+# guess is flagged with _sku_is_estimate: true so it's never confused
+# with a verified SKU. Every row this script adds also gets a plain
+# "SOURCE": "Kroger" column, so it's easy to tell apart from the
+# original 2022 Walmart-CSV rows (which have no SOURCE column at all).
+
+kroger:
+  # Kroger's own department groupings don't map 1:1 to Walmart's, so
+  # this is a set of plain search terms run against filter.term instead
+  # of a category ID. Covers both "frozen meal" and "frozen breakfast
+  # aisle" per the original ask.
+  search_terms:
+    - "frozen dinner"
+    - "frozen meal"
+    - "frozen entree"
+    - "frozen bowl"
+    - "frozen pizza"
+    - "frozen burrito"
+    - "frozen pasta"
+    - "frozen breakfast"
+    - "frozen waffles"
+    - "frozen pancakes"
+    - "frozen breakfast sandwich"
+    - "frozen breakfast burrito"
+    - "frozen french toast"
+  # Kroger's product search caps at 50 results per page (filter.limit).
+  results_per_term: 50
+  # How many pages (of results_per_term each) to pull per search term.
+  pages_per_term: 1
+  timeout_seconds: 15
+
+serpapi:
+  endpoint: "https://serpapi.com/search.json"
+  timeout_seconds: 15
+  max_retries: 2
+  retry_delay_seconds: 3
+
+ddg_image:
+  min_delay_seconds: 4.0
+  max_delay_seconds: 9.0
+  max_retries: 5
+  region: "us-en"
+  safesearch: "moderate"
+
+gemini:
+  # Same fallback chain as gemini_meal_lookup.py -- gemini-2.5-flash-lite
+  # and gemini-2.0-flash-lite both 404 ("no longer available") as of
+  # 2026-09-13.
+  models:
+    - gemini-3.5-flash-lite
+    - gemini-3.1-flash-lite
+  timeout_seconds: 30
+  min_call_interval_seconds: 10
+  retry_delay_seconds: 60
+  max_retries: 3
+
+batch:
+  # New items bundled into a single Gemini prompt/call.
+  items_per_call: 8
+
+run:
+  # Brand-new items fully enriched (SerpApi + DDG + Gemini) per run.
+  # Kept small since each item costs one SerpApi call and one DDG
+  # image search, both of which are rate-limited/quota-limited services.
+  max_new_items: 20
+
+pool:
+  path: candidate_pool.json
+
+# {n}/{product_name}/{brand}/{size} are filled in per item within a
+# batch; {count}/{products_block} wrap the whole batch.
+prompt:
+  item_line: |
+    {n}. {product_name} ({brand}, size: {size})
+  intro: |
+    You are estimating information for {count} frozen food products that
+    may be sold at Walmart, based on what you already know -- you do NOT
+    have the ability to browse the web or visit walmart.com right now,
+    so do not claim to have looked anything up live.
+
+    Products:
+    {products_block}
+
+    For each product, give your best estimate of:
+    1. "recognized" -- true only if you actually recognize this specific
+       product well enough to give a real estimate, false if you'd just
+       be guessing blindly.
+    2. "calories" -- calories per serving, as it would appear on the
+       product's nutrition facts.
+    3. "price" -- a typical/recent price in USD at Walmart. Treat this as
+       an approximate estimate, not a live price -- it may be out of date.
+    4. "servings_per_container" -- short text as it would appear on the
+       label (e.g. "1 bowl (269g)"), or null if unknown.
+    5. "sku_guess" -- ONLY fill this in if told to for a specific item (see
+       below); otherwise leave it null. When asked, give your best guess
+       at a plausible-looking Walmart item ID (digits only, 8-9 digits is
+       typical) -- this is explicitly a fallback GUESS, not a real lookup,
+       and will be stored flagged as an estimate, never as a verified SKU.
+
+    Return ONLY a JSON array with exactly {count} objects, in the same
+    order as the list above, and nothing else -- no markdown code
+    fences, no commentary before or after it. Each object must have
+    exactly these keys:
+    - "index": integer -- the product's number from the list above (1-based)
+    - "recognized": boolean
+    - "calories": integer or JSON null if unknown
+    - "price": number or JSON null if unknown (e.g. 3.98, no dollar sign)
+    - "servings_per_container": string or JSON null if unknown
+    - "sku_guess": string of digits or JSON null
+    - "notes": string -- one short sentence on your confidence or
+      reasoning, or why you don't recognize it
+
+    Do not invent a source URL or claim to have verified anything on
+    walmart.com. If you do not recognize a product, set "recognized" to
+    false and the other fields to null for it.
