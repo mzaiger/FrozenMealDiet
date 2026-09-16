@@ -31,27 +31,45 @@ Pipeline per candidate product:
      service check_walmart_links.py already uses -- for a real Walmart
      PRODUCT_URL, checking each result for the actual /ip/<slug>/<id>
      product-page shape rather than trusting the top hit blindly. SKU is
-     extracted directly from that matched URL (never invented), and
-     PRODUCT_NAME is taken from that same URL's slug (hyphens/underscores
-     -> spaces, %XX-decoded) rather than Kroger's description -- Walmart's
-     own title for the exact page being linked to is more useful here
-     than Kroger's, which sometimes repeats the brand name twice.
+     extracted directly from that matched URL (never invented). If that
+     SKU already belongs to a pool item that's currently marked
+     active=True, the candidate is skipped right here -- no point
+     re-adding a product that's already in the pool and confirmed live.
+     ?fulfillmentIntent=Pickup is appended to the final PRODUCT_URL.
+     (The slug is also read into a product name, but that's kept only as
+     debug metadata -- "_walmart_url_slug_name" -- not used as
+     PRODUCT_NAME, since some slugs are truncated/abbreviated versions of
+     the real name; see step 4.)
   3. DuckDuckGo Images (same technique as AddImageUrl.py) -> image_url.
+     Any result hosted on a trusted retailer domain (Walmart, Kroger, or
+     Amazon -- see TRUSTED_IMAGE_DOMAINS) is preferred over anything
+     else, even if it's not the first result -- generic image search
+     results were turning up random, non-food images often enough to be
+     a problem, so a real product-photo page from one of those three
+     retailers is used whenever one shows up, and only falls back to
+     whatever else was found if none of them do.
   4. Gemini, no search (same model chain/behavior as
      gemini_meal_lookup.py) -> calories, price estimate, servings text.
-     Gemini is also allowed a fallback "sku_guess" ONLY for items where
-     step 2 found a real Walmart link but the SKU couldn't be parsed out
-     of the URL -- that guess is stored as SKU but flagged with
+     PRODUCT_NAME, the DDG image search query, and this Gemini prompt all
+     use Kroger's own product description as the name (not the
+     Walmart-URL-slug version tried in step 2 -- see above). Gemini is
+     also allowed a fallback "sku_guess" ONLY for items where step 2
+     found a real Walmart link but the SKU couldn't be parsed out of the
+     URL -- that guess is stored as SKU but flagged with
      "_sku_is_estimate": true so it's never mistaken for a verified one.
      If Gemini doesn't recognize the product, or recognizes it but is
      missing calories, price, OR servings_per_container, the item is
      dropped -- no partially-filled nutrition/price data gets added.
+  5. An INSTACART_URL is built from that same Kroger product name, so
+     there's a shoppable link even for products where the exact Walmart
+     SKU is the only thing pinned down by step 2.
 
-An item is only appended to the pool if step 2 (a real Walmart URL),
-step 3 (an image), AND step 4 (Gemini recognized it AND returned
-calories, price, and servings_per_container -- all three, not just
-some) all succeeded. Missing any one of those -> the candidate is
-skipped entirely, not added half-filled.
+An item is only appended to the pool if step 2 (a real Walmart URL, and
+its SKU isn't already active in the pool), step 3 (an image), AND step 4
+(Gemini recognized it AND returned calories, price, and
+servings_per_container -- all three, not just some) all succeeded.
+Missing any one of those -> the candidate is skipped entirely, not added
+half-filled.
 
 New records get "active": True -- Serper.dev already confirmed a live
 walmart.com page exists for the UPC before a record is ever assembled
@@ -187,6 +205,18 @@ def existing_name_and_upc_sets(pool):
     names.discard("")
     upcs = {item.get("_kroger_upc") for item in pool if item.get("_kroger_upc")}
     return names, upcs
+
+
+def existing_active_skus(pool):
+    """SKUs already in the pool on a record marked active=True. A newly
+    resolved Walmart link whose SKU matches one of these is skipped --
+    if it's already in the pool and confirmed active, there's no reason
+    to add a second row for the same product."""
+    return {
+        str(item["SKU"]).strip()
+        for item in pool
+        if item.get("SKU") and item.get("active") is True
+    }
 
 
 def next_index(pool):
@@ -474,19 +504,42 @@ def build_image_query(brand, description):
     return query[:200]
 
 
+# Trusted retailer image CDNs, checked as a substring of the result's
+# domain -- these are real product-photo pages, so a match here is much
+# more likely to actually be a photo of the product than a generic image
+# search result is.
+TRUSTED_IMAGE_DOMAINS = ("walmart", "kroger", "amazon")
+
+
 def search_image(ddgs, query, cfg):
+    """Returns (image_url_or_None, reason). Prefers a result hosted on a
+    trusted retailer domain (Walmart, Kroger, Amazon -- see
+    TRUSTED_IMAGE_DOMAINS) over anything else, since those are real
+    product-photo pages and generic image search results were turning up
+    unrelated, non-food images often enough to be a problem. Only falls
+    back to a non-trusted result if none of the trusted domains show up
+    at all in this query's results."""
     region = cfg["ddg_image"]["region"]
     safesearch = cfg["ddg_image"]["safesearch"]
     max_retries = cfg["ddg_image"]["max_retries"]
+    max_results = cfg["ddg_image"].get("max_results", 8)
     backoff = 5.0
 
     for attempt in range(1, max_retries + 1):
         try:
-            results = ddgs.images(query, region=region, safesearch=safesearch, max_results=5)
+            results = ddgs.images(query, region=region, safesearch=safesearch, max_results=max_results)
+            first_fallback = None
             for r in results:
                 url = r.get("image")
-                if url and url.startswith("http"):
-                    return url, "ok"
+                if not url or not url.startswith("http"):
+                    continue
+                netloc = urlparse(url).netloc.lower()
+                if any(domain in netloc for domain in TRUSTED_IMAGE_DOMAINS):
+                    return url, "ok_trusted_domain"
+                if first_fallback is None:
+                    first_fallback = url
+            if first_fallback:
+                return first_fallback, "ok_fallback_domain"
             return None, "no_results"
         except RatelimitException:
             wait = min(backoff + random.uniform(0, backoff * 0.5), 120.0)
@@ -540,17 +593,17 @@ def extract_json_array(text):
 
 def build_batch_prompt(cfg, enriched_batch):
     """enriched_batch is a list of (candidate, walmart, image_url,
-    image_query, image_reason) tuples. Uses the product name read off the
-    matched Walmart URL's own slug (walmart["product_name"]) rather than
-    Kroger's description, since that's the actual title of the exact page
-    being priced/estimated -- falls back to Kroger's description only in
-    the unlikely case a link was found but its slug didn't parse."""
+    image_query, image_reason) tuples. Uses Kroger's own product
+    description as the name -- the Walmart-URL-slug version was tried
+    instead for a while, but some slugs are truncated/abbreviated
+    versions of the real product name, so Kroger's description (also
+    what ends up in PRODUCT_NAME and the DDG image search) is used here
+    too, so Gemini is asked about the same name shown everywhere else."""
     item_line_tmpl = cfg["prompt"]["item_line"]
     lines = []
     for n, (c, walmart, *_rest) in enumerate(enriched_batch, start=1):
-        product_name = walmart.get("product_name") or c["description"]
         lines.append(item_line_tmpl.format(
-            n=n, product_name=product_name, brand=c["brand"] or "unknown brand",
+            n=n, product_name=c["description"], brand=c["brand"] or "unknown brand",
             size=c["size"] or "unknown size",
         ).rstrip("\n"))
     products_block = "\n".join(lines)
@@ -713,6 +766,29 @@ def call_gemini_batch(prompt, gemini_key, cfg, rate_limiter):
 # Record assembly
 # ---------------------------------------------------------------------------
 
+def add_pickup_param(url):
+    """Appends the Walmart in-store-pickup fulfillment query param onto a
+    product URL, respecting whatever's already there (Walmart /ip/ URLs
+    don't normally have a query string, but this stays safe either way)."""
+    if not url:
+        return url
+    separator = "&" if "?" in url else "?"
+    return f"{url}{separator}fulfillmentIntent=Pickup"
+
+
+def build_instacart_search_url(text):
+    """Builds an Instacart search-results URL from a product name:
+    drops apostrophes outright (so a possessive like "Callender's"
+    becomes "Callenders", not "Callender s"), replaces everything else
+    that isn't a letter/digit/space with a space, lowercases, and joins
+    words with "+" -- e.g. "Marie Callender's Pot Roast, Frozen Meal"
+    -> https://www.instacart.com/store/s?k=marie+callenders+pot+roast+frozen+meal"""
+    cleaned = (text or "").replace("'", "").replace("\u2019", "")
+    cleaned = re.sub(r"[^a-zA-Z0-9\s]", " ", cleaned)
+    words = cleaned.lower().split()
+    return f"https://www.instacart.com/store/s?k={'+'.join(words)}" if words else ""
+
+
 def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
                        gemini_result, gemini_model, idx, run_date):
     sku = walmart["sku"]
@@ -726,6 +802,13 @@ def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
     calories = gemini_result["calories"] if gemini_result and gemini_result["recognized"] else None
     servings = gemini_result["servings_per_container"] if gemini_result and gemini_result["recognized"] else None
 
+    # PRODUCT_NAME comes straight from Kroger -- the Walmart-URL-slug
+    # version was tried instead for a while, but some slugs are
+    # truncated/abbreviated versions of the real name, so Kroger's own
+    # (generally fuller) description is what's used here, for DDG image
+    # search, and for the Gemini calories/price/servings prompt.
+    product_name = candidate["description"]
+
     record = {
         "BRAND": candidate["brand"],
         "BREADCRUMBS": "Frozen/" + (categories[-1] if categories else "Frozen"),
@@ -733,9 +816,9 @@ def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
         "DEPARTMENT": "Frozen",
         "PRICE_CURRENT": f"{price:.2f}" if price is not None else "",
         "PRICE_RETAIL": "",
-        "PRODUCT_NAME": walmart.get("product_name") or candidate["description"],
+        "PRODUCT_NAME": product_name,
         "PRODUCT_SIZE": candidate["size"],
-        "PRODUCT_URL": walmart["product_url"] or "",
+        "PRODUCT_URL": add_pickup_param(walmart["product_url"]) if walmart["product_url"] else "",
         "PROMOTION": "",
         "RunDate": run_date,
         "SHIPPING_LOCATION": "",
@@ -752,6 +835,7 @@ def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
                           # instead of waiting on a check that mostly won't run.
         "calories": calories if calories is not None else "N/A",
         "image_url": image_url,
+        "INSTACART_URL": build_instacart_search_url(product_name),
         "index": f"kroger-{idx}",
         "servings_per_container": servings or "N/A",
         "tid": "",
@@ -766,6 +850,9 @@ def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
         "_image_search_query": image_query,
         "_image_search_reason": image_reason,
         "_sku_is_estimate": sku_is_estimate,
+        "_walmart_url_slug_name": walmart.get("product_name"),  # kept for reference/debugging
+                                                                  # only -- not used as PRODUCT_NAME
+                                                                  # since some slugs are truncated.
     }
 
     if gemini_result:
@@ -810,7 +897,9 @@ def main():
 
     pool = load_pool(pool_path)
     existing_names, existing_upcs = existing_name_and_upc_sets(pool)
-    log(f"Loaded {len(pool)} existing pool item(s) ({len(existing_upcs)} with a known Kroger UPC).")
+    active_skus = existing_active_skus(pool)
+    log(f"Loaded {len(pool)} existing pool item(s) ({len(existing_upcs)} with a known Kroger UPC, "
+        f"{len(active_skus)} active with a known SKU).")
 
     log("Fetching Kroger OAuth token...")
     token = get_kroger_token(kroger_id, kroger_secret, cfg["kroger"]["timeout_seconds"])
@@ -833,10 +922,15 @@ def main():
     # "must have both a link and an image" bar. ---
     ddgs = DDGS()
     enriched = []
+    skus_added_this_run = set()
     for c in candidates:
         walmart = find_walmart_listing(c, serper_key, cfg)
         if not walmart["product_url"]:
             log(f"  SKIP (no Walmart link): {c['brand']} {c['description']} -- {walmart['reason']}")
+            continue
+
+        if walmart["sku"] and (walmart["sku"] in active_skus or walmart["sku"] in skus_added_this_run):
+            log(f"  SKIP (SKU {walmart['sku']} already active in pool): {c['brand']} {c['description']}")
             continue
 
         image_query = build_image_query(c["brand"], c["description"])
@@ -845,6 +939,8 @@ def main():
             log(f"  SKIP (no image): {c['brand']} {c['description']} -- {image_reason}")
             continue
 
+        if walmart["sku"]:
+            skus_added_this_run.add(walmart["sku"])
         enriched.append((c, walmart, image_url, image_query, image_reason))
         log(f"  OK: {c['brand']} {c['description']} -> {walmart['product_url']}")
         time.sleep(random.uniform(cfg["ddg_image"]["min_delay_seconds"], cfg["ddg_image"]["max_delay_seconds"]))

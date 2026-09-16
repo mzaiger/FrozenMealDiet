@@ -9,16 +9,25 @@
 # the module docstring in kroger_new_items.py for the full reasoning.
 #
 # Kroger itself is only used for discovery (name/brand/categories/UPC) --
-# not price. A Walmart PRODUCT_URL comes from Serper.dev (searched by
-# brand + product name, not UPC -- Walmart's pages don't reliably surface
-# the raw UPC as indexable text), image_url comes from DuckDuckGo, and
+# not price. PRODUCT_NAME comes from Kroger's own description (not the
+# Walmart URL's slug -- some slugs are truncated/abbreviated versions of
+# the real name), and that same name drives the DuckDuckGo image search
+# and the Gemini prompt too. A Walmart PRODUCT_URL comes from Serper.dev
+# (searched by brand + product name, not UPC -- Walmart's pages don't
+# reliably surface the raw UPC as indexable text), with
+# ?fulfillmentIntent=Pickup appended; image_url comes from DuckDuckGo,
+# preferring a Walmart/Kroger/Amazon-hosted result over anything else
+# (generic results were too often unrelated/non-food images) and only
+# falling back to another source if none of those three show up; an
+# INSTACART_URL is built from the same product name; and
 # calories/price/servings come from Gemini (no search -- same as
 # gemini_meal_lookup.py, so treat price as a rough estimate, not a live
 # price).
 #
 # An item is only added to the pool if it has ALL of: a Walmart
-# PRODUCT_URL (via Serper.dev), an image_url (via DuckDuckGo), AND a
-# complete Gemini result -- recognized, with calories, price, AND
+# PRODUCT_URL (via Serper.dev) whose SKU isn't already on an
+# active=True pool item, an image_url (via DuckDuckGo), AND a complete
+# Gemini result -- recognized, with calories, price, AND
 # servings_per_container all present, not just some of them. Missing
 # any one of those, and the candidate is dropped, not added with gaps.
 # SKU is extracted from the real Walmart URL whenever possible; only if
@@ -77,6 +86,12 @@ ddg_image:
   max_retries: 5
   region: "us-en"
   safesearch: "moderate"
+  # Pulled higher than AddImageUrl.py's 5, so there's more of a chance a
+  # trusted retailer domain (Walmart/Kroger/Amazon -- see
+  # TRUSTED_IMAGE_DOMAINS in kroger_new_items.py) actually shows up
+  # somewhere in the batch, since search_image() prefers one of those
+  # over any other result whenever one's present.
+  max_results: 8
 
 gemini:
   # Same fallback chain as gemini_meal_lookup.py -- gemini-2.5-flash-lite

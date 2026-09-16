@@ -1,4 +1,4 @@
-# Poor Man's Walmart Frozen Meal Diet
+# Poor Man's Frozen Meal Diet
 
 A 7-day frozen meal planner: `candidate_pool.json` holds ~1,800 Walmart
 frozen-food items (name, price, calories, image, link-liveness status),
@@ -19,7 +19,7 @@ export and enriched with USDA calorie data.
 | `check_active_urls.py` | Uses Playwright (with stealth) to visit each item's `PRODUCT_URL` on walmart.com and tag it `active: true/false/null` (null = couldn't tell, e.g. bot-blocked). Writes reason/query/checked-URL metadata per item. | **Yes** — `.github/workflows/check-active-urls`, hourly, `--only-unknown --limit 100`. |
 | `check_walmart_links.py` | Alternate way to check link liveness: searches Google via Serper.dev for `site:walmart.com <product_id>` and checks whether walmart.com is the top result. Needs `SERPER_API_KEY`. | **No** — not wired into any workflow. Not currently in use; `check_active_urls.py` is the one actually running. |
 | `gemini_meal_lookup.py` | Asks Gemini for an estimated calories-per-serving and price for a rotating batch of pool items, from Gemini's own knowledge (no live web search — see "Sept 13" session below for why). Writes results back into `candidate_pool.json`. Needs `GEMINI_KEY`. Config lives in `gemini_meal_lookup.yaml`. | **Yes** — `.github/workflows/gemini-meal-lookup.yml`, every 4 hours. |
-| `kroger_new_items.py` *(new today)* | Finds frozen products NOT already in the pool by searching Kroger's live public catalog with broad terms (`bowl`, `meal`, `breakfast`, `dinner`, `pizza`, etc.), keeping only results whose Kroger category labels actually mention "frozen" (Kroger has no "date added" field, so "new" = in Kroger's catalog today, category-filtered to frozen, and not already in the pool by product name). For each candidate: resolves a real Walmart `PRODUCT_URL` + `SKU` via Serper.dev (`site:walmart.com <brand> <product name>`, checking each result for the actual `/ip/<slug>/<id>` product-page shape — same service `check_walmart_links.py` uses), reads `PRODUCT_NAME` from that same URL's slug rather than Kroger's description, finds an `image_url` via DuckDuckGo, and asks Gemini (no search, same model chain as `gemini_meal_lookup.py`) for calories/price/servings. An item is only added if it got a real Walmart link, an image, AND complete calories/price/servings — no half-filled entries. Needs `KROGER_CLIENT_ID`, `KROGER_CLIENT_SECRET`, `SERPER_API_KEY`, `GEMINI_KEY`. Config lives in `kroger_new_items.yaml`. | **Yes** — `.github/workflows/kroger-new-items.yml`, daily. |
+| `kroger_new_items.py` *(new Sept 15, updated Sept 16)* | Finds frozen products NOT already in the pool by searching Kroger's live public catalog with broad terms (`bowl`, `meal`, `breakfast`, `dinner`, `pizza`, etc.), keeping only results whose Kroger category labels actually mention "frozen" and whose Walmart SKU isn't already active in the pool. For each candidate: resolves a real Walmart `PRODUCT_URL` (+`?fulfillmentIntent=Pickup`) and `SKU` via Serper.dev (`site:walmart.com <brand> <product name>`, checking each result for the actual `/ip/<slug>/<id>` product-page shape — same service `check_walmart_links.py` uses), keeps `PRODUCT_NAME` as Kroger's own description, finds an `image_url` via DuckDuckGo (skipping any walmart.com-hosted result), builds an `INSTACART_URL` search link from that name, and asks Gemini (no search, same model chain as `gemini_meal_lookup.py`) for calories/price/servings using that same name. An item is only added if it got a real (and not-already-active) Walmart link, an image, AND complete calories/price/servings — no half-filled entries. Needs `KROGER_CLIENT_ID`, `KROGER_CLIENT_SECRET`, `SERPER_API_KEY`, `GEMINI_KEY`. Config lives in `kroger_new_items.yaml`. | **Yes** — `.github/workflows/kroger-new-items.yml`, daily. |
 
 ## YAML files
 
@@ -93,6 +93,51 @@ If billing ever gets set up and the grounding quota stops being the
 blocker, re-adding `"tools": [{"google_search": {}}]` to the request
 body in `call_gemini_single()` (in `gemini_meal_lookup.py`) restores
 live lookups — that's called out in the script's module docstring too.
+
+## Today's session (Sept 16, 2026)
+
+Renamed the project to **Poor Man's Frozen Meal Diet** (dropped
+"Walmart" from the title — updated in `README.md`'s heading and
+`index.html`'s `<title>`/`<h1>`). Note: this only updates in-repo
+references; the actual GitHub repository name (`FrozenMealDiet`) has to
+be renamed separately from Settings if you want that to match too.
+
+Also made several refinements to `kroger_new_items.py`:
+
+1. **Skip a SKU that's already active in the pool.** Before, dedup only
+   checked Kroger UPCs and normalized product names — a Walmart SKU
+   already sitting in the pool on an `active: true` row could still get
+   re-added under a different Kroger UPC/description. Now, right after
+   Serper resolves a candidate's real Walmart SKU (before spending a DDG
+   image search on it), that SKU is checked against every `SKU` already
+   in the pool where `active` is `true` — a match skips the candidate
+   entirely, logged as `SKIP (SKU <n> already active in pool)`.
+2. **`?fulfillmentIntent=Pickup` appended to every `PRODUCT_URL`** this
+   script writes, via `add_pickup_param()`.
+3. **`PRODUCT_NAME` (and the DDG image search query, and the Gemini
+   prompt) reverted to Kroger's own description**, not the Walmart-URL
+   slug tried briefly last session — some Walmart slugs turn out to be
+   truncated/abbreviated versions of the real name, so Kroger's is more
+   reliable overall. The slug-derived name is still captured, just as
+   debug metadata (`_walmart_url_slug_name`), not as the real name
+   anywhere.
+4. **DuckDuckGo image results now prefer a trusted retailer domain**
+   (Walmart, Kroger, or Amazon) **over anything else** — `search_image()`
+   checks each result's domain and returns the first one matching
+   `TRUSTED_IMAGE_DOMAINS`, even if it's not the first result in the
+   list, only falling back to another source if none of those three show
+   up at all. (This replaced an earlier version from later the same
+   day that excluded Walmart images outright — that made "random,
+   non-food image" results worse, not better, since those trusted
+   domains are real product-photo pages and most other results aren't.)
+   `max_results` for the DDG call stays raised from 5 to 8, so there's
+   more of a chance one of the three trusted domains actually appears
+   in a given batch.
+5. **New `INSTACART_URL` field** on every row this script adds — built
+   from that same Kroger product name: apostrophes dropped outright
+   (so `Callender's` → `Callenders`, not `Callender s`), everything else
+   non-alphanumeric turned into spaces, lowercased, and joined with `+`
+   into `https://www.instacart.com/store/s?k=...`.
 
 ## Today's session (Sept 15, 2026)
 
