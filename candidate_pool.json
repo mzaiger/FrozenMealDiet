@@ -30,7 +30,8 @@
     "_gemini_recognized": true,
     "_gemini_notes": "Recognize the Banquet family size Salisbury steak product and its standard nutritional and pricing profile at Walmart.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+salisbury+steaks+brown+gravy+family+size+6+count+27+oz"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+salisbury+steaks+brown+gravy+family+size+6+count+27+oz",
+    "_kroger_upc": "0003100011305"
   },
   {
     "index": "318855",
@@ -294,7 +295,8 @@
     "_gemini_recognized": true,
     "_gemini_notes": "I recognize this popular 15 oz large chicken pot pie and its nutritional profile from my training data.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+chicken+pot+pie+large+size+15+oz"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+chicken+pot+pie+large+size+15+oz",
+    "_kroger_upc": "0002113150111"
   },
   {
     "index": "318861",
@@ -459,7 +461,8 @@
     "_gemini_recognized": true,
     "_gemini_notes": "I recognize this Banquet Mega Bowl product from standard frozen aisle offerings at Walmart.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+mega+bowls+country+fried+chicken+14+oz"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+mega+bowls+country+fried+chicken+14+oz",
+    "_kroger_upc": "0003100012611"
   },
   {
     "index": "318865",
@@ -855,7 +858,8 @@
     "_gemini_recognized": true,
     "_gemini_notes": "Recognize Tai Pei single-serve frozen bowls well, with standard pricing around three dollars and roughly 300 calories per serving.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=tai+pei+chicken+fried+rice+frozen+asian+entre+11+oz"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=tai+pei+chicken+fried+rice+frozen+asian+entre+11+oz",
+    "_kroger_upc": "0007007781129"
   },
   {
     "index": "318879",
@@ -1179,7 +1183,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Stouffer's Family Size Lasagna with Meat & Sauce is a very common large frozen lasagna option.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+family+size+lasagna+with+meat+sauce+frozen+meal"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+family+size+lasagna+with+meat+sauce+frozen+meal",
+    "_kroger_upc": "0001380055131"
   },
   {
     "index": "318889",
@@ -3324,7 +3329,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "InnovAsian vegetable fried rice single-bag meals are widely stocked.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=innovasian+vegetable+fried+rice+18+oz+frozen"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=innovasian+vegetable+fried+rice+18+oz+frozen",
+    "_kroger_upc": "0069511912014"
   },
   {
     "index": "318970",
@@ -5825,7 +5831,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "El Monterey 8-count family size burritos are a frequent freezer purchase.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+bean+cheese+burritos+32+oz+family+size+8+ct+frozen"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+bean+cheese+burritos+32+oz+family+size+8+ct+frozen",
+    "_kroger_upc": "0007100706140"
   },
   {
     "index": "319117",
@@ -6899,7 +6906,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Familiar with the 24-count box of Odom's Tennessee Pride biscuit sandwiches.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=odom%27s+tennessee+pride+snack+size+sausage+buttermilk+biscuits+34+8+oz+24+ct+frozen"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=odom%27s+tennessee+pride+snack+size+sausage+buttermilk+biscuits+34+8+oz+24+ct+frozen",
+    "_kroger_upc": "0007229000227"
   },
   {
     "index": "319325",
@@ -9663,7 +9671,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Stouffer's party size mac and cheese is a very popular large-format frozen item.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+party+size+macaroni+cheese+frozen+meal"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+party+size+macaroni+cheese+frozen+meal",
+    "_kroger_upc": "0001380010340"
   },
   {
     "index": "319448",
@@ -11884,7 +11893,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this P.F. Chang's Orange Chicken skillet meal and its general pricing.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=p+f+chang%27s+home+menu+orange+chicken+skillet+meal+frozen+meal+22+oz"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=p+f+chang%27s+home+menu+orange+chicken+skillet+meal+frozen+meal+22+oz",
+    "_kroger_upc": "0003100067002"
   },
   {
     "index": "319594",
@@ -17865,7 +17875,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Red Baron Classic Crust Pepperoni Pizza nutritional profile and typical price.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+pizza+classic+crust+pepperoni+20+60+oz"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+pizza+classic+crust+pepperoni+20+60+oz",
+    "_kroger_upc": "0007218063811"
   },
   {
     "index": "329699",
@@ -17929,7 +17940,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize single-count Totino's Party Pizza Pepperoni.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=totino%27s+party+pizza+pepperoni+flavored+frozen+snacks+10+2+oz+1+ct"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=totino%27s+party+pizza+pepperoni+flavored+frozen+snacks+10+2+oz+1+ct",
+    "_kroger_upc": "0004280011400"
   },
   {
     "index": "329698",
@@ -21386,7 +21398,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Zatarain's family-size Blackened Chicken Alfredo is a well-known frozen multi-serve meal.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=zatarain%27s+frozen+meal+blackened+chicken+alfredo+40+oz"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=zatarain%27s+frozen+meal+blackened+chicken+alfredo+40+oz",
+    "_kroger_upc": "0007142900246"
   },
   {
     "index": "330386",
@@ -24828,7 +24841,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Great Value Cinnamon French Toast Sticks are a standard Walmart store brand frozen breakfast staple.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=great+value+cinnamon+french+toast+sticks+16+oz+frozen"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=great+value+cinnamon+french+toast+sticks+16+oz+frozen",
+    "_kroger_upc": "0004132224589"
   },
   {
     "index": "332879",
@@ -26059,7 +26073,8 @@
     "image_url": "https://i5.walmartimages.com/seo/Eggo-Minis-Cinnamon-Toast-Waffle-Bites-Frozen-Breakfast-25-8-oz-24-Count_6776c8f7-21c3-4426-be00-34aae1c7c4cd.cc228a856d9d97d45e99b6fdabd98e17.jpeg",
     "_image_search_query": "Eggo Frozen Mini Waffles, Cinnamon Toast, 25.8 Oz, Box, Frozen",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=eggo+frozen+mini+waffles+cinnamon+toast+25+8+oz+box+frozen"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=eggo+frozen+mini+waffles+cinnamon+toast+25+8+oz+box+frozen",
+    "_kroger_upc": "0003800040440"
   },
   {
     "index": "332947",
@@ -26576,7 +26591,8 @@
     "image_url": "https://i5.walmartimages.com/seo/Veggies-Made-Great-Spinach-Egg-White-Frittata-12oz-6ct-Box-Frozen_c0cdc51d-eb03-4fbf-9716-0a34ed47c96f.f840f12c5762e798329284dd6b3b365d.png",
     "_image_search_query": "Garden Lites Veggies Made Great Spinach Egg White Frittata, 12oz, 6 CT Box (Frozen)",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=garden+lites+veggies+made+great+spinach+egg+white+frittata+12oz+6+ct+box+frozen"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=garden+lites+veggies+made+great+spinach+egg+white+frittata+12oz+6+ct+box+frozen",
+    "_kroger_upc": "0001111014109"
   },
   {
     "index": "332979",
@@ -49960,7 +49976,10 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Familiar with Kroger private label bulk frozen buttermilk pancakes.",
     "_gemini_recognized": true,
-    "_gemini_price_is_estimate": true
+    "_gemini_price_is_estimate": true,
+    "_kroger_upc_aliases": [
+      "0001111078990"
+    ]
   },
   {
     "BRAND": "Simple Truth",
@@ -50035,6 +50054,85 @@
     "_gemini_checked_at": "2026-09-16T12:52:45.005381+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Standard single-serve frozen Mexican entree from El Monterey, widely stocked at Walmart.",
+    "_gemini_recognized": true,
+    "_gemini_price_is_estimate": true,
+    "_kroger_upc_aliases": [
+      "0007100700197"
+    ]
+  },
+  {
+    "BRAND": "Kellogg's",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "3.98",
+    "PRICE_RETAIL": "",
+    "PRODUCT_NAME": "Eggo® Frozen Protein Pancake Minis Buttermilk Vanilla",
+    "PRODUCT_SIZE": "5 ct / 1.68 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Eggo-Protein-Mini-Pancake-Pouch-Buttermilk-Vanilla/14984564310?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-16T21:49:52.375511+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "14984564310",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 140,
+    "image_url": "https://i.pinimg.com/originals/4c/ba/70/4cba70b6ea3d4148e5cd7836ed13f0dc.jpg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=eggo+frozen+protein+pancake+minis+buttermilk+vanilla",
+    "index": "kroger-554133",
+    "servings_per_container": "About 1 serving (48g)",
+    "tid": "",
+    "_kroger_upc": "0003800031167",
+    "_kroger_discovered_at": "2026-09-16T21:49:52.375511+00:00",
+    "_serper_query": "site:walmart.com Kellogg's Eggo® Frozen Protein Pancake Minis Buttermilk Vanilla",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Eggo-Protein-Mini-Pancake-Pouch-Buttermilk-Vanilla/14984564310",
+    "_image_search_query": "Kellogg's Eggo® Frozen Protein Pancake Minis Buttermilk Vanilla",
+    "_image_search_reason": "ok_fallback_domain",
+    "_sku_is_estimate": false,
+    "_walmart_url_slug_name": "Eggo Protein Mini Pancake Pouch Buttermilk Vanilla",
+    "_gemini_checked_at": "2026-09-16T21:49:52.375511+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognize this specific Eggo protein mini pancake variant from Kellogg's frozen breakfast lineup.",
+    "_gemini_recognized": true,
+    "_gemini_price_is_estimate": true
+  },
+  {
+    "BRAND": "Tyson",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "7.48",
+    "PRICE_RETAIL": "",
+    "PRODUCT_NAME": "Tyson Frozen Chicken Nuggets",
+    "PRODUCT_SIZE": "29 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Tyson-White-Meat-Chicken-Nuggets-29-oz-Frozen/8070360807?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-16T21:49:52.375511+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "8070360807",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 270,
+    "image_url": "https://people.com/thmb/qr1GV5sXbTCrBR6YSoXIx2bhnSg=/1500x1000/filters:fill(auto,1)/jason-momoa-2-f26c24e27da14220a1538c40bc4b718a.jpg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+frozen+chicken+nuggets",
+    "index": "kroger-554134",
+    "servings_per_container": "About 8 servings",
+    "tid": "",
+    "_kroger_upc": "0002370006026",
+    "_kroger_discovered_at": "2026-09-16T21:49:52.375511+00:00",
+    "_serper_query": "site:walmart.com Tyson Tyson Frozen Chicken Nuggets",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Tyson-White-Meat-Chicken-Nuggets-29-oz-Frozen/8070360807",
+    "_image_search_query": "Tyson Frozen Chicken Nuggets",
+    "_image_search_reason": "ok_fallback_domain",
+    "_sku_is_estimate": false,
+    "_walmart_url_slug_name": "Tyson White Meat Chicken Nuggets 29 oz Frozen",
+    "_gemini_checked_at": "2026-09-16T21:49:52.375511+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Tyson frozen chicken nuggets in the standard 29 oz family size bag are widely stocked at Walmart.",
     "_gemini_recognized": true,
     "_gemini_price_is_estimate": true
   }
