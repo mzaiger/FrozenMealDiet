@@ -135,8 +135,8 @@ Also made several refinements to `kroger_new_items.py`:
    more of a chance one of the three trusted domains actually appears
    in a given batch.
 5. **New `INSTACART_URL` field** on every row this script adds — built
-   from that same Kroger product name: apostrophes dropped outright
-   (so `Callender's` → `Callenders`, not `Callender s`), everything else
+   from that same Kroger product name: apostrophes kept as a literal
+   `%27` in place (so `Callender's` → `Callender%27s`), everything else
    non-alphanumeric turned into spaces, lowercased, and joined with `+`
    into `https://www.instacart.com/store/s?k=...`.
 6. **`index.html` now renders a second "View on Instacart" link** next
@@ -147,9 +147,11 @@ Also made several refinements to `kroger_new_items.py`:
    `INSTACART_URL` on every row in the pool, not just the ones
    `kroger_new_items.py` adds — including all ~1,800 original 2022
    Walmart-CSV rows. Pure local transform (no network calls, no API
-   key), safe to re-run any time `PRODUCT_NAME` values change. Already
-   run once against `candidate_pool.json` as part of today's changes,
-   so every row currently in the pool has one.
+   key), safe to re-run any time `PRODUCT_NAME` values or the URL
+   format change. Already run twice against `candidate_pool.json` as
+   part of today's changes (once on the original apostrophe-dropped
+   format, again after that was switched to `%27`), so every row
+   currently in the pool is on the current format.
 
 ## Today's session (Sept 15, 2026)
 

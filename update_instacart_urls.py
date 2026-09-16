@@ -48,14 +48,17 @@ def log(msg):
 
 def build_instacart_search_url(text):
     """Same logic as kroger_new_items.py's build_instacart_search_url():
-    drops apostrophes outright (so a possessive like "Callender's"
-    becomes "Callenders", not "Callender s"), replaces everything else
-    that isn't a letter/digit/space with a space, lowercases, and joins
-    words with "+"."""
-    cleaned = (text or "").replace("'", "").replace("\u2019", "")
-    cleaned = re.sub(r"[^a-zA-Z0-9\s]", " ", cleaned)
+    keeps apostrophes as a literal "%27" in place (so a possessive like
+    "Callender's" becomes "Callender%27s", not "Callender s" or
+    "Callenders"), replaces everything else that isn't a letter/digit/
+    space with a space, lowercases, and joins words with "+"."""
+    placeholder = "\x00"  # stands in for an apostrophe so the strip-special-chars
+                          # step below doesn't touch it before it becomes %27
+    cleaned = (text or "").replace("'", placeholder).replace("\u2019", placeholder)
+    cleaned = re.sub(r"[^a-zA-Z0-9\s" + placeholder + r"]", " ", cleaned)
     words = cleaned.lower().split()
-    return f"https://www.instacart.com/store/s?k={'+'.join(words)}" if words else ""
+    joined = "+".join(words).replace(placeholder, "%27")
+    return f"https://www.instacart.com/store/s?k={joined}" if words else ""
 
 
 def load_pool(path):
