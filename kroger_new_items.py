@@ -203,7 +203,14 @@ def normalize_name(name):
 def existing_name_and_upc_sets(pool):
     names = {normalize_name(item.get("PRODUCT_NAME")) for item in pool}
     names.discard("")
-    upcs = {item.get("_kroger_upc") for item in pool if item.get("_kroger_upc")}
+    upcs = set()
+    for item in pool:
+        primary = item.get("_kroger_upc")
+        if primary:
+            upcs.add(primary)
+        for alias in item.get("_kroger_upc_aliases") or []:
+            if alias:
+                upcs.add(alias)
     return names, upcs
 
 
@@ -217,6 +224,37 @@ def existing_active_skus(pool):
         for item in pool
         if item.get("SKU") and item.get("active") is True
     }
+
+
+def tag_existing_pool_item_with_upc(pool, sku, upc):
+    """When a discovered candidate's Walmart SKU turns out to already be
+    active in the pool (existing_active_skus skip, in main()), this
+    records the newly discovered Kroger UPC on that EXISTING pool item --
+    as "_kroger_upc" if it doesn't have one yet, or appended to
+    "_kroger_upc_aliases" if it already has a different one -- so that
+    UPC lands in existing_name_and_upc_sets()'s output on every future
+    run. Otherwise the same Kroger product would get rediscovered and
+    re-resolved via Serper (a real, quota-limited API call) every single
+    run, just to be thrown away at the SKU-already-active check again --
+    tagging it here means it gets filtered out at the free Kroger-
+    discovery stage instead, before ever reaching Serper. Returns True
+    if it actually changed anything."""
+    changed = False
+    for item in pool:
+        if item.get("active") is not True:
+            continue
+        if str(item.get("SKU", "")).strip() != sku:
+            continue
+        primary = item.get("_kroger_upc")
+        if not primary:
+            item["_kroger_upc"] = upc
+            changed = True
+        elif primary != upc:
+            aliases = item.get("_kroger_upc_aliases") or []
+            if upc not in aliases:
+                item["_kroger_upc_aliases"] = aliases + [upc]
+                changed = True
+    return changed
 
 
 def next_index(pool):
@@ -778,15 +816,21 @@ def add_pickup_param(url):
 
 def build_instacart_search_url(text):
     """Builds an Instacart search-results URL from a product name:
-    keeps apostrophes as a literal "%27" in place (so a possessive like
-    "Callender's" becomes "Callender%27s", not "Callender s" or
-    "Callenders"), replaces everything else that isn't a letter/digit/
-    space with a space, lowercases, and joins words with "+" -- e.g.
-    "Marie Callender's Pot Roast, Frozen Meal" ->
-    https://www.instacart.com/store/s?k=marie+callender%27s+pot+roast+frozen+meal"""
+    truncates at the first comma first (e.g. "Great Value Garlic Texas
+    Toast, 11.25 oz, 8 Count" -> "Great Value Garlic Texas Toast") --
+    the part after a comma is usually size/count/variant detail that
+    makes the search too specific and narrows/misses results, so
+    dropping it tends to get better matches. Then keeps apostrophes as a
+    literal "%27" in place (so a possessive like "Callender's" becomes
+    "Callender%27s", not "Callender s" or "Callenders"), replaces
+    everything else that isn't a letter/digit/space with a space,
+    lowercases, and joins words with "+" -- e.g. "Marie Callender's Pot
+    Roast, Frozen Meal" ->
+    https://www.instacart.com/store/s?k=marie+callender%27s+pot+roast"""
+    text = (text or "").split(",", 1)[0]
     placeholder = "\x00"  # stands in for an apostrophe so the strip-special-chars
                           # step below doesn't touch it before it becomes %27
-    cleaned = (text or "").replace("'", placeholder).replace("\u2019", placeholder)
+    cleaned = text.replace("'", placeholder).replace("\u2019", placeholder)
     cleaned = re.sub(r"[^a-zA-Z0-9\s" + placeholder + r"]", " ", cleaned)
     words = cleaned.lower().split()
     joined = "+".join(words).replace(placeholder, "%27")
@@ -927,6 +971,7 @@ def main():
     ddgs = DDGS()
     enriched = []
     skus_added_this_run = set()
+    skus_tagged = 0
     for c in candidates:
         walmart = find_walmart_listing(c, serper_key, cfg)
         if not walmart["product_url"]:
@@ -934,6 +979,8 @@ def main():
             continue
 
         if walmart["sku"] and (walmart["sku"] in active_skus or walmart["sku"] in skus_added_this_run):
+            if tag_existing_pool_item_with_upc(pool, walmart["sku"], c["upc"]):
+                skus_tagged += 1
             log(f"  SKIP (SKU {walmart['sku']} already active in pool): {c['brand']} {c['description']}")
             continue
 
@@ -952,7 +999,12 @@ def main():
     log(f"{len(enriched)}/{len(candidates)} candidate(s) got both a Walmart link and an image.")
     if not enriched:
         log("Nothing to add this run (all candidates failed link/image lookup).")
-        return
+        # No early return here: even with nothing new to enrich, this run
+        # may have tagged existing pool items with a newly discovered
+        # Kroger UPC (see the SKU-already-active branch above) -- those
+        # edits still need saving, so execution falls through to
+        # save_pool() below. Every loop from here on is a harmless no-op
+        # over an empty `enriched`.
 
     # --- Step 4: Gemini, batched, for calories/price/servings (+ sku_guess
     # only where step 2 found a link but couldn't parse a SKU out of it). ---
@@ -1014,7 +1066,8 @@ def main():
             f"Gemini calories/price/servings -- not added.")
 
     save_pool(pool_path, pool)
-    log(f"Done. Added {added} new item(s) to {pool_path.name} (pool size now {len(pool)}).")
+    log(f"Done. Added {added} new item(s), tagged {skus_tagged} existing item(s) with a newly "
+        f"discovered Kroger UPC, to {pool_path.name} (pool size now {len(pool)}).")
 
 
 if __name__ == "__main__":

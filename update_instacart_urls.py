@@ -48,13 +48,16 @@ def log(msg):
 
 def build_instacart_search_url(text):
     """Same logic as kroger_new_items.py's build_instacart_search_url():
-    keeps apostrophes as a literal "%27" in place (so a possessive like
-    "Callender's" becomes "Callender%27s", not "Callender s" or
-    "Callenders"), replaces everything else that isn't a letter/digit/
-    space with a space, lowercases, and joins words with "+"."""
+    truncates at the first comma first (size/count/variant detail after
+    a comma tends to over-narrow the search), keeps apostrophes as a
+    literal "%27" in place (so a possessive like "Callender's" becomes
+    "Callender%27s", not "Callender s" or "Callenders"), replaces
+    everything else that isn't a letter/digit/space with a space,
+    lowercases, and joins words with "+"."""
+    text = (text or "").split(",", 1)[0]
     placeholder = "\x00"  # stands in for an apostrophe so the strip-special-chars
                           # step below doesn't touch it before it becomes %27
-    cleaned = (text or "").replace("'", placeholder).replace("\u2019", placeholder)
+    cleaned = text.replace("'", placeholder).replace("\u2019", placeholder)
     cleaned = re.sub(r"[^a-zA-Z0-9\s" + placeholder + r"]", " ", cleaned)
     words = cleaned.lower().split()
     joined = "+".join(words).replace(placeholder, "%27")

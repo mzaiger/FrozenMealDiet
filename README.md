@@ -135,23 +135,51 @@ Also made several refinements to `kroger_new_items.py`:
    more of a chance one of the three trusted domains actually appears
    in a given batch.
 5. **New `INSTACART_URL` field** on every row this script adds — built
-   from that same Kroger product name: apostrophes kept as a literal
-   `%27` in place (so `Callender's` → `Callender%27s`), everything else
-   non-alphanumeric turned into spaces, lowercased, and joined with `+`
-   into `https://www.instacart.com/store/s?k=...`.
+   from that same Kroger product name, truncated at the first comma
+   first (size/count/variant detail after a comma tends to over-narrow
+   the Instacart search and get worse results, so it's dropped), then
+   apostrophes kept as a literal `%27` in place (so `Callender's` →
+   `Callender%27s`), everything else non-alphanumeric turned into
+   spaces, lowercased, and joined with `+` into
+   `https://www.instacart.com/store/s?k=...`.
 6. **`index.html` now renders a second "View on Instacart" link** next
    to "View on walmart.com" (`getMealInstacartUrl()` / the `viewLink`
    block in `mealRow()`), separated by a middot when both are present,
-   and gracefully falling back to whichever one exists if only one does.
+   `white-space:nowrap` on the container so the two links stay on one
+   line instead of wrapping, and gracefully falling back to whichever
+   one exists if only one does.
 7. **New `update_instacart_urls.py`** backfills/refreshes
    `INSTACART_URL` on every row in the pool, not just the ones
    `kroger_new_items.py` adds — including all ~1,800 original 2022
    Walmart-CSV rows. Pure local transform (no network calls, no API
    key), safe to re-run any time `PRODUCT_NAME` values or the URL
-   format change. Already run twice against `candidate_pool.json` as
-   part of today's changes (once on the original apostrophe-dropped
-   format, again after that was switched to `%27`), so every row
-   currently in the pool is on the current format.
+   format change. Already run three times against `candidate_pool.json`
+   as part of today's changes (apostrophe-dropped → `%27` → comma
+   truncation added), so every row currently in the pool is on the
+   current format.
+8. **Fixed a gap in `index.html`'s saved-week persistence**:
+   `compactMeal()` — the function both the auto-persisted current week
+   and the explicit "save this week" feature use to decide what survives
+   a page reload — didn't include the Instacart URL, so it would vanish
+   after a refresh even though it was right there in the data.
+   `getMealInstacartUrl()` now also checks the compact form's field name,
+   and `compactMeal()` includes it going forward.
+9. **New Kroger UPCs get recorded on the pool item they matched, even
+   when the item itself gets skipped.** Previously, a candidate whose
+   resolved Walmart SKU turned out to already be `active` in the pool
+   was just logged and dropped — its Kroger UPC was never saved
+   anywhere, so the exact same product would get rediscovered via Kroger,
+   re-resolved via a real Serper call, and skipped again on every future
+   run. `tag_existing_pool_item_with_upc()` now writes that UPC onto the
+   existing pool item instead — as `_kroger_upc` if it doesn't have one
+   yet, or appended to `_kroger_upc_aliases` if it already has a
+   different one — so `existing_name_and_upc_sets()` picks it up on the
+   next run and the candidate gets filtered out for free at the Kroger-
+   discovery stage, before ever reaching Serper. This also meant fixing
+   an early `return` in `main()` that used to skip `save_pool()`
+   entirely on a run where nothing new got added — that return is gone
+   now, so a run that only tags existing items (finds nothing new to
+   add) still saves those tags instead of silently losing them.
 
 ## Today's session (Sept 15, 2026)
 
