@@ -1048,7 +1048,7 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
     ? `<a class="meal-link meal-link-instacart" href="${instacartUrl}" target="_blank" rel="noopener noreferrer">View on Instacart &rarr;</a>`
     : '';
   const viewLink = (walmartLinkHtml || instacartLinkHtml)
-    ? `<div class="meal-view-link">${walmartLinkHtml}${walmartLinkHtml && instacartLinkHtml ? ' &middot; ' : ''}${instacartLinkHtml}</div>`
+    ? `<div class="meal-view-link">${walmartLinkHtml}${walmartLinkHtml && instacartLinkHtml ? '' : ''}${instacartLinkHtml}</div>`
     : '';
 
   const thumbImg = image
