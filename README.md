@@ -16,6 +16,7 @@ export and enriched with USDA calorie data.
 | `Dedup.py` | Reads `frozen_food.csv`, drops a few unwanted categories (desserts, meat & seafood, produce, potatoes), de-dupes by SKU, writes `frozen_food_deduped.csv`. | No — run manually when you refresh the source CSV. |
 | `build_meal_pool.py` | Reads `frozen_food_deduped.csv`, cleans each product name, looks up calories + servings-per-container from the USDA FoodData Central API, writes `candidate_pool.json`. Needs `USDA_API_KEY`. | No — run manually to (re)build the pool from scratch. |
 | `AddImageUrl.py` | For every `active` item in `candidate_pool.json`, searches DuckDuckGo Images and writes the result to `image_url`. Rate-limit-conscious (jittered delays, backoff, per-name caching, checkpointing so it's safe to re-run). No API key needed. | No — run manually. |
+| `update_instacart_urls.py` *(new Sept 16)* | Sets/refreshes `INSTACART_URL` on **every** row in `candidate_pool.json` (not just the Kroger-sourced ones — all ~1,800 original 2022 Walmart-CSV rows too), built from each row's own `PRODUCT_NAME` with the same apostrophe/special-character handling `kroger_new_items.py` uses. Pure local transform, no network calls, no API key. `--only-missing` to only fill blanks instead of recomputing every row; `--dry-run` to preview. | No — run manually. |
 | `check_active_urls.py` | Uses Playwright (with stealth) to visit each item's `PRODUCT_URL` on walmart.com and tag it `active: true/false/null` (null = couldn't tell, e.g. bot-blocked). Writes reason/query/checked-URL metadata per item. | **Yes** — `.github/workflows/check-active-urls`, hourly, `--only-unknown --limit 100`. |
 | `check_walmart_links.py` | Alternate way to check link liveness: searches Google via Serper.dev for `site:walmart.com <product_id>` and checks whether walmart.com is the top result. Needs `SERPER_API_KEY`. | **No** — not wired into any workflow. Not currently in use; `check_active_urls.py` is the one actually running. |
 | `gemini_meal_lookup.py` | Asks Gemini for an estimated calories-per-serving and price for a rotating batch of pool items, from Gemini's own knowledge (no live web search — see "Sept 13" session below for why). Writes results back into `candidate_pool.json`. Needs `GEMINI_KEY`. Config lives in `gemini_meal_lookup.yaml`. | **Yes** — `.github/workflows/gemini-meal-lookup.yml`, every 4 hours. |
@@ -138,6 +139,17 @@ Also made several refinements to `kroger_new_items.py`:
    (so `Callender's` → `Callenders`, not `Callender s`), everything else
    non-alphanumeric turned into spaces, lowercased, and joined with `+`
    into `https://www.instacart.com/store/s?k=...`.
+6. **`index.html` now renders a second "View on Instacart" link** next
+   to "View on walmart.com" (`getMealInstacartUrl()` / the `viewLink`
+   block in `mealRow()`), separated by a middot when both are present,
+   and gracefully falling back to whichever one exists if only one does.
+7. **New `update_instacart_urls.py`** backfills/refreshes
+   `INSTACART_URL` on every row in the pool, not just the ones
+   `kroger_new_items.py` adds — including all ~1,800 original 2022
+   Walmart-CSV rows. Pure local transform (no network calls, no API
+   key), safe to re-run any time `PRODUCT_NAME` values change. Already
+   run once against `candidate_pool.json` as part of today's changes,
+   so every row currently in the pool has one.
 
 ## Today's session (Sept 15, 2026)
 

@@ -780,6 +780,10 @@ function getMealUrl(meal){
   return meal.PRODUCT_URL || meal.product_url || meal.url || (meal.open_food_facts ? meal.open_food_facts.url : '');
 }
 
+function getMealInstacartUrl(meal){
+  return meal.INSTACART_URL || meal.instacart_url || '';
+}
+
 function getMealImage(meal){
   return meal.image_url || meal.image || '';
 }
@@ -1025,6 +1029,7 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
   const row = document.createElement('div');
   row.className = 'meal-row';
   const url = getMealUrl(meal);
+  const instacartUrl = getMealInstacartUrl(meal);
   const image = getMealImage(meal);
   const calories = getMealCalories(meal);
   const servingsPerContainer = getMealServingsPerContainer(meal);
@@ -1034,8 +1039,14 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
 
   const nameHtml = name;
 
-  const viewLink = url
-    ? `<div class="meal-view-link"><a class="meal-link" href="${url}" target="_blank" rel="noopener noreferrer">View on walmart.com &rarr;</a></div>`
+  const walmartLinkHtml = url
+    ? `<a class="meal-link" href="${url}" target="_blank" rel="noopener noreferrer">View on walmart.com &rarr;</a>`
+    : '';
+  const instacartLinkHtml = instacartUrl
+    ? `<a class="meal-link meal-link-instacart" href="${instacartUrl}" target="_blank" rel="noopener noreferrer">View on Instacart &rarr;</a>`
+    : '';
+  const viewLink = (walmartLinkHtml || instacartLinkHtml)
+    ? `<div class="meal-view-link">${walmartLinkHtml}${walmartLinkHtml && instacartLinkHtml ? ' &middot; ' : ''}${instacartLinkHtml}</div>`
     : '';
 
   const thumbImg = image
