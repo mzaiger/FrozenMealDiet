@@ -54941,8 +54941,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 51593859",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=urban+pie+uncured+pepperoni+chicken+sausage+frozen+pizza+20+45+oz",
-    "serving": "0.2 PIZZA"
+    "INSTACART_URL": "https://www.instacart.com/products/3218833?retailerSlug=lazy-acres",
+    "serving": "0.2 PIZZA",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Urban Pie Urban Pie Uncured Pepperoni & Chicken Sausage Frozen Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/3218833?retailerSlug=lazy-acres"
   },
   {
     "index": "483474",
@@ -54966,8 +54970,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 153337164",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+gluten+free+santa+fe+vegan+burrito+5+64+oz",
-    "serving": "N/A"
+    "INSTACART_URL": "https://www.instacart.com/products/19007679-daiya-dairy-free-santa-fe-burrito-5-64-oz",
+    "serving": "N/A",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Daiya Daiya Dairy Free Gluten Free Santa Fe Vegan Burrito -",
+    "_instacart_check_url": "https://www.instacart.com/products/19007679-daiya-dairy-free-santa-fe-burrito-5-64-oz"
   },
   {
     "index": "482535",
@@ -54991,8 +54999,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 376107423",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=life+cuisine+low+carb+lifestyle+meatlovers+zoodles+bowl+frozen+meal+10+375+oz",
-    "serving": "1 Package (294g)"
+    "INSTACART_URL": "https://www.instacart.com/products/24552582-life-cuisine-low-carb-lifestyle-meatlovers-zoodles-bowl-frozen-meal-10-375-onz",
+    "serving": "1 Package (294g)",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Life Cuisine Life Cuisine Low Carb Lifestyle Meatlovers Zoodles Bowl",
+    "_instacart_check_url": "https://www.instacart.com/products/24552582-life-cuisine-low-carb-lifestyle-meatlovers-zoodles-bowl-frozen-meal-10-375-onz"
   },
   {
     "index": "483500",
@@ -55016,8 +55028,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 640288598",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=primal+kitchen+chicken+pesto",
-    "serving": "1 Package (284g)"
+    "INSTACART_URL": "https://www.instacart.com/products/21286610-primal-kitchen-chicken-pesto-frozen-meal-10-0-oz",
+    "serving": "1 Package (284g)",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Primal Kitchen Primal Kitchen Chicken Pesto",
+    "_instacart_check_url": "https://www.instacart.com/products/21286610-primal-kitchen-chicken-pesto-frozen-meal-10-0-oz"
   },
   {
     "index": "483456",
@@ -55041,8 +55057,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 386252678",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=atkins+buffalo+style+chicken+bites+6+oz+frozen",
-    "serving": "3 PIECES"
+    "INSTACART_URL": "https://www.instacart.com/products/27126680-atkins-buffalo-style-chicken-bites-6-oz",
+    "serving": "3 PIECES",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Atkins Atkins Buffalo Style Chicken Bites",
+    "_instacart_check_url": "https://www.instacart.com/products/27126680-atkins-buffalo-style-chicken-bites-6-oz"
   },
   {
     "index": "489248",
@@ -55066,8 +55086,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 184728721",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=magnolia+skinless+vigan+longanisa",
-    "serving": "1 LINK"
+    "INSTACART_URL": "https://www.instacart.com/products/2640309-magnolia-skinless-vigan-longanisa-16-oz",
+    "serving": "1 LINK",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Magnolia Magnolia Skinless Vigan Longanisa",
+    "_instacart_check_url": "https://www.instacart.com/products/2640309-magnolia-skinless-vigan-longanisa-16-oz"
   },
   {
     "index": "491760",
@@ -55091,8 +55115,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 239746342",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=ajinomoto+shumai+shrimp+12pc+nissui+jpn",
-    "serving": "9 ONZ"
+    "INSTACART_URL": "https://www.instacart.com/products/275921-nissui-dumpling-shrimp-shumai-12-ea",
+    "serving": "9 ONZ",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Nissui Ajinomoto Shumai Shrimp",
+    "_instacart_check_url": "https://www.instacart.com/products/275921-nissui-dumpling-shrimp-shumai-12-ea"
   },
   {
     "index": "491774",
@@ -55116,8 +55144,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 134532534",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=orientex+pork+eggroll+16+oz",
-    "serving": "1 EGG ROLL"
+    "INSTACART_URL": "https://www.instacart.com/products/24351839-orientex-eggrolls-lumpia-shanghai-pork-cocktail-size-64-oz",
+    "serving": "1 EGG ROLL",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ ORIENTEX Orientex Pork Eggroll",
+    "_instacart_check_url": "https://www.instacart.com/products/24351839-orientex-eggrolls-lumpia-shanghai-pork-cocktail-size-64-oz"
   },
   {
     "index": "491660",
@@ -55141,8 +55173,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 112335633",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=aji+no+moto+shrimp+shumai+dumplings+15+0+ea",
-    "serving": "6 pieces"
+    "INSTACART_URL": "https://www.instacart.com/products/273180-ajinomoto-frozen-shrimp-shumai-family-pack-17-46-oz",
+    "serving": "6 pieces",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Ajinomoto Aji No Moto Shrimp Shumai Dumplings",
+    "_instacart_check_url": "https://www.instacart.com/products/273180-ajinomoto-frozen-shrimp-shumai-family-pack-17-46-oz"
   },
   {
     "index": "488292",
@@ -55166,8 +55202,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 656309461",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=cali%27flour+foods+lasagna+with+meat+sauce",
-    "serving": "0.083 PACKAGE"
+    "INSTACART_URL": "https://www.instacart.com/products/21524343-cali-flour-foods-lasagna-with-meat-sauce-9-oz",
+    "serving": "0.083 PACKAGE",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Cali'flour Foods Cali'flour Foods Lasagna with Meat Sauce",
+    "_instacart_check_url": "https://www.instacart.com/products/21524343-cali-flour-foods-lasagna-with-meat-sauce-9-oz"
   },
   {
     "index": "506766",
@@ -55194,8 +55234,12 @@
     "image_url": "https://www.instacart.com/image-server/1200x1200/www.instacart.com/assets/domains/product-image/file/large_1982fb31-3290-4a94-8b09-905289f485bf.jpg",
     "_image_search_query": "Ellio's Five Cheese Pizza 9 Slice",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=ellio%27s+five+cheese+pizza+9+slice",
-    "serving": "110 GRM"
+    "INSTACART_URL": "https://www.instacart.com/products/101926?retailerSlug=farm-boy",
+    "serving": "110 GRM",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Ellio's Ellio's Five Cheese Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/101926?retailerSlug=farm-boy"
   },
   {
     "index": "491796",
@@ -55219,8 +55263,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 192058963",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=ajinomoto+aji+no+moto+gyoza+dumplings",
-    "serving": "7 PIECES"
+    "INSTACART_URL": "https://www.instacart.com/products/20126086-ajinomoto-gyoza-dumplings-each",
+    "serving": "7 PIECES",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Ajinomoto Ajinomoto Aji No Moto Gyoza Dumplings",
+    "_instacart_check_url": "https://www.instacart.com/products/20126086-ajinomoto-gyoza-dumplings-each"
   },
   {
     "index": "507238",
@@ -55247,8 +55295,12 @@
     "image_url": "https://i5.walmartimages.com/seo/Newman-s-Own-Thin-Crispy-Crust-Uncured-Pepperoni-Pizza-15-1-oz_240dee38-061e-4a52-ae9a-8049b0051010.f563e896768582fca1b5760b81a79496.jpeg",
     "_image_search_query": "Newman's Own Thin Crispy Pizza, Uncured Pepperoni 15.1 oz. (Frozen)",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=newman%27s+own+thin+crispy+pizza",
-    "serving": "0.333 PIZZA"
+    "INSTACART_URL": "https://www.instacart.com/products/81655223-newmans-own-thin-crispy-crust-uncured-pepperoni-pizza-151-oz",
+    "serving": "0.333 PIZZA",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Newman's Own Newman's Own Thin Crispy Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/81655223-newmans-own-thin-crispy-crust-uncured-pepperoni-pizza-151-oz"
   },
   {
     "index": "507652",
@@ -55272,8 +55324,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 159551963",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=dogtown+4+meat+frozen+pizza",
-    "serving": "0.167 PIZZA"
+    "INSTACART_URL": "https://www.instacart.com/products/2810315-dogtown-pizza-cheese-pizza-15-3-oz",
+    "serving": "0.167 PIZZA",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Dogtown Pizza Dogtown",
+    "_instacart_check_url": "https://www.instacart.com/products/2810315-dogtown-pizza-cheese-pizza-15-3-oz"
   },
   {
     "index": "507251",
@@ -55297,8 +55353,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 454847768",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=base+culture+nutty+pumpkin+bread",
-    "serving": "1 LOAF"
+    "INSTACART_URL": "https://www.instacart.com/products/16472826-base-culture-bread-nutty-pumpkin-12-oz",
+    "serving": "1 LOAF",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Base Culture Base Culture Nutty Pumpkin Bread",
+    "_instacart_check_url": "https://www.instacart.com/products/16472826-base-culture-bread-nutty-pumpkin-12-oz"
   },
   {
     "index": "507720",
@@ -55325,8 +55385,12 @@
     "image_url": "https://target.scene7.com/is/image/Target/GUEST_38272dba-b363-459b-905b-a39d4d021036?wid=488&hei=488&fmt=pjpeg",
     "_image_search_query": "Dogtown Pizza Dogtown Pepperoni Frozen Pizza",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=dogtown+pepperoni+frozen+pizza",
-    "serving": "0.25 PIZZA"
+    "INSTACART_URL": "https://www.instacart.com/products/2810274-dogtown-pizza-pepperoni-pizza-16-0-oz",
+    "serving": "0.25 PIZZA",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Dogtown Pizza Dogtown Pepperoni Frozen Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/2810274-dogtown-pizza-pepperoni-pizza-16-0-oz"
   },
   {
     "index": "507897",
@@ -55353,8 +55417,12 @@
     "image_url": "https://i5.walmartimages.com/seo/Louisa-Seasoned-Pork-and-Beef-Meat-Tortellini-Frozen-Pasta-Meal-19-oz-Bag_d3aea010-2bba-40b9-b94b-8a36c8a08f44.dd8012452d8374a6842525a5de7ac700.jpeg",
     "_image_search_query": "Louisa Food Products Louisa Pork and Braised Beef Meat Tortellini, 19 oz",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=louisa+pork+and+braised+beef+meat+tortellini",
-    "serving": "21 PIECES"
+    "INSTACART_URL": "https://www.instacart.com/products/16739407-louisa-tortellini-pork-and-beef-19-oz",
+    "serving": "21 PIECES",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Louisa Food Products Louisa Pork and Braised Beef Meat Tortellini",
+    "_instacart_check_url": "https://www.instacart.com/products/16739407-louisa-tortellini-pork-and-beef-19-oz"
   },
   {
     "index": "508280",
@@ -55378,8 +55446,12 @@
     "_active_check_reason": "walmart_domain_but_id_not_in_url",
     "_active_check_query": "site:walmart.com 45709487",
     "_active_check_url": "https://www.walmart.com/ip/Mirror-Compatible-With-2008-2012-Buick-Enclave-Right-Passenger-Side-Heated-In-housing-Signal-Light-Paintable-Kool-Vue/381915803",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=louisa+beef+ravioli",
-    "serving": "10 PIECES"
+    "INSTACART_URL": "https://www.instacart.com/products/16738612-louisa-toasted-ravioli-beef-cheese-16-oz?retailerSlug=food-lion",
+    "serving": "10 PIECES",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Louisa Food Products Louisa Beef Ravioli",
+    "_instacart_check_url": "https://www.instacart.com/products/16738612-louisa-toasted-ravioli-beef-cheese-16-oz?retailerSlug=food-lion"
   },
   {
     "index": "508164",
@@ -55403,8 +55475,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 14940643",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=smart+ones+fettuccine+alfredo+with+broccoli+florets+creamy+alfredo+sauce+frozen+meal",
-    "serving": "1 cup"
+    "INSTACART_URL": "https://www.instacart.com/products/42089-smart-ones-fettuccine-alfredo-with-broccoli-florets-creamy-alfredo-sauce-frozen-meal-9-25-oz",
+    "serving": "1 cup",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ SMART ONES Smart Ones Fettuccine Alfredo with Broccoli Florets & Creamy Alfredo Sauce",
+    "_instacart_check_url": "https://www.instacart.com/products/42089-smart-ones-fettuccine-alfredo-with-broccoli-florets-creamy-alfredo-sauce-frozen-meal-9-25-oz"
   },
   {
     "index": "508288",
@@ -55428,8 +55504,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 164293526",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=dogtown+sausage+and+pepperoni+frozen+pizza",
-    "serving": "0.25 Pizza"
+    "INSTACART_URL": "https://www.instacart.com/products/2810313-dogtown-pizza-sausage-and-pepperoni-pizza-16-5-oz",
+    "serving": "0.25 Pizza",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Dogtown Pizza Dogtown Sausage And Pepperoni Frozen Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/2810313-dogtown-pizza-sausage-and-pepperoni-pizza-16-5-oz"
   },
   {
     "index": "508299",
@@ -55453,8 +55533,12 @@
     "_active_check_reason": "walmart_domain_but_id_not_in_url",
     "_active_check_query": "site:walmart.com 45709491",
     "_active_check_url": "https://business.walmart.com/ip/Polly-Pocket-Flower-Garden-Bunny-Compact-Playset-with-2-Micro-Dolls-Color-Change/1476357151",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=louisa+spinach+cheese+ravioli",
-    "serving": "10 PIECES"
+    "INSTACART_URL": "https://www.instacart.com/products/3184078?retailerSlug=harps-food-store",
+    "serving": "10 PIECES",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Louisa Food Products Louisa Spinach & Cheese Ravioli",
+    "_instacart_check_url": "https://www.instacart.com/products/3184078?retailerSlug=harps-food-store"
   },
   {
     "index": "508302",
@@ -55478,8 +55562,12 @@
     "_active_check_reason": "walmart_domain_but_id_not_in_url",
     "_active_check_query": "site:walmart.com 45709490",
     "_active_check_url": "https://www.walmart.com/ip/Gazechimp-BBQ-Gas-Grill-Heat-Plate-Adjustable-Burner-Cover-for-Outdoor-Picnic-Backyard-1-piece/5631974717",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=louisa+mini+round+cheese+ravioli",
-    "serving": "10 PIECES"
+    "INSTACART_URL": "https://www.instacart.com/products/3184078?retailerSlug=harps-food-store",
+    "serving": "10 PIECES",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Louisa Food Products Louisa Mini Round Cheese Ravioli",
+    "_instacart_check_url": "https://www.instacart.com/products/3184078?retailerSlug=harps-food-store"
   },
   {
     "index": "513723",
@@ -55506,8 +55594,12 @@
     "image_url": "https://i5.walmartimages.com/seo/Deep-Indian-Kitchen-Chicken-Tikka-Masala-9oz-Frozen-Packaged-Meal_a3be2900-9777-48c3-8057-95395a995895.43c7228dbf9b85d4500232fa0cf35ec9.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
     "_image_search_query": "Deep Indian Kitchen Chicken Tikka Masala with Turmeric Rice, 9oz (Frozen)",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=deep+indian+kitchen+chicken+tikka+masala+with+turmeric+rice",
-    "serving": "1 container"
+    "INSTACART_URL": "https://www.instacart.com/products/30512557-deep-indian-kitchen-chicken-tikka-masala-medium-10-oz",
+    "serving": "1 container",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Deep Indian Kitchen Deep Indian Kitchen Chicken Tikka Masala with Turmeric Rice",
+    "_instacart_check_url": "https://www.instacart.com/products/30512557-deep-indian-kitchen-chicken-tikka-masala-medium-10-oz"
   },
   {
     "index": "508293",
@@ -55531,8 +55623,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 174889707",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=dogtown+deluxe+frozen+pizza",
-    "serving": "0.5 PIZZA"
+    "INSTACART_URL": "https://www.instacart.com/products/2810307-dogtown-pizza-deluxe-pizza-18-0-oz",
+    "serving": "0.5 PIZZA",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Dogtown Pizza Dogtown Deluxe Frozen Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/2810307-dogtown-pizza-deluxe-pizza-18-0-oz"
   },
   {
     "index": "508296",
@@ -55556,8 +55652,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 350126058",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=tribeca+oven+french+batard",
-    "serving": "about 2.5 inch slice"
+    "INSTACART_URL": "https://www.instacart.com/products/25932616-tribeca-oven-french-batard-bread-20-ct",
+    "serving": "about 2.5 inch slice",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ TRIBECA OVEN Tribeca Oven French Batard",
+    "_instacart_check_url": "https://www.instacart.com/products/25932616-tribeca-oven-french-batard-bread-20-ct"
   },
   {
     "index": "513838",
@@ -55581,8 +55681,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 115373888",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=deep+indian+kitchen+chicken+curry+with+turmeric+rice",
-    "serving": "1 tray (255g)"
+    "INSTACART_URL": "https://www.instacart.com/products/48235-deep-indian-kitchen-chicken-curry-medium-spice-9-oz?retailerSlug=kroger",
+    "serving": "1 tray (255g)",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Deep Indian Kitchen Deep Indian Kitchen Chicken Curry with Turmeric Rice",
+    "_instacart_check_url": "https://www.instacart.com/products/48235-deep-indian-kitchen-chicken-curry-medium-spice-9-oz?retailerSlug=kroger"
   },
   {
     "index": "513946",
@@ -55606,8 +55710,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 273517451",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=cheese+ravioli+big+value",
-    "serving": "0.5 PACKAGE"
+    "INSTACART_URL": "https://www.instacart.com/products/19124845-louisa-round-ravioli-four-cheese-value-size-40-oz",
+    "serving": "0.5 PACKAGE",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Louisa Food Products Cheese Ravioli Big Value",
+    "_instacart_check_url": "https://www.instacart.com/products/19124845-louisa-round-ravioli-four-cheese-value-size-40-oz"
   },
   {
     "index": "513934",
@@ -55631,8 +55739,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 947951575",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=deep+indian+kitchen+chicken+vindaloo+with+turmeric+rice",
-    "serving": "1 tray (255g)"
+    "INSTACART_URL": "https://www.instacart.com/products/24363077-deep-indian-kitchen-chicken-vindaloo-9-oz",
+    "serving": "1 tray (255g)",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Deep Indian Kitchen Deep Indian Kitchen Chicken Vindaloo with Turmeric Rice",
+    "_instacart_check_url": "https://www.instacart.com/products/24363077-deep-indian-kitchen-chicken-vindaloo-9-oz"
   },
   {
     "index": "514318",
@@ -55659,8 +55771,12 @@
     "image_url": "https://i5.walmartimages.com/seo/Roma-Original-Cheese-Thin-Crust-Frozen-Pizza-10-54oz_f0c1d3d1-26c6-4f66-953c-a78c5f0dcf44.4fdbf012b795bb165073059c3a38e335.jpeg",
     "_image_search_query": "Roma 4 Cheese, Frozen Pizza, 10.54 oz",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=roma+4+cheese",
-    "serving": "0.125 Pizza"
+    "INSTACART_URL": "https://www.instacart.com/products/26410591-roma-pizza-sauce-california-extra-heavy-with-basil-107-oz",
+    "serving": "0.125 Pizza",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Roma Roma",
+    "_instacart_check_url": "https://www.instacart.com/products/26410591-roma-pizza-sauce-california-extra-heavy-with-basil-107-oz"
   },
   {
     "index": "513831",
@@ -55684,8 +55800,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 129366265",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=deep+indian+kitchen+spinach+paneer+with+turmeric+rice",
-    "serving": "1 tray (283g)"
+    "INSTACART_URL": "https://www.instacart.com/products/17327?retailerSlug=sunset-foods",
+    "serving": "1 tray (283g)",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Deep Indian Kitchen Deep Indian Kitchen Spinach Paneer with Turmeric Rice",
+    "_instacart_check_url": "https://www.instacart.com/products/17327?retailerSlug=sunset-foods"
   },
   {
     "index": "514334",
@@ -55712,8 +55832,12 @@
     "image_url": "https://i5.walmartimages.com/seo/Brew-Pub-Lotzza-Motzza-Sausage-and-Pepperoni-Frozen-Pizza-23-82oz_06701232-d8ac-4922-bd08-4a24e9abad7f.52226ad0caee27209fec0df0d6a6ab14.jpeg",
     "_image_search_query": "Brew Pub Lotzza Motzza Sausage & Pepperoni Pizza, 23.82 oz",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=brew+pub+lotzza+motzza+sausage+pepperoni+pizza",
-    "serving": "0.2 PIZZA"
+    "INSTACART_URL": "https://www.instacart.com/products/21727353-brew-pub-pizza-xxl-lotzza-motzza-sausage-pepperoni-pizza-40-85-oz",
+    "serving": "0.2 PIZZA",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ BREW PUB Brew Pub Lotzza Motzza Sausage & Pepperoni Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/21727353-brew-pub-pizza-xxl-lotzza-motzza-sausage-pepperoni-pizza-40-85-oz"
   },
   {
     "index": "514336",
@@ -55740,8 +55864,12 @@
     "image_url": "https://i5.walmartimages.com/seo/Roma-Original-Pepperoni-Thin-Crust-Frozen-Pizza-10-54oz_703a256d-78ee-4e6a-a2d3-aa20a43647ca.b169f1172c3bf34a4827cdaf14cae1e3.jpeg",
     "_image_search_query": "Roma Pepperoni Pizza, 10.54 oz",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=roma+pepperoni+pizza",
-    "serving": "0.2 Pizza"
+    "INSTACART_URL": "https://www.instacart.com/products/75255732-roma-original-pepperoni-pizza",
+    "serving": "0.2 Pizza",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Roma Roma Pepperoni Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/75255732-roma-original-pepperoni-pizza"
   },
   {
     "index": "514343",
@@ -55768,8 +55896,12 @@
     "image_url": "https://westfieldsv.com/cdn/shop/files/d58542e1-4322-443e-b90c-b4d0c1796074.jpg?v=1772702423&width=1445",
     "_image_search_query": "Roma Pepperoni & Sausage Pizza, 10.70 oz",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=roma+pepperoni+sausage+pizza",
-    "serving": "0.25 Pizza"
+    "INSTACART_URL": "https://www.instacart.com/products/2646865-roma-pizza-original-pepperoni-sausage-11-inch-12-3-oz",
+    "serving": "0.25 Pizza",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Roma Roma Pepperoni & Sausage Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/2646865-roma-pizza-original-pepperoni-sausage-11-inch-12-3-oz"
   },
   {
     "index": "514345",
@@ -55793,8 +55925,12 @@
     "_active_check_reason": "walmart_domain_but_id_not_in_url",
     "_active_check_query": "site:walmart.com 44024094",
     "_active_check_url": "https://www.walmart.com/ip/5-in-1-Slide-and-Swing-Playing-Set-Toddler-Extra-Long-Slide-with-2-Basketball-Hoops-Football-Ringtoss-Indoor-Outdoor/5467318449",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=brew+pub+lotzza+motzza+4+meat+pizza",
-    "serving": "0.2 PIZZA"
+    "INSTACART_URL": "https://www.instacart.com/products/2805473-brew-pub-pizza-pizza-lotzza-hotzza-12-inch-25-75-oz",
+    "serving": "0.2 PIZZA",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ BREW PUB Brew Pub Lotzza Motzza",
+    "_instacart_check_url": "https://www.instacart.com/products/2805473-brew-pub-pizza-pizza-lotzza-hotzza-12-inch-25-75-oz"
   },
   {
     "index": "514362",
@@ -55818,8 +55954,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 762742118",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+fried+chicken+mac+and+cheese+bowl+single+serve+frozen+meal",
-    "serving": "1 meal (336g)"
+    "INSTACART_URL": "https://www.instacart.com/products/22376706-marie-callender-s-fried-chicken-mac-cheese-bowl-11-85-oz",
+    "serving": "1 meal (336g)",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Marie Callender's Marie Callender's Fried Chicken Mac and Cheese Bowl Single Serve",
+    "_instacart_check_url": "https://www.instacart.com/products/22376706-marie-callender-s-fried-chicken-mac-cheese-bowl-11-85-oz"
   },
   {
     "index": "514801",
@@ -55843,8 +55983,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 590424429",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=cappello%27s+almond+flour+uncured+pepperoni+pizza",
-    "serving": "1/4 pizza"
+    "INSTACART_URL": "https://www.instacart.com/products/19951481-cappello-s-uncured-pepperoni-pizza-12-0-oz",
+    "serving": "1/4 pizza",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Cappello's Cappello's Almond Flour Uncured Pepperoni Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/19951481-cappello-s-uncured-pepperoni-pizza-12-0-oz"
   },
   {
     "index": "514398",
@@ -55871,8 +56015,12 @@
     "image_url": "https://i5.walmartimages.com/seo/Brew-Pub-Lotzza-Motzza-Cheese-Frozen-Pizza-20-00oz_48f19d2e-bdc0-451c-a34e-0dafc0d7505f.f0a35e7f2291805257c979ec31590f4b.jpeg",
     "_image_search_query": "Bernatellos Pizza Brew Pub Lotzza Motzza Pizza, 20.97 oz",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=bernatellos+pizza+brew+pub+lotzza+motzza+pizza",
-    "serving": "0.2 PIZZA"
+    "INSTACART_URL": "https://www.instacart.com/products/2805464-brew-pub-pizza-pizza-taco-grand-12-inch-25-5-oz",
+    "serving": "0.2 PIZZA",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ BREW PUB Bernatellos Pizza Brew Pub Lotzza Motzza Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/2805464-brew-pub-pizza-pizza-taco-grand-12-inch-25-5-oz"
   },
   {
     "index": "514363",
@@ -55896,8 +56044,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 42294401",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=brew+pub+lotzza+motzza+supreme+pizza",
-    "serving": "0.2 PIZZA"
+    "INSTACART_URL": "https://www.instacart.com/products/20047458-brew-pub-pizza-pizza-4-meat-lotzza-motzza-28-25-oz",
+    "serving": "0.2 PIZZA",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ BREW PUB Brew Pub Lotzza Motzza Supreme Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/20047458-brew-pub-pizza-pizza-4-meat-lotzza-motzza-28-25-oz"
   },
   {
     "index": "514789",
@@ -55924,8 +56076,12 @@
     "image_url": "https://costcofdb.com/wp-content/uploads/2022/01/bellatoria-ultra-thin-crust-sausage-italia-pizza-3-x-18-27-oz.jpg",
     "_image_search_query": "Bellatoria Ultra Thin Crust Sausage Pizza, 18.96 oz",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=bellatoria+ultra+thin+crust+sausage+pizza",
-    "serving": "1/3 PIZZA CRUST"
+    "INSTACART_URL": "https://www.instacart.com/products/347238?retailerSlug=food-town-fresh-market",
+    "serving": "1/3 PIZZA CRUST",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Bellatoria Bellatoria Ultra Thin Crust Sausage Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/347238?retailerSlug=food-town-fresh-market"
   },
   {
     "index": "514842",
@@ -55949,8 +56105,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 495207023",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=canyon+bakehouse+sweet+hawaiian+bread",
-    "serving": "1 slice"
+    "INSTACART_URL": "https://www.instacart.com/products/26955348-canyon-bakehouse-sweet-rolls-gluten-free-hawaiian-6-ea",
+    "serving": "1 slice",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Canyon Bakehouse Canyon Bakehouse Sweet Hawaiian Bread",
+    "_instacart_check_url": "https://www.instacart.com/products/26955348-canyon-bakehouse-sweet-rolls-gluten-free-hawaiian-6-ea"
   },
   {
     "index": "514845",
@@ -55974,8 +56134,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 868803381",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=canyon+bakehouse+sub+rolls",
-    "serving": "1.9 ONZ"
+    "INSTACART_URL": "https://www.instacart.com/products/24724877-canyon-bakehouse-gluten-free-100-whole-grain-sub-rolls-4-0-ct",
+    "serving": "1.9 ONZ",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Canyon Bakehouse Canyon Bakehouse Sub Rolls",
+    "_instacart_check_url": "https://www.instacart.com/products/24724877-canyon-bakehouse-gluten-free-100-whole-grain-sub-rolls-4-0-ct"
   },
   {
     "index": "514849",
@@ -55999,8 +56163,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 775008748",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=green+giant+garlic+cauliflower+breadsticks+6+ct+pouch",
-    "serving": "1 stick"
+    "INSTACART_URL": "https://www.instacart.com/products/21171809-green-giant-garlic-cauliflower-breadsticks-8-2-oz",
+    "serving": "1 stick",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Green Giant Green Giant Garlic Cauliflower Breadsticks",
+    "_instacart_check_url": "https://www.instacart.com/products/21171809-green-giant-garlic-cauliflower-breadsticks-8-2-oz"
   },
   {
     "index": "518545",
@@ -56027,8 +56195,12 @@
     "image_url": "https://millvalleymarket.com/cdn/shop/files/10daaf9e-12f9-4afb-b724-b04a11449bbc.jpg?v=1748581864&width=1946",
     "_image_search_query": "Udi's Gluten Free Delicious Multigrain Sandwich Bread, Frozen, 12 oz.",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+gluten+free+delicious+multigrain+sandwich+bread",
-    "serving": "2 SLICES"
+    "INSTACART_URL": "https://www.instacart.com/products/28448-udi-s-bread-sandwich-delicious-multigrain-12-oz",
+    "serving": "2 SLICES",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Udi's Udi's Gluten Free Delicious Multigrain Sandwich Bread",
+    "_instacart_check_url": "https://www.instacart.com/products/28448-udi-s-bread-sandwich-delicious-multigrain-12-oz"
   },
   {
     "index": "518559",
@@ -56052,8 +56224,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 991782262",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=canyon+bakehouse+plain+bagels",
-    "serving": "1 Bagel"
+    "INSTACART_URL": "https://www.instacart.com/products/2770520?retailerSlug=fresh-thyme-farmers-market&from_pla=true",
+    "serving": "1 Bagel",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Canyon Bakehouse Canyon Bakehouse Plain Bagels",
+    "_instacart_check_url": "https://www.instacart.com/products/2770520?retailerSlug=fresh-thyme-farmers-market&from_pla=true"
   },
   {
     "index": "518923",
@@ -56080,8 +56256,12 @@
     "image_url": "https://dylzm7u8zqclv.cloudfront.net/2024/08/20/18/52/25/2ba070b7-aeb1-446d-8291-04a22448cdef/Applegate+Natural+Chicken+and+Apple+Breakfast+Sausage+On_Front_Shot.png",
     "_image_search_query": "Applegate Natural Chicken & Apple Breakfast Sausage, 7oz (Frozen)",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=applegate+natural+chicken+apple+breakfast+sausage",
-    "serving": "2 links"
+    "INSTACART_URL": "https://www.instacart.com/products/16697834-applegate-natural-chicken-apple-breakfast-sausage-7-oz",
+    "serving": "2 links",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Applegate Applegate Natural Chicken & Apple Breakfast Sausage",
+    "_instacart_check_url": "https://www.instacart.com/products/16697834-applegate-natural-chicken-apple-breakfast-sausage-7-oz"
   },
   {
     "index": "522119",
@@ -56105,8 +56285,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 337020549",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=life+cuisine+cauliflower+crust+chicken+bacon+ranch+piada+gluten+free+frozen+sandwich+6+oz",
-    "serving": "1 package (187g)"
+    "INSTACART_URL": "https://www.instacart.com/products/24567099-lean-cuisine-life-cuisine-cauliflower-crust-chicken-bacon-ranch-piada-gluten-free-frozen-sandwich-6-onz",
+    "serving": "1 package (187g)",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Life Cuisine Life Cuisine Cauliflower Crust Chicken Bacon Ranch Piada Gluten Free Frozen Sandwich",
+    "_instacart_check_url": "https://www.instacart.com/products/24567099-lean-cuisine-life-cuisine-cauliflower-crust-chicken-bacon-ranch-piada-gluten-free-frozen-sandwich-6-onz"
   },
   {
     "index": "522134",
@@ -56130,8 +56314,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 766473015",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=green+giant+broccoli+cheese+veggie+tots+40+oz+bag",
-    "serving": "6 pieces"
+    "INSTACART_URL": "https://www.instacart.com/products/19260793-green-giant-broccoli-cheese-veggie-tots-40-0-oz",
+    "serving": "6 pieces",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Green Giant Green Giant Broccoli & Cheese Veggie Tots",
+    "_instacart_check_url": "https://www.instacart.com/products/19260793-green-giant-broccoli-cheese-veggie-tots-40-0-oz"
   },
   {
     "index": "522135",
@@ -56155,8 +56343,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 442743254",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=great+value+roasted+portobello+mushroom+bites",
-    "serving": "4 pieces"
+    "INSTACART_URL": "https://www.instacart.com/products/16962267-wegmans-food-you-feel-good-about-just-picked-and-quickly-frozen-fire-roasted-steak-cut-portabella-mu-8-oz?retailerSlug=wegmans",
+    "serving": "4 pieces",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Great Value Great Value Roasted Portobello Mushroom Bites",
+    "_instacart_check_url": "https://www.instacart.com/products/16962267-wegmans-food-you-feel-good-about-just-picked-and-quickly-frozen-fire-roasted-steak-cut-portabella-mu-8-oz?retailerSlug=wegmans"
   },
   {
     "index": "553786",
@@ -56183,8 +56375,12 @@
     "image_url": "https://i5.walmartimages.com/seo/Great-Value-Microwavable-Sausage-Pepperoni-Combination-Pizza-7-2-oz-Frozen_2902083d-63e1-474e-b5e0-b59a9be7a23b.ade34e957fbeb718ad1f91a72512d8d1.jpeg?odnHeight=640&odnWidth=640&odnBg=FFFFFF",
     "_image_search_query": "Great Value Microwave Combination Pizza",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=microwave+combination+pizza",
-    "serving": "1 pizza"
+    "INSTACART_URL": "https://www.instacart.com/products/27738033?retailerSlug=walmart",
+    "serving": "1 pizza",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Great Value Microwave Combination Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/27738033?retailerSlug=walmart"
   },
   {
     "index": "522136",
@@ -56211,8 +56407,12 @@
     "image_url": "https://dsom-imager-prod.shipt.com/f4a109cc-8a3a-11eb-8d63-43db26a7a471/67d3b9d5f24890e3eb70b55aab59734f.jpeg",
     "_image_search_query": "Life Cuisine Cauliflower Crust Chicken Mozarella Piada Gluten Free Frozen Sandwich 6 oz",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=life+cuisine+cauliflower+crust+chicken+mozarella+piada+gluten+free+frozen+sandwich+6+oz",
-    "serving": "2 Sandwiches (255g)"
+    "INSTACART_URL": "https://www.instacart.com/products/24562221-lean-cuisine-life-cuisine-cauliflower-crust-chicken-mozarella-piada-gluten-free-frozen-sandwich-6-onz?retailer_id=252&product_id=24562221",
+    "serving": "2 Sandwiches (255g)",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Life Cuisine Life Cuisine Cauliflower Crust Chicken Mozarella Piada Gluten Free Frozen Sandwich",
+    "_instacart_check_url": "https://www.instacart.com/products/24562221-lean-cuisine-life-cuisine-cauliflower-crust-chicken-mozarella-piada-gluten-free-frozen-sandwich-6-onz?retailer_id=252&product_id=24562221"
   },
   {
     "index": "553789",
@@ -56237,7 +56437,11 @@
     "_active_check_query": "site:walmart.com 1085184756",
     "_active_check_url": null,
     "INSTACART_URL": "https://www.instacart.com/store/s?k=screamin+sicilian+ssbacon+roni+pizza",
-    "serving": "0.2 PIZZA"
+    "serving": "0.2 PIZZA",
+    "instacart_active": false,
+    "_instacart_check_reason": "no_search_results",
+    "_instacart_check_query": "site:www.instacart.com/products/ Screamin' Sicilian Screamin Sicilian Ssbacon-roni Pizza",
+    "_instacart_check_url": null
   },
   {
     "index": "553812",
@@ -56261,8 +56465,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 644316343",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=the+pizza+cupcake+pepperoni+pizza",
-    "serving": "50.40 oz/1428.8 g"
+    "INSTACART_URL": "https://www.instacart.com/products/32538794-the-pizza-cupcake-pepperoni-pizza-cupcake-12-ct",
+    "serving": "50.40 oz/1428.8 g",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ The Pizza Cupcake The Pizza Cupcake Pepperoni Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/32538794-the-pizza-cupcake-pepperoni-pizza-cupcake-12-ct"
   },
   {
     "index": "553832",
@@ -56286,8 +56494,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 294490278",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+signature+chicken+quesadilla",
-    "serving": "1 QUESADILLA"
+    "INSTACART_URL": "https://www.instacart.com/products/50237686-el-monterey-signature-chicken-cheese-quesadillas-20-oz",
+    "serving": "1 QUESADILLA",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ El Monterey El Monterey Signature Chicken Quesadilla",
+    "_instacart_check_url": "https://www.instacart.com/products/50237686-el-monterey-signature-chicken-cheese-quesadillas-20-oz"
   },
   {
     "index": "553790",
@@ -56312,7 +56524,11 @@
     "_active_check_query": "site:walmart.com 1140395886",
     "_active_check_url": null,
     "INSTACART_URL": "https://www.instacart.com/store/s?k=screamin+sicilian+ss+saus+shrooms+pizza",
-    "serving": "0.2 PIZZA"
+    "serving": "0.2 PIZZA",
+    "instacart_active": false,
+    "_instacart_check_reason": "no_search_results",
+    "_instacart_check_query": "site:www.instacart.com/products/ Screamin' Sicilian Screamin Sicilian Ss Saus & Shrooms Pizza",
+    "_instacart_check_url": null
   },
   {
     "index": "553804",
@@ -56336,8 +56552,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 641268461",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=van+leeuwen+pumpkin+cinnamon+roll+flavored+french+ice+cream+pint+14+oz",
-    "serving": "0.5 cup"
+    "INSTACART_URL": "https://www.instacart.com/products/21514263-van-leeuwen-pumpkin-cinnamon-roll-non-dairy-frozen-dessert-14-fl-oz",
+    "serving": "0.5 cup",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Van Leeuwen Ice Cream Van Leeuwen Pumpkin Cinnamon Roll Flavored French Ice Cream Pint",
+    "_instacart_check_url": "https://www.instacart.com/products/21514263-van-leeuwen-pumpkin-cinnamon-roll-non-dairy-frozen-dessert-14-fl-oz"
   },
   {
     "index": "553942",
@@ -56361,8 +56581,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 554255492",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=italian+sausage+baozza+2+pack",
-    "serving": "N/A"
+    "INSTACART_URL": "https://www.instacart.com/products/25003273-baozza-italian-sausage-pizza-snacks-2-ct",
+    "serving": "N/A",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Baozza! Italian Sausage Baozza (",
+    "_instacart_check_url": "https://www.instacart.com/products/25003273-baozza-italian-sausage-pizza-snacks-2-ct"
   },
   {
     "index": "553856",
@@ -56386,8 +56610,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 355387591",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=sam%27s+choice+seasoned+crust+pepperoni+31+15oz+pizza+frozen",
-    "serving": "N/A"
+    "INSTACART_URL": "https://www.instacart.com/products/27909933-sam-s-choice-seasoned-crust-rising-crust-seasoned-with-garlic-butter-flavored-oil-dusted-with-paprika-and-chili-pepperoni-pizza",
+    "serving": "N/A",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Sam's Choice Sam's Choice - Seasoned Crust Pepperoni -",
+    "_instacart_check_url": "https://www.instacart.com/products/27909933-sam-s-choice-seasoned-crust-rising-crust-seasoned-with-garlic-butter-flavored-oil-dusted-with-paprika-and-chili-pepperoni-pizza"
   },
   {
     "index": "553838",
@@ -56411,8 +56639,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 535970262",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=bibigo+korean+style+fried+rice+shrimp+with+soy+garlic+flavor+18+oz",
-    "serving": "1 Bag"
+    "INSTACART_URL": "https://www.instacart.com/products/23574198-bibigo-korean-style-fried-rice-shrimp-with-soy-garlic-flavor-18-0-oz",
+    "serving": "1 Bag",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Bibigo Bibigo Korean Style Fried Rice Shrimp with Soy Garlic Flavor",
+    "_instacart_check_url": "https://www.instacart.com/products/23574198-bibigo-korean-style-fried-rice-shrimp-with-soy-garlic-flavor-18-0-oz"
   },
   {
     "index": "554038",
@@ -56436,8 +56668,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 273266719",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=hot+pockets+deliwich+turkey+colby+frozen+deli+sandwiches",
-    "serving": "Sandwich (127g)"
+    "INSTACART_URL": "https://www.instacart.com/products/26643653-hot-pockets-hot-pocket-deliwich-turkey-and-colby-frozen-sandwiches-12-9-onz",
+    "serving": "Sandwich (127g)",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Hot Pockets Hot Pockets Deliwich Turkey & Colby Frozen Deli Sandwiches",
+    "_instacart_check_url": "https://www.instacart.com/products/26643653-hot-pockets-hot-pocket-deliwich-turkey-and-colby-frozen-sandwiches-12-9-onz"
   },
   {
     "index": "554023",
@@ -56464,8 +56700,12 @@
     "image_url": "https://www.instacart.com/image-server/1200x1200/www.instacart.com/assets/domains/product-image/file/large_b8d0d1df-fe1f-48b3-8675-3bc0e4af2095.jpg",
     "_image_search_query": "Life Cuisine Gluten Free Cauliflower Crust Three Meat Frozen Pizza 6 oz",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=life+cuisine+gluten+free+cauliflower+crust+three+meat+frozen+pizza+6+oz",
-    "serving": "1 pizza (187g)"
+    "INSTACART_URL": "https://www.instacart.com/products/21064953-life-cuisine-cauliflower-meatlovers-pizza-bowl-frozen-meal-11-onz",
+    "serving": "1 pizza (187g)",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Life Cuisine Life Cuisine Gluten Free Cauliflower Crust Three Meat Frozen Pizza",
+    "_instacart_check_url": "https://www.instacart.com/products/21064953-life-cuisine-cauliflower-meatlovers-pizza-bowl-frozen-meal-11-onz"
   },
   {
     "index": "554073",
@@ -56492,8 +56732,12 @@
     "image_url": "https://target.scene7.com/is/image/Target/GUEST_dbac16d1-0dba-418f-86d8-3f8318a54e8e?wid=488&hei=488&fmt=pjpeg",
     "_image_search_query": "Newman's Own 13.1z Newmans Own Stone-Fired Crust Margherita Pizza",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=13+1z+newmans+own+stone+fired+crust+margherita+pizza",
-    "serving": "1/3 Pizza (124g)"
+    "INSTACART_URL": "https://www.instacart.com/products/48422-newman-s-own-family-recipe-cookies-spelt-ginger-snap-6-5-oz",
+    "serving": "1/3 Pizza (124g)",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Newman's Own",
+    "_instacart_check_url": "https://www.instacart.com/products/48422-newman-s-own-family-recipe-cookies-spelt-ginger-snap-6-5-oz"
   },
   {
     "index": "554039",
@@ -56517,8 +56761,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 228591186",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=hot+pockets+deliwich+cheddar+ham+frozen+deli+sandwiches",
-    "serving": "1 SERVING"
+    "INSTACART_URL": "https://www.instacart.com/products/26643650-hot-pockets-hot-pocket-deliwich-cheddar-and-ham-frozen-sandwiches-12-9-onz",
+    "serving": "1 SERVING",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Hot Pockets Hot Pockets Deliwich Cheddar & Ham Frozen Deli Sandwiches",
+    "_instacart_check_url": "https://www.instacart.com/products/26643650-hot-pockets-hot-pocket-deliwich-cheddar-and-ham-frozen-sandwiches-12-9-onz"
   },
   {
     "index": "554076",
@@ -56542,8 +56790,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 397375132",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=13+8z+newmans+own+stone+fired+crust+spinaci+formaggi+pizza",
-    "serving": "1/3 Pizza (130g)"
+    "INSTACART_URL": "https://www.instacart.com/products/75781-newman-s-own-dressing-poppy-seed-16-oz",
+    "serving": "1/3 Pizza (130g)",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Newman's Own",
+    "_instacart_check_url": "https://www.instacart.com/products/75781-newman-s-own-dressing-poppy-seed-16-oz"
   },
   {
     "index": "554077",
@@ -56567,8 +56819,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 948660212",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=13+6z+newmans+own+stone+fired+crust+quattro+formaggi+pizza",
-    "serving": "1/3 Pizza (129g)"
+    "INSTACART_URL": "https://www.instacart.com/products/16777525-newman-s-own-vinaigrette-honey-apple-cider-16-fl-oz",
+    "serving": "1/3 Pizza (129g)",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Newman's Own",
+    "_instacart_check_url": "https://www.instacart.com/products/16777525-newman-s-own-vinaigrette-honey-apple-cider-16-fl-oz"
   },
   {
     "index": "554118",
@@ -56592,8 +56848,12 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 851339714",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=cheesy+spinach+baozza+2+pack",
-    "serving": "1 Baozza"
+    "INSTACART_URL": "https://www.instacart.com/products/25003276-baozza-cheesy-spinach-pizza-snacks-2-ct",
+    "serving": "1 Baozza",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Baozza! Cheesy Spinach Baozza (",
+    "_instacart_check_url": "https://www.instacart.com/products/25003276-baozza-cheesy-spinach-pizza-snacks-2-ct"
   },
   {
     "index": "554132",
@@ -56617,8 +56877,12 @@
     "_active_check_reason": "walmart_domain_but_id_not_in_url",
     "_active_check_query": "site:walmart.com 45709488",
     "_active_check_url": "https://business.walmart.com/ip/Unique-Bargains-1-Pc-Seersucker-Stripes-Makeup-Bag-Black-White-Polyester/15473558129",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=louisa+cheese+ravioli",
-    "serving": "10 PIECES"
+    "INSTACART_URL": "https://www.instacart.com/products/3184078?retailerSlug=harps-food-store",
+    "serving": "10 PIECES",
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Louisa Food Products Louisa Cheese Ravioli",
+    "_instacart_check_url": "https://www.instacart.com/products/3184078?retailerSlug=harps-food-store"
   },
   {
     "BRAND": "Stouffer's",
@@ -56656,7 +56920,11 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Stouffer's Family and For Two sizes well from standard frozen aisle offerings.",
     "_gemini_recognized": true,
-    "_gemini_price_is_estimate": true
+    "_gemini_price_is_estimate": true,
+    "instacart_active": false,
+    "_instacart_check_reason": "no_search_results",
+    "_instacart_check_query": "site:www.instacart.com/products/ Stouffer's Stouffer's For Two Rigatoni With Italian Sausage Frozen EntrÃƒÂ©e",
+    "_instacart_check_url": null
   },
   {
     "BRAND": "Eggo",
@@ -56694,7 +56962,11 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Eggo Homestyle Waffles are a classic toaster item with standard nutrition and pricing.",
     "_gemini_recognized": true,
-    "_gemini_price_is_estimate": true
+    "_gemini_price_is_estimate": true,
+    "instacart_active": false,
+    "_instacart_check_reason": "no_search_results",
+    "_instacart_check_query": "site:www.instacart.com/products/ Eggo EggoÃ‚Â® Homestyle Waffles",
+    "_instacart_check_url": null
   },
   {
     "BRAND": "Eggo",
@@ -56732,7 +57004,11 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Familiar frozen breakfast product with typical sizing and calorie count.",
     "_gemini_recognized": true,
-    "_gemini_price_is_estimate": true
+    "_gemini_price_is_estimate": true,
+    "instacart_active": false,
+    "_instacart_check_reason": "no_search_results",
+    "_instacart_check_query": "site:www.instacart.com/products/ Eggo EggoÃ‚Â® Buttermilk Pancakes",
+    "_instacart_check_url": null
   },
   {
     "BRAND": "Tyson",
@@ -56753,7 +57029,7 @@
     "active": true,
     "calories": 270,
     "image_url": "https://static.wikia.nocookie.net/metroid/images/3/32/Tatori_and_Tatori_Jr..png/revision/latest?cb=20191015002002",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+chicken+nuggets",
+    "INSTACART_URL": "https://www.instacart.com/products/119509491-tyson-chicken-nuggets-1-lb",
     "index": "kroger-554136",
     "serving": "3.21 OZ SERVING",
     "tid": "",
@@ -56770,7 +57046,11 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Tyson frozen chicken nuggets in the large 29 oz bag are a very common Walmart staple.",
     "_gemini_recognized": true,
-    "_gemini_price_is_estimate": true
+    "_gemini_price_is_estimate": true,
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Tyson Tyson Frozen Chicken Nuggets",
+    "_instacart_check_url": "https://www.instacart.com/products/119509491-tyson-chicken-nuggets-1-lb"
   },
   {
     "BRAND": "Jimmy Dean",
@@ -56808,7 +57088,11 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Jimmy Dean Protein Breakfast Bowls are standard single-serve frozen breakfast items.",
     "_gemini_recognized": true,
-    "_gemini_price_is_estimate": true
+    "_gemini_price_is_estimate": true,
+    "instacart_active": false,
+    "_instacart_check_reason": "no_search_results",
+    "_instacart_check_query": "site:www.instacart.com/products/ Jimmy Dean Jimmy DeanÃ‚Â® Protein Breakfast Bowl Classic Sausage Bacon Cheese & Scrambled Egg Frozen",
+    "_instacart_check_url": null
   },
   {
     "BRAND": "Saffron Road",
@@ -56829,7 +57113,7 @@
     "active": true,
     "calories": 360,
     "image_url": "https://cdn.britannica.com/25/203625-050-64EDAEEE/Saffron-crocus-bloom-stigmas-flower-saffron-spice.jpg",
-    "INSTACART_URL": "https://www.instacart.com/categories/316-food/627-frozen-food/664-frozen-entrees/4191-frozen-indian-meals?brand=saffron-road",
+    "INSTACART_URL": "https://www.instacart.com/products/48223-saffron-road-gluten-free-chicken-tikka-masala-with-basmati-rice-frozen-dinner-10-0-oz?retailerSlug=kroger",
     "index": "kroger-554138",
     "serving": "1 Tray",
     "tid": "",
@@ -56846,7 +57130,11 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized well as a popular gluten-free frozen Indian meal frequently stocked at Walmart.",
     "_gemini_recognized": true,
-    "_gemini_price_is_estimate": true
+    "_gemini_price_is_estimate": true,
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Saffron Road Saffron RoadÃ‚Â® Chicken Tikka Masala with Basmati Rice Gluten-Free Indian",
+    "_instacart_check_url": "https://www.instacart.com/products/48223-saffron-road-gluten-free-chicken-tikka-masala-with-basmati-rice-frozen-dinner-10-0-oz?retailerSlug=kroger"
   },
   {
     "BRAND": "Kroger",
@@ -56884,7 +57172,11 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this Kroger frozen breakfast burrito multipack.",
     "_gemini_recognized": true,
-    "_gemini_price_is_estimate": true
+    "_gemini_price_is_estimate": true,
+    "instacart_active": false,
+    "_instacart_check_reason": "no_search_results",
+    "_instacart_check_query": "site:www.instacart.com/products/ Kroger KrogerÃ‚Â® Egg Potato Bacon and Cheese Burritos",
+    "_instacart_check_url": null
   },
   {
     "BRAND": "Kroger",
@@ -56922,7 +57214,11 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Familiar with the standard 24-count Kroger buttermilk waffles.",
     "_gemini_recognized": true,
-    "_gemini_price_is_estimate": true
+    "_gemini_price_is_estimate": true,
+    "instacart_active": false,
+    "_instacart_check_reason": "no_search_results",
+    "_instacart_check_query": "site:www.instacart.com/products/ Kroger KrogerÃ‚Â® Buttermilk Waffles",
+    "_instacart_check_url": null
   },
   {
     "BRAND": "Simple Truth",
@@ -56960,7 +57256,11 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Simple Truth organic frozen breakfast items.",
     "_gemini_recognized": true,
-    "_gemini_price_is_estimate": true
+    "_gemini_price_is_estimate": true,
+    "instacart_active": false,
+    "_instacart_check_reason": "no_search_results",
+    "_instacart_check_query": "site:www.instacart.com/products/ Simple Truth Simple TruthÃ‚Â® Protein Cinnamon French Toast Sticks",
+    "_instacart_check_url": null
   },
   {
     "BRAND": "Rao's",
@@ -56998,7 +57298,11 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Well-known premium frozen lasagna offering from Rao's.",
     "_gemini_recognized": true,
-    "_gemini_price_is_estimate": true
+    "_gemini_price_is_estimate": true,
+    "instacart_active": false,
+    "_instacart_check_reason": "no_search_results",
+    "_instacart_check_query": "site:www.instacart.com/products/ Rao's Rao'SÃ‚Â® Made For HomeÃ‚Â® Meat Lasagna",
+    "_instacart_check_url": null
   },
   {
     "BRAND": "Jimmy Dean",
@@ -57019,7 +57323,7 @@
     "active": true,
     "calories": 420,
     "image_url": "https://www.kroger.com/product/images/xlarge/front/0007790000169",
-    "INSTACART_URL": "https://www.instacart.com/products/29626434-jimmy-dean-maple-griddle-cake-sausage-egg-and-cheese-sandwiches",
+    "INSTACART_URL": "https://www.instacart.com/products/39966400-jimmy-dean-da-sweet-italian-sausage-1-each",
     "index": "kroger-554137",
     "serving": "1 sandwich",
     "tid": "",
@@ -57036,7 +57340,11 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Jimmy Dean maple griddle cake breakfast sandwiches.",
     "_gemini_recognized": true,
-    "_gemini_price_is_estimate": true
+    "_gemini_price_is_estimate": true,
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Jimmy Dean Jimmy Dean Sausage",
+    "_instacart_check_url": "https://www.instacart.com/products/39966400-jimmy-dean-da-sweet-italian-sausage-1-each"
   },
   {
     "BRAND": "Saffron Road",
@@ -57057,7 +57365,7 @@
     "active": true,
     "calories": 360,
     "image_url": "https://m.media-amazon.com/images/I/81UwGMLD1hL._SL1500_.jpg",
-    "INSTACART_URL": "https://www.instacart.com/categories/316-food/627-frozen-food/664-frozen-entrees/4189-frozen-asian-meals?brand=saffron-road",
+    "INSTACART_URL": "https://www.instacart.com/products/48226-saffron-road-gluten-free-chicken-pad-thai-w-rice-noodles-frozen-dinner-halal-11-oz?retailerSlug=kroger",
     "index": "kroger-554138",
     "serving": "2 oz",
     "tid": "",
@@ -57074,7 +57382,11 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Familiar with Saffron Road frozen meals and their Pad Thai.",
     "_gemini_recognized": true,
-    "_gemini_price_is_estimate": true
+    "_gemini_price_is_estimate": true,
+    "instacart_active": true,
+    "_instacart_check_reason": "ok",
+    "_instacart_check_query": "site:www.instacart.com/products/ Saffron Road Saffron RoadÃ‚Â® Chicken Pad Thai with Rice Noodles Gluten-Free Thai",
+    "_instacart_check_url": "https://www.instacart.com/products/48226-saffron-road-gluten-free-chicken-pad-thai-w-rice-noodles-frozen-dinner-halal-11-oz?retailerSlug=kroger"
   },
   {
     "BRAND": "El Monterey",
@@ -57112,6 +57424,10 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize El Monterey single/small multi-pack beef enchiladas.",
     "_gemini_recognized": true,
-    "_gemini_price_is_estimate": true
+    "_gemini_price_is_estimate": true,
+    "instacart_active": false,
+    "_instacart_check_reason": "no_search_results",
+    "_instacart_check_query": "site:www.instacart.com/products/ El Monterey El MontereyÃ‚Â® Signature Frozen EntrÃƒÂ©e Beef Enchiladas",
+    "_instacart_check_url": null
   }
 ]
