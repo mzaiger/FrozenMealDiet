@@ -7,7 +7,7 @@ on:
     # drift by an hour during DST -- still 6 evenly-spaced runs a day.
     # 10 items/call x 10 calls/run x 6 runs/day = 600 items/day, so the
     # ~1800-item pool gets a full refresh pass roughly every 3 days.
-    - cron: "0 0 * * 2"
+    - cron: "0 */4 * * *"
   workflow_dispatch:
     inputs:
       items_per_call:
