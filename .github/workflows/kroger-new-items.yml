@@ -44,6 +44,7 @@ jobs:
           KROGER_CLIENT_SECRET: ${{ secrets.KROGER_CLIENT_SECRET }}
           SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
+          USDA_API_KEY: ${{ secrets.USDA_API_KEY }}
         run: |
           python kroger_new_items.py \
             --max-new-items "${{ github.event.inputs.max_new_items || 20 }}"
