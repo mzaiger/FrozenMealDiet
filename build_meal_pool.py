@@ -42,8 +42,31 @@ def clean_product_name(raw_name):
     return cleaned.strip()
 
 
+def clean_serving_text(raw):
+    """Cleans a USDA-sourced serving-size string. Some branded-food
+    labels write the serving size AND how-many-servings-are-in-the-
+    container into the same field, e.g. "2.71 OZ SERVING, 36 Servings
+    Per Container" -- that trailing ", N Servings Per Container" clause
+    is a different fact (container count, not serving amount) and gets
+    dropped, along with a bare "Per Serving"/"Per Container" boilerplate
+    suffix some labels tack on. Returns "N/A" if what's left has no
+    actual amount in it at all (e.g. bare "Amount")."""
+    if raw is None:
+        return None
+    text = str(raw).strip()
+    if not text or text.upper() == "N/A":
+        return text or "N/A"
+    text = re.split(r",\s*(?:about\s+)?[\d.]+\s*servings?\s+per\s+container", text, flags=re.I)[0]
+    text = re.sub(r"\s*per\s+serving\s*$", "", text, flags=re.I)
+    text = re.sub(r"\s*per\s+container\s*$", "", text, flags=re.I)
+    text = text.strip().rstrip(",").strip()
+    if text and not re.search(r"\d", text):
+        return "N/A"
+    return text or "N/A"
+
+
 def fetch_usda_info(product_name, max_retries=3):
-    """Queries the USDA FDC API for product calorie and servings per container information with retry logic."""
+    """Queries the USDA FDC API for product calorie and serving-size information with retry logic."""
     cleaned_query = clean_product_name(product_name)
     if not cleaned_query:
         return "N/A", "N/A"
@@ -68,18 +91,12 @@ def fetch_usda_info(product_name, max_retries=3):
 
             best = foods[0]
 
-            # Check top-level fields & fallbacks for servings
-            servings = (
-                best.get("servingsPerContainer") 
-                or best.get("householdServingFullText")
-                or best.get("packageWeight")
-            )
-
-            if not servings:
-                label_nutrients = best.get("labelNutrients") or {}
-                servings = label_nutrients.get("servingsPerContainer", {}).get("value")
-
-            formatted_servings = str(servings).strip() if servings is not None else "N/A"
+            # Amount of ONE serving ("1 cup", "0.25 pizza") -- deliberately
+            # preferred over the raw servingsPerContainer COUNT, which is a
+            # different fact (how many servings are in the container, not
+            # the size of one) and was wrongly being tried first before.
+            servings = best.get("householdServingFullText") or best.get("packageWeight")
+            formatted_servings = clean_serving_text(str(servings).strip()) if servings else "N/A"
 
             # Check calories
             serving_size = best.get("servingSize")
@@ -125,11 +142,11 @@ def process_row(row):
     """Processes each row using exact header fields from frozen_food.csv."""
     product_name = row.get("PRODUCT_NAME", "")
 
-    calories, servings_per_container = fetch_usda_info(product_name)
+    calories, serving = fetch_usda_info(product_name)
 
     updated_row = dict(row)
     updated_row["calories"] = calories
-    updated_row["servings_per_container"] = servings_per_container
+    updated_row["serving"] = serving
 
     return updated_row
 

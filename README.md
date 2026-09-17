@@ -41,6 +41,40 @@ Two ways, without touching code:
    `cron:` line). The `workflow_dispatch:` trigger, if left in place,
    still lets you run it manually from the Actions tab.
 
+## Today's session (Sept 17, 2026)
+
+Finished the two pieces left from the Instacart-active work:
+
+1. **`kroger_new_items.py` now verifies Instacart for real**, via a new
+   `find_instacart_listing()` (searches `instacart <brand> <product
+   name>` via Serper, scans every result for the first one on
+   instacart.com — same multi-result technique `find_walmart_listing()`
+   already uses for Walmart, not just the top hit). A confirmed match
+   sets `INSTACART_URL` to the real link and `instacart_active: true`;
+   no match falls back to the guessed search-results URL (from
+   `build_instacart_search_url()`) with `instacart_active: false`. This
+   never gates whether an item gets added — Walmart is still the hard
+   requirement for that, same as before.
+2. **`index.html` eligibility + link visibility.** The pool filter used
+   to just drop confirmed-dead Walmart links (`active !== false`,
+   letting anything unverified through); it now requires a genuinely
+   confirmed source — `getMealActive(item) || getMealInstacartActive(item)`
+   — so an item needs Walmart active, Instacart active, or both, not
+   merely "not known to be dead." Each "View on..." link is now shown
+   independently based on its own source's active flag, not just
+   whether that URL field happens to be populated — an item eligible via
+   Instacart alone (Walmart inactive) shows only the Instacart link, and
+   vice versa. `compactMeal()` now persists both `active` and
+   `instacart_active` so this survives a page refresh and the
+   saved-weeks feature, the same fix that was needed for `INSTACART_URL`
+   itself last session.
+   Deploying this changes nothing immediately — checked against the real
+   pool, both the old and new filter currently produce exactly 828
+   eligible items, since no existing row has `instacart_active` set yet.
+   It'll start surfacing more eligible items once `check_instacart_urls.py`
+   is actually run against the live pool (still pending — needs to be
+   run with a real `SERPER_API_KEY`, not something doable from here).
+
 ## Today's session (Sept 13, 2026)
 
 Built out the Gemini-based calorie/price lookup as a new leg of the pool,

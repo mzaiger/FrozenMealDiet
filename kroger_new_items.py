@@ -40,6 +40,14 @@ Pipeline per candidate product:
      debug metadata -- "_walmart_url_slug_name" -- not used as
      PRODUCT_NAME, since some slugs are truncated/abbreviated versions of
      the real name; see step 4.)
+  2.5. Serper.dev again (instacart <brand> <product name>) via
+     find_instacart_listing() -- same multi-result-scanning technique as
+     step 2, just checking for instacart.com instead of walmart.com. A
+     confirmed match sets INSTACART_URL to the real link and
+     instacart_active=true; no match falls back to a guessed
+     search-results URL (build_instacart_search_url()) with
+     instacart_active=false. Never a gate on whether the item gets
+     added -- only step 2's Walmart match is.
   3. DuckDuckGo Images (same technique as AddImageUrl.py) -> image_url.
      Any result hosted on a trusted retailer domain (Walmart, Kroger, or
      Amazon -- see TRUSTED_IMAGE_DOMAINS) is preferred over anything
@@ -48,28 +56,38 @@ Pipeline per candidate product:
      a problem, so a real product-photo page from one of those three
      retailers is used whenever one shows up, and only falls back to
      whatever else was found if none of them do.
+  3.5. USDA FoodData Central (fetch_usda_serving(), same technique
+     build_meal_pool.py uses) -> "serving" -- the amount of ONE serving
+     ("1 cup", "0.25 pizza"), never the count of servings in the
+     container, which is a different fact USDA sometimes bundles into
+     the same text (cleaned out by clean_serving_text()). Best-effort:
+     "N/A" if USDA has no match, same as some of the original 2022 pool
+     rows -- this never blocks an item from being added (see step 4).
   4. Gemini, no search (same model chain/behavior as
-     gemini_meal_lookup.py) -> calories, price estimate, servings text.
-     PRODUCT_NAME, the DDG image search query, and this Gemini prompt all
-     use Kroger's own product description as the name (not the
-     Walmart-URL-slug version tried in step 2 -- see above). Gemini is
-     also allowed a fallback "sku_guess" ONLY for items where step 2
-     found a real Walmart link but the SKU couldn't be parsed out of the
-     URL -- that guess is stored as SKU but flagged with
-     "_sku_is_estimate": true so it's never mistaken for a verified one.
-     If Gemini doesn't recognize the product, or recognizes it but is
-     missing calories, price, OR servings_per_container, the item is
-     dropped -- no partially-filled nutrition/price data gets added.
+     gemini_meal_lookup.py) -> calories and a price estimate. Serving
+     size is NOT asked of Gemini -- that's step 3.5's job now. PRODUCT_NAME,
+     the DDG image search query, and this Gemini prompt all use Kroger's
+     own product description as the name (not the Walmart-URL-slug
+     version tried in step 2 -- see above). Gemini is also allowed a
+     fallback "sku_guess" ONLY for items where step 2 found a real
+     Walmart link but the SKU couldn't be parsed out of the URL -- that
+     guess is stored as SKU but flagged with "_sku_is_estimate": true so
+     it's never mistaken for a verified one. If Gemini doesn't recognize
+     the product, or recognizes it but is missing calories OR price, the
+     item is dropped -- no partially-filled nutrition/price data gets
+     added.
   5. An INSTACART_URL is built from that same Kroger product name, so
      there's a shoppable link even for products where the exact Walmart
      SKU is the only thing pinned down by step 2.
 
 An item is only appended to the pool if step 2 (a real Walmart URL, and
 its SKU isn't already active in the pool), step 3 (an image), AND step 4
-(Gemini recognized it AND returned calories, price, and
-servings_per_container -- all three, not just some) all succeeded.
-Missing any one of those -> the candidate is skipped entirely, not added
-half-filled.
+(Gemini recognized it AND returned both calories and price) all
+succeeded. Missing any one of those -> the candidate is skipped
+entirely, not added half-filled. Step 3.5's "serving" is the one
+exception -- a genuine USDA miss becomes "N/A" rather than blocking the
+item, since that's a real answer from an authoritative source, not an
+unreliable guess.
 
 New records get "active": True -- Serper.dev already confirmed a live
 walmart.com page exists for the UPC before a record is ever assembled
@@ -88,6 +106,9 @@ Env vars required:
     SERPER_API_KEY                          -- serper.dev (same key
                                                 check_walmart_links.py uses)
     GEMINI_KEY                              -- Gemini calorie/price/sku fill-in
+    USDA_API_KEY                            -- USDA FoodData Central (same key
+                                                build_meal_pool.py uses), for
+                                                "serving" only, not calories
 If any are missing, the run is skipped entirely (exit 0), same pattern
 as gemini_meal_lookup.py.
 
@@ -532,6 +553,70 @@ def find_walmart_listing(candidate, api_key, cfg):
     }
 
 
+def find_instacart_listing(candidate, api_key, cfg):
+    """Searches 'instacart <brand> <product name>' via Serper.dev, scanning
+    every organic result for the first one on instacart.com -- same
+    multi-result technique as find_walmart_listing() above and
+    check_instacart_urls.py's standalone checker, rather than only
+    trusting whatever the top result happens to be. Returns a dict with
+    instacart_url (None if nothing matched) plus query/reason/top-result
+    metadata. This is a real verification, not a guess -- contrast with
+    build_instacart_search_url(), which just builds a plausible-looking
+    Instacart *search-results* URL from the product name without
+    confirming anything actually shows up there."""
+    query = re.sub(r"\s+", " ", f"instacart {candidate['brand']} {candidate['description']}").strip()
+    endpoint = cfg["serper"]["endpoint"]
+    timeout = cfg["serper"]["timeout_seconds"]
+    max_retries = cfg["serper"]["max_retries"]
+    retry_delay = cfg["serper"]["retry_delay_seconds"]
+
+    last_error = None
+    data = None
+    for attempt in range(max_retries + 1):
+        try:
+            resp = requests.post(
+                endpoint,
+                headers={"X-API-KEY": api_key, "Content-Type": "application/json"},
+                json={"q": query, "num": 5},
+                timeout=timeout,
+            )
+            if resp.status_code in (401, 403):
+                return {
+                    "instacart_url": None, "query": query,
+                    "reason": f"auth_error: check SERPER_API_KEY (status {resp.status_code})",
+                    "top_result_url": None,
+                }
+            resp.raise_for_status()
+            data = resp.json()
+            break
+        except requests.RequestException as e:
+            last_error = str(e)
+            if attempt < max_retries:
+                time.sleep(retry_delay)
+
+    if data is None:
+        return {
+            "instacart_url": None, "query": query,
+            "reason": f"request_failed: {last_error}", "top_result_url": None,
+        }
+
+    organic = data.get("organic") or []
+    if not organic:
+        return {"instacart_url": None, "query": query, "reason": "no_search_results", "top_result_url": None}
+
+    top_result_url = organic[0].get("link", "")
+    for result in organic:
+        url = result.get("link", "")
+        netloc = urlparse(url).netloc.lower().split(":")[0]
+        if netloc == "instacart.com" or netloc.endswith(".instacart.com"):
+            return {"instacart_url": url, "query": query, "reason": "ok", "top_result_url": top_result_url}
+
+    return {
+        "instacart_url": None, "query": query,
+        "reason": "no_instacart_result_in_top_results", "top_result_url": top_result_url,
+    }
+
+
 # ---------------------------------------------------------------------------
 # Step 3: DuckDuckGo image lookup (same technique as AddImageUrl.py)
 # ---------------------------------------------------------------------------
@@ -602,7 +687,96 @@ def search_image(ddgs, query, cfg):
 
 
 # ---------------------------------------------------------------------------
-# Step 4: Gemini calories/price/servings (+ fallback sku_guess) fill-in
+# Step 3.5: USDA serving-size lookup (calories still come from Gemini below --
+# this is only for the "serving" field)
+# ---------------------------------------------------------------------------
+
+def clean_usda_query_name(raw_name):
+    """Same cleanup build_meal_pool.py's clean_product_name() does:
+    strips trailing size/count descriptors and stray punctuation so the
+    USDA search gets a cleaner query."""
+    if not raw_name:
+        return ""
+    cleaned = re.sub(r",?\s*Frozen Meals.*", "", raw_name, flags=re.IGNORECASE)
+    cleaned = re.sub(r",?\s*\d+(\.\d+)?\s*(oz|ct|count|g|lb).*", "", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"\b\d+\s+\d+/\d+\s*(ounce|oz|lb)?\b", "", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"\b\d+/\d+\s*(ounce|oz|lb)?\b", "", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"[/,.'\"]", " ", cleaned)
+    cleaned = re.sub(r"\s+", " ", cleaned)
+    return cleaned.strip()
+
+
+def clean_serving_text(raw):
+    """Cleans a USDA-sourced serving-size string. Some branded-food
+    labels write the serving size AND how-many-servings-are-in-the-
+    container into the same field, e.g. "2.71 OZ SERVING, 36 Servings
+    Per Container" -- that trailing ", N Servings Per Container" clause
+    is a different fact (container count, not serving amount) and gets
+    dropped, along with a bare "Per Serving"/"Per Container" boilerplate
+    suffix some labels tack on. Returns "N/A" if what's left has no
+    actual amount in it at all (e.g. bare "Amount")."""
+    if raw is None:
+        return None
+    text = str(raw).strip()
+    if not text or text.upper() == "N/A":
+        return text or "N/A"
+    text = re.split(r",\s*(?:about\s+)?[\d.]+\s*servings?\s+per\s+container", text, flags=re.I)[0]
+    text = re.sub(r"\s*per\s+serving\s*$", "", text, flags=re.I)
+    text = re.sub(r"\s*per\s+container\s*$", "", text, flags=re.I)
+    text = text.strip().rstrip(",").strip()
+    if text and not re.search(r"\d", text):
+        return "N/A"
+    return text or "N/A"
+
+
+def fetch_usda_serving(product_name, usda_api_key, cfg):
+    """Looks up a product's serving-size TEXT -- the amount of ONE
+    serving ("1 cup", "0.25 pizza", "3 oz"), not how many servings are
+    in the container -- from the USDA FoodData Central Branded Foods
+    database. Same search endpoint/technique as build_meal_pool.py's
+    fetch_usda_info(), but only for this one field: calories still come
+    from Gemini in this script (see step 4), not from USDA. Deliberately
+    prefers "householdServingFullText" (the descriptive amount) over the
+    bare "servingsPerContainer" count field, which is a different fact.
+    Returns "N/A" if nothing usable is found or the request fails."""
+    query = clean_usda_query_name(product_name)
+    if not query:
+        return "N/A"
+
+    timeout = cfg["usda"]["timeout_seconds"]
+    max_retries = cfg["usda"]["max_retries"]
+    retry_delay = cfg["usda"]["retry_delay_seconds"]
+
+    foods = None
+    for attempt in range(max_retries + 1):
+        try:
+            resp = requests.get(
+                "https://api.nal.usda.gov/fdc/v1/foods/search",
+                params={"api_key": usda_api_key, "query": query, "dataType": "Branded", "pageSize": 5},
+                timeout=timeout,
+            )
+            resp.raise_for_status()
+            foods = resp.json().get("foods") or []
+            break
+        except (requests.RequestException, ValueError):
+            if attempt < max_retries:
+                time.sleep(retry_delay)
+
+    if not foods:
+        return "N/A"
+
+    best = foods[0]
+    serving = best.get("householdServingFullText")
+    if not serving:
+        size, unit = best.get("servingSize"), best.get("servingSizeUnit")
+        if size and unit:
+            serving = f"{size} {unit}"
+
+    return clean_serving_text(serving) if serving else "N/A"
+
+
+# ---------------------------------------------------------------------------
+# Step 4: Gemini calories/price (+ fallback sku_guess) fill-in
 # ---------------------------------------------------------------------------
 
 _JSON_ARRAY_RE = re.compile(r"\[.*\]", re.DOTALL)
@@ -682,23 +856,25 @@ def normalize_gemini_result(raw):
         "recognized": bool(raw.get("recognized")),
         "calories": calories,
         "price": price,
-        "servings_per_container": (str(raw.get("servings_per_container")).strip()
-                                    if raw.get("servings_per_container") else None),
         "sku_guess": sku_guess,
         "notes": str(raw.get("notes", "")).strip(),
     }
 
 
 def gemini_result_is_complete(result):
-    """True only if Gemini recognized the product AND returned all three
-    of calories/price/servings_per_container -- not just some of them.
-    A candidate with no result, or an incomplete one, doesn't get added."""
+    """True only if Gemini recognized the product AND returned both
+    calories and price -- not just one of them. (Serving size is
+    sourced from USDA now, not Gemini -- see fetch_usda_serving() --
+    and isn't part of this gate: a real "not found in USDA" is treated
+    as an acceptable N/A, not a reason to drop an otherwise-good item,
+    the same way the original 2022 pool already tolerates N/A servings
+    for some rows.) A candidate with no result, or an incomplete one,
+    doesn't get added."""
     return (
         result is not None
         and result["recognized"]
         and result["calories"] is not None
         and result["price"] is not None
-        and result["servings_per_container"] is not None
     )
 
 
@@ -838,7 +1014,7 @@ def build_instacart_search_url(text):
 
 
 def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
-                       gemini_result, gemini_model, idx, run_date):
+                       gemini_result, gemini_model, serving_text, instacart_result, idx, run_date):
     sku = walmart["sku"]
     sku_is_estimate = False
     if not sku and gemini_result and gemini_result.get("sku_guess"):
@@ -848,13 +1024,13 @@ def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
     categories = candidate["categories"]
     price = gemini_result["price"] if gemini_result and gemini_result["recognized"] else None
     calories = gemini_result["calories"] if gemini_result and gemini_result["recognized"] else None
-    servings = gemini_result["servings_per_container"] if gemini_result and gemini_result["recognized"] else None
 
     # PRODUCT_NAME comes straight from Kroger -- the Walmart-URL-slug
     # version was tried instead for a while, but some slugs are
     # truncated/abbreviated versions of the real name, so Kroger's own
     # (generally fuller) description is what's used here, for DDG image
-    # search, and for the Gemini calories/price/servings prompt.
+    # search, and for the Gemini calories/price prompt. "serving" comes
+    # from USDA (fetch_usda_serving()), not from Gemini or Kroger.
     product_name = candidate["description"]
 
     record = {
@@ -883,9 +1059,14 @@ def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
                           # instead of waiting on a check that mostly won't run.
         "calories": calories if calories is not None else "N/A",
         "image_url": image_url,
-        "INSTACART_URL": build_instacart_search_url(product_name),
+        # A real Serper-confirmed match (see find_instacart_listing) is
+        # preferred; the guessed search-results URL is only a fallback
+        # for when nothing was confirmed, so there's still SOME link.
+        "INSTACART_URL": (instacart_result["instacart_url"] if instacart_result and instacart_result["instacart_url"]
+                           else build_instacart_search_url(product_name)),
+        "instacart_active": bool(instacart_result and instacart_result["instacart_url"]),
         "index": f"kroger-{idx}",
-        "servings_per_container": servings or "N/A",
+        "serving": serving_text or "N/A",
         "tid": "",
         # Provenance metadata -- "SOURCE" above is the human-readable
         # column; these _-prefixed fields are the detail behind it, kept
@@ -895,6 +1076,9 @@ def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
         "_serper_query": walmart["query"],
         "_serper_reason": walmart["reason"],
         "_serper_top_result_url": walmart["top_result_url"],
+        "_instacart_check_query": instacart_result["query"] if instacart_result else None,
+        "_instacart_check_reason": instacart_result["reason"] if instacart_result else None,
+        "_instacart_check_url": instacart_result["top_result_url"] if instacart_result else None,
         "_image_search_query": image_query,
         "_image_search_reason": image_reason,
         "_sku_is_estimate": sku_is_estimate,
@@ -930,10 +1114,12 @@ def main():
     kroger_secret = os.environ.get("KROGER_CLIENT_SECRET")
     serper_key = os.environ.get("SERPER_API_KEY")
     gemini_key = os.environ.get("GEMINI_KEY")
+    usda_key = os.environ.get("USDA_API_KEY")
 
     missing = [name for name, val in [
         ("KROGER_CLIENT_ID", kroger_id), ("KROGER_CLIENT_SECRET", kroger_secret),
         ("SERPER_API_KEY", serper_key), ("GEMINI_KEY", gemini_key),
+        ("USDA_API_KEY", usda_key),
     ] if not val]
     if missing:
         log(f"Missing env var(s) {', '.join(missing)} -- skipping kroger_new_items run.")
@@ -1006,7 +1192,27 @@ def main():
         # save_pool() below. Every loop from here on is a harmless no-op
         # over an empty `enriched`.
 
-    # --- Step 4: Gemini, batched, for calories/price/servings (+ sku_guess
+    # --- Step 2.5: Instacart verification, one Serper call per candidate
+    # that made it into `enriched` -- real search-result confirmation,
+    # not just a guessed search-results URL. Never a gate on whether the
+    # item gets added (that's Walmart's job, via active_skus above); a
+    # candidate with no Instacart match just gets instacart_active=False
+    # and falls back to the guessed URL for INSTACART_URL. ---
+    instacart_by_upc = {}
+    for c, *_rest in enriched:
+        instacart_by_upc[c["upc"]] = find_instacart_listing(c, serper_key, cfg)
+
+    # --- Step 3.5: USDA serving-size lookup, one call per candidate that
+    # made it into `enriched` -- independent of Gemini/calories, and not
+    # a gate on whether the item gets added (a genuine "not found in
+    # USDA" becomes "N/A", same as the original 2022 pool already
+    # tolerates for some rows, rather than blocking the item). ---
+    usda_serving_by_upc = {}
+    for c, *_rest in enriched:
+        usda_serving_by_upc[c["upc"]] = fetch_usda_serving(c["description"], usda_key, cfg)
+        time.sleep(cfg["usda"]["min_call_interval_seconds"])
+
+    # --- Step 4: Gemini, batched, for calories/price (+ sku_guess
     # only where step 2 found a link but couldn't parse a SKU out of it). ---
     items_per_call = cfg["batch"]["items_per_call"]
     rate_limiter = _RateLimiter(cfg["gemini"]["min_call_interval_seconds"])
@@ -1032,9 +1238,9 @@ def main():
                 gemini_results_by_upc[entry[0]["upc"]] = result
 
     # --- Assemble + append records. Only candidates with a COMPLETE
-    # Gemini result (recognized, and calories + price + servings all
-    # present) make it in -- everything else is dropped, not added with
-    # gaps. ---
+    # Gemini result (recognized, and calories + price both present) make
+    # it in -- everything else is dropped, not added with gaps. Serving
+    # (from USDA, above) is best-effort and never gates this. ---
     idx = next_index(pool)
     run_date = datetime.now(timezone.utc).isoformat()
     added = 0
@@ -1045,25 +1251,26 @@ def main():
         if not gemini_result_is_complete(gemini_result):
             skipped_incomplete += 1
             reason = (gemini_result["notes"] if gemini_result and gemini_result["notes"]
-                       else "not recognized or missing calories/price/servings")
+                       else "not recognized or missing calories/price")
             log(f"  SKIP (incomplete Gemini result): {c['brand']} {c['description']} -- {reason}")
             continue
 
         idx += 1
         record = build_pool_record(
             c, walmart, image_url, image_query, image_reason,
-            gemini_result, gemini_model_used, idx, run_date,
+            gemini_result, gemini_model_used, usda_serving_by_upc.get(c["upc"]),
+            instacart_by_upc.get(c["upc"]), idx, run_date,
         )
         pool.append(record)
         added += 1
         sku_note = " (estimated SKU)" if record["_sku_is_estimate"] else ""
         log(f"  ADDED: {record['PRODUCT_NAME']} -- SKU {record['SKU']}{sku_note}, "
             f"calories={record['calories']}, price={record['PRICE_CURRENT']}, "
-            f"servings={record['servings_per_container']}")
+            f"serving={record['serving']}")
 
     if skipped_incomplete:
         log(f"{skipped_incomplete} candidate(s) had a Walmart link + image but no complete "
-            f"Gemini calories/price/servings -- not added.")
+            f"Gemini calories/price -- not added.")
 
     save_pool(pool_path, pool)
     log(f"Done. Added {added} new item(s), tagged {skus_tagged} existing item(s) with a newly "
