@@ -341,10 +341,6 @@
 
   .meal-view-link{
     margin-top:3px;
-  }
-
-  .meal-view-link-row{
-    line-height:1.3;
     white-space:nowrap;
   }
 
@@ -649,11 +645,9 @@ function compactMeal(meal){
     name: meal.PRODUCT_NAME || meal.name || 'Unnamed item',
     calories: getMealCalories(meal),
     price: getMealPriceNumber(meal) || null,
-    serving: getMealServingsPerContainer(meal),
+    servings: getMealServingsPerContainer(meal),
     url: getMealUrl(meal),
-    active: getMealActive(meal),
     instacart: getMealInstacartUrl(meal) || null,
-    instacart_active: getMealInstacartActive(meal),
     image: getMealImage(meal) || null
   };
 }
@@ -768,8 +762,6 @@ function getMealCalories(meal){
 }
 
 function getMealServingsPerContainer(meal){
-  if(meal.serving) return meal.serving;
-  if(meal.SERVING) return meal.SERVING;
   if(meal.SERVINGS_PER_CONTAINER) return meal.SERVINGS_PER_CONTAINER;
   if(meal.servings_per_container) return meal.servings_per_container;
   if(meal.servings) return meal.servings;
@@ -790,22 +782,8 @@ function getMealUrl(meal){
   return meal.PRODUCT_URL || meal.product_url || meal.url || (meal.open_food_facts ? meal.open_food_facts.url : '');
 }
 
-function getMealActive(meal){
-  // Walmart's own active flag -- true only if explicitly true (compact
-  // form and the raw pool both use real booleans, never a truthy
-  // string), so an unset/unknown value reads as "not confirmed active"
-  // here, same treatment as instacart_active below.
-  return meal.active === true;
-}
-
 function getMealInstacartUrl(meal){
   return meal.INSTACART_URL || meal.instacart_url || meal.instacart || '';
-}
-
-function getMealInstacartActive(meal){
-  if(typeof meal.instacart_active === 'boolean') return meal.instacart_active;
-  if(typeof meal.INSTACART_ACTIVE === 'boolean') return meal.INSTACART_ACTIVE;
-  return false;
 }
 
 function getMealImage(meal){
@@ -848,13 +826,10 @@ async function loadPool(){
     let items = Array.isArray(rawData) ? rawData : (rawData.general || []);
 
     const totalCount = items.length;
-    // Eligible only if EITHER source is confirmed active -- Walmart
-    // (item.active === true) OR Instacart (instacart_active === true).
-    // Previously this only dropped confirmed-dead Walmart links and let
-    // anything unverified through; now that Instacart has its own
-    // verified active flag, an item needs at least one real confirmed
-    // source rather than just "not known to be dead".
-    items = items.filter(item => getMealActive(item) || getMealInstacartActive(item));
+    // Drop confirmed-dead links (active === false). Items that are still
+    // unchecked (active === null/undefined) stay eligible — only a
+    // confirmed dead result excludes them.
+    items = items.filter(item => item.active !== false);
     const deadCount = totalCount - items.length;
 
     // Anything under this is too small to count as a real meal.
@@ -877,7 +852,7 @@ async function loadPool(){
       PRODUCT_NAME: 'N/A',
       calories: 400,
       PRICE_CURRENT: 0,
-      serving: 'N/A'
+      SERVINGS_PER_CONTAINER: 'N/A'
     }];
 
     pool = {
@@ -1056,9 +1031,7 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
   const row = document.createElement('div');
   row.className = 'meal-row';
   const url = getMealUrl(meal);
-  const walmartActive = getMealActive(meal);
   const instacartUrl = getMealInstacartUrl(meal);
-  const instacartActive = getMealInstacartActive(meal);
   const image = getMealImage(meal);
   const calories = getMealCalories(meal);
   const servingsPerContainer = getMealServingsPerContainer(meal);
@@ -1068,18 +1041,14 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
 
   const nameHtml = name;
 
-  // Only a CONFIRMED active source gets a link shown -- an item can be
-  // eligible for the pool via one source (see loadPool()'s filter) while
-  // still being inactive on the other, so each link is gated on its own
-  // flag rather than just "does this URL field happen to have a value".
-  const walmartLinkHtml = (url && walmartActive)
-    ? `<div class="meal-view-link-row"><a class="meal-link" href="${url}" target="_blank" rel="noopener noreferrer">View on walmart.com &rarr;</a></div>`
+  const walmartLinkHtml = url
+    ? `<a class="meal-link" href="${url}" target="_blank" rel="noopener noreferrer">View on walmart.com &rarr;</a><br/>`
     : '';
-  const instacartLinkHtml = (instacartUrl && instacartActive)
-    ? `<div class="meal-view-link-row"><a class="meal-link meal-link-instacart" href="${instacartUrl}" target="_blank" rel="noopener noreferrer">View on Instacart &rarr;</a></div>`
+  const instacartLinkHtml = instacartUrl
+    ? `<a class="meal-link meal-link-instacart" href="${instacartUrl}" target="_blank" rel="noopener noreferrer">View on Instacart &rarr;</a>`
     : '';
   const viewLink = (walmartLinkHtml || instacartLinkHtml)
-    ? `<div class="meal-view-link">${walmartLinkHtml}${instacartLinkHtml}</div>`
+    ? `<div class="meal-view-link">${walmartLinkHtml}${walmartLinkHtml && instacartLinkHtml ? '' : ''}${instacartLinkHtml}</div>`
     : '';
 
   const thumbImg = image
