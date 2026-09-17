@@ -5576,7 +5576,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Amy's Mexican Casserole bowl packaging and profile.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+non+gmo+mexican+casserole+bowl"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+mexican+casserole+bowl"
   },
   {
     "index": "319109",
@@ -5704,7 +5704,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this popular gluten-free frozen meal by Amy's and its typical price range.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+gluten+free+non+gmo+cheese+enchilada"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+cheese+enchilada"
   },
   {
     "index": "319116",
@@ -6433,7 +6433,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Amy's Broccoli & Cheddar Bake Bowl and its standard pricing and nutrition info.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+non+gmo+broccoli+cheddar+bake+bowl"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+broccoli+cheddar+bake+bowl"
   },
   {
     "index": "319309",
@@ -6721,7 +6721,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Familiar with Yummy Dino Buddies gluten-free dinosaur-shaped nuggets.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=yummy+dino+buddies+gluten+free+chicken+breast+nuggets"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=yummy+dino+buddies+chicken+breast+nuggets"
   },
   {
     "index": "319316",
@@ -7479,7 +7479,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Applegate gluten free chicken nuggets and their typical premium pricing.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=applegate+natural+gluten+free+chicken+nuggets"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=applegate+natural+chicken+nuggets"
   },
   {
     "index": "319359",
@@ -7952,7 +7952,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Amy's Gluten Free Bean & Rice Burrito and its standard retail price.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+gluten+free+bean+rice+burrito"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+bean+rice+burrito"
   },
   {
     "index": "319374",
@@ -8258,7 +8258,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Amy's frozen gluten-free enchilada meal is a common specialty dietary option.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+gluten+free+enchilada+with+spanish+rice+beans"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+enchilada+with+spanish+rice+beans"
   },
   {
     "index": "319386",
@@ -8347,7 +8347,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 118974234",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+gluten+free+non+gmo+chile+relleno+casserole+bowl"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+chile+relleno+casserole+bowl"
   },
   {
     "index": "319390",
@@ -8596,7 +8596,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 34701149",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=farm+rich+breaded+jalapeno+peppers+stuffed+with+1"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=farm+rich+breaded+jalapeno+peppers+stuffed+with"
   },
   {
     "index": "319414",
@@ -9037,7 +9037,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Amy's organic bowls are widely stocked at major retailers.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+non+gmo+3+cheese+kale+bake+bowl"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+3+cheese+kale+bake+bowl"
   },
   {
     "index": "319426",
@@ -9254,7 +9254,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this Daiya gluten-free vegan pizza well from standard frozen aisle offerings.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+cheeze+lover%27s+gluten+free+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+cheeze+lover%27s+pizza"
   },
   {
     "index": "319433",
@@ -9286,7 +9286,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Familiar with Amy's standard frozen burritos and their typical calorie counts.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+gluten+free+cheddar+cheese+burrito"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+cheddar+cheese+burrito"
   },
   {
     "index": "319434",
@@ -9688,7 +9688,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 123503179",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=saffron+road+gluten+free+chicken+tikka+masala+with+basmati+rice+frozen+dinner"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=saffron+road+chicken+tikka+masala+with+basmati+rice+frozen+dinner"
   },
   {
     "index": "319447",
@@ -9745,7 +9745,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 45067842",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+non+gmo+pesto+tortellini+bowl"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+pesto+tortellini+bowl"
   },
   {
     "index": "319493",
@@ -9841,7 +9841,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Amy's single-serve gluten-free bowls typically fall in the five-dollar range.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+gluten+free+chili+mac+bowl"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+chili+mac+bowl"
   },
   {
     "index": "319496",
@@ -9905,7 +9905,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Applegate natural gluten-free chicken tenders are a premium organic frozen item.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=applegate+natural+gluten+free+chicken+tenders"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=applegate+natural+chicken+tenders"
   },
   {
     "index": "319499",
@@ -10909,7 +10909,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Amy's cheese ravioli bowl and its typical single-serving calorie count.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+non+gmo+cheese+ravioli+with+sauce+bowl"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+cheese+ravioli+with+sauce+bowl"
   },
   {
     "index": "319531",
@@ -10966,7 +10966,7 @@
     "_active_check_reason": "walmart_domain_but_id_not_in_url",
     "_active_check_query": "site:walmart.com 47394233",
     "_active_check_url": "https://business.walmart.com/ip/Troglfold-Shelf-Support-Metal-Shelves-Cabinet-Shelf-Pegs-50pcs-Heavy-Duty-Shelving-0-79-X0-28-X0-28/15157460429",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=blake%27s+gluten+free+chicken+pot+pie"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=blake%27s+chicken+pot+pie"
   },
   {
     "index": "319565",
@@ -11368,7 +11368,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Amy's gluten-free mac and cheese is a standard frozen aisle item.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+gluten+free+non+gmo+rice+mac+cheese"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+rice+mac+cheese"
   },
   {
     "index": "319576",
@@ -11610,7 +11610,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Amy's Roasted Poblano Enchilada meal is a popular organic frozen option.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+non+gmo+roasted+poblano+enchilada"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+roasted+poblano+enchilada"
   },
   {
     "index": "319584",
@@ -11674,7 +11674,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I am familiar with Amy's Mattar Paneer and its standard nutritional profile and pricing.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+non+gmo+indian+mattar+paneer"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+indian+mattar+paneer"
   },
   {
     "index": "319588",
@@ -11706,7 +11706,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize Amy's Tofu Scramble breakfast bowl and its typical calorie count and price.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+gluten+free+non+gmo+tofu+scramble"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+tofu+scramble"
   },
   {
     "index": "319589",
@@ -12351,7 +12351,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Applegate gluten-free beef corn dogs are a common specialty frozen item.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=applegate+natural+gluten+free+uncured+beef+corn+dogs"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=applegate+natural+uncured+beef+corn+dogs"
   },
   {
     "index": "319649",
@@ -12376,7 +12376,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 137813514",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=saffron+road+gluten+free+chicken+biryani+with+basmati+rice"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=saffron+road+chicken+biryani+with+basmati+rice"
   },
   {
     "index": "319650",
@@ -12982,7 +12982,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 188292436",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+gluten+free+chicken+potstickers+with+tamari+dipping+sauce"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+chicken+potstickers+with+tamari+dipping+sauce"
   },
   {
     "index": "319670",
@@ -13317,7 +13317,7 @@
     "_active_check_reason": "walmart_domain_but_id_not_in_url",
     "_active_check_query": "site:walmart.com 47394232",
     "_active_check_url": "https://www.walmart.com/ip/Man-Arena-Theodore-Roosevelt-Quote-Graduation-Gift-Modern-Artwork-3-Wall-Art-Poster-Scroll-Canvas-Painting-Picture-Living-Room-Decor-Home-08x12inch-2/15359065380",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=blake%27s+all+natural+gluten+free+shepherd%27s+pie"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=blake%27s+all+natural+shepherd%27s+pie"
   },
   {
     "index": "319688",
@@ -13342,7 +13342,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 10789420",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+non+gmo+tortilla+casserole+black+beans+bowl"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+tortilla+casserole+black+beans+bowl"
   },
   {
     "index": "319686",
@@ -13777,7 +13777,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 48575075",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+gluten+free+lasagna+with+meat+sauce"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+lasagna+with+meat+sauce"
   },
   {
     "index": "319700",
@@ -13859,7 +13859,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Feel Good Foods gluten-free egg rolls packaging and typical price point.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+gluten+free+chicken+egg+rolls"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+chicken+egg+rolls"
   },
   {
     "index": "319705",
@@ -13916,7 +13916,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 753314637",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+gluten+free+uncured+pepperoni+snack+bites"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+uncured+pepperoni+snack+bites"
   },
   {
     "index": "319707",
@@ -13941,7 +13941,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 148651142",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+gluten+free+non+gmo+rice+mac+cheeze"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+rice+mac+cheeze"
   },
   {
     "index": "319709",
@@ -14761,7 +14761,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Familiar with Amy's Thai Red Curry bowl size, calorie range, and grocery pricing.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+vegan+dairy+and+gluten+free+thai+red+curry"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+vegan+dairy+and+thai+red+curry"
   },
   {
     "index": "319740",
@@ -14818,7 +14818,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Amy's Veggie Loaf meal packaging and estimated pricing.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+gluten+free+dairy+free+veggie+loaf+whole+meals"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+dairy+free+veggie+loaf+whole+meals"
   },
   {
     "index": "319741",
@@ -15121,7 +15121,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Grain Trust frozen fried rice bags and typical retail cost.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=grain+trust+gluten+free+hibachi+fried+rice"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=grain+trust+hibachi+fried+rice"
   },
   {
     "index": "319753",
@@ -15146,7 +15146,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 46104003",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+gluten+free+non+gmo+black+bean+vegetable+enchilada"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+black+bean+vegetable+enchilada"
   },
   {
     "index": "319754",
@@ -15681,7 +15681,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Amy's Country Cheddar Bowl is a standard organic frozen meal with familiar calorie and price points.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+non+gmo+country+cheddar+bowl"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+country+cheddar+bowl"
   },
   {
     "index": "319773",
@@ -15820,7 +15820,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 45067845",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+non+gmo+mushroom+risotto+bowl"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+mushroom+risotto+bowl"
   },
   {
     "index": "319781",
@@ -15984,7 +15984,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 104047986",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+gluten+free+vegetable+egg+rolls"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+vegetable+egg+rolls"
   },
   {
     "index": "319784",
@@ -16216,7 +16216,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 768980215",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=saffron+road+gluten+free+coconut+curry+chicken+with+basmati+rice+frozen+dinner"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=saffron+road+coconut+curry+chicken+with+basmati+rice+frozen+dinner"
   },
   {
     "index": "319796",
@@ -16291,7 +16291,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 128628644",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=saffron+road+gluten+free+chicken+pad+thai+with+rice+noodles+frozen+dinner"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=saffron+road+chicken+pad+thai+with+rice+noodles+frozen+dinner"
   },
   {
     "index": "319798",
@@ -16466,7 +16466,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 867148509",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+gluten+free+three+cheese+snack+bites"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+three+cheese+snack+bites"
   },
   {
     "index": "319805",
@@ -16516,7 +16516,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 157177927",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+gluten+free+pork+potstickers+with+tamari+dipping+sauce"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+pork+potstickers+with+tamari+dipping+sauce"
   },
   {
     "index": "319807",
@@ -16566,7 +16566,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 42556623",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=evol+gluten+free+chicken+enchilada+bake"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=evol+chicken+enchilada+bake"
   },
   {
     "index": "319808",
@@ -16691,7 +16691,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 193205387",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+gluten+free+vegetable+potstickers+with+tamari+dipping+sauce"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+vegetable+potstickers+with+tamari+dipping+sauce"
   },
   {
     "index": "319814",
@@ -16848,7 +16848,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 438393671",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+gluten+free+sausage+kale+mac+cheese+bites"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+sausage+kale+mac+cheese+bites"
   },
   {
     "index": "319820",
@@ -17080,7 +17080,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 916617621",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+gluten+free+uncured+bacon+cheddar+mini+pierogies"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+uncured+bacon+cheddar+mini+pierogies"
   },
   {
     "index": "319829",
@@ -17230,7 +17230,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 903044336",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+gluten+free+chicken+sausage+snack+bites"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=feel+good+foods+chicken+sausage+snack+bites"
   },
   {
     "index": "319835",
@@ -17405,7 +17405,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 724398850",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=saffron+road+gluten+free+chicken+biryani+with+basmati+rice+family+size+frozen+dinner"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=saffron+road+chicken+biryani+with+basmati+rice+family+size+frozen+dinner"
   },
   {
     "index": "319840",
@@ -17430,7 +17430,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 859266195",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=saffron+road+gluten+free+chicken+pad+thai+with+rice+noodles"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=saffron+road+chicken+pad+thai+with+rice+noodles"
   },
   {
     "index": "319843",
@@ -21493,7 +21493,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 961540114",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=caulipower+gluten+free+linguine+cauliflower+pasta"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=caulipower+linguine+cauliflower+pasta"
   },
   {
     "index": "330390",
@@ -21589,7 +21589,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Daiya gluten-free plant-based pizzas are a standard dairy-free option.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+fire+roasted+vegetable+gluten+free+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+fire+roasted+vegetable+pizza"
   },
   {
     "index": "330392",
@@ -21710,7 +21710,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Daiya Meatless Meat Lover's pizza is a recognized allergy-friendly frozen item.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+meatless+meat+lover%27s+gluten+free+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+meatless+meat+lover%27s+pizza"
   },
   {
     "index": "330403",
@@ -21824,7 +21824,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 638364431",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=caulipower+gluten+free+italian+sausage+vegetables+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=caulipower+italian+sausage+vegetables+pizza"
   },
   {
     "index": "330408",
@@ -21913,7 +21913,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 359680742",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=caulipower+gluten+free+pappardelle+cauliflower+pasta"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=caulipower+pappardelle+cauliflower+pasta"
   },
   {
     "index": "330413",
@@ -22009,7 +22009,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Freschetta Gluten Free Four Cheese Pizza and its standard frozen aisle price.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=freschetta+gluten+free+four+cheese+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=freschetta+four+cheese+pizza"
   },
   {
     "index": "330415",
@@ -22066,7 +22066,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 316940530",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=marketside+gluten+free+cauliflower+crust+margherita+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=marketside+cauliflower+crust+margherita+pizza"
   },
   {
     "index": "330417",
@@ -22123,7 +22123,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Daiya Dairy Free Supreme Gluten Free Pizza as a standard plant-based frozen option.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+supreme+gluten+free+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+supreme+pizza"
   },
   {
     "index": "330420",
@@ -22155,7 +22155,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Freschetta Gluten Free Pepperoni Pizza, companion to their cheese pizza.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=freschetta+gluten+free+pepperoni+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=freschetta+pepperoni+pizza"
   },
   {
     "index": "330424",
@@ -22187,7 +22187,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Sonoma Flatbreads gluten-free frozen pizzas sold at major retailers.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=sonoma+flatbreads+gluten+free+pepperoni+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=sonoma+flatbreads+pepperoni+pizza"
   },
   {
     "index": "330421",
@@ -22308,7 +22308,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Daiya dairy-free gluten-free pizzas are common frozen aisle staples for allergen-friendly diets.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+meatless+pepperoni+gluten+free+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+meatless+pepperoni+pizza"
   },
   {
     "index": "330864",
@@ -22397,7 +22397,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 488509439",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+gluten+free+blueberry+muffins"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+blueberry+muffins"
   },
   {
     "index": "330866",
@@ -22461,7 +22461,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I am not sufficiently familiar with Udi's frozen ravioli product offerings to estimate.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+gluten+free+three+cheese+ravioli"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+three+cheese+ravioli"
   },
   {
     "index": "330873",
@@ -22646,7 +22646,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Familiar with Canyon Bakehouse Country White gluten-free loaf sizing and pricing.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=canyon+bakehouse+country+white+gluten+free+bread"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=canyon+bakehouse+country+white+bread"
   },
   {
     "index": "330880",
@@ -22678,7 +22678,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Know Banza chickpea mac and cheddar cheese nutrition and standard retail price.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=banza+gluten+free+elbow+chickpea+mac+cheddar+cheese+pasta"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=banza+elbow+chickpea+mac+cheddar+cheese+pasta"
   },
   {
     "index": "330876",
@@ -22710,7 +22710,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Udi's Gluten Free Grilled Chicken Alfredo is a known frozen single-serve meal.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+gluten+free+grilled+chicken+alfredo"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+grilled+chicken+alfredo"
   },
   {
     "index": "330878",
@@ -22767,7 +22767,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 978204760",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+gluten+free+whole+grain+sandwich+bread"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+whole+grain+sandwich+bread"
   },
   {
     "index": "330884",
@@ -22799,7 +22799,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Schar Artisan Baker White bread package and typical calorie count.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=schar+gluten+free+artisan+baker+white+bread"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=schar+artisan+baker+white+bread"
   },
   {
     "index": "330885",
@@ -22824,7 +22824,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 975790663",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+gluten+free+delicious+soft+white+sandwich+bread"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+delicious+soft+white+sandwich+bread"
   },
   {
     "index": "330886",
@@ -22970,7 +22970,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 987532998",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=against+the+grain+gluten+free+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=against+the+grain+pizza"
   },
   {
     "index": "330889",
@@ -23184,7 +23184,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 173116395",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+margherita+gluten+free+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+margherita+pizza"
   },
   {
     "index": "330902",
@@ -23216,7 +23216,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Against the Grain three cheese gluten-free pizza is a known specialty brand with higher price points.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=against+the+grain+gluten+free+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=against+the+grain+pizza"
   },
   {
     "index": "330900",
@@ -23911,7 +23911,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 352378068",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+meatless+pepperoni+style+with+jalapeo+vegetable+crust+gluten+free+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+meatless+pepperoni+style+with+jalapeo+vegetable+crust+pizza"
   },
   {
     "index": "331006",
@@ -24011,7 +24011,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 271480526",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+italian+herbs+cheeze+style+vegetable+crust+gluten+free+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+italian+herbs+cheeze+style+vegetable+crust+pizza"
   },
   {
     "index": "331009",
@@ -24086,7 +24086,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 542582978",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=great+value+gluten+free+sliced+white+bread"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=great+value+sliced+white+bread"
   },
   {
     "index": "331089",
@@ -24111,7 +24111,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 423766729",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=sonoma+flatbreads+gluten+free+dairy+free+veggie+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=sonoma+flatbreads+dairy+free+veggie+pizza"
   },
   {
     "index": "331091",
@@ -24143,7 +24143,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Familiar with DiGiorno pepperoni personal stuffed crust pizza calorie and price range.",
     "_gemini_price_is_estimate": true,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=digiorno+frozen+pizza+pepperoni+pizza+on+a+stuffed+pizza+crust+8+5+oz+personal+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=digiorno+frozen+pizza+pepperoni+pizza+on+a+stuffed+pizza+crust+8"
   },
   {
     "index": "331090",
@@ -24275,7 +24275,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 126301997",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=against+the+grain+gluten+free+bread+cheese+baguette+bread"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=against+the+grain+bread+cheese+baguette+bread"
   },
   {
     "index": "331099",
@@ -24325,7 +24325,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 23788433",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+gluten+free+delicious+soft+white+sandwich+bread"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+delicious+soft+white+sandwich+bread"
   },
   {
     "index": "331101",
@@ -30011,7 +30011,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 238745637",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+gluten+free+tex+mex+vegan+burrito"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+tex+mex+vegan+burrito"
   },
   {
     "index": "336157",
@@ -33313,7 +33313,7 @@
     "image_url": "https://i5.walmartimages.com/seo/Van-s-Frozen-Waffle-Gluten-Free-Blueberry-9oz_5427bfc4-3078-4382-9837-74414dbf4ecb.aab2bfe23824f839ed2e59b914d9ae46.jpeg",
     "_image_search_query": "Van's Frozen Waffle Gluten Free Blueberry 9oz",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=van%27s+frozen+waffle+gluten+free+blueberry"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=van%27s+frozen+waffle+blueberry"
   },
   {
     "index": "343350",
@@ -33363,7 +33363,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 37859502",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=van%27s+simply+delicious+totally+original+gluten+free+waffles"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=van%27s+simply+delicious+totally+original+waffles"
   },
   {
     "index": "343355",
@@ -34869,7 +34869,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 47386263",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=golden+platter+all+natural+gluten+free+buffalo+style+bites"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=golden+platter+all+natural+buffalo+style+bites"
   },
   {
     "index": "344689",
@@ -35677,7 +35677,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 144538721",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+naturals+gluten+free+breaded+chicken+breast+nuggets"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+naturals+breaded+chicken+breast+nuggets"
   },
   {
     "index": "345027",
@@ -36177,7 +36177,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 37560726",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=boca+all+american+veggie+burgers+with+non+gmo+soy"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=boca+all+american+veggie+burgers+with+soy"
   },
   {
     "index": "345252",
@@ -37079,7 +37079,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 160367586",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=great+value+6+gluten+free+tortillas"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=great+value"
   },
   {
     "index": "346666",
@@ -37104,7 +37104,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 391126783",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=great+value+gluten+free+hamburger+buns"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=great+value+hamburger+buns"
   },
   {
     "index": "346647",
@@ -37354,7 +37354,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 182019029",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+gluten+free+plain+bagels"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+plain+bagels"
   },
   {
     "index": "346745",
@@ -38590,7 +38590,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 170027109",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=boca+spicy+vegan+chik%27n+veggie+patties+with+non+gmo+soy"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=boca+spicy+vegan+chik%27n+veggie+patties+with+soy"
   },
   {
     "index": "347571",
@@ -39208,7 +39208,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 45832224",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+gluten+free+breaded+chicken+parmesan"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+breaded+chicken+parmesan"
   },
   {
     "index": "347608",
@@ -40494,7 +40494,7 @@
     "image_url": "https://assets.wakefern.com/is/image/wakefern/69899781033-001?$Mi9Product_detail$",
     "_image_search_query": "Udi's Gluten Free Pepperoni Pizza With Crispy Thin Crust, Frozen, 18.36 oz.",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+gluten+free+pepperoni+pizza+with+crispy+thin+crust"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+pepperoni+pizza+with+crispy+thin+crust"
   },
   {
     "index": "365775",
@@ -40753,7 +40753,7 @@
     "image_url": "https://www.instacart.com/image-server/1200x1200/www.instacart.com/assets/domains/product-image/file/large_c75667d0-5c8c-4fb5-9ce8-c08bf76c8094.png",
     "_image_search_query": "Udi's Gluten Free Four Cheese Pizza With Crispy Thin Crust, Frozen, 17.53 oz.",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+gluten+free+four+cheese+pizza+with+crispy+thin+crust"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+four+cheese+pizza+with+crispy+thin+crust"
   },
   {
     "index": "365908",
@@ -42083,7 +42083,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 654304342",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=against+the+grain+gluten+free+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=against+the+grain+pizza"
   },
   {
     "index": "379130",
@@ -42461,7 +42461,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 486592977",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+gluten+free+fiesta+breakfast+vegan+burrito"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+fiesta+breakfast+vegan+burrito"
   },
   {
     "index": "385303",
@@ -43122,7 +43122,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 138722286",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=mybread+gluten+free+bakery+original+gluten+free+flatbread+pita"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=mybread+bakery+original+flatbread+pita"
   },
   {
     "index": "388699",
@@ -43678,7 +43678,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 35824697",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+gluten+free+thin+crispy+pizza+crusts"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+thin+crispy+pizza+crusts"
   },
   {
     "index": "399022",
@@ -44730,7 +44730,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 479390315",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=one+bite+frozen+3+meat+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=one+bite+frozen"
   },
   {
     "index": "416440",
@@ -45776,7 +45776,7 @@
     "image_url": "https://www.ubuy.co.in/productimg/?image=aHR0cHM6Ly9pNS53YWxtYXJ0aW1hZ2VzLmNvbS9hc3IvOWYxZDFjOTUtOGEyMi00MjM5LWI0NzktZWQ5N2IzZWRmZWUzLmQwYzMyYzhhYTM1ZjFlMGRhMGQ4M2U5YzQ0NDk2ODI1LnBuZw.jpg",
     "_image_search_query": "Kodiak Cakes Gluten Free & Whole Grain Protein Waffles, 9oz, 6 CT Box (Frozen)",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=kodiak+cakes+gluten+free+whole+grain+protein+waffles"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=kodiak+cakes+whole+grain+protein+waffles"
   },
   {
     "index": "438333",
@@ -47487,7 +47487,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 764709516",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=homebake+425"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=homebake"
   },
   {
     "index": "463841",
@@ -48005,7 +48005,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 153337164",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+gluten+free+santa+fe+vegan+burrito"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+santa+fe+vegan+burrito"
   },
   {
     "index": "482535",
@@ -49066,7 +49066,7 @@
     "image_url": "https://millvalleymarket.com/cdn/shop/files/10daaf9e-12f9-4afb-b724-b04a11449bbc.jpg?v=1748581864&width=1946",
     "_image_search_query": "Udi's Gluten Free Delicious Multigrain Sandwich Bread, Frozen, 12 oz.",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+gluten+free+delicious+multigrain+sandwich+bread"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+delicious+multigrain+sandwich+bread"
   },
   {
     "index": "518559",
@@ -49144,7 +49144,7 @@
     "_active_check_reason": "no_search_results",
     "_active_check_query": "site:walmart.com 337020549",
     "_active_check_url": null,
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=life+cuisine+cauliflower+crust+chicken+bacon+ranch+piada+gluten+free+frozen+sandwich"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=life+cuisine+cauliflower+crust+chicken+bacon+ranch+piada+frozen+sandwich"
   },
   {
     "index": "522134",
@@ -49250,7 +49250,7 @@
     "image_url": "https://dsom-imager-prod.shipt.com/f4a109cc-8a3a-11eb-8d63-43db26a7a471/67d3b9d5f24890e3eb70b55aab59734f.jpeg",
     "_image_search_query": "Life Cuisine Cauliflower Crust Chicken Mozarella Piada Gluten Free Frozen Sandwich 6 oz",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=life+cuisine+cauliflower+crust+chicken+mozarella+piada+gluten+free+frozen+sandwich"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=life+cuisine+cauliflower+crust+chicken+mozarella+piada+frozen+sandwich"
   },
   {
     "index": "553789",
@@ -49503,7 +49503,7 @@
     "image_url": "https://www.instacart.com/image-server/1200x1200/www.instacart.com/assets/domains/product-image/file/large_b8d0d1df-fe1f-48b3-8675-3bc0e4af2095.jpg",
     "_image_search_query": "Life Cuisine Gluten Free Cauliflower Crust Three Meat Frozen Pizza 6 oz",
     "_image_search_reason": "ok",
-    "INSTACART_URL": "https://www.instacart.com/store/s?k=life+cuisine+gluten+free+cauliflower+crust+three+meat+frozen+pizza"
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=life+cuisine+cauliflower+crust+three+meat+frozen+pizza"
   },
   {
     "index": "554073",
