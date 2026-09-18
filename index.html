@@ -130,6 +130,26 @@
     background:var(--frost);
   }
 
+  .field input:disabled{
+    opacity:0.45;
+    cursor:not-allowed;
+  }
+
+  .max-price-label{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    cursor:pointer;
+  }
+
+  .max-price-label input[type="checkbox"]{
+    width:13px;
+    height:13px;
+    margin:0;
+    cursor:pointer;
+    accent-color:var(--blue);
+  }
+
   .field select{
     font-family:'Inter', sans-serif;
     font-size:12px;
@@ -551,8 +571,11 @@
     <div class="tolerance" style="--o-d:8; --o-m:10;">&plusmn; 250 cal window</div>
     <div class="row-break" style="--o-d:9; --o-m:11;"></div>
     <div class="field" style="--o-d:10; --o-m:12;">
-      <label for="max-per-meal">Max per meal ($)</label>
-      <input type="number" id="max-per-meal" value="5.00" min="0" max="50" step="0.25" />
+      <label for="max-per-meal" class="max-price-label">
+        <input type="checkbox" id="max-per-meal-enabled" />
+        <span>Max per meal ($)</span>
+      </label>
+      <input type="number" id="max-per-meal" value="6.00" min="0" max="50" step="0.25" disabled />
     </div>
     <button id="generate" style="--o-d:11; --o-m:13;">Generate week</button>
   </div>
@@ -725,7 +748,8 @@ function saveFormData(){
     loseRate: document.getElementById('lose-per-week').value,
     caloriesBurned: document.getElementById('calories-burned').value,
     calorieTarget: document.getElementById('calorie-target').value,
-    maxPerMeal: document.getElementById('max-per-meal').value
+    maxPerMeal: document.getElementById('max-per-meal').value,
+    maxPerMealEnabled: document.getElementById('max-per-meal-enabled').checked
   };
   try{
     setStorage('freezerFormData', JSON.stringify(data));
@@ -746,6 +770,9 @@ function loadFormData(){
     if(data.caloriesBurned !== undefined) document.getElementById('calories-burned').value = data.caloriesBurned;
     if(data.calorieTarget !== undefined) document.getElementById('calorie-target').value = data.calorieTarget;
     if(data.maxPerMeal !== undefined) document.getElementById('max-per-meal').value = data.maxPerMeal;
+    const enabledCheckbox = document.getElementById('max-per-meal-enabled');
+    enabledCheckbox.checked = !!data.maxPerMealEnabled;
+    document.getElementById('max-per-meal').disabled = !enabledCheckbox.checked;
     return true;
   }catch(err){
     return false;
@@ -966,7 +993,8 @@ function generateWeek(){
 
   const target = parseInt(document.getElementById('calorie-target').value, 10) || 1500;
   const maxPrice = parseFloat(document.getElementById('max-per-meal').value);
-  const capActive = !isNaN(maxPrice) && maxPrice > 0;
+  const maxPriceEnabled = document.getElementById('max-per-meal-enabled').checked;
+  const capActive = maxPriceEnabled && !isNaN(maxPrice) && maxPrice > 0;
 
   const { breakfastPool, generalPool, capFallback } = computeActivePools(maxPrice, capActive);
 
@@ -1309,6 +1337,14 @@ document.getElementById('lose-per-week').addEventListener('input', () => { recal
 document.getElementById('calories-burned').addEventListener('input', () => { recalcDailyTarget(); saveFormData(); });
 document.getElementById('calorie-target').addEventListener('input', saveFormData);
 document.getElementById('max-per-meal').addEventListener('input', saveFormData);
+document.getElementById('max-per-meal-enabled').addEventListener('change', function(){
+  const input = document.getElementById('max-per-meal');
+  input.disabled = !this.checked;
+  if(this.checked && (!input.value || parseFloat(input.value) <= 0)){
+    input.value = '6.00';
+  }
+  saveFormData();
+});
 document.getElementById('save-week').addEventListener('click', saveCurrentWeek);
 document.getElementById('save-week-top').addEventListener('click', saveCurrentWeek);
 document.getElementById('week').addEventListener('click', (e) => {
