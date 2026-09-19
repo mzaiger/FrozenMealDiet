@@ -607,11 +607,11 @@
     <div class="field diet-filters" style="--o-d:12; --o-m:14;">
       <label class="diet-checkbox-label" for="healthy-only">
         <input type="checkbox" id="healthy-only" />
-        <span>Healthy brands only</span>
+        <span>Healthy</span>
       </label>
       <label class="diet-checkbox-label" for="vegetarian-only">
         <input type="checkbox" id="vegetarian-only" />
-        <span>Vegetarian only</span>
+        <span>Vegetarian</span>
       </label>
     </div>
     <div class="row-break mobile-only" style="--o-m:15;"></div>
@@ -671,10 +671,12 @@ let activeCapInfo = { capActive: false, maxPrice: 0, capFallback: false, healthy
 // against this pool's actual product names, deliberately excluding "veggie" and
 // "dairy free", both of which false-positive against real meat items here (e.g.
 // "Bacon, Ham & Veggies Frittata", "Cauliflower, Cheese & Bacon Veggie Tots").
-const HEALTHY_BRANDS = ['lean cuisine', 'healthy choice', 'smart ones', 'life cuisine', 'atkins', 'realgood foods co.', 'caulipower', 'birdseye', 'birds eye voila'];
+const HEALTHY_BRANDS = ['lean cuisine', 'healthy choice', 'smart ones', 'life cuisine', 'atkins', 'realgood foods co.', 'caulipower', 'birdseye', 'birds eye voila', 'garden lites', 'garden lites veggies made great', 'kodiak', 'kodiak cakes'];
 // Name-level healthy signal for a specific line within a brand that isn't
-// otherwise a "healthy" brand overall (Jimmy Dean's regular lineup is not).
-const HEALTHY_KEYWORDS = ['simple scrambles'];
+// otherwise a "healthy" brand overall (Jimmy Dean's regular lineup is not),
+// plus a blanket "protein" callout -- if the product itself advertises its
+// protein content in the name, treat that as a healthy signal.
+const HEALTHY_KEYWORDS = ['simple scrambles', 'protein'];
 const VEGETARIAN_BRANDS = ["amy's kitchen", 'beyond meat', 'daiya'];
 const VEGETARIAN_KEYWORDS = ['vegetarian', 'vegan', 'plant based', 'plant-based', 'meatless'];
 
