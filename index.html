@@ -671,7 +671,7 @@ let activeCapInfo = { capActive: false, maxPrice: 0, capFallback: false, healthy
 // against this pool's actual product names, deliberately excluding "veggie" and
 // "dairy free", both of which false-positive against real meat items here (e.g.
 // "Bacon, Ham & Veggies Frittata", "Cauliflower, Cheese & Bacon Veggie Tots").
-const HEALTHY_BRANDS = ['lean cuisine', 'healthy choice', 'smart ones', 'life cuisine', 'atkins', 'realgood foods co.', 'caulipower', 'birdseye', 'birds eye voila', 'garden lites', 'garden lites veggies made great', 'kodiak', 'kodiak cakes'];
+const HEALTHY_BRANDS = ['lean cuisine', 'healthy choice', 'smart ones', 'life cuisine', 'atkins', 'realgood foods co.', 'caulipower', 'birdseye', 'birds eye voila', 'garden lites', 'garden lites veggies made great', 'kodiak', 'kodiak cakes', 'quest nutrition'];
 // Name-level healthy signal for a specific line within a brand that isn't
 // otherwise a "healthy" brand overall (Jimmy Dean's regular lineup is not),
 // plus a blanket "protein" callout -- if the product itself advertises its
@@ -688,7 +688,7 @@ const VEG_DISH_KEYWORDS = ['pancake', 'flapjack', 'waffle', 'muffin', 'bread', '
   'pasta', 'fettuccine', 'fettucine', 'fettuccini', 'alfredo', 'spaghetti', 'lasagna', 'ravioli',
   'linguine', 'penne', 'rigatoni', 'ziti', 'noodle', 'mac & cheese', 'mac and cheese', 'macaroni',
   'tortellini', 'gnocchi', 'cavatelli', 'pizza'];
-const MEAT_WORDS = ['chicken', 'beef', 'pork', 'saus', 'bacon', 'shrimp', 'turkey', 'ham', 'steak', 'meat',
+const MEAT_WORDS = ['chicken', 'beef', 'pork', 'saus', 'bacon', 'shrimp', 'turkey', 'ham', 'steak', 'meat', 'chili',
   'pepperoni', 'fish', 'salmon', 'tuna', 'sirloin', 'anchov', 'prosciutto', 'salami',
   'chorizo', 'pastrami', 'brisket', 'rib', 'wing', 'lamb', 'seafood', 'crawfish', 'haddock', 'calamari',
   'scallop', 'boudin', 'veal', 'venison', 'duck', 'crab', 'clam', 'oyster'];
