@@ -607,7 +607,7 @@
     <div class="field diet-filters" style="--o-d:12; --o-m:14;">
       <label class="diet-checkbox-label" for="healthy-only">
         <input type="checkbox" id="healthy-only" />
-        <span>Healthy</span>
+        <span>Healthy Brands</span>
       </label>
       <label class="diet-checkbox-label" for="vegetarian-only">
         <input type="checkbox" id="vegetarian-only" />
@@ -1034,15 +1034,6 @@ async function loadPool(){
   }
 }
 
-function shuffle(arr){
-  const a = arr.slice();
-  for(let i = a.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
 // Meal count scales with the daily calorie target:
 //  <=1400        -> 3 meals: breakfast, lunch, dinner
 //  1400-2000     -> 4 meals: + a late night meal (general pool)
@@ -1067,50 +1058,52 @@ function getMealSlotsForTarget(target, healthyOnly){
   }
 }
 
-function poolForSlot(slot){
-  return (slot === 'breakfast' || slot === 'brunch') ? activeBreakfastPool : activeGeneralPool;
+// 'brunch' (only present in the 5-meal tier) draws from BOTH the breakfast
+// and general pools combined, since brunch food realistically overlaps both
+// categories. Every other slot stays scoped to its usual pool.
+function poolForSlot(slot, breakfastPool, generalPool){
+  breakfastPool = breakfastPool || activeBreakfastPool;
+  generalPool = generalPool || activeGeneralPool;
+  if(slot === 'breakfast') return breakfastPool;
+  if(slot === 'brunch') return breakfastPool.concat(generalPool);
+  return generalPool;
 }
 
-// Pick `n` items from a pool, preferring distinct items but allowing repeats
-// if the pool is smaller than what's needed.
-function pickDistinct(poolArr, n){
-  if(poolArr.length >= n) return shuffle(poolArr).slice(0, n);
-  const result = [];
-  for(let i = 0; i < n; i++){
-    result.push(poolArr[Math.floor(Math.random() * poolArr.length)]);
-  }
-  return result;
-}
-
-// Randomly samples combinations of breakfast-pool items (for breakfastSlots)
-// and general-pool items (for generalSlots) and keeps the closest-to-target
-// combo found. Works for any slot count (3, 4, or 5 meals).
+// Randomly samples one item per slot (via poolForSlot, so 'brunch' draws from
+// the combined pool) and keeps the closest-to-target combo found. Tries to
+// avoid repeating the same item twice in a day when the pool allows it.
+// Works for any slot count (3, 4, or 5 meals).
 function buildDay(target, breakfastPool, generalPool, breakfastSlots, generalSlots){
   const low = target - TOLERANCE;
   const high = target + TOLERANCE;
-  const bCount = breakfastSlots.length;
-  const gCount = generalSlots.length;
+  const allSlots = [...breakfastSlots, ...generalSlots];
 
   let best = null;
   const attempts = 600;
   for(let i = 0; i < attempts; i++){
-    const bItems = pickDistinct(breakfastPool, bCount);
-    const gItems = pickDistinct(generalPool, gCount);
-    const sum = [...bItems, ...gItems].reduce((s, m) => s + getMealCalories(m), 0);
+    const used = new Set();
+    const items = allSlots.map(slot => {
+      const p = poolForSlot(slot, breakfastPool, generalPool);
+      const unused = p.filter(m => !used.has(m));
+      const candidates = unused.length ? unused : p;
+      const choice = candidates[Math.floor(Math.random() * candidates.length)];
+      used.add(choice);
+      return choice;
+    });
+    const sum = items.reduce((s, m) => s + getMealCalories(m), 0);
     const dist = sum < low ? low - sum : (sum > high ? sum - high : 0);
     if(!best || dist < best.dist){
-      best = { bItems, gItems, sum, dist };
+      best = { items, sum, dist };
     }
     if(dist === 0) break;
   }
 
   const meals = {};
-  breakfastSlots.forEach((slot, idx) => { meals[slot] = best.bItems[idx]; });
-  generalSlots.forEach((slot, idx) => { meals[slot] = best.gItems[idx]; });
+  allSlots.forEach((slot, idx) => { meals[slot] = best.items[idx]; });
 
   return {
     meals,
-    slotOrder: [...breakfastSlots, ...generalSlots],
+    slotOrder: allSlots,
     total: best.sum,
     inRange: best.sum >= low && best.sum <= high
   };
@@ -1373,7 +1366,7 @@ function regenerateMeal(dayIndex, slot){
   if(!saved || !saved.days[dayIndex]) return;
   const day = saved.days[dayIndex];
   const { breakfastPool, generalPool } = poolsForCapInfo(saved.capInfo);
-  const sourcePool = (slot === 'breakfast' || slot === 'brunch') ? breakfastPool : generalPool;
+  const sourcePool = poolForSlot(slot, breakfastPool, generalPool);
   if(!sourcePool || !sourcePool.length) return;
 
   const usedNames = Object.values(day.meals).map(m => m.name);
