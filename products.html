@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Products &middot; Poor Man's Frozen Meal Diet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --frost: #EAF3F6;
+    --card: #FFFFFF;
+    --ink: #12232E;
+    --ink-soft: #4C6270;
+    --line: #D3E3E9;
+    --blue: #1E5F8C;
+    --blue-deep: #123B57;
+    --ice: #8FD9E8;
+    --good: #2C8C5E;
+    --warn: #C1443C;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    background:var(--frost);
+    background-image:
+      radial-gradient(circle at 10% 0%, rgba(143,217,232,0.35), transparent 45%),
+      radial-gradient(circle at 90% 15%, rgba(30,95,140,0.10), transparent 40%);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    padding:0 0 80px;
+  }
+
+  header{
+    max-width:1080px;
+    margin:0 auto;
+    padding:56px 24px 16px;
+  }
+
+  .kicker{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--blue);
+  }
+
+  h1{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(36px, 6vw, 56px);
+    letter-spacing:0.01em;
+    margin:6px 0 8px;
+    color:var(--blue-deep);
+    line-height:0.95;
+  }
+
+  .sub{
+    color:var(--ink-soft);
+    max-width:640px;
+    font-size:15px;
+    line-height:1.5;
+    margin:0 0 8px;
+  }
+
+  main{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  .toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:14px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 18px;
+    margin-bottom:18px;
+  }
+
+  .toolbar input[type="search"]{
+    font-family:'Inter', sans-serif;
+    font-size:14px;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:9px 12px;
+    background:var(--frost);
+    color:var(--ink);
+    flex:1 1 240px;
+    min-width:180px;
+  }
+
+  .toolbar input[type="search"]:focus{
+    outline:2px solid var(--ice);
+    outline-offset:1px;
+  }
+
+  .count-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+
+  .status{
+    color:var(--ink-soft);
+    font-size:14px;
+    padding:40px 0;
+    text-align:center;
+  }
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+  }
+
+  thead th{
+    text-align:left;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    background:var(--frost);
+    padding:10px 14px;
+    border-bottom:1px solid var(--line);
+    position:sticky;
+    top:0;
+  }
+
+  tbody tr{
+    border-bottom:1px solid var(--line);
+  }
+
+  tbody tr:last-child{
+    border-bottom:none;
+  }
+
+  tbody tr:hover{
+    background:rgba(143,217,232,0.10);
+  }
+
+  td{
+    padding:10px 14px;
+    font-size:14px;
+    vertical-align:middle;
+  }
+
+  .col-img{ width:72px; }
+  .col-sku{ width:110px; }
+  .col-links{ width:180px; }
+
+  .prod-thumb{
+    width:56px;
+    height:56px;
+    object-fit:contain;
+    background:var(--frost);
+    border:1px solid var(--line);
+    border-radius:6px;
+    display:block;
+  }
+
+  .prod-thumb-empty{
+    width:56px;
+    height:56px;
+    background:var(--frost);
+    border:1px solid var(--warn);
+    border-radius:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:9px;
+    color:var(--warn);
+    text-align:center;
+    line-height:1.2;
+  }
+
+  .prod-sku{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+
+  .prod-name{
+    color:var(--ink);
+    line-height:1.35;
+  }
+
+  .prod-links{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+
+  .prod-link{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--blue);
+    text-decoration:none;
+  }
+
+  .prod-link:hover{
+    text-decoration:underline;
+  }
+
+  .prod-link-instacart{
+    color:var(--good);
+  }
+
+  .prod-link-missing{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    opacity:0.6;
+  }
+
+  .pager{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin:22px 0;
+  }
+
+  .pager button{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--blue-deep);
+    border-radius:6px;
+    padding:8px 12px;
+    cursor:pointer;
+  }
+
+  .pager button:hover:not(:disabled){
+    border-color:var(--blue);
+  }
+
+  .pager button:disabled{
+    opacity:0.35;
+    cursor:default;
+  }
+
+  .pager button.active{
+    background:var(--blue-deep);
+    border-color:var(--blue-deep);
+    color:#fff;
+  }
+
+  .pager .page-jump{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-left:8px;
+  }
+
+  .pager .page-jump input{
+    width:54px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:6px 8px;
+    text-align:center;
+  }
+
+  .empty-state{
+    text-align:center;
+    color:var(--ink-soft);
+    padding:60px 20px;
+    font-size:14px;
+  }
+
+  .empty-state code{
+    font-family:'IBM Plex Mono', monospace;
+    background:var(--frost);
+    padding:2px 6px;
+    border-radius:4px;
+  }
+
+  @media (max-width:640px){
+    thead{ display:none; }
+    table, tbody, tr, td{ display:block; width:100%; }
+    tbody tr{
+      padding:12px 14px;
+      display:grid;
+      grid-template-columns:64px 1fr;
+      gap:4px 12px;
+    }
+    td{ padding:2px 0; border:none; }
+    .col-img{ grid-row:1 / span 3; }
+    .prod-sku::before{ content:'SKU '; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker">FROZEN &middot; PRODUCT INDEX</div>
+  <h1>Products</h1>
+  <p class="sub">Every item in the pool, with its current image and links to Walmart / Instacart &mdash; use this to spot missing or wrong thumbnails.</p>
+</header>
+
+<main>
+  <div class="toolbar">
+    <input type="search" id="search-box" placeholder="Filter by product name or SKU&hellip;" />
+    <span class="count-label" id="count-label"></span>
+  </div>
+
+  <div class="status" id="status">Loading products&hellip;</div>
+
+  <div class="empty-state" id="empty-state" style="display:none;">
+    Product pool not found. Make sure <code>candidate_pool.json</code> is deployed alongside this page.
+  </div>
+
+  <table id="products-table" style="display:none;">
+    <thead>
+      <tr>
+        <th class="col-img">Image</th>
+        <th class="col-sku">SKU</th>
+        <th>Product Name</th>
+        <th class="col-links">Links</th>
+      </tr>
+    </thead>
+    <tbody id="products-body"></tbody>
+  </table>
+
+  <div class="pager" id="pager-top" style="display:none;"></div>
+  <div class="pager" id="pager-bottom" style="display:none;"></div>
+</main>
+
+<script>
+(function(){
+  const PAGE_SIZE = 100;
+
+  let allProducts = [];
+  let filtered = [];
+  let currentPage = 1;
+
+  const statusEl = document.getElementById('status');
+  const emptyEl = document.getElementById('empty-state');
+  const tableEl = document.getElementById('products-table');
+  const bodyEl = document.getElementById('products-body');
+  const countEl = document.getElementById('count-label');
+  const searchEl = document.getElementById('search-box');
+  const pagerTop = document.getElementById('pager-top');
+  const pagerBottom = document.getElementById('pager-bottom');
+
+  function escapeHtml(str){
+    return String(str == null ? '' : str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function getImage(p){
+    return p.image_url || p.IMAGE_URL || p.image || '';
+  }
+  function getWalmartUrl(p){
+    return p.PRODUCT_URL || p.product_url || '';
+  }
+  function getInstacartUrl(p){
+    return p.INSTACART_URL || p.instacart_url || '';
+  }
+  function getSku(p){
+    return p.SKU || p.sku || '';
+  }
+  function getName(p){
+    return p.PRODUCT_NAME || p.name || 'Unnamed item';
+  }
+
+  function renderRow(p){
+    const sku = getSku(p);
+    const name = getName(p);
+    const image = getImage(p);
+    const walmartUrl = getWalmartUrl(p);
+    const instacartUrl = getInstacartUrl(p);
+
+    const thumbImg = image
+      ? `<img class="prod-thumb" src="${escapeHtml(image)}" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;prod-thumb-empty&quot;>no image</div>';" />`
+      : `<div class="prod-thumb-empty">no image</div>`;
+
+    const walmartLink = walmartUrl
+      ? `<a class="prod-link" href="${escapeHtml(walmartUrl)}" target="_blank" rel="noopener noreferrer">Walmart &rarr;</a>`
+      : `<span class="prod-link-missing">no Walmart link</span>`;
+
+    const instacartLink = instacartUrl
+      ? `<a class="prod-link prod-link-instacart" href="${escapeHtml(instacartUrl)}" target="_blank" rel="noopener noreferrer">Instacart &rarr;</a>`
+      : `<span class="prod-link-missing">no Instacart link</span>`;
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="col-img">${thumbImg}</td>
+      <td class="prod-sku">${escapeHtml(sku)}</td>
+      <td class="prod-name">${escapeHtml(name)}</td>
+      <td class="prod-links"><div class="prod-links">${walmartLink}${instacartLink}</div></td>
+    `;
+    return tr;
+  }
+
+  function renderPage(){
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+    currentPage = Math.min(Math.max(1, currentPage), totalPages);
+
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const pageItems = filtered.slice(start, start + PAGE_SIZE);
+
+    bodyEl.innerHTML = '';
+    const fragment = document.createDocumentFragment();
+    pageItems.forEach(p => fragment.appendChild(renderRow(p)));
+    bodyEl.appendChild(fragment);
+
+    const rangeStart = filtered.length === 0 ? 0 : start + 1;
+    const rangeEnd = Math.min(start + PAGE_SIZE, filtered.length);
+    countEl.textContent = `Showing ${rangeStart}-${rangeEnd} of ${filtered.length} (page ${currentPage} of ${totalPages})`;
+
+    renderPager(pagerTop, totalPages);
+    renderPager(pagerBottom, totalPages);
+
+    window.scrollTo({ top: tableEl.offsetTop - 20, behavior: 'instant' in window ? 'instant' : 'auto' });
+  }
+
+  function renderPager(container, totalPages){
+    container.innerHTML = '';
+    if (totalPages <= 1){
+      container.style.display = 'none';
+      return;
+    }
+    container.style.display = 'flex';
+
+    const makeBtn = (label, page, opts) => {
+      opts = opts || {};
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = label;
+      if (opts.disabled) btn.disabled = true;
+      if (opts.active) btn.className = 'active';
+      btn.addEventListener('click', () => { currentPage = page; renderPage(); });
+      return btn;
+    };
+
+    container.appendChild(makeBtn('\u2190 Prev', currentPage - 1, { disabled: currentPage === 1 }));
+
+    // Windowed page numbers: first, last, and a range around current.
+    const windowSize = 2;
+    const pages = new Set([1, totalPages]);
+    for (let i = currentPage - windowSize; i <= currentPage + windowSize; i++){
+      if (i >= 1 && i <= totalPages) pages.add(i);
+    }
+    const sorted = Array.from(pages).sort((a, b) => a - b);
+
+    let prev = null;
+    sorted.forEach(p => {
+      if (prev !== null && p - prev > 1){
+        const gap = document.createElement('span');
+        gap.textContent = '\u2026';
+        gap.style.color = 'var(--ink-soft)';
+        gap.style.fontFamily = "'IBM Plex Mono', monospace";
+        gap.style.fontSize = '13px';
+        container.appendChild(gap);
+      }
+      container.appendChild(makeBtn(String(p), p, { active: p === currentPage }));
+      prev = p;
+    });
+
+    container.appendChild(makeBtn('Next \u2192', currentPage + 1, { disabled: currentPage === totalPages }));
+
+    const jump = document.createElement('span');
+    jump.className = 'page-jump';
+    jump.innerHTML = `Go to <input type="number" min="1" max="${totalPages}" value="${currentPage}" /> `;
+    const jumpInput = jump.querySelector('input');
+    jumpInput.addEventListener('change', () => {
+      const val = parseInt(jumpInput.value, 10);
+      if (!isNaN(val)){
+        currentPage = val;
+        renderPage();
+      }
+    });
+    container.appendChild(jump);
+  }
+
+  function applyFilter(){
+    const q = searchEl.value.trim().toLowerCase();
+    if (!q){
+      filtered = allProducts;
+    } else {
+      filtered = allProducts.filter(p => {
+        const name = getName(p).toLowerCase();
+        const sku = String(getSku(p)).toLowerCase();
+        return name.includes(q) || sku.includes(q);
+      });
+    }
+    currentPage = 1;
+    renderPage();
+  }
+
+  let debounceTimer = null;
+  searchEl.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(applyFilter, 150);
+  });
+
+  async function init(){
+    try{
+      const res = await fetch('candidate_pool.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('fetch failed: ' + res.status);
+      const data = await res.json();
+      allProducts = Array.isArray(data) ? data : [];
+      filtered = allProducts;
+
+      statusEl.style.display = 'none';
+      if (allProducts.length === 0){
+        emptyEl.style.display = 'block';
+        return;
+      }
+      tableEl.style.display = 'table';
+      renderPage();
+    } catch (err){
+      statusEl.style.display = 'none';
+      emptyEl.style.display = 'block';
+      console.error('Failed to load candidate_pool.json', err);
+    }
+  }
+
+  init();
+})();
+</script>
+
+</body>
+</html>
