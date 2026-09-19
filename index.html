@@ -150,6 +150,30 @@
     accent-color:var(--blue);
   }
 
+  .diet-filters{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    justify-content:center;
+  }
+
+  .diet-checkbox-label{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    cursor:pointer;
+    font-size:13px;
+    color:var(--ink);
+  }
+
+  .diet-checkbox-label input[type="checkbox"]{
+    width:13px;
+    height:13px;
+    margin:0;
+    cursor:pointer;
+    accent-color:var(--blue);
+  }
+
   .field select{
     font-family:'Inter', sans-serif;
     font-size:12px;
@@ -577,7 +601,18 @@
       </label>
       <input type="number" id="max-per-meal" value="6.00" min="0" max="50" step="0.25" disabled />
     </div>
-    <button id="generate" style="--o-d:11; --o-m:13;">Generate week</button>
+    <div class="row-break" style="--o-d:11; --o-m:13;"></div>
+    <div class="field diet-filters" style="--o-d:12; --o-m:14;">
+      <label class="diet-checkbox-label" for="healthy-only">
+        <input type="checkbox" id="healthy-only" />
+        <span>Healthy brands only</span>
+      </label>
+      <label class="diet-checkbox-label" for="vegetarian-only">
+        <input type="checkbox" id="vegetarian-only" />
+        <span>Vegetarian only</span>
+      </label>
+    </div>
+    <button id="generate" style="--o-d:13; --o-m:15;">Generate week</button>
   </div>
   </div>
   <div class="pool-status" id="pool-status">Loading meal pool&hellip;</div>
@@ -625,7 +660,36 @@ let currentWeek = [];
 let currentTargetGlobal = 1500;
 let activeBreakfastPool = [];
 let activeGeneralPool = [];
-let activeCapInfo = { capActive: false, maxPrice: 0, capFallback: false };
+let activeCapInfo = { capActive: false, maxPrice: 0, capFallback: false, healthyOnly: false, vegetarianOnly: false, healthyFallback: false, vegetarianFallback: false };
+
+// Brand/keyword-based diet filters. "Healthy" = a recognized portion-controlled
+// diet-brand line (brand only, no keyword guessing). "Vegetarian" = a recognized
+// all-vegetarian brand OR the name itself says so via a keyword -- checked
+// against this pool's actual product names, deliberately excluding "veggie" and
+// "dairy free", both of which false-positive against real meat items here (e.g.
+// "Bacon, Ham & Veggies Frittata", "Cauliflower, Cheese & Bacon Veggie Tots").
+const HEALTHY_BRANDS = ['lean cuisine', 'healthy choice', 'smart ones', 'life cuisine', 'atkins', 'realgood foods co.', 'caulipower'];
+// Name-level healthy signal for a specific line within a brand that isn't
+// otherwise a "healthy" brand overall (Jimmy Dean's regular lineup is not).
+const HEALTHY_KEYWORDS = ['simple scrambles'];
+const VEGETARIAN_BRANDS = ["amy's kitchen", 'beyond meat'];
+const VEGETARIAN_KEYWORDS = ['vegetarian', 'vegan', 'plant based', 'plant-based', 'meatless'];
+
+function getMealBrand(meal){
+  return (meal.BRAND || meal.brand || '').trim().toLowerCase();
+}
+
+function isHealthyMeal(meal){
+  if(HEALTHY_BRANDS.includes(getMealBrand(meal))) return true;
+  const name = (meal.PRODUCT_NAME || meal.name || '').toLowerCase();
+  return HEALTHY_KEYWORDS.some(kw => name.includes(kw));
+}
+
+function isVegetarianMeal(meal){
+  if(VEGETARIAN_BRANDS.includes(getMealBrand(meal))) return true;
+  const name = (meal.PRODUCT_NAME || meal.name || '').toLowerCase();
+  return VEGETARIAN_KEYWORDS.some(kw => name.includes(kw));
+}
 
 // Weeks the user has saved to cookies, plus which tab is showing.
 let savedWeeks = [];
@@ -677,7 +741,7 @@ function compactMeal(meal){
 
 // Applies the max-per-meal cap (if any) to the raw pool, same rule used at
 // generation time and again when restoring the persisted current week.
-function computeActivePools(maxPrice, capActiveRequested){
+function computeActivePools(maxPrice, capActiveRequested, healthyOnly, vegetarianOnly){
   let breakfastPool = pool.breakfast;
   let generalPool = pool.general;
   let capFallback = false;
@@ -691,7 +755,35 @@ function computeActivePools(maxPrice, capActiveRequested){
       capFallback = true;
     }
   }
-  return { breakfastPool, generalPool, capFallback };
+
+  // Diet filters apply on top of (not instead of) the price cap, and fall back
+  // the same way it does: if too few items would remain, skip the filter for
+  // that pool rather than leaving the week ungeneratable.
+  let healthyFallback = false;
+  if(healthyOnly){
+    const healthyBreakfast = breakfastPool.filter(isHealthyMeal);
+    const healthyGeneral = generalPool.filter(isHealthyMeal);
+    if(healthyBreakfast.length && healthyGeneral.length >= 2){
+      breakfastPool = healthyBreakfast;
+      generalPool = healthyGeneral;
+    }else{
+      healthyFallback = true;
+    }
+  }
+
+  let vegetarianFallback = false;
+  if(vegetarianOnly){
+    const vegBreakfast = breakfastPool.filter(isVegetarianMeal);
+    const vegGeneral = generalPool.filter(isVegetarianMeal);
+    if(vegBreakfast.length && vegGeneral.length >= 2){
+      breakfastPool = vegBreakfast;
+      generalPool = vegGeneral;
+    }else{
+      vegetarianFallback = true;
+    }
+  }
+
+  return { breakfastPool, generalPool, capFallback, healthyFallback, vegetarianFallback };
 }
 
 // The live/current week persists across reloads so the site doesn't rebuild
@@ -722,8 +814,8 @@ function restoreCurrentWeek(){
   if(!payload || !Array.isArray(payload.days) || !payload.days.length) return false;
 
   currentTargetGlobal = payload.target || 1500;
-  activeCapInfo = payload.capInfo || { capActive: false, maxPrice: 0, capFallback: false };
-  const pools = computeActivePools(activeCapInfo.maxPrice, activeCapInfo.capActive);
+  activeCapInfo = payload.capInfo || { capActive: false, maxPrice: 0, capFallback: false, healthyOnly: false, vegetarianOnly: false, healthyFallback: false, vegetarianFallback: false };
+  const pools = computeActivePools(activeCapInfo.maxPrice, activeCapInfo.capActive, activeCapInfo.healthyOnly, activeCapInfo.vegetarianOnly);
   activeBreakfastPool = pools.breakfastPool;
   activeGeneralPool = pools.generalPool;
 
@@ -749,7 +841,9 @@ function saveFormData(){
     caloriesBurned: document.getElementById('calories-burned').value,
     calorieTarget: document.getElementById('calorie-target').value,
     maxPerMeal: document.getElementById('max-per-meal').value,
-    maxPerMealEnabled: document.getElementById('max-per-meal-enabled').checked
+    maxPerMealEnabled: document.getElementById('max-per-meal-enabled').checked,
+    healthyOnly: document.getElementById('healthy-only').checked,
+    vegetarianOnly: document.getElementById('vegetarian-only').checked
   };
   try{
     setStorage('freezerFormData', JSON.stringify(data));
@@ -773,6 +867,8 @@ function loadFormData(){
     const enabledCheckbox = document.getElementById('max-per-meal-enabled');
     enabledCheckbox.checked = !!data.maxPerMealEnabled;
     document.getElementById('max-per-meal').disabled = !enabledCheckbox.checked;
+    document.getElementById('healthy-only').checked = !!data.healthyOnly;
+    document.getElementById('vegetarian-only').checked = !!data.vegetarianOnly;
     return true;
   }catch(err){
     return false;
@@ -995,13 +1091,15 @@ function generateWeek(){
   const maxPrice = parseFloat(document.getElementById('max-per-meal').value);
   const maxPriceEnabled = document.getElementById('max-per-meal-enabled').checked;
   const capActive = maxPriceEnabled && !isNaN(maxPrice) && maxPrice > 0;
+  const healthyOnly = document.getElementById('healthy-only').checked;
+  const vegetarianOnly = document.getElementById('vegetarian-only').checked;
 
-  const { breakfastPool, generalPool, capFallback } = computeActivePools(maxPrice, capActive);
+  const { breakfastPool, generalPool, capFallback, healthyFallback, vegetarianFallback } = computeActivePools(maxPrice, capActive, healthyOnly, vegetarianOnly);
 
   activeBreakfastPool = breakfastPool;
   activeGeneralPool = generalPool;
   currentTargetGlobal = target;
-  activeCapInfo = { capActive, maxPrice, capFallback };
+  activeCapInfo = { capActive, maxPrice, capFallback, healthyOnly, vegetarianOnly, healthyFallback, vegetarianFallback };
 
   const { breakfastSlots, generalSlots } = getMealSlotsForTarget(target);
   currentWeek = DAY_NAMES.map(dayName => ({ dayName, ...buildDay(target, breakfastPool, generalPool, breakfastSlots, generalSlots) }));
@@ -1035,23 +1133,35 @@ function weekTotals(days){
 
 // Each meal is filtered against the max-per-meal cap before selection, rather
 // than checking the week's average against a +/- tolerance.
-function updateBudgetSummary(capActive, maxPrice, overCapCount, capFallback){
+function updateBudgetSummary(capActive, maxPrice, overCapCount, capFallback, healthyFallback, vegetarianFallback){
   const summary = document.getElementById('budget-summary');
+
+  const dietNotes = [];
+  if(healthyFallback) dietNotes.push('not enough "healthy brand" meals in the pool — some non-matching meals were included instead');
+  if(vegetarianFallback) dietNotes.push('not enough vegetarian meals in the pool — some non-vegetarian meals were included instead');
+  const dietNote = dietNotes.length ? ` (${dietNotes.join('; ')})` : '';
+
   if(!capActive){
-    summary.style.display = 'none';
+    if(dietNotes.length){
+      summary.style.display = 'inline-block';
+      summary.className = 'budget-summary off-range';
+      summary.textContent = dietNotes.map(n => n.charAt(0).toUpperCase() + n.slice(1)).join('; ') + '.';
+    }else{
+      summary.style.display = 'none';
+    }
     return;
   }
 
   summary.style.display = 'inline-block';
   if(capFallback){
     summary.className = 'budget-summary off-range';
-    summary.textContent = `Not enough meals priced at $${maxPrice.toFixed(2)} or under in the pool — showing the closest calorie matches instead, some may be over cap.`;
+    summary.textContent = `Not enough meals priced at $${maxPrice.toFixed(2)} or under in the pool — showing the closest calorie matches instead, some may be over cap.${dietNote}`;
   }else if(overCapCount > 0){
     summary.className = 'budget-summary off-range';
-    summary.textContent = `${overCapCount} meal${overCapCount === 1 ? '' : 's'} this week landed over the $${maxPrice.toFixed(2)} cap.`;
+    summary.textContent = `${overCapCount} meal${overCapCount === 1 ? '' : 's'} this week landed over the $${maxPrice.toFixed(2)} cap.${dietNote}`;
   }else{
-    summary.className = 'budget-summary in-range';
-    summary.textContent = `Every meal this week is at or under $${maxPrice.toFixed(2)}.`;
+    summary.className = dietNotes.length ? 'budget-summary off-range' : 'budget-summary in-range';
+    summary.textContent = `Every meal this week is at or under $${maxPrice.toFixed(2)}.${dietNote}`;
   }
 }
 
@@ -1182,7 +1292,7 @@ function renderCurrentOrSaved(){
   document.getElementById('save-bar-top').style.display = editable ? 'flex' : 'none';
 
   if(editable){
-    updateBudgetSummary(activeCapInfo.capActive, activeCapInfo.maxPrice, countOverCap(days, activeCapInfo.capActive, activeCapInfo.maxPrice), activeCapInfo.capFallback);
+    updateBudgetSummary(activeCapInfo.capActive, activeCapInfo.maxPrice, countOverCap(days, activeCapInfo.capActive, activeCapInfo.maxPrice), activeCapInfo.capFallback, activeCapInfo.healthyFallback, activeCapInfo.vegetarianFallback);
   }else{
     document.getElementById('budget-summary').style.display = 'none';
   }
@@ -1192,7 +1302,7 @@ function renderCurrentOrSaved(){
 // used to regenerate meals on both the live week and any saved week.
 function poolsForCapInfo(capInfo){
   if(!capInfo) return { breakfastPool: pool.breakfast, generalPool: pool.general };
-  return computeActivePools(capInfo.maxPrice, capInfo.capActive);
+  return computeActivePools(capInfo.maxPrice, capInfo.capActive, capInfo.healthyOnly, capInfo.vegetarianOnly);
 }
 
 function regenerateMeal(dayIndex, slot){
