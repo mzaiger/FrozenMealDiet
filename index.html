@@ -1627,8 +1627,8 @@ document.getElementById('lose-per-week').addEventListener('input', () => { recal
 document.getElementById('calories-burned').addEventListener('input', () => { recalcDailyTarget(); saveFormData(); });
 document.getElementById('calorie-target').addEventListener('input', saveFormData);
 document.getElementById('max-per-meal').addEventListener('input', () => { saveFormData(); updatePoolCount(); });
-document.getElementById('healthy-only').addEventListener('change', updatePoolCount);
-document.getElementById('vegetarian-only').addEventListener('change', updatePoolCount);
+document.getElementById('healthy-only').addEventListener('change', () => { saveFormData(); updatePoolCount(); });
+document.getElementById('vegetarian-only').addEventListener('change', () => { saveFormData(); updatePoolCount(); });
 document.getElementById('max-per-meal-enabled').addEventListener('change', function(){
   const input = document.getElementById('max-per-meal');
   input.disabled = !this.checked;
