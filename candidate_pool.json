@@ -977,7 +977,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+beef",
     "_calorie_max_checked_at": "2026-09-19T09:15:02.247732+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:05:28.769671+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:05:28.769671+00:00",
+    "_kroger_upc": "0007100701467",
+    "_kroger_upc_aliases": [
+      "0007100701094"
+    ]
   },
   {
     "index": "318881",
@@ -3960,7 +3964,8 @@
     "_calorie_max_source": "current",
     "_kroger_upc": "0007790050210",
     "_kroger_upc_aliases": [
-      "0007790050308"
+      "0007790050308",
+      "0007100714766"
     ],
     "_image_walmart_url_checked_at": "2026-09-20T05:15:37.902455+00:00"
   },
@@ -4242,7 +4247,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jose+ole+beef+cheese+chimichanga",
     "_calorie_max_checked_at": "2026-09-19T09:22:14.726391+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:16:37.739753+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:16:37.739753+00:00",
+    "_kroger_upc": "0007320289201",
+    "_kroger_upc_aliases": [
+      "0007320289251"
+    ]
   },
   {
     "index": "319018",
@@ -5618,7 +5627,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jose+ole+chicken+cheese+chimichanga",
     "_calorie_max_checked_at": "2026-09-19T09:24:54.007301+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:21:15.803377+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:21:15.803377+00:00",
+    "_kroger_upc": "0007320289253"
   },
   {
     "index": "319095",
@@ -6478,7 +6488,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+bean+cheese+burritos",
     "_calorie_max_checked_at": "2026-09-19T09:26:17.736120+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:24:02.565692+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:24:02.565692+00:00",
+    "_kroger_upc": "0007100706140",
+    "_kroger_upc_aliases": [
+      "0007100706711"
+    ]
   },
   {
     "index": "319117",
@@ -7007,7 +7021,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+beef+bean+green+chili+burritos",
     "_calorie_max_checked_at": "2026-09-19T09:27:15.836186+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:26:00.252906+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:26:00.252906+00:00",
+    "_kroger_upc": "0007100702309",
+    "_kroger_upc_aliases": [
+      "0007100703172"
+    ]
   },
   {
     "index": "319305",
@@ -8353,7 +8371,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+sausage+egg+cheese+biscuit+sandwich",
     "_calorie_max_checked_at": "2026-09-19T09:29:50.464584+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:30:30.568437+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:30:30.568437+00:00",
+    "_kroger_upc": "0007790019487"
   },
   {
     "index": "319362",
@@ -8804,7 +8823,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+cheddar+cheese+bean+and+rice+burrito",
     "_calorie_max_checked_at": "2026-09-19T09:30:43.741582+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:32:04.976000+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:32:04.976000+00:00",
+    "_kroger_upc": "0004227200071",
+    "_kroger_upc_aliases": [
+      "0004227201388"
+    ]
   },
   {
     "index": "319376",
@@ -8839,7 +8862,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+bean+rice+burrito",
     "_calorie_max_checked_at": "2026-09-19T09:30:45.313244+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:32:13.179115+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:32:13.179115+00:00",
+    "_kroger_upc": "0004227200352"
   },
   {
     "index": "319374",
@@ -9014,7 +9038,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tina%27s+big+burrito+red+hot+beef",
     "_calorie_max_checked_at": "2026-09-19T09:30:55.388419+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:32:47.742916+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:32:47.742916+00:00",
+    "_kroger_upc": "0085041600222"
   },
   {
     "index": "319381",
@@ -9870,7 +9895,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+signature+shredded+steak",
     "_calorie_max_checked_at": "2026-09-19T09:32:25.617669+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:35:44.632346+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:35:44.632346+00:00",
+    "_kroger_upc": "0007100715841"
   },
   {
     "index": "319420",
@@ -10286,7 +10312,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=daiya+dairy+free+cheeze+lover%27s+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:33:10.586221+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:37:11.177018+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:37:11.177018+00:00",
+    "_kroger_upc": "0007570630778"
   },
   {
     "index": "319433",
@@ -10321,7 +10348,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+cheddar+cheese+burrito",
     "_calorie_max_checked_at": "2026-09-19T09:33:14.427837+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:37:19.493730+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:37:19.493730+00:00",
+    "_kroger_upc": "0004227200353"
   },
   {
     "index": "319434",
@@ -10496,7 +10524,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+non+dairy+bean+rice+burrito",
     "_calorie_max_checked_at": "2026-09-19T09:33:32.608493+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:38:01.718749+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:38:01.718749+00:00",
+    "_kroger_upc": "0004227200070"
   },
   {
     "index": "319442",
@@ -10873,7 +10902,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jose+ole+chicken+cheese+flour+taquitos",
     "_calorie_max_checked_at": "2026-09-19T09:34:01.905881+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:39:17.619690+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:39:17.619690+00:00",
+    "_kroger_upc": "0007320289457"
   },
   {
     "index": "319449",
@@ -18079,7 +18109,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+black+bean+vegetable+frozen+burrito",
     "_calorie_max_checked_at": "2026-09-19T09:47:46.279433+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:04:24.895603+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:04:24.895603+00:00",
+    "_kroger_upc": "0004227200073"
   },
   {
     "index": "319785",
@@ -20307,7 +20338,11 @@
     "_calorie_max_checked_at": "2026-09-19T09:51:44.636924+00:00",
     "_calorie_max_source": "current",
     "_kroger_upc": "0007465379187",
-    "_image_walmart_url_checked_at": "2026-09-20T06:12:48.258445+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:12:48.258445+00:00",
+    "_kroger_upc_aliases": [
+      "0007465330890",
+      "0007465339393"
+    ]
   },
   {
     "index": "329690",
@@ -20408,7 +20443,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:51:51.823499+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:13:10.629675+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:13:10.629675+00:00",
+    "_kroger_upc": "0007218063322",
+    "_kroger_upc_aliases": [
+      "0007218056625"
+    ]
   },
   {
     "index": "329699",
@@ -20513,7 +20552,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:52:07.048910+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T06:13:37.662962+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:13:37.662962+00:00",
+    "_kroger_upc": "0007218056624"
   },
   {
     "index": "329696",
@@ -20785,7 +20825,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+deep+dish+singles+pepperoni+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:52:33.007659+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T06:14:31.446932+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:14:31.446932+00:00",
+    "_kroger_upc": "0007218073366"
   },
   {
     "index": "329711",
@@ -21268,7 +21309,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=digiorno+pepperoni",
     "_calorie_max_checked_at": "2026-09-19T09:53:38.721619+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:16:01.133678+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:16:01.133678+00:00",
+    "_kroger_upc": "0007192192580"
   },
   {
     "index": "329727",
@@ -21777,7 +21819,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tombstone+pepperoni",
     "_calorie_max_checked_at": "2026-09-19T09:54:23.360196+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:17:41.131685+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:17:41.131685+00:00",
+    "_kroger_upc": "0007192197185"
   },
   {
     "index": "329789",
@@ -21812,7 +21855,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:54:24.900018+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:17:46.440667+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:17:46.440667+00:00",
+    "_kroger_upc": "0007218056611"
   },
   {
     "index": "329788",
@@ -21917,7 +21961,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=motor+city+detroit+style+pepperoni+deep+dish+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:54:39.719638+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:18:08.955509+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:18:08.955509+00:00",
+    "_kroger_upc": "0087037500500"
   },
   {
     "index": "329796",
@@ -22476,7 +22521,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:55:24.204306+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:20:07.077536+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:20:07.077536+00:00",
+    "_kroger_upc": "0007218063813"
   },
   {
     "index": "329841",
@@ -23607,7 +23653,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=california+pizza+kitchen+bbq+chicken",
     "_calorie_max_checked_at": "2026-09-19T09:57:52.667492+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:23:53.477460+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:23:53.477460+00:00",
+    "_kroger_upc": "0007192162491"
   },
   {
     "index": "329900",
@@ -24042,7 +24089,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=screamin%27+sicilian+original+holy+pepperoni+frozen+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:58:36.775530+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:25:32.088424+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:25:32.088424+00:00",
+    "_kroger_upc": "0007570615101",
+    "_kroger_upc_aliases": [
+      "0001111080364"
+    ]
   },
   {
     "index": "330240",
@@ -24209,7 +24260,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=caulipower+uncured+pepperoni+stone+fired+cauliflower+crust+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:58:57.070677+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:26:05.876119+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:26:05.876119+00:00",
+    "_kroger_upc": "0085493400720"
   },
   {
     "index": "330252",
@@ -24446,7 +24498,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+margherita+frozen+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:59:24.275133+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:27:00.627009+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:27:00.627009+00:00",
+    "_kroger_upc": "0004227200199"
   },
   {
     "index": "330391",
@@ -26136,7 +26189,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=quest+thin+crust+pizza",
     "_calorie_max_checked_at": "2026-09-19T10:03:08.416598+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T06:32:53.501206+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:32:53.501206+00:00",
+    "_kroger_upc": "0001111010773"
   },
   {
     "index": "330887",
@@ -26885,7 +26939,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+vegan+roasted+vegetable+pizza+full+size",
     "_calorie_max_checked_at": "2026-09-19T10:04:47.631375+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:35:36.610112+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:35:36.610112+00:00",
+    "_kroger_upc": "0004227200101"
   },
   {
     "index": "330981",
@@ -29526,7 +29581,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:09:25.312605+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:45:07.971940+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:45:07.971940+00:00",
+    "_kroger_upc": "0007100714159"
   },
   {
     "index": "332930",
@@ -31607,7 +31663,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=great+value+microwave+cheese+pizza",
     "_calorie_max_checked_at": "2026-09-19T10:13:57.234092+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:53:07.026409+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:53:07.026409+00:00",
+    "_kroger_upc": "0001111080371"
   },
   {
     "index": "334868",
@@ -31979,7 +32036,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=screamin%27+sicilian+original+supremus+maximus+pizza",
     "_calorie_max_checked_at": "2026-09-19T10:15:03.656298+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:54:22.684883+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:54:22.684883+00:00",
+    "_kroger_upc": "0007570615103"
   },
   {
     "index": "334968",
@@ -32196,7 +32254,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=freschetta+naturally+rising+crust+pepperoni+pizza",
     "_calorie_max_checked_at": "2026-09-19T10:15:36.784415+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:55:14.212910+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:55:14.212910+00:00",
+    "_kroger_upc": "0007218063052",
+    "_kroger_upc_aliases": [
+      "0007218063979"
+    ]
   },
   {
     "index": "335014",
@@ -32537,7 +32599,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:16:28.522758+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:56:33.831721+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:56:33.831721+00:00",
+    "_kroger_upc": "0007960601045"
   },
   {
     "index": "335255",
@@ -32661,7 +32724,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jos+ol+beef+cheese+mini+tacos",
     "_calorie_max_checked_at": "2026-09-19T10:16:49.940036+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:57:00.498804+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:57:00.498804+00:00",
+    "_kroger_upc": "0007320251021"
   },
   {
     "index": "335432",
@@ -35358,7 +35422,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=freschetta+four+cheese+pizza",
     "_calorie_max_checked_at": "2026-09-19T10:23:02.394219+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:07:16.897258+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:07:16.897258+00:00",
+    "_kroger_upc": "0007218063983"
   },
   {
     "index": "339800",
@@ -37190,7 +37255,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+pancakes+and+sausage+on+a+stick+breakfast",
     "_calorie_max_checked_at": "2026-09-19T10:27:13.733523+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:14:25.634271+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:14:25.634271+00:00",
+    "_kroger_upc": "0007790033496"
   },
   {
     "index": "342489",
@@ -40107,7 +40173,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:33:20.163949+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T07:25:45.342016+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:25:45.342016+00:00",
+    "_kroger_upc": "0085041600229"
   },
   {
     "index": "344673",
@@ -40262,7 +40329,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:33:47.279497+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:26:23.573997+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:26:23.573997+00:00",
+    "_kroger_upc": "0085041600223"
   },
   {
     "index": "344692",
@@ -40667,7 +40735,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+chicken+cheese+flour+taquitos",
     "_calorie_max_checked_at": "2026-09-19T10:34:45.424374+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:27:52.152299+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:27:52.152299+00:00",
+    "_kroger_upc": "0007100740140"
   },
   {
     "index": "344827",
@@ -42436,7 +42505,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tina%27s+red+hot+beef+burrito",
     "_calorie_max_checked_at": "2026-09-19T10:38:30.530505+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T07:34:21.651401+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:34:21.651401+00:00",
+    "_kroger_upc": "0007960601015"
   },
   {
     "index": "346263",
@@ -51153,7 +51223,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+pizza",
     "_calorie_max_checked_at": "2026-09-19T10:55:21.672959+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T08:07:38.871443+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:07:38.871443+00:00",
+    "_kroger_upc": "0007218063469"
   },
   {
     "index": "404918",
@@ -58204,7 +58275,9 @@
     "_gemini_notes": "I recognize this specific 4.5 oz El Monterey breakfast burrito from standard frozen food nutrition data.",
     "_gemini_recognized": true,
     "_kroger_upc_aliases": [
-      "0007100714478"
+      "0007100714478",
+      "0007100714937",
+      "0007100714842"
     ],
     "_image_walmart_url_checked_at": "2026-09-20T08:34:14.448563+00:00"
   },
@@ -58933,7 +59006,11 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize the Totino's Party Pizza Pepperoni 10.2 oz size, which typically contains around 670 calories for the whole pizza.",
     "_gemini_recognized": true,
-    "_image_walmart_url_checked_at": "2026-09-20T08:36:12.030863+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:36:12.030863+00:00",
+    "_kroger_upc_aliases": [
+      "0007570630779",
+      "0004280043589"
+    ]
   },
   {
     "BRAND": "DIGIORNO",
@@ -58980,5 +59057,726 @@
     "_gemini_notes": "Recognize DiGiorno Rising Crust Four Cheese Pizza, which is typically around 320 calories per slice with about 5 or 6 slices per 24.6 oz pizza.",
     "_gemini_recognized": true,
     "_image_walmart_url_checked_at": "2026-09-20T08:36:18.927795+00:00"
+  },
+  {
+    "BRAND": "DIGIORNO",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "6.49",
+    "PRICE_RETAIL": "6.49",
+    "PRODUCT_NAME": "DiGiorno Frozen Pizza Rising Crust Three Meat Pizza Family Dinner",
+    "PRODUCT_SIZE": "27.1 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/DiGiorno-Rising-Crust-Pizza-with-Pepperoni-Three-Meat-27-1-oz-Frozen/5332699213?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "5332699213",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 390,
+    "image_url": "https://i5.walmartimages.com/seo/DiGiorno-Rising-Crust-Pizza-with-Pepperoni-Three-Meat-27-1-oz-Frozen_6f86c0b9-b376-4b29-bfce-d72fc1be3422.c19a4171a41e86c4a4199820e7249d7f.jpeg?odnHeight=580&odnWidth=580&odnBg=FFFFFF",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=digiorno+pizza+rising+crust+three+meat+pizza+family+dinner",
+    "index": "kroger-554133",
+    "servings_per_container": "1/4 pizza (145g)",
+    "tid": "",
+    "_kroger_upc": "0007192123298",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com DiGiorno Frozen Pizza Rising Crust Three Meat Pizza Family Dinner",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/DiGiorno-Rising-Crust-Pizza-with-Pepperoni-Three-Meat-27-1-oz-Frozen/5332699213",
+    "_walmart_url_slug_name": "DiGiorno Rising Crust Pizza with Pepperoni Three Meat 27 1 oz Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/DiGiorno-Rising-Crust-Pizza-with-Pepperoni-Three-Meat-27-1-oz-Frozen/5332699213",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 359.6,
+      "gemini": 390
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognize DiGiorno Rising Crust Three Meat pizza, typically estimated around 390 calories per slice.",
+    "_gemini_recognized": true,
+    "_kroger_upc_aliases": [
+      "0007192119331"
+    ]
+  },
+  {
+    "BRAND": "Totino's",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "1.67",
+    "PRICE_RETAIL": "2.00",
+    "PRODUCT_NAME": "Totino's™ Party Pizza Combination 20g Protein Thin Crust Frozen Pizza",
+    "PRODUCT_SIZE": "10.7 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Totino-s-Ultimate-Pizza-Combination/15189667034?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "15189667034",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 730,
+    "image_url": "https://i5.walmartimages.com/seo/Totino-s-Ultimate-Pizza-Combination_d244ee74-8ecf-434f-a224-fd43eee9658d.77ff397a9ffc1306ec616bcc075e4fc0.jpeg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=totino%27s+party+pizza+combination+protein+thin+crust+pizza",
+    "index": "kroger-554134",
+    "servings_per_container": "Per 1/2 Pizza",
+    "tid": "",
+    "_kroger_upc": "0004280011600",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Totino's™ Party Pizza Combination 20g Protein Thin Crust Frozen Pizza",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/brand/totinos/10004037",
+    "_walmart_url_slug_name": "Totino s Ultimate Pizza Combination",
+    "_image_search_query": "https://www.walmart.com/ip/Totino-s-Ultimate-Pizza-Combination/15189667034",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "open_food_facts",
+    "_calorie_sources": {
+      "usda": 369.4,
+      "open_food_facts": 730.0,
+      "gemini": 660
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Totino's Party Pizza Combination 10.7 oz has approximately 660 calories for the whole pizza.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Totino's",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "1.67",
+    "PRICE_RETAIL": "2.00",
+    "PRODUCT_NAME": "Totino's™ Party Pizza™ Triple Cheese 14g Protein Thin Crust Frozen Pizza",
+    "PRODUCT_SIZE": "9.8 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Totino-s-Cheeseburger-Pizza-Rolls-50-Count/19280074518?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "19280074518",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 680,
+    "image_url": "https://i5.walmartimages.com/seo/Totino-s-Pizza-Rolls-Combination-Flavored-Frozen-Snacks-50-Rolls-24-8-oz_562a1750-5a90-4817-a51e-b46246c7a3c1.6d316b3e75094c82af3a5c2dde320bf6.jpeg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=totino%27s+party+pizza+triple+cheese+protein+thin+crust+pizza",
+    "index": "kroger-554135",
+    "servings_per_container": "1/2 Pizza",
+    "tid": "",
+    "_kroger_upc": "0004280011520",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Totino's™ Party Pizza™ Triple Cheese 14g Protein Thin Crust Frozen Pizza",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/brand/totinos/10004037",
+    "_walmart_url_slug_name": "Totino s Cheeseburger Pizza Rolls 50 Count",
+    "_image_search_query": "https://www.walmart.com/ip/Totino-s-Cheeseburger-Pizza-Rolls-50-Count/19280074518",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 681.1,
+      "open_food_facts": 340.0,
+      "gemini": 670
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognize Totino's Triple Cheese Party Pizza, which contains about 670 calories for the entire 9.8 oz package.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Red Baron",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "4.49",
+    "PRICE_RETAIL": "4.99",
+    "PRODUCT_NAME": "Red Baron Mexican Style Classic Crust Frozen Pizza",
+    "PRODUCT_SIZE": "20.53 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Red-Baron-Mexican-Style-Classic-Crust-Frozen-Pizza-20-53-oz/5253537712?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "5253537712",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 380,
+    "image_url": "https://i5.walmartimages.com/seo/Red-Baron-Mexican-Style-Classic-Crust-Frozen-Pizza-20-53-oz_f9709297-556b-401c-ad8e-d5c6c3652ed9.4fd4a8ff2a8c9602ccbdd661db9110fc.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+mexican+style+classic+crust+pizza",
+    "index": "kroger-554136",
+    "servings_per_container": "0.25 PIZZA",
+    "tid": "",
+    "_kroger_upc": "0007218074201",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Red Baron Mexican Style Classic Crust Frozen Pizza",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Red-Baron-Mexican-Style-Classic-Crust-Frozen-Pizza-20-53-oz/5253537712",
+    "_walmart_url_slug_name": "Red Baron Mexican Style Classic Crust Frozen Pizza 20 53 oz",
+    "_image_search_query": "https://www.walmart.com/ip/Red-Baron-Mexican-Style-Classic-Crust-Frozen-Pizza-20-53-oz/5253537712",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 369.6,
+      "gemini": 380
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognize Red Baron Classic Crust pizzas, where a typical serving (1/5 of a Mexican Style pizza) is around 380 calories.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Simple Truth",
+    "BREADCRUMBS": "Frozen/Natural & Organic",
+    "CATEGORY": "Natural & Organic",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "4.99",
+    "PRICE_RETAIL": "5.99",
+    "PRODUCT_NAME": "Simple Truth® Protein Single-Serve Cheese Frozen Pizza",
+    "PRODUCT_SIZE": "2 ct / 11.3 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Simple-Truth-Protein-Crisp-Crackers-Sour-Cream-Onion-Naturally-Flavored-Non-GMO-4-25-oz-2-Pack-Bonus/19318319934?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "19318319934",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 360,
+    "image_url": "https://i5.walmartimages.com/seo/Simple-Truth-Protein-Crisp-Crackers-Sour-Cream-Onion-Naturally-Flavored-Non-GMO-4-25-oz-2-Pack-Bonus_d518f0bd-c113-46da-818d-14b2015d22d0.d5e6f81a0f8e9c452b3f61d2b94c4ff3.png",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=simple+truth+protein+single+serve+cheese+pizza",
+    "index": "kroger-554137",
+    "servings_per_container": "1 PIZZA",
+    "tid": "",
+    "_kroger_upc": "0001111016287",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Simple Truth® Protein Single-Serve Cheese Frozen Pizza",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/c/kp/high-protein-pizza",
+    "_walmart_url_slug_name": "Simple Truth Protein Crisp Crackers Sour Cream Onion Naturally Flavored Non GMO 4 25 oz 2 Pack Bonus",
+    "_image_search_query": "https://www.walmart.com/ip/Simple-Truth-Protein-Crisp-Crackers-Sour-Cream-Onion-Naturally-Flavored-Non-GMO-4-25-oz-2-Pack-Bonus/19318319934",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 360.1
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "I do not recognize this specific Simple Truth frozen pizza product well enough to provide an accurate calorie count.",
+    "_gemini_recognized": false,
+    "_kroger_upc_aliases": [
+      "0001111016289"
+    ]
+  },
+  {
+    "BRAND": "Red's",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "2.69",
+    "PRICE_RETAIL": "2.69",
+    "PRODUCT_NAME": "Red’s Organic Bean & Cheese Frozen Burrito",
+    "PRODUCT_SIZE": "5 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Red-s-Cheesy-Beef-and-Bean-Burrito-16-oz-4-Count-Frozen/15400620536?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "15400620536",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Natural & Organic",
+    "active": true,
+    "calories": 310,
+    "image_url": "https://i5.walmartimages.com/seo/Red-s-Cheesy-Beef-and-Bean-Burrito-16-oz-4-Count-Frozen_bceb81ae-84d1-4daf-807e-caf1a3824389.73c37d31f3935038861045d39db733a2.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=red%27s+organic+bean+and+cheese+burrito",
+    "index": "kroger-554138",
+    "servings_per_container": "1 Burrito (114g)",
+    "tid": "",
+    "_kroger_upc": "0085041600225",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Red's Red’s Organic Bean & Cheese Frozen Burrito",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Red-s-Cheesy-Beef-and-Bean-Burrito-16-oz-4-Count-Frozen/15400620536",
+    "_walmart_url_slug_name": "Red s Cheesy Beef and Bean Burrito 16 oz 4 Count Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/Red-s-Cheesy-Beef-and-Bean-Burrito-16-oz-4-Count-Frozen/15400620536",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 270.2,
+      "gemini": 310
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "I recognize this specific organic frozen burrito and its standard nutritional profile.",
+    "_gemini_recognized": true,
+    "_kroger_upc_aliases": [
+      "0085041600224"
+    ]
+  },
+  {
+    "BRAND": "Red's",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "6.99",
+    "PRICE_RETAIL": "7.49",
+    "PRODUCT_NAME": "Red's Grilled Chicken & Cheddar Frozen Burrito 4pk",
+    "PRODUCT_SIZE": "4 ct / 16 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Great-Value-Sausage-Egg-and-Cheese-Maple-Griddle-Cake/15510712112?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "15510712112",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Natural & Organic",
+    "active": true,
+    "calories": 380,
+    "image_url": "https://i5.walmartimages.com/seo/Great-Value-Sausage-Egg-and-Cheese-Maple-Griddle-Cake_069345a3-dc70-45e4-8a2f-c4d503166651.0e0adb316101b50d731c98ca086aa3fc.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=red%27s+grilled+chicken+and+cheddar+burrito",
+    "index": "kroger-554139",
+    "servings_per_container": "1 BURRITO",
+    "tid": "",
+    "_kroger_upc": "0085001191182",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Red's Grilled Chicken & Cheddar Frozen Burrito 4pk",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/c/kp/frozen-wraps",
+    "_walmart_url_slug_name": "Great Value Sausage Egg and Cheese Maple Griddle Cake",
+    "_image_search_query": "https://www.walmart.com/ip/Great-Value-Sausage-Egg-and-Cheese-Maple-Griddle-Cake/15510712112",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 380.8,
+      "gemini": 310
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognized Red's Grilled Chicken & Cheddar Burrito, which typically has around 310 calories per single-burrito serving.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "El Monterey",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "1.00",
+    "PRICE_RETAIL": "1.50",
+    "PRODUCT_NAME": "El Monterey® Signature Egg Cheese & Jalapeño Frozen Breakfast Burrito",
+    "PRODUCT_SIZE": "4.5 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/El-Monterey-Signature-Individually-Wrapped-Egg-Cheese-and-Jalapeno-Burrito-24-per-Case/1875365998?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "1875365998",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 530,
+    "image_url": "https://i5.walmartimages.com/asr/66aeae1a-9f0a-431f-827c-1cf4e3351b46.f8ec6ef74ea5b2f72c5e1604b1d9df73.jpeg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+signature+egg+cheese+and+jalapeno+breakfast+burrito",
+    "index": "kroger-554140",
+    "servings_per_container": "7 1/2 oz",
+    "tid": "",
+    "_kroger_upc": "0007100714332",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com El Monterey® Signature Egg Cheese & Jalapeño Frozen Breakfast Burrito",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/El-Monterey-Signature-Individually-Wrapped-Egg-Cheese-and-Jalapeno-Burrito-24-per-Case/1875365998",
+    "_walmart_url_slug_name": "El Monterey Signature Individually Wrapped Egg Cheese and Jalapeno Burrito 24 per Case",
+    "_image_search_query": "https://www.walmart.com/ip/El-Monterey-Signature-Individually-Wrapped-Egg-Cheese-and-Jalapeno-Burrito-24-per-Case/1875365998",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 530.4,
+      "gemini": 290
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "I recognize this specific 4.5 oz El Monterey breakfast burrito variant and its standard calorie content.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Red's",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "6.99",
+    "PRICE_RETAIL": "7.49",
+    "PRODUCT_NAME": "Red's Turkey Sausage Frozen Breakfast Burrito",
+    "PRODUCT_SIZE": "4 ct / 16 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Red-s-Turkey-Sausage-Breakfast-Burrito-16-oz-4-Count-Frozen/3716180300?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "3716180300",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 310,
+    "image_url": "https://i5.walmartimages.com/seo/Red-s-Turkey-Sausage-Breakfast-Burrito-16-oz-4-Count-Frozen_f719e43b-486e-4d7d-bd0f-ab6bf370eb72.3f32eaf9f054bffec43f9a97ada10e13.jpeg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=red%27s+turkey+sausage+breakfast+burrito",
+    "index": "kroger-554141",
+    "servings_per_container": "1 burrito (142g)",
+    "tid": "",
+    "_kroger_upc": "0085001191135",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Red's Turkey Sausage Frozen Breakfast Burrito",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Red-s-Turkey-Sausage-Breakfast-Burrito-16-oz-4-Count-Frozen/3716180300",
+    "_walmart_url_slug_name": "Red s Turkey Sausage Breakfast Burrito 16 oz 4 Count Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/Red-s-Turkey-Sausage-Breakfast-Burrito-16-oz-4-Count-Frozen/3716180300",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 309.6,
+      "gemini": 310
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognize Red's frozen breakfast burritos, where a single turkey sausage burrito serving is typically around 300 to 320 calories.",
+    "_gemini_recognized": true,
+    "_kroger_upc_aliases": [
+      "0085041600227",
+      "0085041600288"
+    ]
+  },
+  {
+    "BRAND": "El Monterey",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "5.99",
+    "PRICE_RETAIL": "5.99",
+    "PRODUCT_NAME": "El Monterey® Frozen Chili Cheese Chimichangas",
+    "PRODUCT_SIZE": "8 ct / 30.4 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/El-Monterey-Chili-Cheese-Chimichangas-30-4-oz-8-Count-Frozen/3126186356?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "3126186356",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 300,
+    "image_url": "https://i5.walmartimages.com/seo/El-Monterey-Beef-Bean-Cheese-Flavor-Chimichangas-30-4-oz-8-Count-Frozen_135dfb08-f171-4baa-863b-1badb656a74e.1e8e65cf4c3b3893d48d7607ba7191c6.jpeg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+chili+cheese+chimichangas",
+    "index": "kroger-554142",
+    "servings_per_container": "1 CHIMICHANGA",
+    "tid": "",
+    "_kroger_upc": "0007100700151",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com El Monterey® Frozen Chili Cheese Chimichangas",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/El-Monterey-Chili-Cheese-Chimichangas-30-4-oz-8-Count-Frozen/3126186356",
+    "_walmart_url_slug_name": "El Monterey Chili Cheese Chimichangas 30 4 oz 8 Count Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/El-Monterey-Chili-Cheese-Chimichangas-30-4-oz-8-Count-Frozen/3126186356",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 299.6,
+      "gemini": 290
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognized El Monterey Chili Cheese Chimichangas based on standard frozen Mexican snack nutrition profiles.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Amy's",
+    "BREADCRUMBS": "Frozen/Natural & Organic",
+    "CATEGORY": "Natural & Organic",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "13.29",
+    "PRICE_RETAIL": "13.29",
+    "PRODUCT_NAME": "Amy's Bean, Rice & Cheese Burrito 4 Pack",
+    "PRODUCT_SIZE": "24oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Amys-Bean-and-Rice-Burrito-5-5-Ounce-12-per-case/5379082154?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "5379082154",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 380,
+    "image_url": "https://i5.walmartimages.com/seo/Amys-Bean-and-Rice-Burrito-5-5-Ounce-12-per-case_60d667e6-aa8c-436a-ab44-c52709bbe07b.04d993a15558bd39c7d525173ee8068f.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+bean",
+    "index": "kroger-554143",
+    "servings_per_container": "1 package",
+    "tid": "",
+    "_kroger_upc": "0004227201405",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Amy's Bean, Rice & Cheese Burrito 4 Pack",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/c/kp/amy-vegan-burrito",
+    "_walmart_url_slug_name": "Amys Bean and Rice Burrito 5 5 Ounce 12 per case",
+    "_image_search_query": "https://www.walmart.com/ip/Amys-Bean-and-Rice-Burrito-5-5-Ounce-12-per-case/5379082154",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 340.0,
+      "gemini": 380
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "I recognize this popular Amy's frozen burrito product, which typically has around 380 calories per serving (one burrito).",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Cholula",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "4.99",
+    "PRICE_RETAIL": "4.99",
+    "PRODUCT_NAME": "Cholula Salsa Verde Chicken Frozen Burrito Bowl",
+    "PRODUCT_SIZE": "9 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Cholula-Salsa-Verde-Chicken-Frozen-Burrito-Bowl-9-oz/5321500720?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "5321500720",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 560,
+    "image_url": "https://i5.walmartimages.com/seo/Cholula-Salsa-Verde-Chicken-Frozen-Burrito-Bowl-9-oz_34ecb3ca-3db0-4bec-ae87-7990eb41da4e.36c2268942ff7d0133b82d8a10b55f56.jpeg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=cholula+salsa+verde+chicken+burrito+bowl",
+    "index": "kroger-554144",
+    "servings_per_container": "1 cup",
+    "tid": "",
+    "_kroger_upc": "0004973309029",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Cholula Salsa Verde Chicken Frozen Burrito Bowl",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Cholula-Salsa-Verde-Chicken-Frozen-Burrito-Bowl-9-oz/5321500720",
+    "_walmart_url_slug_name": "Cholula Salsa Verde Chicken Frozen Burrito Bowl 9 oz",
+    "_image_search_query": "https://www.walmart.com/ip/Cholula-Salsa-Verde-Chicken-Frozen-Burrito-Bowl-9-oz/5321500720",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 560.0
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "I do not recognize this specific frozen burrito bowl product well enough to provide a reliable calorie estimate.",
+    "_gemini_recognized": false
+  },
+  {
+    "BRAND": "Cholula",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "4.99",
+    "PRICE_RETAIL": "4.99",
+    "PRODUCT_NAME": "Cholula Chili Lime Carnitas Frozen Burrito Bowl",
+    "PRODUCT_SIZE": "8.5 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Cholula-Pork-Carnitas-Seasoning/14895872276?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "14895872276",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 340,
+    "image_url": "https://i5.walmartimages.com/seo/Cholula-Pork-Carnitas-Seasoning_0474a551-444e-49cc-af02-e485206ec3ca.ebd286e51e17c9034d7d981e9006d1fc.jpeg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=cholula+chili+lime+carnitas+burrito+bowl",
+    "index": "kroger-554145",
+    "servings_per_container": "1 CONTAINER",
+    "tid": "",
+    "_kroger_upc": "0004973309024",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Cholula Chili Lime Carnitas Frozen Burrito Bowl",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/reviews/product/5327864316",
+    "_walmart_url_slug_name": "Cholula Pork Carnitas Seasoning",
+    "_image_search_query": "https://www.walmart.com/ip/Cholula-Pork-Carnitas-Seasoning/14895872276",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 340.1
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "I do not recognize this specific Cholula frozen burrito bowl product well enough to provide an accurate calorie count.",
+    "_gemini_recognized": false
+  },
+  {
+    "BRAND": "Jimmy Dean",
+    "BREADCRUMBS": "Frozen/International",
+    "CATEGORY": "International",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "6.99",
+    "PRICE_RETAIL": "7.49",
+    "PRODUCT_NAME": "Jimmy Dean Meat Lovers Frozen Breakfast Burritos",
+    "PRODUCT_SIZE": "4 ct",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Jimmy-Dean-Meat-Lovers-Egg-Bites-Pork-Sausage-Bacon-Ham-and-Cheddar-Cheese-4-oz-2-Count-Frozen/424047158?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "424047158",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 490,
+    "image_url": "https://i5.walmartimages.com/seo/Jimmy-Dean-Meat-Lovers-Egg-Bites-Pork-Sausage-Bacon-Ham-and-Cheddar-Cheese-4-oz-2-Count-Frozen_26e541cb-7552-4b77-9cb3-08fe891470fb.f7ef144efb2586d8e0a4eaeb2525cb90.jpeg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+meat+lovers+breakfast+burritos",
+    "index": "kroger-554146",
+    "servings_per_container": "7.07 OZ SERVING",
+    "tid": "",
+    "_kroger_upc": "0007790019488",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Jimmy Dean Meat Lovers Frozen Breakfast Burritos",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/c/kp/jimmy-dean-breakfast-burritos",
+    "_walmart_url_slug_name": "Jimmy Dean Meat Lovers Egg Bites Pork Sausage Bacon Ham and Cheddar Cheese 4 oz 2 Count Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/Jimmy-Dean-Meat-Lovers-Egg-Bites-Pork-Sausage-Bacon-Ham-and-Cheddar-Cheese-4-oz-2-Count-Frozen/424047158",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 489.1,
+      "gemini": 300
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognized from standard nutritional data for Jimmy Dean Meat Lovers Breakfast Burritos.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Kroger",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "1.99",
+    "PRICE_RETAIL": "1.99",
+    "PRODUCT_NAME": "Kroger® Buttermilk Waffles",
+    "PRODUCT_SIZE": "10 ct / 12.3 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Kroger-Complete-Original-Pancake-Waffle-Mix-32-oz-3-Pack/19608661880?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "19608661880",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 210,
+    "image_url": "https://www.kroger.com/product/images/large/front/0001111088217",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=kroger+buttermilk+waffles",
+    "index": "kroger-554147",
+    "servings_per_container": "2 WAFFLES",
+    "tid": "",
+    "_kroger_upc": "0001111087832",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Kroger® Buttermilk Waffles",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Kroger-Complete-Original-Pancake-Waffle-Mix-32-oz-3-Pack/19608661880",
+    "_walmart_url_slug_name": "Kroger Complete Original Pancake Waffle Mix 32 oz 3 Pack",
+    "_image_search_query": "https://www.walmart.com/ip/Kroger-Complete-Original-Pancake-Waffle-Mix-32-oz-3-Pack/19608661880",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "open_food_facts",
+    "_calorie_sources": {
+      "usda": 179.9,
+      "open_food_facts": 210.0,
+      "gemini": 190
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Standard frozen buttermilk waffles typically contain about 190 calories per serving of two waffles.",
+    "_gemini_recognized": true,
+    "_kroger_upc_aliases": [
+      "0001111078990",
+      "0001111087831"
+    ]
+  },
+  {
+    "BRAND": "Kroger",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "1.99",
+    "PRICE_RETAIL": "1.99",
+    "PRODUCT_NAME": "Kroger® Blueberry Frozen Waffles",
+    "PRODUCT_SIZE": "10 ct / 12.3 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Simple-Truth-Homestyle-Waffles-2-Pack-19-75-oz/17632164288?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T09:35:33.691622+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "17632164288",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 190,
+    "image_url": "https://i5.walmartimages.com/seo/Simple-Truth-Homestyle-Waffles-2-Pack-19-75-oz_0a449478-8f6b-4ec9-804a-51e77b36093f.02fda0e30e28ef9385e8de5990cff2a4.png",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=kroger+blueberry+waffles",
+    "index": "kroger-554148",
+    "servings_per_container": "2 WAFFLES",
+    "tid": "",
+    "_kroger_upc": "0001111087830",
+    "_kroger_discovered_at": "2026-09-20T09:35:33.691622+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Kroger® Blueberry Frozen Waffles",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/c/kp/waffles-meaning",
+    "_walmart_url_slug_name": "Simple Truth Homestyle Waffles 2 Pack 19 75 oz",
+    "_image_search_query": "https://www.walmart.com/ip/Simple-Truth-Homestyle-Waffles-2-Pack-19-75-oz/17632164288",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 189.7,
+      "gemini": 190
+    },
+    "_gemini_checked_at": "2026-09-20T09:35:33.691622+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Standard frozen toaster waffles typically contain around 190 calories per serving of two waffles.",
+    "_gemini_recognized": true
   }
 ]

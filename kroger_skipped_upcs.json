@@ -19,6 +19,11 @@
     "name": "Simple Truth® Cheese and Uncured Bacon Egg Bites",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
+  "0001111016288": {
+    "at": "2026-09-20T09:35:33.691622+00:00",
+    "name": "Simple Truth® Protein Single-Serve Uncured Pepperoni Frozen Pizza",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
   "0001111016415": {
     "at": "2026-09-20T00:16:34.743546+00:00",
     "name": "Simple Truth® Sweet Sriracha Style Chicken and Brown Rice Bowl",
@@ -27,6 +32,21 @@
   "0007265522011": {
     "at": "2026-09-20T00:16:34.743546+00:00",
     "name": "Healthy Choice Cafe Steamers Mexican-Style Street Corn, Frozen Meal",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0069781201268": {
+    "at": "2026-09-20T09:35:33.691622+00:00",
+    "name": "Italpizza® Wood Fired Holy Margherita Frozen Pizza",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0069781201269": {
+    "at": "2026-09-20T09:35:33.691622+00:00",
+    "name": "Italpizza® Wood Fired Devil Pepperoni Frozen Pizza",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0069781201272": {
+    "at": "2026-09-20T09:35:33.691622+00:00",
+    "name": "Italpizza® Wood Fired Cheesy Cheese Frozen Pizza",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
   "0085006515807": {
