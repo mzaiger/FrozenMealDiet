@@ -61029,7 +61029,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 360,
-    "image_url": "https://assets.jabarekspres.com/pasundan/2023/04/Screenshot-2023-04-04-202746.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Stouffer-s-Meat-andSauce-Lasagna-Large-Family-Size-Frozen-Meal-57-oz-Frozen_12fe7a4b-4584-462c-9ee1-3b4410b832b6.41811ed71674785de511716608afd2e8.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+classic+lasagna+with+meat+and+sauce+family+meal",
     "index": "kroger-554133",
     "servings_per_container": "1 Cup (215g)",
@@ -61055,7 +61055,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this Stouffer's family size meat lasagna with a standard serving size of about 360 calories per cup.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:11:52.981293+00:00"
   },
   {
     "BRAND": "Lean Cuisine",
@@ -61075,7 +61076,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 300,
-    "image_url": "https://i.pinimg.com/originals/8a/3d/88/8a3d88c2236d9abe46af23d986846411.jpg",
+    "image_url": "https://i5.walmartimages.com/asr/f81e0133-0c75-481e-b5c7-220eec67e5f8_3.18d2c932137adf229954c0c40f9cf38f.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=lean+cuisine+classic+fettuccine+alfredo+meal",
     "index": "kroger-554134",
     "servings_per_container": "1 package (308g)",
@@ -61101,7 +61102,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this specific Lean Cuisine frozen meal and its standard nutritional profile.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:12:00.781088+00:00"
   },
   {
     "BRAND": "Lean Cuisine",
@@ -61121,7 +61123,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 330,
-    "image_url": "https://fictionhorizon.com/wp-content/uploads/2025/06/star-trek-strange-new-worlds-character-posters-3-202x300.png",
+    "image_url": "https://i5.walmartimages.com/seo/Lean-Cuisine-Santa-Fe-style-Rice-and-Beans-10-375-Ounce-12-per-Case_77d01c71-5fbc-47dd-b82e-e4be4bae5c21.3344d28f368ab14e25ebbb75e222bf75.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=lean+cuisine+signature+santa+fe+style+rice+and+beans+meal",
     "index": "kroger-554135",
     "servings_per_container": "1 Package (294g)",
@@ -61147,7 +61149,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this Lean Cuisine variety and its typical calorie range for a 10.375 oz bowl.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:12:07.960036+00:00"
   },
   {
     "BRAND": "Stouffer's",
@@ -61167,7 +61170,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 380,
-    "image_url": "https://qvc.scene7.com/is/image/QVC/k/59/k83959.001",
+    "image_url": "https://s7d1.scene7.com/is/image/dolgen/dg-43727301-1",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+hawaiian+chicken+and+fried+rice+meal",
     "index": "kroger-554136",
     "servings_per_container": "1 Package (215g)",
@@ -61193,7 +61196,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Estimated based on typical nutritional profiles for Stouffer's single-serve frozen skillet and bowl meals of similar size.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:12:14.349796+00:00"
   },
   {
     "BRAND": "Lean Cuisine",
@@ -61213,7 +61217,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 380,
-    "image_url": "https://i5.walmartimages.com/seo/Squishmallows-Flip-a-Mallows-12-inch-Devin-Dragon-and-Esmerelda-Unicorn-Ultra-Soft-Plush_87653898-44ff-4228-a2da-12e6705e722c.612241dd51cd8d267ef539ac0e7d3030.png",
+    "image_url": "https://i5.walmartimages.com/asr/e4c5bf4e-9d08-4dbc-90f9-6ac902895398.696977945f9c8de57b743e0b9e343048.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=lean+cuisine+classic+chicken+fried+rice+meal",
     "index": "kroger-554137",
     "servings_per_container": "1 sandwich (170g)",
@@ -61239,7 +61243,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this Lean Cuisine variety and its standard calorie count for a 9 oz portion.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:12:22.766577+00:00"
   },
   {
     "BRAND": "Stouffer's",
@@ -61259,7 +61264,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 400,
-    "image_url": "https://c8.alamy.com/comp/2JHA7GX/l-r-bryan-cranston-and-jk-simmons-at-the-2022-mlb-all-star-celebrity-softball-game-media-availability-held-at-the-76-station-dodger-stadium-parking-lot-in-los-angeles-ca-on-saturday-july-16-2022-photo-by-sthanlee-b-miradorsipa-usa-2JHA7GX.jpg",
+    "image_url": "https://dsom-imager-prod.shipt.com/1380092596-10/5-1dbb17ce540907eecf9c537d9f5e72eb.png",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+cheeseburger+mac+and+cheese+meal",
     "index": "kroger-554138",
     "servings_per_container": "1 bowl (179g)",
@@ -61285,7 +61290,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this Stouffer's Single-Serve frozen meal size and typical calorie range for cheesy pasta dishes.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:12:27.634060+00:00"
   },
   {
     "BRAND": "Delimex",
@@ -61305,7 +61311,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 220,
-    "image_url": "https://www.imageneseducativas.com/wp-content/uploads/2021/03/LECTURAS-DE-COMPRENSION_Pagina_5.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Delimex-Beef-Cheese-Large-Flour-Taquitos-Frozen-Snacks-Appetizers-40-Ct-Box-Giant_9116bf6c-ecf6-4f65-b29d-5c3cf4bc477d.01f0de0ec2f02ed3a16a24a6bd9d974f.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=delimex+beef+and+cheese+taquitos+snacks",
     "index": "kroger-554139",
     "servings_per_container": "3 TAQUITOS",
@@ -61331,7 +61337,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Delimex Beef & Cheese Taquitos standard nutritional profile of about 190 calories per serving of 3 taquitos.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:12:33.046986+00:00"
   },
   {
     "BRAND": "Marie Callender's",
@@ -61351,7 +61358,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 480,
-    "image_url": "https://i.pinimg.com/736x/fa/ef/55/faef554a2dc2fcefedf986bc88767e34.jpg",
+    "image_url": "https://i5.walmartimages.com/asr/060db70d-dbbe-4ba8-aaaf-163d09eaaffe.ac4879caf1d3844ffb3c269918399905.jpeg?odnHeight=576&odnWidth=576&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+lasagna+with+meat+and+sauce+bowl",
     "index": "kroger-554140",
     "servings_per_container": "1 CUP (227g)",
@@ -61378,7 +61385,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized based on typical nutritional content for Marie Callender's single-serve pasta bowls of this size.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:12:40.481534+00:00"
   },
   {
     "BRAND": "Tyson",
@@ -61398,7 +61406,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 190,
-    "image_url": "https://wirecrafted.com/wp-content/images/free-loiil-2012-Toyota-Camry-Parts-Diagram.webp",
+    "image_url": "https://i5.walmartimages.com/asr/c3927fef-82e5-4ae6-a680-2de834fe7db0.0dd3df822dba37c979aaa907e177bf39.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+buffalo+style+chicken+strips",
     "index": "kroger-554141",
     "servings_per_container": "3 oz",
@@ -61425,7 +61433,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this Tyson frozen chicken product, which typically has around 170 calories per 3-ounce serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:12:48.030905+00:00"
   },
   {
     "BRAND": "Tyson",
@@ -61445,7 +61454,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 220,
-    "image_url": "https://s.hdnux.com/photos/66/44/14/14304054/4/1440x0.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Mini-Dino-Nuggets-Cups_ae07d26a-f01b-4a35-986c-c69d373bfcce.c3f2d39f5833849801c4037773f350f2.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+dino+nuggets",
     "index": "kroger-554142",
     "servings_per_container": "4 PIECES",
@@ -61474,7 +61483,8 @@
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
     "_kroger_upc_aliases": [
       "0002370006161"
-    ]
+    ],
+    "_image_walmart_url_checked_at": "2026-09-20T17:12:53.541949+00:00"
   },
   {
     "BRAND": "Tyson",
@@ -61494,7 +61504,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 210,
-    "image_url": "https://images2.alphacoders.com/936/936759.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Grilled-Boneless-Bite-Cups_c7a8d296-7819-4a94-87b9-ea50d565f8af.7ac7ca4344188bd4dfd9301e0da6e37b.jpeg?odnHeight=580&odnWidth=580&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+any%27tizers+sweet+bbq+flavored+boneless+chicken+bites",
     "index": "kroger-554143",
     "servings_per_container": "1 cup (142g)",
@@ -61520,7 +61530,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized based on standard Tyson Any'tizers nutritional profile for a 3-ounce serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:13:01.414484+00:00"
   },
   {
     "BRAND": "Tyson",
@@ -61540,7 +61551,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 380,
-    "image_url": "https://i.pinimg.com/originals/ff/fc/3b/fffc3b13ee4e489613111972022cb34d.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Fully-Cooked-Country-Fried-Steaks-Beef-Patty-Fritters-with-Gravy-Mix_da479fb5-97bf-4948-8faa-b2c89a431812.cdc283353b1cff4df96ab16fca716c2b.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+country+fried+steaks+with+gravy+mix",
     "index": "kroger-554144",
     "servings_per_container": "1 Pattie",
@@ -61566,7 +61577,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this frozen meal product, and a typical serving of country fried steak with gravy is around 380 calories.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:13:10.484831+00:00"
   },
   {
     "BRAND": "Tyson",
@@ -61586,7 +61598,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 140,
-    "image_url": "https://orig00.deviantart.net/abfa/f/2013/241/e/0/motivational_poster_older_hiccup_by_tmntfanchick-d6k68m6.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Grilled-Boneless-Bite-Cups_c7a8d296-7819-4a94-87b9-ea50d565f8af.7ac7ca4344188bd4dfd9301e0da6e37b.jpeg?odnHeight=160&odnWidth=160&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+grilled+boneless+chicken+bites",
     "index": "kroger-554145",
     "servings_per_container": "4 OZ SERVING",
@@ -61612,7 +61624,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize Tyson Frozen Grilled Boneless Chicken Bites as having about 140 calories per 3-ounce serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:13:15.845878+00:00"
   },
   {
     "BRAND": "Tyson",
@@ -61632,7 +61645,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 260,
-    "image_url": "https://www.unir.net/wp-content/uploads/2024/01/La-critica-de-arte-y-el-papel-del-critico-de-arte-480x270.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Restaurant-Style-Uncooked-Crispy-Nuggets_74e5d681-ed6a-4a44-9f7e-35848941d6de.ee83a24264602bd018db958876a3bce6.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+restaurant+style+crispy+nuggets+uncooked+chicken+appetizers",
     "index": "kroger-554146",
     "servings_per_container": "100 GRAM",
@@ -61658,7 +61671,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized as typical frozen raw breaded chicken nuggets with a standard serving size calorie count.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:13:21.242943+00:00"
   },
   {
     "BRAND": "Banquet",
@@ -61678,7 +61692,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 480,
-    "image_url": "https://wallpapers.com/images/hd/kat-dennings-thor-2013-los-angeles-premiere-67bvrqcd9eqt74zs.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Banquet-MEGA-Breakfast-Bowl-Sausage-Frozen-Meal-30g-Protein-10-oz-Bowl_3e1bc719-418c-4a66-bf5c-2727dff522c3.133a930b6e5bd6bc54502d3d1bfcb273.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+mega+breakfast+bowl+sausage+meal",
     "index": "kroger-554147",
     "servings_per_container": "one bowl (396g)",
@@ -61704,7 +61718,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize the Banquet MEGA Breakfast Bowl line, which typically ranges from 450 to 550 calories for a 10 oz sausage variety.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:13:26.642516+00:00"
   },
   {
     "BRAND": "Banquet",
@@ -61724,7 +61739,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 400,
-    "image_url": "https://c8.alamy.com/comp/3DD90EF/argyle-falls-on-three-levels-set-in-lowland-rainforest-a-mile-hike-inland-from-a-coastal-village-roxborough-tobago-west-indies-march-2025-3DD90EF.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Banquet-Chicken-and-Broccoli-Deep-Dish-Pot-Pie-Frozen-Meal-7-oz-Frozen_7c444f91-b015-4e94-a62a-c8282995453f.a3e61a72c98b6564931e3fa02ffe0b5d.jpeg?odnHeight=580&odnWidth=580&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+chicken+and+broccoli+pot+pie",
     "index": "kroger-554148",
     "servings_per_container": "1 Pie (198g)",
@@ -61750,7 +61765,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized based on standard nutritional data for a 7 oz Banquet pot pie.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:13:34.345336+00:00"
   },
   {
     "BRAND": "Banquet",
@@ -61770,7 +61786,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 710,
-    "image_url": "https://pokercoachingblog.b-cdn.net/wp-content/uploads/2024/06/Poker-Hand-Rankings-In-Order-689x1024.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Banquet-Mega-Bowls-Chicken-Fried-Beef-Steak-Frozen-Meal-14-oz-Frozen_44caa38d-bbff-4baf-a041-d283e4f2a1e5_1.76dcb08037601c590a634aaf34e0c0ef.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+mega+bowls+chicken+fried+beef+steak+bowl+meal",
     "index": "kroger-554149",
     "servings_per_container": "one bowl (396g)",
@@ -61796,7 +61812,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized from the Banquet MEGA Bowls product line for a 14 oz frozen meal portion.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:13:40.641960+00:00"
   },
   {
     "BRAND": "Eggo",
@@ -61816,7 +61833,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 140,
-    "image_url": "https://cdn.trialex.com/library_media/production/30c9e61c56a0a84b7fd7176f0323d0b6/c/SP_C_1207-library_medium.jpg",
+    "image_url": "https://i5.walmartimages.com/asr/174f9b2e-8c5e-4a26-930f-c6ce364ed780.104ec2688bfabc385c9180f656726c40.jpeg?odnHeight=576&odnWidth=576&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=eggo+minis+chocolatey+chip+pancakes",
     "index": "kroger-554150",
     "servings_per_container": "1 Pouch (48g)",
@@ -61843,7 +61860,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Eggo Minis Chocolatey Chip Pancakes based on typical frozen breakfast pouch calorie counts for a 1.68 oz serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:13:49.713268+00:00"
   },
   {
     "BRAND": "Eggo",
@@ -61863,7 +61881,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 350,
-    "image_url": "https://cdn.releases.com/img/image/c4b050f8-e9a8-4ad2-a828-0f5bbc58b021.jpg/200",
+    "image_url": "https://i5.walmartimages.com/seo/Eggo-Buttermilk-Pancakes-Frozen-Breakfast-29-6-oz-24-Count_d4de2fb9-8f7f-4c42-b7c5-62e4c9181404.1cf2e2bccbdefab3bfbff232b744b445.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=eggo+buttermilk+pancakes",
     "index": "kroger-554151",
     "servings_per_container": "11 Pancakes",
@@ -61890,7 +61908,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized well as a standard serving size of 3 frozen buttermilk pancakes.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:13:56.110275+00:00"
   },
   {
     "BRAND": "Eggo",
@@ -61910,7 +61929,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 360,
-    "image_url": "https://images.tractorzoom.com/lot/john-deere-2520-tractor-narrow-1a14085c-745b-464f-9c4f-44dbcc1c4c69/img-1.jpeg",
+    "image_url": "https://i5.walmartimages.com/seo/Kelloggs-Eggo-Mini-Buttermilk-Pancake-14-1-Ounce-8-per-case_a2b78e39-164a-4e16-b896-c6b398c98589.73860d8979e6e7341c699c582488430f.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=eggo+minis+buttermilk+pancakes",
     "index": "kroger-554152",
     "servings_per_container": "11 Pancakes",
@@ -61936,7 +61955,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized well as a standard serving size of 8 mini pancakes, which is about 360 calories.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:14:01.550986+00:00"
   },
   {
     "BRAND": "Uno",
@@ -61956,7 +61976,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 910,
-    "image_url": "https://www.vista-health.co.uk/media/pd2hkatk/mri-lumbar-spine-l5_s1-level.jpg?width=1440&height=1800&format=webp&v=1dad3a113584bc0",
+    "image_url": "https://i5.walmartimages.com/seo/Uno-6in-Chicago-Style-Deep-Dish-Cheese-and-Pepperoni-Pizza-2-Pack-23-oz-Marinara-Sauce-Fresh_909cac13-01c6-4cbc-846b-1852e45cda34.d837d8a5b320f2491477eca94e97369e.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=uno+6in+chicago+style+deep+dish+cheese+and+pepperoni+pizza",
     "index": "kroger-554153",
     "servings_per_container": "1/6 pizza",
@@ -61982,7 +62002,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this specific Uno individual deep dish cheese and pepperoni pizza, which is quite calorie-dense due to the thick crust and cheese.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:14:10.664032+00:00"
   },
   {
     "BRAND": "Mrs. T's",
@@ -62002,7 +62023,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 280,
-    "image_url": "https://britishftv.co.uk/wp-content/uploads/1713/88/frank-domhnall-gleeson-3.jpg",
+    "image_url": "https://i5.walmartimages.com/asr/8cd9ab9a-5855-4ced-885f-d10b16bda698.f09be3129675e8fa285a457ffd63d8ad.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=mrs+t%27s+loaded+baked+potato+pierogies",
     "index": "kroger-554154",
     "servings_per_container": "3 pierogies",
@@ -62029,7 +62050,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized from standard frozen aisle pierogies nutrition facts, typically around 190 calories per serving of 3 pierogies.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:14:16.793874+00:00"
   },
   {
     "BRAND": "Amy's",
@@ -62049,7 +62071,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 370,
-    "image_url": "https://2.bp.blogspot.com/-PSV3qOvAfjM/Ujrsb-vkPVI/AAAAAAAACvI/33OaqWv2rKk/s1600/Ada+apa+denganmu.PNG",
+    "image_url": "https://i5.walmartimages.com/seo/Amy-s-Frozen-Meals-Vegetable-Lasagna-Microwave-Meals-9-5-oz_a173b0e7-3d94-4aa3-bd2c-caad790894b4.85102bccb908a27b9c05ccaf4dfd96b4.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+vegetable+lasagna",
     "index": "kroger-554155",
     "servings_per_container": "0.083 Package",
@@ -62076,7 +62098,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize Amy's Vegetable Lasagna 9.5 oz as typically containing around 370 calories per serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:14:24.608741+00:00"
   },
   {
     "BRAND": "Amy's",
@@ -62096,7 +62119,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 380,
-    "image_url": "https://cerebrodigital.net/wp-content/uploads/2023/02/BAJO-EL-MICROSCOPIO.png",
+    "image_url": "https://i5.walmartimages.com/seo/Amy-s-Frozen-Meals-Mushroom-Risotto-Bowl-Made-With-Organic-Arborio-Rice-Microwave-Meals-9-5-Oz_52f0aa49-bdc6-4b9a-a277-50a3a26c9bf7.9d15a5870048c9893d9afa6c22ce62c5.jpeg?odnHeight=580&odnWidth=580&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+mushroom+risotto+bowl+meal",
     "index": "kroger-554156",
     "servings_per_container": "1 bowl",
@@ -62122,7 +62145,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this specific Amy's frozen meal and its standard nutritional profile.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:14:32.397126+00:00"
   },
   {
     "BRAND": "Amy's",
@@ -62142,7 +62166,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 380,
-    "image_url": "https://i.pinimg.com/originals/13/5b/59/135b5953d46b98cc13ef0c43a7e7efa4.jpg?nii=t",
+    "image_url": "https://i5.walmartimages.com/seo/Amys-Organic-Spinach-and-Tomato-Pizza-14-Ounce-8-per-case_f3b4cf5a-752b-4083-be91-919af3c5c269.d54057166fd7e840f8330bf6ac81f317.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+veggie+combo+pizza",
     "index": "kroger-554157",
     "servings_per_container": "4 PIZZA BITES",
@@ -62169,7 +62193,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized from Amy's frozen pizza line, typically around 380 calories per serving for a personal veggie combo pizza.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:14:41.744537+00:00"
   },
   {
     "BRAND": "Campbell's",
@@ -62189,7 +62214,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 500,
-    "image_url": "http://pericope.org/buls-notes/images/two_sons.jpg",
+    "image_url": "https://i5.walmartimages.com/asr/bb03458c-7ec0-4eda-87bc-7ad2bccae427.384c8f99eb14151ec9ac300a18e1033f.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=campbell%27s+chunky+meat+lovers+lasagna+bowl+meal",
     "index": "kroger-554158",
     "servings_per_container": "1 Cup (213g)",
@@ -62216,7 +62241,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Estimated based on typical nutritional content for a 12 oz Campbell's Chunky frozen pasta bowl.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:14:46.989202+00:00"
   },
   {
     "BRAND": "On-Cor",
@@ -62236,7 +62262,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 260,
-    "image_url": "https://www.royalcaribbeanblog.com/sites/default/files/styles/fb_style/public/fb/1558365026_SC19-MainDiningRoomR_2.jpg?itok=T0TQ5fda",
+    "image_url": "https://i5.walmartimages.com/asr/7de3662d-e77b-44d1-90a5-5107e0c015d5.b443e1fd89d08ca5372266cd3c25d16a.jpeg?odnHeight=576&odnWidth=576&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=on+cor+gravy+and+salisbury+steaks+package+meal",
     "index": "kroger-554159",
     "servings_per_container": "1 patty",
@@ -62262,7 +62288,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this On-Cor frozen meal product and its standard nutritional profile per serving of Salisbury steak with gravy.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:14:54.715937+00:00"
   },
   {
     "BRAND": "El Monterey",
@@ -62282,7 +62309,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 330,
-    "image_url": "https://2.bp.blogspot.com/-PSV3qOvAfjM/Ujrsb-vkPVI/AAAAAAAACvI/33OaqWv2rKk/s1600/Ada+apa+denganmu.PNG",
+    "image_url": "https://i5.walmartimages.com/seo/El-Monterey-Beef-and-Bean-Red-Chili-Burrito-4-ounce-64-per-case_8d5b9beb-d52c-44a9-bb39-9eb900b3c0a5.1fc3ff160fab2bf62bcaaa7ba00bdf1a.jpeg?odnHeight=117&odnWidth=117&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+family+size+beef+and+bean+red+chili+burritos",
     "index": "kroger-554160",
     "servings_per_container": "1 BURRITO",
@@ -62308,7 +62335,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this specific El Monterey 8-pack frozen burrito product, where a typical serving is one burrito at around 290 calories.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:15:03.071276+00:00"
   },
   {
     "BRAND": "El Monterey",
@@ -62328,7 +62356,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 530,
-    "image_url": "https://fwmedia.fandomwire.com/wp-content/uploads/2026/05/22040142/FH6-Shirakawa-Island-Farmhouse.jpg",
+    "image_url": "https://i5.walmartimages.com/asr/66aeae1a-9f0a-431f-827c-1cf4e3351b46.f8ec6ef74ea5b2f72c5e1604b1d9df73.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+signature+egg+cheese+and+jalapeno+breakfast+burrito",
     "index": "kroger-554161",
     "servings_per_container": "7 1/2 oz",
@@ -62354,7 +62382,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this specific 4.5 oz El Monterey breakfast burrito flavor and its typical calorie count.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:15:08.188641+00:00"
   },
   {
     "BRAND": "DIGIORNO",
@@ -62374,7 +62403,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 380,
-    "image_url": "https://cdn2.mediotiempo.com/uploads/media/2022/06/07/ines-sainz-mujer-pionera-television.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/DIGIORNO-Frozen-Pizza-Rising-Crust-Supreme-29-3oz-US-Package_7ca0afe5-ac7b-419b-af73-559e9955be87.467e5519fa5c5225eb07902fe3e2e3bb.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=digiorno+pizza+rising+crust+supreme+pizza+family+dinner",
     "index": "kroger-554162",
     "servings_per_container": "1/4 pizza (151g)",
@@ -62400,7 +62429,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize DiGiorno Rising Crust Supreme pizza; calories are typically around 380 per slice, with 6 servings per 29.3 oz pizza.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:15:15.018510+00:00"
   },
   {
     "BRAND": "DIGIORNO",
@@ -62420,7 +62450,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 370,
-    "image_url": "https://2.bp.blogspot.com/-PSV3qOvAfjM/Ujrsb-vkPVI/AAAAAAAACvI/33OaqWv2rKk/s1600/Ada+apa+denganmu.PNG",
+    "image_url": "https://i5.walmartimages.com/asr/418022e9-d1e4-4782-b19b-b303f96f8a18.7b5b2bab4c78bd5ae022e199a20ac306.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=digiorno+pizza+rising+crust+three+meat+pizza+family+dinner",
     "index": "kroger-554163",
     "servings_per_container": "1/4 pizza (145g)",
@@ -62446,7 +62476,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this specific DiGiorno rising crust frozen pizza variant and its typical nutritional profile per serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:15:23.522372+00:00"
   },
   {
     "BRAND": "DIGIORNO",
@@ -62466,7 +62497,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 320,
-    "image_url": "https://preview.redd.it/unique-made-in-mexico-city-santa-muerte-statues-as-perfect-v0-kat20oal7p6c1.png?width=794&format=png&auto=webp&s=84b7a74e7c1e99dcb63567d2f3d5168c6506252c",
+    "image_url": "https://i5.walmartimages.com/seo/DIGIORNO-Frozen-Wood-Fired-Pizza-Four-Cheese-14-6oz-Box_24b97d6a-9854-43e9-a376-0b6e12016231.909e0504807c0780d5a5527237cfd598.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=digiorno+four+cheese+pizza+wood+fired+style+crust+pizza",
     "index": "kroger-554164",
     "servings_per_container": "1/3 PIZZA",
@@ -62492,7 +62523,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this DiGiorno Wood Fired crust frozen pizza, which typically contains around 310 calories per serving (one-fourth of the pizza).",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:15:30.715213+00:00"
   },
   {
     "BRAND": "Odom's Tennessee Pride",
@@ -62512,7 +62544,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 330,
-    "image_url": "https://collegepill.com/wp-content/uploads/2022/12/Jean-Kelly-8.jpg",
+    "image_url": "https://www.tnpride.com/sites/g/files/qyyrlu381/files/images/products/maple-pancake-sausage-22072.png",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=odom%27s+tennessee+pride+maple+pancake+sausage+sandwiches+breakfast+sandwiches",
     "index": "kroger-554165",
     "servings_per_container": "2 SANDWICHES",
@@ -62538,7 +62570,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized as a standard frozen breakfast sandwich with pancake and sausage, typically around 240 calories per single sandwich serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:15:35.563303+00:00"
   },
   {
     "BRAND": "Perdue",
@@ -62558,7 +62591,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 270,
-    "image_url": "https://i.pinimg.com/originals/f8/27/3e/f8273e935abc5bd46dfb6e1fce07b745.png",
+    "image_url": "https://i5.walmartimages.com/seo/Perdue-No-Antibiotics-Ever-Frozen-Chicken-Breast-Nuggets-29-oz_d7f30b2b-6ef8-4015-8879-9842dfdb094c.a6537e016e62c1c52928ba7b4914511c.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=perdue+fully+cooked+breaded+chicken+breast+nuggets",
     "index": "kroger-554166",
     "servings_per_container": "4 NUGGETS",
@@ -62584,7 +62617,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized based on standard nutritional data for Perdue fully cooked breaded chicken breast nuggets per 4-ounce serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:15:43.017791+00:00"
   },
   {
     "BRAND": "Just Bare",
@@ -62604,7 +62638,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 140,
-    "image_url": "https://www.homestratosphere.com/wp-content/uploads/2019/03/types-of-mice-mar6-870x527.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Just-Bare-Fully-Cooked-Roasted-Chciken-Breast-Bites_0b9fdc52-80ef-480f-99eb-a1dd96ddf454.a628ad4125564e7d3c55c80afd043bb4.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=just+bare+fully+cooked+roasted+chicken+breast+bites",
     "index": "kroger-554167",
     "servings_per_container": "2 ONZ",
@@ -62630,7 +62664,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized as a popular frozen chicken product with standard nutritional values per serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:15:48.411607+00:00"
   },
   {
     "BRAND": "Jimmy Dean",
@@ -62650,7 +62685,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 410,
-    "image_url": "https://musescore.com/static/musescore/scoredata/g/93cff2580400b68894de6444a9e47b9765843a19/score_0.png@0?no-cache=1715710062",
+    "image_url": "https://i5.walmartimages.com/seo/Jimmy-Dean-Blueberry-Griddle-Cake-Sausage-Egg-and-Cheese-Sandwiches-18-8-oz-4-Count-Frozen_d3213621-889b-49d3-a62e-52b8c1b34670.5c1bbe8ab466d9cbe8cabfdef75ff56b.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+blueberry+griddle+cake+sausage",
     "index": "kroger-554168",
     "servings_per_container": "1 sandwich",
@@ -62676,7 +62711,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this Jimmy Dean frozen breakfast sandwich variant and its typical calorie content per serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:15:53.613110+00:00"
   },
   {
     "BRAND": "Jimmy Dean",
@@ -62696,7 +62732,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 290,
-    "image_url": "https://phinf.wevpstatic.net/MjAyNDAxMjZfMTQw/MDAxNzA2MjA1Mjg4MzU2.1IhGjv_IkBF1bvT7bIBr9CFp9-sTpAitux_Vxrl7SFEg.A-Bmh9iV8GnX0lVaCuApyAYLtSzaeJo1htvTjfp03qkg.JPEG/image.jpg?type=w1414",
+    "image_url": "https://i5.walmartimages.com/seo/Protein-Waffle-Buttermilk_3b610cbf-6940-49b6-9a29-ac9fa963c215.494274a69e4c8c65dbf68efd39a8ca6f.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+protein+buttermilk+waffles+fully+cooked+breakfast",
     "index": "kroger-554169",
     "servings_per_container": "100 GRAM",
@@ -62722,7 +62758,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized based on standard Jimmy Dean frozen protein waffle nutritional profiles for a 2-waffle serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:02.942003+00:00"
   },
   {
     "BRAND": "Jimmy Dean",
@@ -62742,7 +62779,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 290,
-    "image_url": "https://coloringpagescenter.com/images/06-2024/baby-unicorn-coloring-pages/baby-unicorn-sitting-in-a-crib-coloring-page.jpg",
+    "image_url": "https://i5.walmartimages.com/asr/64fac1d0-20b1-48b8-b01c-e56f89b48000.ddd3d39cea6a19caaafda204dbebd293.jpeg?odnHeight=576&odnWidth=576&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+protein+blueberry+waffles+fully+cooked+breakfast",
     "index": "kroger-554170",
     "servings_per_container": "100 GRAM",
@@ -62768,7 +62805,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized based on standard Jimmy Dean frozen breakfast product nutrition profiles for protein waffles.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:12.066941+00:00"
   },
   {
     "BRAND": "Jimmy Dean",
@@ -62788,7 +62826,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 480,
-    "image_url": "https://2.bp.blogspot.com/-PSV3qOvAfjM/Ujrsb-vkPVI/AAAAAAAACvI/33OaqWv2rKk/s1600/Ada+apa+denganmu.PNG",
+    "image_url": "https://i5.walmartimages.com/seo/Great-Value-Sausage-Breakfast-Bowl-7-oz-Frozen_de87f2a2-85b0-41ac-87b8-da7d03734d23.790c8ab2fd44f4df5079860539222ae2.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+protein+breakfast+bowl+classic+sausage+bacon+cheese+and+scrambled+egg",
     "index": "kroger-554171",
     "servings_per_container": "7.07 OZ SERVING",
@@ -62814,7 +62852,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this Jimmy Dean protein breakfast bowl; the classic sausage, bacon, and cheese variety is typically around 480 calories per 7.25 oz bowl.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:18.207098+00:00"
   },
   {
     "BRAND": "Jimmy Dean",
@@ -62834,7 +62873,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 390,
-    "image_url": "https://flavorverse.com/wp-content/uploads/2020/07/Lake-Burton-in-North-Georgia.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Sausage-Peppered-Egg-and-Colby-Jack-Cheese-on-a-Spiral-Croissant_de14ba00-ecbb-4718-9cdf-9c75b039ac6c.02c106eb1761834ee4003bd285a268a5.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+protein+breakfast+sausage+egg+cheese+croissant+fully+cooked+sandwiches",
     "index": "kroger-554172",
     "servings_per_container": "100 GRAM",
@@ -62860,7 +62899,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this Jimmy Dean frozen breakfast croissant sandwich as having approximately 390 calories per serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:26.339313+00:00"
   },
   {
     "BRAND": "Jimmy Dean",
@@ -62880,7 +62920,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 300,
-    "image_url": "https://c8.alamy.com/comp/2AWR0J5/1951-18-march-boston-usa-the-german-born-swiss-physicist-albert-einstein-1879-1955-1921-nobel-prize-winner-in-this-photo-sticking-2AWR0J5.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Grilled-Chicken-Peppered-Egg-and-Sharp-Cheddar-Cheese-Breakfast-Sandwich-on-ciabatta_feea7c0c-0827-4469-92c5-6497232e9d14.8b3c6ecf744d4760f3810b2ba6099dc9.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+protein+breakfast+grilled+chicken+egg+cheese+ciabatta+sandwiches+fully+cooked",
     "index": "kroger-554173",
     "servings_per_container": "100 GRAM",
@@ -62906,7 +62946,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this Jimmy Dean protein breakfast sandwich; typically around 300 calories per sandwich.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:31.494828+00:00"
   },
   {
     "BRAND": "Jimmy Dean",
@@ -62926,7 +62967,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 400,
-    "image_url": "https://assetsio.gnwcdn.com/Pokemon-Charcadet-Evolution-Line.jpg?width=690&quality=75&format=jpg&auto=webp",
+    "image_url": "https://i5.walmartimages.com/seo/Egg-Blend-Chipotle-Chicken-Cheddar-Cheese_aeb3878f-eacc-4c94-9fb7-4fe5223c1fca.d51156f3319a63b7a43bc596e5a3e11a.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+protein+breakfast+bowl+chipotle+chicken+scrambled+egg+and+monterey+jack+cheese",
     "index": "kroger-554174",
     "servings_per_container": "7.07 OZ SERVING",
@@ -62952,7 +62993,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this specific Jimmy Dean protein breakfast bowl variety and its standard calorie content.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:40.851848+00:00"
   },
   {
     "BRAND": "Jimmy Dean",
@@ -62972,7 +63014,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 360,
-    "image_url": "http://www.lffsnellville.com/wp-content/uploads/2014/07/members.jpg",
+    "image_url": "https://contenthandler-raleys.fieldera.com/prod/319931/1/0/0/10410714-Front-Right-Elevated.jpg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+heat+n+serve+turkey+sausage+breakfast+patties",
     "index": "kroger-554175",
     "servings_per_container": "100 GRAM",
@@ -62998,7 +63040,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize these fully cooked turkey sausage patties as having about 110 calories per two-patty serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:45.709758+00:00"
   },
   {
     "BRAND": "Premier Protein",
@@ -63018,7 +63061,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 80,
-    "image_url": "https://thumbs.dreamstime.com/b/wet-sponge-shiny-countertop-dripping-water-representing-cleanliness-freshness-yellow-rests-slick-droplets-cascading-334485316.jpg?w=992",
+    "image_url": "https://i5.walmartimages.com/seo/Premier-Protein-Pancakes-15-4-oz-12-Count-Frozen_cd915892-3131-45b3-a61a-0a7d161265b2.639a8f896b50847c22f3f15398dae5fe.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=premier+protein+microwavable+pancakes",
     "index": "kroger-554176",
     "servings_per_container": "1 Tbsp",
@@ -63043,7 +63086,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I do not recognize this specific Premier Protein frozen pancake product well enough to provide accurate calorie information.",
     "_gemini_recognized": false,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:52.124413+00:00"
   },
   {
     "BRAND": "Kodiak Cakes",
@@ -63063,7 +63107,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 250,
-    "image_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/4da32d17-051c-49bc-947b-b8543723f01f/dcb5t9i-e120119e-341f-4fbc-914e-3362a31557a1.jpg/v1/fill/w_810,h_987,q_70,strp/natsuki__ddlc_by_kiramano_dcb5t9i-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTI0OCIsInBhdGgiOiJcL2ZcLzRkYTMyZDE3LTA1MWMtNDliYy05NDdiLWI4NTQzNzIzZjAxZlwvZGNiNXQ5aS1lMTIwMTE5ZS0zNDFmLTRmYmMtOTE0ZS0zMzYyYTMxNTU3YTEuanBnIiwid2lkdGgiOiI8PTEwMjQifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.D0n-1MOXtJ6K_zkxLZoELAZ39ilAnbxZl2brmb7RdYc",
+    "image_url": "https://i5.walmartimages.com/asr/01282a51-2764-4801-8ac3-539760cdcc8c.90a5aecd9f783aa295ef33f6114873bc.png?odnHeight=372&odnWidth=372&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=kodiak+protein+packed+buttermilk+flapjack+puffs+with+protein",
     "index": "kroger-554177",
     "servings_per_container": "11 pieces",
@@ -63089,7 +63133,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized based on standard nutritional data for Kodiak frozen flapjack puffs per serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:56.961654+00:00"
   },
   {
     "BRAND": "Kodiak",
@@ -63135,7 +63180,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize Kodiak Sausage & Cheddar breakfast sandwiches, which typically contain around 390 calories per single sandwich serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:17:05.624686+00:00"
   },
   {
     "BRAND": "Kodiak",
@@ -63155,7 +63201,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 390,
-    "image_url": "https://www.hawtcelebs.com/wp-content/uploads/2025/10/julia-cavanagh-instagram-photos-and-video-10-24-2025-1.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Kodiak-Frozen-Breakfast-Sandwich-Maple-Pancake-Bacon-and-Colby-Jack-Cheese-2-ct-Box_419f7539-7a8a-439c-904f-96a08fe8c0de.fa9279486072051ca1507a0d867f4fab.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=kodiak+protein+packed+bacon+and+colby+jack+cheese+breakfast+sandwiches",
     "index": "kroger-554179",
     "servings_per_container": "1 tray",
@@ -63181,7 +63227,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this specific Kodiak protein breakfast sandwich, which typically contains around 390 calories per single sandwich serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:17:12.675440+00:00"
   },
   {
     "BRAND": "bibigo",
@@ -63201,7 +63248,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 610,
-    "image_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/8f179fc3-2cf4-4357-b2fa-bae340c95f0b/dkx64cy-7e44baa3-f9bd-4528-9b5e-d06f16ab2a99.png/v1/fill/w_840,h_952/huntrix_png_design___kpop_demon_hunters_art_by_kaizennosekai_dkx64cy-pre.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiIvZi84ZjE3OWZjMy0yY2Y0LTQzNTctYjJmYS1iYWUzNDBjOTVmMGIvZGt4NjRjeS03ZTQ0YmFhMy1mOWJkLTQ1MjgtOWI1ZS1kMDZmMTZhYjJhOTkucG5nIiwiaGVpZ2h0IjoiPD0xNDUxIiwid2lkdGgiOiI8PTEyODAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uud2F0ZXJtYXJrIl0sIndtayI6eyJwYXRoIjoiL3dtLzhmMTc5ZmMzLTJjZjQtNDM1Ny1iMmZhLWJhZTM0MGM5NWYwYi9rYWl6ZW5ub3Nla2FpLTQucG5nIiwib3BhY2l0eSI6OTUsInByb3BvcnRpb25zIjowLjQ1LCJncmF2aXR5IjoiY2VudGVyIn19.3C95ljXf0Bfws7fze6LQW1J21QnIhp1cGxeJ-88sFkU",
+    "image_url": "https://i5.walmartimages.com/seo/Bibigo-Korean-Style-Vegetable-Kimchi-Fried-Rice-18-0-oz_10384441-9a1d-4acd-8eee-6f09ab74573f.c0c059d47dda3f2ed78cfd7cf1690ea5.jpeg?odnHeight=640&odnWidth=640&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=bibigo+kimchi+cheese+fried+rice",
     "index": "kroger-554180",
     "servings_per_container": "1 CONTAINER",
@@ -63227,7 +63274,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized Bibigo Kimchi Cheese Fried Rice, with typical frozen fried rice nutritional values per serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:17:18.417007+00:00"
   },
   {
     "BRAND": "Kevin's Natural Foods",
@@ -63247,7 +63295,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 210,
-    "image_url": "https://products.eneba.games/resized-products/yEtR8NlOMbwrA8-MkM9WcjtwauWGaqG84Zj4nwPvlIo_350x200_2x-0.png",
+    "image_url": "https://i5.walmartimages.com/seo/Kevin-s-Natural-Foods-Orange-Chicken-9-5-oz_f9ebb422-bc17-40ac-badd-45527d207b56.3763fd90047c421430a1bb411132f5c0.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=kevin%27s+natural+foods+orange+chicken",
     "index": "kroger-554181",
     "servings_per_container": "2 Tbsp",
@@ -63274,7 +63322,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize Kevin's Natural Foods Orange Chicken, where a typical serving is around 210 calories.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:17:25.473775+00:00"
   },
   {
     "BRAND": "The Real Good Food Company",
@@ -63294,7 +63343,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 190,
-    "image_url": "https://velvetescape.com/wp-content/uploads/2013/03/Photo14.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Realgood-Foods-Co-Lightly-Breaded-Chicken-Breast-Strips-Gluten-Free-20-oz-Regular-Bag-Frozen_3192c62a-1392-4279-b4f3-2a3ae95cef0d.23c8c7294b77d146ec5ee7d8ec4edb39.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=real+good+foods+lightly+breaded+chicken+strips",
     "index": "kroger-554182",
     "servings_per_container": "2 Pieces (85g)",
@@ -63321,7 +63370,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized as a high-protein, low-carb frozen chicken product typically around 170 calories per 3-ounce serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:17:31.471477+00:00"
   },
   {
     "BRAND": "Pitaya Foods",
@@ -63341,7 +63391,7 @@
     "SUBCATEGORY": "Natural & Organic",
     "active": true,
     "calories": 330,
-    "image_url": "https://i.pinimg.com/474x/ff/93/0d/ff930d53bffc02ca75a1fe18fc0cbd15.jpg",
+    "image_url": "https://restaurantandmore.com/media/catalog/product/cache/6e8e24cc73e2eff11526e72b5f24c033/0/0/00853687004683_product_image_01_energy_smoothie_bowl_pitaya_foods_front.jpg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=pitaya+foods+organic+protein+smoothie+bowl+acai+strawberry+banana",
     "index": "kroger-554183",
     "servings_per_container": "1 bowl",
@@ -63368,7 +63418,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized based on standard nutritional profiles for acai protein smoothie bowls of this size.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:17:39.203189+00:00"
   },
   {
     "BRAND": "Pitaya Foods",
@@ -63388,7 +63439,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 240,
-    "image_url": "https://i.ytimg.com/vi/9WE6O38OZlY/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGFkgZShbMA8=&rs=AOn4CLB2fEtuWdwK_XWbArYgxk3kU3PU4w",
+    "image_url": "https://i5.walmartimages.com/seo/Pitaya-Foods-Protein-Dragon-Fruit-Mango-Smoothie-Bowl-6oz_849362b4-891c-44ea-9ce0-330cc7e92d41.dc7de627abbf337fd83755d4b1754049.png",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=pitaya+foods+organic+protein+smoothie+bowl+dragon+fruit+mango",
     "index": "kroger-554184",
     "servings_per_container": "1 bowl",
@@ -63414,7 +63465,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Pitaya Foods Organic Protein Smoothie Bowls typically range around 220 to 260 calories per 8 fl oz serving.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:17:45.038833+00:00"
   },
   {
     "BRAND": "Pitaya Foods",
@@ -63434,7 +63486,7 @@
     "SUBCATEGORY": "Natural & Organic",
     "active": true,
     "calories": 250,
-    "image_url": "https://i.pinimg.com/736x/97/38/27/9738277c6a15b0ea44d703531d971d9a.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Pitaya-Foods-Protein-Smoothie-Bowl-Chocolate-Banana-Sunflower-Butter-Organic-Frozen-1-Bowl-6-oz_8b402877-647c-4e59-9eb7-16d27c81eff8.4f016ee5cf3f73f7b4dc2bf6a2a2be03.jpeg?odnHeight=580&odnWidth=580&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=pitaya+foods+organic+protein+smoothie+bowl+chocolate+banana",
     "index": "kroger-554185",
     "servings_per_container": "1 bowl",
@@ -63460,7 +63512,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this specific Pitaya Foods chocolate banana protein smoothie bowl and its typical nutritional profile for an 8 oz size.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:17:53.785319+00:00"
   },
   {
     "BRAND": "Pitaya Foods",
@@ -63480,7 +63533,7 @@
     "SUBCATEGORY": "Natural & Organic",
     "active": true,
     "calories": 250,
-    "image_url": "https://i.ytimg.com/vi/mP93YcbQfeg/maxresdefault.jpg",
+    "image_url": "https://storage.googleapis.com/images-lnb-prd-8936dd0.lnb.prd.v8.commerce.mi9cloud.com/product-images/detail/00850065016207.png",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=pitaya+foods+organic+protein+smoothie+bowl+blue+spirulina+coconut",
     "index": "kroger-554186",
     "servings_per_container": "1 bowl",
@@ -63506,7 +63559,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized this specific Pitaya Foods blue spirulina coconut protein smoothie bowl size and typical nutritional profile.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:17:59.372067+00:00"
   },
   {
     "BRAND": "Saffron Road",
@@ -63526,7 +63580,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 380,
-    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Jimenez_en_Chihuahua.svg/1280px-Jimenez_en_Chihuahua.svg.png",
+    "image_url": "https://i5.walmartimages.com/seo/Saffron-Road-Coconut-Curry-Chicken-with-Basmati-Rice-10-Ounce-8-per-case_8c88a05e-d735-43d1-9998-21d245293afb.2b51ac0da3261c099371908fcc528d0c.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=saffron+road+coconut+curry+chicken+gluten+free+indian+dinner",
     "index": "kroger-554187",
     "servings_per_container": "0.5 pouch",
@@ -63552,7 +63606,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this frozen Indian meal and its typical nutritional profile for a 10 oz portion.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:18:08.804907+00:00"
   },
   {
     "BRAND": "Saffron Road",
@@ -63572,7 +63627,7 @@
     "SUBCATEGORY": "Natural & Organic",
     "active": true,
     "calories": 380,
-    "image_url": "https://yourneighborhoodvegan.com/wp-content/uploads/sites/41626/2023/12/rsw_1280-4-1.webp",
+    "image_url": "https://i5.walmartimages.com/seo/Saffron-Road-Lamb-Saag-with-Basmati-Rice-10-Ounce-8-per-case_590d5702-e315-4f0b-b00f-9bcb9a84a118.5bc5e317e0294d06a65c5939ea001c44.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=saffron+road+lamb+saag+with+basmati+rice+gluten+free+indian+dinner",
     "index": "kroger-554188",
     "servings_per_container": "10 ONZ",
@@ -63598,7 +63653,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this specific Saffron Road frozen meal and its typical calorie content for a 10 oz portion.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:18:15.517880+00:00"
   },
   {
     "BRAND": "Saffron Road",
@@ -63618,7 +63674,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 390,
-    "image_url": "https://i0.wp.com/i.pinimg.com/736x/3d/ab/d1/3dabd167aa3808dd59c8c59db7c927fc.jpg?resize=650,400",
+    "image_url": "https://i5.walmartimages.com/asr/8daed865-f957-439a-b125-0313b32ff76a.b6e30cf05395576e93ece8c0b3bc3614.jpeg?odnHeight=576&odnWidth=576&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=saffron+road+chicken+biryani+with+basmati+rice+gluten+free+indian+dinner",
     "index": "kroger-554189",
     "servings_per_container": "1 cup",
@@ -63644,7 +63700,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this specific Saffron Road frozen dinner and its standard calorie count for a 10 oz package.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:18:21.669669+00:00"
   },
   {
     "BRAND": "Saffron Road",
@@ -63690,6 +63747,7 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this frozen meal and its typical nutritional profile for a 10 oz portion.",
     "_gemini_recognized": true,
-    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)"
+    "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
+    "_image_walmart_url_checked_at": "2026-09-20T17:18:27.681432+00:00"
   }
 ]
