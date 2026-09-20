@@ -81,14 +81,14 @@ to find 20. For each Kroger product:
    | `_kroger_upc`, `PRODUCT_NAME`, `BRAND`, `PRICE_CURRENT` / `PRICE_RETAIL` | Kroger (price at the store picked from `KROGER_ZIP` or `kroger.location_id`; `PRICE_CURRENT` is the promo price when there is one, else regular) |
    | `calories` | The **highest** of USDA, Open Food Facts and Gemini, **rounded to the nearest 10**. Winning source in `_calorie_max_source`, every source's raw number in `_calorie_sources`. |
    | `servings_per_container` | USDA FoodData Central, pulled the way `build_meal_pool.py` does (`householdServingFullText`, else `packageWeight`); `N/A` if USDA has no match |
-   | `PRODUCT_URL`, `SKU` | Serper.dev search `site:walmart.com <brand> <name>`; the URL (with `?fulfillmentIntent=Pickup`) and the numeric id from it. If that SKU is already **active** in the pool, the product *is* that item and its UPC is recorded there instead. If the SKU is already in the pool on a row that's **inactive** (or was never checked), that row is refreshed in place rather than duplicated: `PRODUCT_URL` becomes the looked-up URL, `active` becomes `true`, and everything else in this table is filled in as for a new product (the row keeps its `index` and any UPC it already had; `_reactivated_at` is set). A refreshed row counts toward the run's 20. |
+   | `PRODUCT_URL`, `SKU` | Serper.dev search `site:walmart.com <brand> <name>` (10 results). A result only counts if it's the **same product**: the product name in the Walmart URL must contain Kroger's brand and score at least `serper.min_name_match_score` (85) against Kroger's name — Serper returns the *closest* page, which is often a different flavor or brand. The first result that passes is used (its score is saved as `_walmart_name_match_score`); if none does, the product is skipped and its UPC remembered. The URL (with `?fulfillmentIntent=Pickup`) and the numeric id from it are stored. If that SKU is already **active** in the pool, the product *is* that item and its UPC is recorded there instead. If the SKU is already in the pool on a row that's **inactive** (or was never checked), that row is refreshed in place rather than duplicated: `PRODUCT_URL` becomes the looked-up URL, `active` becomes `true`, and everything else in this table is filled in as for a new product (the row keeps its `index` and any UPC it already had; `_reactivated_at` is set). A refreshed row counts toward the run's 20. |
    | `INSTACART_URL` | **Built** from the cleaned name (`https://www.instacart.com/store/s?k=…`) — never searched for, not verified |
    | `image_url` | DuckDuckGo Images, searched with the product's Walmart URL as the query; the top result wins, whoever hosts it (retry/backoff as in `AddImageUrl.py`) |
    | `SOURCE`, `active` | `"Kroger"`; `true` (Serper confirmed a live Walmart page) |
 
-   A new product is only added if it has a Kroger price, a Walmart URL/SKU,
-   an image, and at least one calorie number. Otherwise it isn't added; if
-   the reason is lasting (no Walmart page, no image results, no calories
+   A new product is only added if it has a Kroger price, a verified
+   same-product Walmart URL/SKU, an image, and at least one calorie number. Otherwise it isn't added; if
+   the reason is lasting (no matching Walmart page, no image results, no calories
    anywhere) its UPC goes in `kroger_skipped_upcs.json` (delete an entry to
    retry it), and if it might be temporary (network error, rate limit,
    Gemini quota) nothing is recorded and a later run tries again.

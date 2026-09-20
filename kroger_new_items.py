@@ -44,8 +44,14 @@ find 20 new ones. For every Kroger product pulled:
          regular; PRICE_RETAIL = regular) -- all straight from Kroger, at
          the store chosen by KROGER_ZIP / kroger.location_id;
        - Walmart page: Serper.dev search "site:walmart.com <brand> <name>"
-         -- the same service check_walmart_links.py uses -- checking each
-         result for the real /ip/<slug>/<id> product-page shape. The URL
+         -- the same service check_walmart_links.py uses. Each result is
+         checked for the real /ip/<slug>/<id> product-page shape AND for
+         being the SAME PRODUCT as the Kroger one: the product name in the
+         URL must carry Kroger's brand and score at least
+         serper.min_name_match_score (85) against Kroger's name. Serper
+         returns the closest Walmart page, which is often a different
+         flavor or brand; the first result that passes wins, and if none
+         does the product is skipped ("no_matching_walmart_page"). The URL
          (+ ?fulfillmentIntent=Pickup) goes in PRODUCT_URL and the numeric
          id in SKU. If that SKU is already on an ACTIVE pool item the
          product IS that item: its UPC is recorded there instead. If it's
@@ -745,6 +751,44 @@ def slug_to_product_name(slug):
     return re.sub(r"\s+", " ", text).strip()
 
 
+def verification_key(text, from_slug=False):
+    """Cleaned words of a product name, for checking that a Walmart page
+    is the same product as a Kroger one. Same cleanup as compare_key(),
+    plus: "and" is dropped (Walmart slugs lose the "&" that Kroger names
+    keep), and in a URL slug a split possessive is rejoined ("Amy s" ->
+    "Amys") so it lines up with Kroger's "Amy's"."""
+    if from_slug:
+        text = re.sub(r"(\w) s\b", r"\1s", text)
+    words = [w for w in clean_search_words(text) if w != "and"]
+    return " ".join(words).replace("'", "")
+
+
+def walmart_page_matches(candidate, slug_name, cfg):
+    """Is the Walmart page whose URL slug is `slug_name` the SAME PRODUCT
+    as this Kroger candidate? Serper only returns the closest Walmart page
+    to the search, which is often a different flavor or even a different
+    brand -- and treating a wrong page as this product would tag its UPC
+    on the wrong pool row or overwrite the wrong row.
+    Returns (matches, score, reason). It matches when:
+      1. the brands agree -- Kroger's brand appears in the URL's product
+         name (same rule brands_match() uses against the pool; if Kroger
+         gave no brand at all, this check is skipped), AND
+      2. the cleaned names score at least serper.min_name_match_score
+         (0-100, rapidfuzz token_sort_ratio) against each other."""
+    # brand_and_name() so that a Kroger description missing its brand still
+    # lines up with a Walmart title that has it.
+    cand_key = verification_key(brand_and_name(candidate))
+    slug_key = verification_key(slug_name, from_slug=True)
+    cand_brand = normalize_brand(candidate["brand"])
+    if cand_brand and not brands_match(cand_brand, cand_key, "", slug_key,
+                                        cfg["dedup"]["brand_min_similarity"]):
+        return False, 0.0, "brand_mismatch"
+    score = float(fuzz.token_sort_ratio(cand_key, slug_key))
+    if score < cfg["serper"]["min_name_match_score"]:
+        return False, score, "name_mismatch"
+    return True, score, "ok"
+
+
 def brand_and_name(candidate):
     """"<brand> <description>", but without repeating the brand when
     Kroger's description already starts with / contains it (it usually
@@ -763,11 +807,15 @@ def find_walmart_listing(candidate, api_key, cfg):
     reliably surface the raw UPC as indexable text, so that returned
     no_search_results almost every time -- product name works far
     better, same as searching for it by hand does.) Checks each organic
-    result in turn for the first one that's both on walmart.com AND
-    matches the real /ip/<slug>/<id> product-page shape, rather than
-    just trusting whatever the top result happens to be. Returns a dict
-    with product_url/sku (both None if nothing matched) plus
-    query/reason/top-result metadata."""
+    result in turn for the first one that's on walmart.com, has the real
+    /ip/<slug>/<id> product-page shape, AND is the same product as the
+    Kroger candidate (walmart_page_matches(): same brand, similar name --
+    judged from the product name inside the URL), rather than trusting
+    whatever the top result happens to be. Returns a dict with
+    product_url/sku (both None if nothing matched) plus
+    query/reason/top-result metadata; "name_match_score" on success, and
+    "closest_rejected" ((name, score) of the best product page that failed
+    the same-product check) when that was the reason for failing."""
     query = f"site:walmart.com {brand_and_name(candidate)}"
     endpoint = cfg["serper"]["endpoint"]
     timeout = cfg["serper"]["timeout_seconds"]
@@ -781,7 +829,7 @@ def find_walmart_listing(candidate, api_key, cfg):
             resp = requests.post(
                 endpoint,
                 headers={"X-API-KEY": api_key, "Content-Type": "application/json"},
-                json={"q": query, "num": 5},
+                json={"q": query, "num": cfg["serper"]["num_results"]},
                 timeout=timeout,
             )
             if resp.status_code in (401, 403):
@@ -813,6 +861,7 @@ def find_walmart_listing(candidate, api_key, cfg):
 
     top_result_url = organic[0].get("link", "")
     saw_walmart_domain = False
+    closest_rejected = None          # (name, score) of the best product page that wasn't the same product
     for result in organic:
         url = result.get("link", "")
         netloc = urlparse(url).netloc.lower().split(":")[0]
@@ -823,16 +872,28 @@ def find_walmart_listing(candidate, api_key, cfg):
         match = WALMART_IP_URL_RE.search(urlparse(url).path)
         if match:
             slug, sku = match.group(1), match.group(2)
-            return {
-                "product_url": url, "sku": sku,
-                "product_name": slug_to_product_name(slug), "query": query,
-                "reason": "ok", "top_result_url": top_result_url,
-            }
+            page_name = slug_to_product_name(slug)
+            same_product, score, _why = walmart_page_matches(candidate, page_name, cfg)
+            if same_product:
+                return {
+                    "product_url": url, "sku": sku,
+                    "product_name": page_name, "query": query,
+                    "reason": "ok", "top_result_url": top_result_url,
+                    "name_match_score": score,
+                }
+            if closest_rejected is None or score > closest_rejected[1]:
+                closest_rejected = (page_name, score)
 
-    reason = "walmart_domain_but_no_ip_pattern" if saw_walmart_domain else "no_walmart_result_in_top_results"
+    if closest_rejected is not None:
+        reason = "no_matching_walmart_page"
+    elif saw_walmart_domain:
+        reason = "walmart_domain_but_no_ip_pattern"
+    else:
+        reason = "no_walmart_result_in_top_results"
     return {
         "product_url": None, "sku": None, "product_name": None, "query": query,
         "reason": reason, "top_result_url": top_result_url,
+        "closest_rejected": closest_rejected,
     }
 
 
@@ -1350,6 +1411,8 @@ def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
         "_serper_query": walmart["query"],
         "_serper_reason": walmart["reason"],
         "_serper_top_result_url": walmart["top_result_url"],
+        "_walmart_name_match_score": walmart.get("name_match_score"),  # how closely the Walmart
+                                                                        # page's name matched Kroger's
         "_walmart_url_slug_name": walmart.get("product_name"),  # debug/reference only -- not
                                                                   # PRODUCT_NAME (Kroger's is).
         "_image_search_query": image_query,
@@ -1386,6 +1449,7 @@ class AbortRun(Exception):
 # skipped-UPCs file.
 _PERMANENT_WALMART_REASONS = {
     "no_search_results", "no_walmart_result_in_top_results", "walmart_domain_but_no_ip_pattern",
+    "no_matching_walmart_page",
 }
 
 
@@ -1431,7 +1495,12 @@ def enrich_candidate(c, ctx):
         reason = walmart["reason"]
         if reason.startswith("auth_error"):
             raise AbortRun(reason)
-        return ("skip" if reason in _PERMANENT_WALMART_REASONS else "retry_later"), f"no Walmart link ({reason})"
+        detail = f"no Walmart link ({reason})"
+        if walmart.get("closest_rejected"):
+            name, score = walmart["closest_rejected"]
+            detail += (f" -- closest Walmart page was a different product: {name!r} "
+                       f"(name match {score:.0f}, needs {cfg['serper']['min_name_match_score']})")
+        return ("skip" if reason in _PERMANENT_WALMART_REASONS else "retry_later"), detail
 
     sku = walmart["sku"]
     if sku in ctx.active_skus:

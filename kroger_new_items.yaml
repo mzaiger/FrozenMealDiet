@@ -141,6 +141,19 @@ serper:
   timeout_seconds: 15
   max_retries: 2
   retry_delay_seconds: 3
+  # Organic results to look through per search (Serper's cap for one
+  # credit is 10). More results = more chances that one of them is the
+  # right Walmart page.
+  num_results: 10
+  # A Walmart page only counts as the same product as the Kroger one when
+  # the brand appears in the page's product name (taken from its URL) AND
+  # the two cleaned names score at least this (0-100, rapidfuzz
+  # token_sort_ratio). Serper returns the CLOSEST Walmart page, which is
+  # often a different flavor or brand -- e.g. a tortilla-chip page for a
+  # Kroger burrito bowl -- so without this check the wrong page's SKU gets
+  # used. Real same-product pairs score ~88-100; near-miss flavors ~55-75.
+  # Raise it to be stricter (more products skipped), lower it to be looser.
+  min_name_match_score: 85
 
 ddg_image:
   min_delay_seconds: 4.0
