@@ -38,7 +38,7 @@ find 20 new ones. For every Kroger product pulled:
        - Kroger UPC ("_kroger_upc"), PRODUCT_NAME (Kroger's description),
          and price (PRICE_CURRENT = promo price if Kroger lists one else
          regular; PRICE_RETAIL = regular) -- all straight from Kroger, at
-         the store in kroger.location_id;
+         the store chosen by KROGER_ZIP / kroger.location_id;
        - Walmart page: Serper.dev search "site:walmart.com <brand> <name>"
          -- the same service check_walmart_links.py uses -- checking each
          result for the real /ip/<slug>/<id> product-page shape. The URL
@@ -94,12 +94,15 @@ Env vars required:
     GEMINI_KEY                              -- Gemini calorie estimate
     USDA_API_KEY                            -- USDA FoodData Central (same
                                                 key build_meal_pool.py uses)
-Also needed: a Kroger store to price against -- kroger.location_id in
-kroger_new_items.yaml, or the KROGER_LOCATION_ID env var (which wins if
-both are set). Run `python kroger_new_items.py --find-location <ZIP>` to
-list nearby store ids. If any key or the store id is missing, the run is
-skipped entirely (exit 0), same pattern as gemini_meal_lookup.py. Open Food
-Facts needs no key.
+Also needed: a Kroger store to price against, from the first of these that
+is set: the KROGER_LOCATION_ID env var, kroger.location_id in
+kroger_new_items.yaml, or KROGER_ZIP -- a ZIP code (a GitHub secret or
+variable in the workflow) that's turned into the NEAREST Kroger-family
+store through Kroger's Locations API at the start of each run and logged.
+Run `python kroger_new_items.py --find-location <ZIP>` to list nearby store
+ids and pin one explicitly instead. If any key or the store is missing,
+the run is skipped entirely (exit 0), same pattern as
+gemini_meal_lookup.py. Open Food Facts needs no key.
 
 Install:
     pip install requests pyyaml ddgs rapidfuzz
@@ -485,14 +488,18 @@ def _positive_price(value):
     return price if price > 0 else None
 
 
-def find_kroger_locations(token, zip_code, timeout, limit=10):
-    """Lists Kroger-family stores near a ZIP code so you can pick the
-    locationId to put in kroger_new_items.yaml (kroger.location_id).
-    Returns a list of (locationId, one-line description)."""
+def find_kroger_locations(token, zip_code, timeout, limit=10, radius_miles=100):
+    """Lists Kroger-family stores near a ZIP code, nearest first. Used
+    both by --find-location (to pick a locationId by hand) and to resolve
+    the KROGER_ZIP secret into a store. Kroger's default search radius is
+    only 10 miles, so it's widened (kroger.location_search_radius_miles)
+    -- otherwise a ZIP with no store that close returns nothing. Returns
+    a list of (locationId, one-line description)."""
     resp = requests.get(
         KROGER_LOCATIONS_URL,
         headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
-        params={"filter.zipCode.near": zip_code, "filter.limit": limit},
+        params={"filter.zipCode.near": zip_code, "filter.radiusInMiles": radius_miles,
+                "filter.limit": limit},
         timeout=timeout,
     )
     resp.raise_for_status()
@@ -1403,13 +1410,18 @@ def main():
     # The env var wins over the yaml, so a one-off run can point at a
     # different store without editing the config.
     location_id = (os.environ.get("KROGER_LOCATION_ID") or str(cfg["kroger"].get("location_id") or "")).strip()
+    # Used only when no store id is set above: the nearest Kroger-family
+    # store to this ZIP code becomes the store prices are taken from.
+    kroger_zip = (os.environ.get("KROGER_ZIP") or "").strip()
+    radius_miles = cfg["kroger"].get("location_search_radius_miles", 100)
 
     if args.find_location:
         if not (kroger_id and kroger_secret):
             log("--find-location needs KROGER_CLIENT_ID and KROGER_CLIENT_SECRET set.")
             return
         token = get_kroger_token(kroger_id, kroger_secret, cfg["kroger"]["timeout_seconds"])
-        stores = find_kroger_locations(token, args.find_location, cfg["kroger"]["timeout_seconds"])
+        stores = find_kroger_locations(token, args.find_location, cfg["kroger"]["timeout_seconds"],
+                                       radius_miles=radius_miles)
         if not stores:
             log(f"No Kroger-family stores found near {args.find_location}.")
         for loc_id, desc in stores:
@@ -1420,8 +1432,8 @@ def main():
     if not args.dry_run:
         required += [("SERPER_API_KEY", serper_key), ("GEMINI_KEY", gemini_key), ("USDA_API_KEY", usda_key)]
     missing = [name for name, val in required if not val]
-    if not location_id:
-        missing.append("KROGER_LOCATION_ID (or kroger.location_id in kroger_new_items.yaml)")
+    if not location_id and not kroger_zip:
+        missing.append("KROGER_ZIP (or KROGER_LOCATION_ID / kroger.location_id in kroger_new_items.yaml)")
     if missing:
         log(f"Missing {', '.join(missing)} -- skipping kroger_new_items run.")
         return
@@ -1443,6 +1455,20 @@ def main():
 
     log("Fetching Kroger OAuth token...")
     token = get_kroger_token(kroger_id, kroger_secret, cfg["kroger"]["timeout_seconds"])
+
+    if not location_id:
+        try:
+            stores = find_kroger_locations(token, kroger_zip, cfg["kroger"]["timeout_seconds"],
+                                           limit=1, radius_miles=radius_miles)
+        except requests.RequestException as e:
+            log(f"Couldn't look up a Kroger store for KROGER_ZIP {kroger_zip!r}: {e} -- skipping this run.")
+            return
+        if not stores:
+            log(f"No Kroger-family store within {radius_miles} miles of KROGER_ZIP {kroger_zip!r} -- "
+                f"skipping this run. Set kroger.location_id (or KROGER_LOCATION_ID) to pick a store directly.")
+            return
+        location_id, store_desc = stores[0]
+        log(f"KROGER_ZIP {kroger_zip}: using the nearest store, {location_id} ({store_desc}) for prices.")
 
     stats = {"pulled": 0, "not_frozen_or_unpriced": 0, "known_upc": 0, "matched_existing": 0}
     unsaved_tags = 0

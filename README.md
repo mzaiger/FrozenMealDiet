@@ -71,7 +71,7 @@ to find 20. For each Kroger product:
 
    | Field | Source |
    |---|---|
-   | `_kroger_upc`, `PRODUCT_NAME`, `BRAND`, `PRICE_CURRENT` / `PRICE_RETAIL` | Kroger (price at the store in `kroger.location_id`; `PRICE_CURRENT` is the promo price when there is one, else regular) |
+   | `_kroger_upc`, `PRODUCT_NAME`, `BRAND`, `PRICE_CURRENT` / `PRICE_RETAIL` | Kroger (price at the store picked from `KROGER_ZIP` or `kroger.location_id`; `PRICE_CURRENT` is the promo price when there is one, else regular) |
    | `calories` | The **highest** of USDA, Open Food Facts and Gemini, **rounded to the nearest 10**. Winning source in `_calorie_max_source`, every source's raw number in `_calorie_sources`. |
    | `servings_per_container` | USDA FoodData Central, pulled the way `build_meal_pool.py` does (`householdServingFullText`, else `packageWeight`); `N/A` if USDA has no match |
    | `PRODUCT_URL`, `SKU` | Serper.dev search `site:walmart.com <brand> <name>`; the URL (with `?fulfillmentIntent=Pickup`) and the numeric id from it. If that SKU is already active in the pool, the product *is* that item and its UPC is recorded there instead. |
@@ -91,11 +91,15 @@ how many new products go through the quota-limited Serper/DuckDuckGo steps
 per run, and `run.max_runtime_minutes` stops the run in time for the
 workflow to commit what it did.
 
-**Setup:** besides the secrets below, it needs a Kroger store to take prices
-from — set `kroger.location_id` in `kroger_new_items.yaml` (or the
-`KROGER_LOCATION_ID` env var / repo variable, which wins). Find store ids
-with `python kroger_new_items.py --find-location <ZIP>`. Without one, the
-run is skipped.
+**Kroger store for prices:** Kroger only returns prices for a specific
+store. The script uses the first of these that is set: the
+`KROGER_LOCATION_ID` env var/repo variable, `kroger.location_id` in
+`kroger_new_items.yaml`, or `KROGER_ZIP` — the ZIP code secret, which is
+turned into the *nearest* Kroger-family store at the start of every run
+(within `kroger.location_search_radius_miles`, default 100) and logged. To
+pin a specific store instead of the nearest one, list candidates with
+`python kroger_new_items.py --find-location <ZIP>` and set its id. With
+none of the three set, the run is skipped.
 
 ```
 pip install requests pyyaml ddgs rapidfuzz
@@ -159,11 +163,13 @@ from an environment variable at runtime:
 | `SERPER_API_KEY` | `check_walmart_links.py`, `check_instacart_urls.py`, `kroger_new_items.py` | Serper.dev Google searches — Walmart/Instacart link checks, and finding each new product's Walmart URL/SKU. |
 | `GEMINI_KEY` | `gemini_meal_lookup.py`, `kroger_new_items.py` | The weekly Gemini estimate workflow, and the Gemini calorie estimate for new products. |
 | `KROGER_CLIENT_ID` / `KROGER_CLIENT_SECRET` | `kroger_new_items.py` | Kroger's OAuth client-credentials app (register at developer.kroger.com) — product catalog search and store lookup. |
-| `KROGER_LOCATION_ID` *(optional)* | `kroger_new_items.py` | Overrides `kroger.location_id` from `kroger_new_items.yaml`. |
+| `KROGER_ZIP` | `kroger_new_items.py` | ZIP code, turned into the nearest Kroger-family store whose prices are used. Secret or repo variable. Not needed if a store id is set below. |
+| `KROGER_LOCATION_ID` *(optional)* | `kroger_new_items.py` | Pins one specific store; wins over `KROGER_ZIP` and over `kroger.location_id` in `kroger_new_items.yaml`. |
 
 Open Food Facts needs no key. `check_active_urls.py` and `AddImageUrl.py`
 don't need any key either.
 
 For GitHub Actions, the keys need to be repo secrets (Settings → Secrets
 and variables → Actions), referenced in the relevant workflow's `env:`
-block; `KROGER_LOCATION_ID` is read from a repo *variable* if you set one.
+block. `KROGER_ZIP` can be a secret or a repo variable (the workflow reads
+either); `KROGER_LOCATION_ID` is read from a repo *variable*.

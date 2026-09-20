@@ -11,7 +11,8 @@
 #
 # Where each field on a new pool record comes from:
 #   _kroger_upc, PRODUCT_NAME, BRAND, PRICE_CURRENT/PRICE_RETAIL -- Kroger
-#       (price is the price at the store in kroger.location_id below)
+#       (price is the price at the store chosen under kroger: below --
+#       KROGER_ZIP, or location_id)
 #   PRODUCT_URL, SKU -- Serper.dev search for the Walmart page; SKU is the
 #       id part of that URL, and ?fulfillmentIntent=Pickup is appended to
 #       the URL
@@ -67,12 +68,22 @@ open_food_facts:
 kroger:
   # The Kroger store to take prices from. REQUIRED -- Kroger's API only
   # returns prices when a search is scoped to a store, and this script
-  # skips the run if there isn't one. The KROGER_LOCATION_ID environment
-  # variable, if set, overrides this. To find an id, run:
+  # skips the run if there isn't one. The store comes from the first of
+  # these that is set:
+  #   1. the KROGER_LOCATION_ID environment variable
+  #   2. location_id below
+  #   3. the KROGER_ZIP environment variable (a GitHub secret/variable in
+  #      the workflow): a ZIP code, turned into the NEAREST Kroger-family
+  #      store at the start of every run via Kroger's Locations API. The
+  #      store it picked is logged.
+  # To pin a specific store instead, run:
   #     python kroger_new_items.py --find-location <ZIP>
   # (needs KROGER_CLIENT_ID / KROGER_CLIENT_SECRET set) and paste the
   # 8-character locationId of the store you want here, e.g. "01400943".
   location_id: ""
+  # How far from the ZIP code to look for a store. Kroger's own default is
+  # only 10 miles, which returns nothing if no store is that close.
+  location_search_radius_miles: 100
 
   # Kroger's own department groupings don't map 1:1 to Walmart's, so
   # this is a set of search terms run against filter.term instead of a
