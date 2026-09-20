@@ -1,124 +1,114 @@
 """
 kroger_new_items.py
 
-Finds frozen-meal / frozen-breakfast products NOT already in
-candidate_pool.json by searching Kroger's live public product catalog,
-then enriches each one and appends it to the pool in the same schema
-Dedup.py / build_meal_pool.py / check_active_urls.py already use.
+Adds new frozen-meal / frozen-breakfast products to candidate_pool.json
+by pulling Kroger's live public product catalog, keeping only products
+that aren't already in the pool, and enriching each one in the same
+schema Dedup.py / build_meal_pool.py / check_active_urls.py already use.
 
 Why Kroger for discovery: candidate_pool.json was built from a single
-2022 Walmart CSV export and hasn't had new products added since (only
-existing rows get checked/refreshed). Kroger's Product API is a free,
-official, live catalog -- not a scrape -- so it's a reasonable stand-in
-for "what frozen products exist right now" even though the item is
-ultimately still looked up on Walmart. Kroger's API has no "date added"
-field, so there's no way to literally filter to "listed after 2022" --
-this script instead treats "in Kroger's catalog today AND not already in
-the pool by normalized product name" as the practical definition of
-"new". See kroger_new_items.yaml's header for more.
+2022 Walmart CSV export and hasn't had new products added since. Kroger's
+Product API is a free, official, live catalog -- not a scrape -- and it
+has no "date added" field, so "new" here means "in Kroger's catalog today
+and not already in the pool (by fuzzy name match)". Meant to run 4 times a
+day for up to 20 new products each run (see the workflow).
 
-Pipeline per candidate product:
-  1. Kroger Product API search (by term) -> brand, description,
-     categories, size, UPC. Search terms are deliberately broad/generic
-     (e.g. "bowl", "meal" -- not "frozen bowl"), since Kroger's term
-     search is a literal text match and an over-narrow phrase wastes
-     most of a 50-result page on near-duplicates. What actually keeps
-     results scoped to frozen items is Kroger's own category labels --
-     a candidate is dropped unless at least one of its Kroger categories
-     mentions "frozen" -- not the search term. No price/location lookup
-     -- Kroger pricing isn't used anywhere here.
-  2. Serper.dev (site:walmart.com <brand> <product name>) -- the same
-     service check_walmart_links.py already uses -- for a real Walmart
-     PRODUCT_URL, checking each result for the actual /ip/<slug>/<id>
-     product-page shape rather than trusting the top hit blindly. SKU is
-     extracted directly from that matched URL (never invented). If that
-     SKU already belongs to a pool item that's currently marked
-     active=True, the candidate is skipped right here -- no point
-     re-adding a product that's already in the pool and confirmed live.
-     ?fulfillmentIntent=Pickup is appended to the final PRODUCT_URL.
-     (The slug is also read into a product name, but that's kept only as
-     debug metadata -- "_walmart_url_slug_name" -- not used as
-     PRODUCT_NAME, since some slugs are truncated/abbreviated versions of
-     the real name; see step 4.)
-  2.5. Serper.dev again (instacart <brand> <product name>) via
-     find_instacart_listing() -- same multi-result-scanning technique as
-     step 2, just checking for instacart.com instead of walmart.com. A
-     confirmed match sets INSTACART_URL to the real link and
-     instacart_active=true; no match falls back to a guessed
-     search-results URL (build_instacart_search_url()) with
-     instacart_active=false. Never a gate on whether the item gets
-     added -- only step 2's Walmart match is.
-  3. DuckDuckGo Images (same technique as AddImageUrl.py) -> image_url.
-     Any result hosted on a trusted retailer domain (Walmart, Kroger, or
-     Amazon -- see TRUSTED_IMAGE_DOMAINS) is preferred over anything
-     else, even if it's not the first result -- generic image search
-     results were turning up random, non-food images often enough to be
-     a problem, so a real product-photo page from one of those three
-     retailers is used whenever one shows up, and only falls back to
-     whatever else was found if none of them do.
-  3.5. USDA FoodData Central (fetch_usda_serving(), same technique
-     build_meal_pool.py uses) -> "serving" -- the amount of ONE serving
-     ("1 cup", "0.25 pizza"), never the count of servings in the
-     container, which is a different fact USDA sometimes bundles into
-     the same text (cleaned out by clean_serving_text()). Best-effort:
-     "N/A" if USDA has no match, same as some of the original 2022 pool
-     rows -- this never blocks an item from being added (see step 4).
-  4. Gemini, no search (same model chain/behavior as
-     gemini_meal_lookup.py) -> calories and a price estimate. Serving
-     size is NOT asked of Gemini -- that's step 3.5's job now. PRODUCT_NAME,
-     the DDG image search query, and this Gemini prompt all use Kroger's
-     own product description as the name (not the Walmart-URL-slug
-     version tried in step 2 -- see above). Gemini is also allowed a
-     fallback "sku_guess" ONLY for items where step 2 found a real
-     Walmart link but the SKU couldn't be parsed out of the URL -- that
-     guess is stored as SKU but flagged with "_sku_is_estimate": true so
-     it's never mistaken for a verified one. If Gemini doesn't recognize
-     the product, or recognizes it but is missing calories OR price, the
-     item is dropped -- no partially-filled nutrition/price data gets
-     added.
-  5. An INSTACART_URL is built from that same Kroger product name, so
-     there's a shoppable link even for products where the exact Walmart
-     SKU is the only thing pinned down by step 2.
+How one run works
+-----------------
+The run keeps pulling Kroger, one page at a time, until it has added
+run.max_new_items (20) new products -- it may pull 100+ Kroger products to
+find 20 new ones. For every Kroger product pulled:
 
-An item is only appended to the pool if step 2 (a real Walmart URL, and
-its SKU isn't already active in the pool), step 3 (an image), AND step 4
-(Gemini recognized it AND returned both calories and price) all
-succeeded. Missing any one of those -> the candidate is skipped
-entirely, not added half-filled. Step 3.5's "serving" is the one
-exception -- a genuine USDA miss becomes "N/A" rather than blocking the
-item, since that's a real answer from an authoritative source, not an
-unreliable guess.
+  1. Not frozen (by Kroger's own category labels), no price at the
+     configured store, or no UPC -> ignored. That's free to re-check, so
+     it isn't recorded.
+  2. Its Kroger UPC is already known -> ignored. A UPC is "known" when it
+     is on a pool item ("_kroger_upc" / "_kroger_upc_aliases"), or in
+     kroger_skipped_upcs.json (see step 8), or already seen this run.
+  3. Otherwise the product name is cleaned and fuzzy-matched against
+     EVERY product name in the pool, cleaned the same way (see
+     clean_search_words(): cut at the first comma, sizes like "27 oz",
+     other numbers, punctuation and the word "frozen" removed,
+     lowercased). The score is rapidfuzz token_sort_ratio, 0-100.
+  4. Best score ABOVE dedup.fuzzy_threshold (75) -> it already exists. The
+     Kroger UPC is written onto the pool item with the HIGHEST score, so
+     the product is skipped on every later pull, and the run moves on to
+     the next Kroger product.
+  5. Best score 75 or below -> it's new, and gets a new pool object:
+       - Kroger UPC ("_kroger_upc"), PRODUCT_NAME (Kroger's description),
+         and price (PRICE_CURRENT = promo price if Kroger lists one else
+         regular; PRICE_RETAIL = regular) -- all straight from Kroger, at
+         the store in kroger.location_id;
+       - Walmart page: Serper.dev search "site:walmart.com <brand> <name>"
+         -- the same service check_walmart_links.py uses -- checking each
+         result for the real /ip/<slug>/<id> product-page shape. The URL
+         (+ ?fulfillmentIntent=Pickup) goes in PRODUCT_URL and the numeric
+         id in SKU. If that SKU is already on an active pool item the
+         product IS that item: its UPC is recorded there instead;
+       - image_url: DuckDuckGo Images, same technique as AddImageUrl.py,
+         except a result hosted by Walmart, Kroger, Instacart, Target,
+         Aldi or Amazon is taken before any other, even if it isn't the
+         first result;
+       - calories + servings_per_container from USDA FoodData Central
+         (servings_per_container the way build_meal_pool.py pulls it:
+         householdServingFullText, else packageWeight, cleaned with
+         clean_serving_text() -- the amount of ONE serving, never the
+         count of servings in the container; "N/A" if USDA has no match);
+       - calories: the LARGEST of USDA, Open Food Facts and Gemini (its
+         own knowledge, no search) -- the same "largest wins" rule as
+         DataCleaning/Max_Calories_Count.py -- rounded to the nearest 10.
+         The source is in "_calorie_max_source" (and
+         "_calorie_max_checked_at" is set so Max_Calories_Count.py leaves
+         the row alone);
+       - INSTACART_URL: BUILT from the cleaned product name, e.g.
+         https://www.instacart.com/store/s?k=marie+callender%27s+pot+roast
+         -- never searched for on Serper, and nothing verifies it.
+  6. "active" is True on new records: Serper already confirmed a live
+     walmart.com page, and check_active_urls.py's Playwright checks are
+     unreliable (Walmart bot-blocks them). Serper's details are kept in
+     "_serper_*" fields, separate from that script's "_active_check_*".
+  7. A new product only gets added if it has ALL of: a Kroger price, a
+     Walmart URL/SKU, an image, and at least one calorie number. Missing
+     any one -> not added, never half-filled.
+  8. A new product that can't be added for a reason that won't change
+     (no Walmart page, no image results, no calorie number anywhere) has
+     no pool object to carry its UPC, so the UPC goes in
+     kroger_skipped_upcs.json (with the reason) and it isn't retried.
+     Failures that might be temporary (network error, rate limit, Gemini
+     quota) record nothing, so a later run tries again. Delete a line from
+     that file to make the script try a product again.
 
-New records get "active": True -- Serper.dev already confirmed a live
-walmart.com page exists for the UPC before a record is ever assembled
-(that's step 2 below), and check_active_urls.py's Playwright-based
-checks are unreliable here since Walmart bot-blocks it, so that
-confirmation is trusted directly rather than leaving the item in limbo
-waiting on a check that mostly can't complete. This script's own check
-is still stored separately under "_serper_*" fields (as opposed to
-check_active_urls.py's "_active_check_*" fields) so it's clear which
-check actually set "active" for a given row -- and check_active_urls.py
-is still free to flip a row to False later if Walmart genuinely delists
-it and a check happens to get through.
+Every UPC that gets pulled and evaluated therefore ends up recorded
+somewhere -- on an existing pool item, on a new pool item, or in the
+skipped file -- so the next run's pull starts past all of them.
+
+Safety limits: run.max_enrichment_attempts caps how many new products get
+run through the (quota-limited) Serper/DDG steps in one run, and
+run.max_runtime_minutes stops the run early enough that the workflow
+commits what it has instead of being killed.
 
 Env vars required:
     KROGER_CLIENT_ID, KROGER_CLIENT_SECRET  -- api.kroger.com OAuth app
     SERPER_API_KEY                          -- serper.dev (same key
                                                 check_walmart_links.py uses)
-    GEMINI_KEY                              -- Gemini calorie/price/sku fill-in
-    USDA_API_KEY                            -- USDA FoodData Central (same key
-                                                build_meal_pool.py uses), for
-                                                "serving" only, not calories
-If any are missing, the run is skipped entirely (exit 0), same pattern
-as gemini_meal_lookup.py.
+    GEMINI_KEY                              -- Gemini calorie estimate
+    USDA_API_KEY                            -- USDA FoodData Central (same
+                                                key build_meal_pool.py uses)
+Also needed: a Kroger store to price against -- kroger.location_id in
+kroger_new_items.yaml, or the KROGER_LOCATION_ID env var (which wins if
+both are set). Run `python kroger_new_items.py --find-location <ZIP>` to
+list nearby store ids. If any key or the store id is missing, the run is
+skipped entirely (exit 0), same pattern as gemini_meal_lookup.py. Open Food
+Facts needs no key.
 
 Install:
-    pip install requests pyyaml ddgs
+    pip install requests pyyaml ddgs rapidfuzz
 
 Usage:
     python kroger_new_items.py                     # up to run.max_new_items new items
     python kroger_new_items.py --max-new-items 5    # smoke test
-    python kroger_new_items.py --dry-run            # discovery + dedup only, no network enrichment
+    python kroger_new_items.py --dry-run            # pull + fuzzy-match only, write nothing
+    python kroger_new_items.py --find-location 68508  # print Kroger store ids near a ZIP, then exit
 """
 
 from __future__ import annotations
@@ -131,12 +121,20 @@ import random
 import re
 import sys
 import time
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
+from types import SimpleNamespace
 from urllib.parse import urlparse
 
 import requests
 import yaml
+
+try:
+    from rapidfuzz import fuzz, process
+except ImportError:  # pragma: no cover
+    print("Missing dependency. Run: pip install rapidfuzz", file=sys.stderr)
+    raise
 
 try:
     from ddgs import DDGS
@@ -158,6 +156,7 @@ DEFAULT_CONFIG_PATH = _SCRIPT_DIR / "kroger_new_items.yaml"
 
 KROGER_TOKEN_URL = "https://api.kroger.com/v1/connect/oauth2/token"
 KROGER_PRODUCTS_URL = "https://api.kroger.com/v1/products"
+KROGER_LOCATIONS_URL = "https://api.kroger.com/v1/locations"
 
 # (WALMART_IP_URL_RE, the pattern actually used for matching a Walmart
 # product-page URL, is defined just above find_walmart_listing() below.)
@@ -215,16 +214,108 @@ def save_pool(path, pool):
     os.replace(tmp_path, path)
 
 
-def normalize_name(name):
-    """Lowercase, collapse whitespace/punctuation -- used only to decide
-    whether a Kroger result is "already in the pool", not stored anywhere."""
-    return re.sub(r"[^a-z0-9]+", " ", (name or "").lower()).strip()
+# ---------------------------------------------------------------------------
+# Name cleaning + fuzzy "is it already in the pool?" matching
+# ---------------------------------------------------------------------------
+
+# Size/count units that get stripped along with the number in front of
+# them ("27 oz", "10.5oz", "10-oz", "6 ct", "1 1/2 lb", "9 7/8 ounce").
+_SIZE_UNITS = (
+    r"(?:fl\.?\s*oz|ounces?|oz|pounds?|lbs?|kg|grams?|g|ml|liters?|l|"
+    r"count|ct|packs?|pk|pieces?|pcs?)"
+)
+_SIZE_RE = re.compile(
+    r"\b(?:\d+\s+\d+/\d+|\d+/\d+|\d+(?:\.\d+)?)[\s-]*" + _SIZE_UNITS + r"\b"
+)
+
+# Words that carry no information about WHICH product it is here -- every
+# item in this pool is frozen, so "frozen" only adds noise to a name match.
+_NOISE_WORDS = {"frozen"}
 
 
-def existing_name_and_upc_sets(pool):
-    names = {normalize_name(item.get("PRODUCT_NAME")) for item in pool}
-    names.discard("")
-    upcs = set()
+def clean_search_words(text):
+    """Cleans a product name down to the words that identify it, the same
+    way an Instacart search query is built: everything after the first
+    comma is dropped (that's where "27 oz, 6 count" style size/variant
+    detail lives), sizes like "27 oz" / "6 ct" go, any other bare numbers
+    go, punctuation and symbols go, accents are folded ("Jalapeno" not
+    "Jalape o"), "&" becomes "and", and the result is lowercased.
+    Apostrophes inside a word are kept (returned as e.g. "callender's") so
+    build_instacart_search_url() can turn them into %27; compare_key()
+    drops them. Returns a list of words.
+
+    e.g. "Marie Callender's Pot Roast, Frozen Meal, 10 oz" ->
+         ["marie", "callender's", "pot", "roast"]"""
+    text = (text or "").split(",", 1)[0].lower()
+    text = unicodedata.normalize("NFD", text)
+    text = "".join(ch for ch in text if not unicodedata.combining(ch))
+    text = text.replace("\u2019", "'").replace("&", " and ")
+    text = _SIZE_RE.sub(" ", text)
+    text = re.sub(r"[^a-z0-9'\s]", " ", text)
+    words = []
+    for word in text.split():
+        word = word.strip("'")
+        if not word or word.isdigit() or word in _NOISE_WORDS:
+            continue
+        words.append(word)
+    return words
+
+
+def compare_key(name):
+    """The string two product names are fuzzy-compared as: the cleaned
+    search words joined by spaces, apostrophes dropped ("callenders")."""
+    return " ".join(clean_search_words(name)).replace("'", "")
+
+
+class PoolNameMatcher:
+    """Fuzzy "does this product already exist in the pool?" check.
+
+    Every PRODUCT_NAME in the pool is reduced with compare_key() once, up
+    front; best_match() then scores a Kroger product's name against all
+    of them with rapidfuzz's token_sort_ratio (0-100; word order doesn't
+    matter, but extra/missing words cost points, so "Banquet Chicken"
+    doesn't count as a match for "Banquet Chicken Fried Steak") and
+    returns the single HIGHEST-scoring pool item, so the caller knows
+    exactly which object to tag with the Kroger UPC. Anything scoring
+    ABOVE `threshold` counts as already existing. add() lets a record
+    appended during this run join the comparison set, so a second size
+    variant of a product just added isn't added again."""
+
+    def __init__(self, pool, threshold):
+        self.threshold = threshold
+        self._keys = []
+        self._items = []
+        for item in pool:
+            self.add(item)
+
+    def add(self, item):
+        key = compare_key(item.get("PRODUCT_NAME"))
+        if key:
+            self._keys.append(key)
+            self._items.append(item)
+
+    def best_match(self, name):
+        """Returns (closest_pool_item_or_None, score 0-100)."""
+        key = compare_key(name)
+        if not key or not self._keys:
+            return None, 0.0
+        hit = process.extractOne(key, self._keys, scorer=fuzz.token_sort_ratio)
+        if hit is None:
+            return None, 0.0
+        _choice, score, idx = hit
+        return self._items[idx], float(score)
+
+    def __len__(self):
+        return len(self._keys)
+
+
+def existing_upc_set(pool, skipped_upcs):
+    """Every Kroger UPC this script already knows about, so a product with
+    one of them is skipped for free on the next pull: UPCs recorded on
+    pool items (primary "_kroger_upc" plus "_kroger_upc_aliases"), and
+    UPCs of products that were new but couldn't be added (skipped_upcs,
+    the sidecar file's keys)."""
+    upcs = set(skipped_upcs)
     for item in pool:
         primary = item.get("_kroger_upc")
         if primary:
@@ -232,7 +323,26 @@ def existing_name_and_upc_sets(pool):
         for alias in item.get("_kroger_upc_aliases") or []:
             if alias:
                 upcs.add(alias)
-    return names, upcs
+    return upcs
+
+
+def tag_pool_item_with_upc(item, upc):
+    """Records a Kroger UPC on an existing pool item -- as "_kroger_upc"
+    if it doesn't have one yet, else appended to "_kroger_upc_aliases"
+    (a second size/variant of the same product gets its own UPC). Returns
+    True if it changed anything. This is what makes the next Kroger pull
+    skip that UPC for free instead of re-matching it."""
+    primary = item.get("_kroger_upc")
+    if not primary:
+        item["_kroger_upc"] = upc
+        return True
+    if primary == upc:
+        return False
+    aliases = item.get("_kroger_upc_aliases") or []
+    if upc in aliases:
+        return False
+    item["_kroger_upc_aliases"] = aliases + [upc]
+    return True
 
 
 def existing_active_skus(pool):
@@ -248,34 +358,39 @@ def existing_active_skus(pool):
 
 
 def tag_existing_pool_item_with_upc(pool, sku, upc):
-    """When a discovered candidate's Walmart SKU turns out to already be
-    active in the pool (existing_active_skus skip, in main()), this
-    records the newly discovered Kroger UPC on that EXISTING pool item --
-    as "_kroger_upc" if it doesn't have one yet, or appended to
-    "_kroger_upc_aliases" if it already has a different one -- so that
-    UPC lands in existing_name_and_upc_sets()'s output on every future
-    run. Otherwise the same Kroger product would get rediscovered and
-    re-resolved via Serper (a real, quota-limited API call) every single
-    run, just to be thrown away at the SKU-already-active check again --
-    tagging it here means it gets filtered out at the free Kroger-
-    discovery stage instead, before ever reaching Serper. Returns True
-    if it actually changed anything."""
-    changed = False
+    """When a new candidate's Walmart SKU turns out to already be active
+    in the pool (see main()), the candidate IS that existing product --
+    just under a name the fuzzy match didn't catch. Record the Kroger UPC
+    on that item so the same Kroger product is skipped for free on every
+    later pull, instead of being re-resolved through Serper (a real,
+    quota-limited API call) and thrown away again. Returns the pool item
+    it tagged, or None."""
     for item in pool:
-        if item.get("active") is not True:
-            continue
-        if str(item.get("SKU", "")).strip() != sku:
-            continue
-        primary = item.get("_kroger_upc")
-        if not primary:
-            item["_kroger_upc"] = upc
-            changed = True
-        elif primary != upc:
-            aliases = item.get("_kroger_upc_aliases") or []
-            if upc not in aliases:
-                item["_kroger_upc_aliases"] = aliases + [upc]
-                changed = True
-    return changed
+        if item.get("active") is True and str(item.get("SKU", "")).strip() == sku:
+            tag_pool_item_with_upc(item, upc)
+            return item
+    return None
+
+
+def load_skipped_upcs(path):
+    """{upc: {"name", "reason", "at"}} for Kroger products that were new
+    but couldn't be added (no Walmart page, no image, no calorie number).
+    They have no pool object to carry their UPC, so this file does -- so
+    they aren't re-tried (and don't re-spend Serper credits) every run.
+    Delete an entry to make the script try that product again."""
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
+
+
+def save_skipped_upcs(path, skipped):
+    tmp_path = str(path) + ".tmp"
+    with open(tmp_path, "w", encoding="utf-8") as f:
+        json.dump(skipped, f, indent=2, ensure_ascii=False, sort_keys=True)
+        f.write("\n")
+    os.replace(tmp_path, path)
 
 
 def next_index(pool):
@@ -309,35 +424,93 @@ def get_kroger_token(client_id, client_secret, timeout):
     return resp.json()["access_token"]
 
 
-def search_kroger_term(token, term, cfg):
-    """Yields raw Kroger product dicts for one search term, across
-    cfg['kroger']['pages_per_term'] pages."""
+def fetch_kroger_page(token, term, page, cfg, location_id):
+    """One page (cfg['kroger']['results_per_term'] products) of Kroger
+    results for one search term, scoped to a store with filter.locationId
+    -- without it Kroger returns no price data at all. Returns a list
+    (empty when the term has run out of results)."""
     limit = cfg["kroger"]["results_per_term"]
-    timeout = cfg["kroger"]["timeout_seconds"]
-    headers = {"Authorization": f"Bearer {token}", "Accept": "application/json"}
-
-    for page in range(cfg["kroger"]["pages_per_term"]):
-        params = {
+    resp = requests.get(
+        KROGER_PRODUCTS_URL,
+        headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
+        params={
             "filter.term": term,
+            "filter.locationId": location_id,
             "filter.limit": limit,
             "filter.start": page * limit + 1,  # Kroger's start is 1-based
-        }
-        resp = requests.get(KROGER_PRODUCTS_URL, headers=headers, params=params, timeout=timeout)
-        if resp.status_code == 404 and page > 0:
-            break  # ran past the end of available results
-        resp.raise_for_status()
-        data = resp.json().get("data") or []
-        if not data:
-            break
-        yield from data
-        if len(data) < limit:
-            break  # fewer than a full page -- no point requesting the next one
+        },
+        timeout=cfg["kroger"]["timeout_seconds"],
+    )
+    if resp.status_code == 404 and page > 0:
+        return []  # ran past the end of available results
+    resp.raise_for_status()
+    return resp.json().get("data") or []
+
+
+def iter_kroger_products(token, cfg, location_id):
+    """Lazily yields raw Kroger products, one page at a time, and stops
+    being asked for more the moment the caller has what it needs -- so
+    the run keeps pulling Kroger only until it has enough NEW products,
+    not a fixed amount. Pages are taken round-robin across the search
+    terms (term A page 1, term B page 1, ..., then term A page 2, ...) so
+    a generic early term like "bowl" can't crowd out later ones like
+    "breakfast". A term drops out of the rotation when it returns a short
+    page, an error, or hits kroger.max_pages_per_term."""
+    limit = cfg["kroger"]["results_per_term"]
+    max_pages = cfg["kroger"]["max_pages_per_term"]
+    active_terms = list(cfg["kroger"]["search_terms"])
+
+    for page in range(max_pages):
+        for term in list(active_terms):
+            log(f"Kroger search: {term!r} page {page + 1}")
+            try:
+                data = fetch_kroger_page(token, term, page, cfg, location_id)
+            except requests.RequestException as e:
+                log(f"  Kroger search failed for {term!r} page {page + 1}: {e} -- dropping this term.")
+                active_terms.remove(term)
+                continue
+            if len(data) < limit:
+                active_terms.remove(term)  # last page for this term
+            yield from data
+        if not active_terms:
+            return
+
+
+def _positive_price(value):
+    """Kroger price value -> float, or None if missing / zero / junk."""
+    try:
+        price = float(value)
+    except (TypeError, ValueError):
+        return None
+    return price if price > 0 else None
+
+
+def find_kroger_locations(token, zip_code, timeout, limit=10):
+    """Lists Kroger-family stores near a ZIP code so you can pick the
+    locationId to put in kroger_new_items.yaml (kroger.location_id).
+    Returns a list of (locationId, one-line description)."""
+    resp = requests.get(
+        KROGER_LOCATIONS_URL,
+        headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
+        params={"filter.zipCode.near": zip_code, "filter.limit": limit},
+        timeout=timeout,
+    )
+    resp.raise_for_status()
+    found = []
+    for loc in resp.json().get("data") or []:
+        addr = loc.get("address") or {}
+        desc = (f"{loc.get('name', '')} ({loc.get('chain', '')}) -- "
+                f"{addr.get('addressLine1', '')}, {addr.get('city', '')}, "
+                f"{addr.get('state', '')} {addr.get('zipCode', '')}")
+        found.append((loc.get("locationId"), desc))
+    return found
 
 
 def kroger_product_to_candidate(product):
     """Normalizes one raw Kroger product dict into the loose fields this
     script cares about. Returns None if it's missing what we need
-    (UPC + a description) OR if none of Kroger's own category labels for
+    (UPC + a description + a price at the configured store) OR if none of
+    Kroger's own category labels for
     it actually mention "frozen" -- this is what makes broader, shorter
     search terms (like "bowl" or "meal" instead of "frozen bowl") safe to
     use: the term casts a wide net, but only genuinely frozen-aisle
@@ -356,90 +529,69 @@ def kroger_product_to_candidate(product):
     items = product.get("items") or [{}]
     size = (items[0].get("size") or "").strip()
 
+    # Kroger's price object: {"regular": 5.99, "promo": 4.99} -- "promo" is
+    # 0 (or absent) when nothing's on sale. Only present when the search
+    # was scoped to a store (filter.locationId). No price = no candidate,
+    # since the price on the pool record comes from Kroger and nowhere else.
+    price_info = items[0].get("price") or {}
+    regular = _positive_price(price_info.get("regular"))
+    promo = _positive_price(price_info.get("promo"))
+    price_current = promo if promo is not None else regular
+    if price_current is None:
+        return None
+
     return {
         "upc": str(upc),
         "brand": brand,
         "description": description,
         "categories": categories,
         "size": size,
+        "price_current": price_current,
+        "price_regular": regular if regular is not None else price_current,
     }
 
 
-def discover_new_candidates(token, cfg, existing_names, existing_upcs, max_new_items):
-    """Runs every configured search term against Kroger -- ALL of them,
-    with no early exit -- since Kroger's API is free discovery (unlike
-    the Serper/DDG/Image/Gemini steps that follow, which do cost per
-    item), so scanning the full term list costs nothing extra and gives
-    an accurate count of how much is actually out there. Search terms
-    are deliberately broad (e.g. "bowl", "meal", "breakfast" rather than
-    "frozen bowl") to catch more of Kroger's actual catalog --
-    kroger_product_to_candidate() is what keeps this from pulling in
-    non-frozen products, by checking Kroger's own category labels rather
-    than relying on the search term. A candidate is also dropped if its
-    Kroger UPC is already recorded on a pool item from a previous run of
-    this script (existing_upcs), OR if its normalized product name
-    already matches something in the pool at all -- including the
-    original 2022 Walmart-CSV rows, which predate this script and so
-    have no recorded Kroger UPC to match against (existing_names).
+def iter_new_candidates(token, cfg, location_id, matcher, known_upcs, stats, on_existing_match):
+    """Lazily yields Kroger products that are NEW -- pulling more from
+    Kroger only when the caller asks for the next one.
 
-    Results are then round-robined one candidate at a time across terms
-    -- term A's 1st match, term B's 1st, term C's 1st, ... then term A's
-    2nd, etc. -- before the max_new_items cap is applied, so an early,
-    generic term (like "bowl" or "meal") that happens to turn up a lot of
-    matches can't eat the entire day's cap on its own and starve out
-    later terms (like "breakfast").
+    For every product pulled:
+      - not frozen / no price at the store / no UPC -> ignored (that's
+        free to re-check every run, so it isn't recorded anywhere);
+      - its UPC is already known (on a pool item, or in the skipped-UPCs
+        file, or seen earlier this run) -> ignored, free;
+      - otherwise its name is cleaned (clean_search_words) and fuzzy-
+        matched against every pool item's cleaned name, keeping the single
+        HIGHEST score. Score above matcher.threshold (75) -> it already
+        exists: on_existing_match(pool_item, upc) records the UPC on that
+        best-matching item so the product is skipped next run, and the
+        loop moves on to the next Kroger product. Score at or below 75 ->
+        it's new, and it's yielded.
 
-    Returns (candidates_to_enrich, total_found) -- total_found is the
-    full deduped, category-filtered count across every term, before the
-    cap; candidates_to_enrich is the first max_new_items of the
-    round-robined list, which is what actually goes on to the
-    Serper/DDG/Gemini enrichment steps this run."""
-    seen_upcs_this_run = set()
-    per_term_candidates = {}
-
-    for term in cfg["kroger"]["search_terms"]:
-        log(f"Kroger search: {term!r}")
-        try:
-            raw_products = list(search_kroger_term(token, term, cfg))
-        except requests.RequestException as e:
-            log(f"  Kroger search failed for {term!r}: {e}")
-            per_term_candidates[term] = []
+    `stats` is a dict this fills in (pulled / not_frozen_or_unpriced /
+    known_upc / matched_existing) for the end-of-run log."""
+    for product in iter_kroger_products(token, cfg, location_id):
+        stats["pulled"] += 1
+        candidate = kroger_product_to_candidate(product)
+        if candidate is None:
+            stats["not_frozen_or_unpriced"] += 1
             continue
 
-        term_candidates = []
-        not_frozen_or_incomplete = 0
-        for product in raw_products:
-            candidate = kroger_product_to_candidate(product)
-            if candidate is None:
-                not_frozen_or_incomplete += 1
-                continue
-            if candidate["upc"] in seen_upcs_this_run or candidate["upc"] in existing_upcs:
-                continue
-            if normalize_name(candidate["description"]) in existing_names:
-                continue
+        upc = candidate["upc"]
+        if upc in known_upcs:
+            stats["known_upc"] += 1
+            continue
 
-            seen_upcs_this_run.add(candidate["upc"])
-            term_candidates.append(candidate)
+        item, score = matcher.best_match(candidate["description"])
+        if item is not None and score > matcher.threshold:
+            stats["matched_existing"] += 1
+            log(f"    exists ({score:.0f}): {candidate['description']!r} ~ {item.get('PRODUCT_NAME')!r} "
+                f"(UPC {upc})")
+            on_existing_match(item, upc)
+            continue
 
-        per_term_candidates[term] = term_candidates
-        log(f"  {len(raw_products)} result(s) ({not_frozen_or_incomplete} not frozen/incomplete), "
-            f"{len(term_candidates)} new candidate(s) for this term")
-
-    # Round-robin merge: one from each term's list per pass, in search-term
-    # order, so every term gets a turn before any term gets a second pick.
-    term_lists = [per_term_candidates[t] for t in cfg["kroger"]["search_terms"]]
-    max_len = max((len(lst) for lst in term_lists), default=0)
-    all_candidates = [
-        lst[i] for i in range(max_len) for lst in term_lists if i < len(lst)
-    ]
-
-    total_found = len(all_candidates)
-    to_enrich = all_candidates[:max_new_items]
-    log(f"Total new candidate(s) across all {len(cfg['kroger']['search_terms'])} search term(s), "
-        f"frozen-category-filtered and deduped against the pool: {total_found}. "
-        f"Enriching {len(to_enrich)} this run (cap {max_new_items}).")
-
-    return to_enrich, total_found
+        known_upcs.add(upc)  # seen -- never yield the same UPC twice in one run
+        yield candidate
 
 
 # ---------------------------------------------------------------------------
@@ -472,6 +624,16 @@ def slug_to_product_name(slug):
     return re.sub(r"\s+", " ", text).strip()
 
 
+def brand_and_name(candidate):
+    """"<brand> <description>", but without repeating the brand when
+    Kroger's description already starts with / contains it (it usually
+    does -- e.g. "Banquet Chicken Fried Steak" already has "Banquet")."""
+    brand = candidate["brand"]
+    description = candidate["description"]
+    text = f"{brand} {description}" if brand and brand.lower() not in description.lower() else description
+    return re.sub(r"\s+", " ", text).strip()
+
+
 def find_walmart_listing(candidate, api_key, cfg):
     """Searches 'site:walmart.com <brand> <product name>' via Serper.dev
     (google.serper.dev) -- the same service and POST/X-API-KEY shape
@@ -485,7 +647,7 @@ def find_walmart_listing(candidate, api_key, cfg):
     just trusting whatever the top result happens to be. Returns a dict
     with product_url/sku (both None if nothing matched) plus
     query/reason/top-result metadata."""
-    query = re.sub(r"\s+", " ", f"site:walmart.com {candidate['brand']} {candidate['description']}").strip()
+    query = f"site:walmart.com {brand_and_name(candidate)}"
     endpoint = cfg["serper"]["endpoint"]
     timeout = cfg["serper"]["timeout_seconds"]
     max_retries = cfg["serper"]["max_retries"]
@@ -553,70 +715,6 @@ def find_walmart_listing(candidate, api_key, cfg):
     }
 
 
-def find_instacart_listing(candidate, api_key, cfg):
-    """Searches 'instacart <brand> <product name>' via Serper.dev, scanning
-    every organic result for the first one on instacart.com -- same
-    multi-result technique as find_walmart_listing() above and
-    check_instacart_urls.py's standalone checker, rather than only
-    trusting whatever the top result happens to be. Returns a dict with
-    instacart_url (None if nothing matched) plus query/reason/top-result
-    metadata. This is a real verification, not a guess -- contrast with
-    build_instacart_search_url(), which just builds a plausible-looking
-    Instacart *search-results* URL from the product name without
-    confirming anything actually shows up there."""
-    query = re.sub(r"\s+", " ", f"instacart {candidate['brand']} {candidate['description']}").strip()
-    endpoint = cfg["serper"]["endpoint"]
-    timeout = cfg["serper"]["timeout_seconds"]
-    max_retries = cfg["serper"]["max_retries"]
-    retry_delay = cfg["serper"]["retry_delay_seconds"]
-
-    last_error = None
-    data = None
-    for attempt in range(max_retries + 1):
-        try:
-            resp = requests.post(
-                endpoint,
-                headers={"X-API-KEY": api_key, "Content-Type": "application/json"},
-                json={"q": query, "num": 5},
-                timeout=timeout,
-            )
-            if resp.status_code in (401, 403):
-                return {
-                    "instacart_url": None, "query": query,
-                    "reason": f"auth_error: check SERPER_API_KEY (status {resp.status_code})",
-                    "top_result_url": None,
-                }
-            resp.raise_for_status()
-            data = resp.json()
-            break
-        except requests.RequestException as e:
-            last_error = str(e)
-            if attempt < max_retries:
-                time.sleep(retry_delay)
-
-    if data is None:
-        return {
-            "instacart_url": None, "query": query,
-            "reason": f"request_failed: {last_error}", "top_result_url": None,
-        }
-
-    organic = data.get("organic") or []
-    if not organic:
-        return {"instacart_url": None, "query": query, "reason": "no_search_results", "top_result_url": None}
-
-    top_result_url = organic[0].get("link", "")
-    for result in organic:
-        url = result.get("link", "")
-        netloc = urlparse(url).netloc.lower().split(":")[0]
-        if netloc == "instacart.com" or netloc.endswith(".instacart.com"):
-            return {"instacart_url": url, "query": query, "reason": "ok", "top_result_url": top_result_url}
-
-    return {
-        "instacart_url": None, "query": query,
-        "reason": "no_instacart_result_in_top_results", "top_result_url": top_result_url,
-    }
-
-
 # ---------------------------------------------------------------------------
 # Step 3: DuckDuckGo image lookup (same technique as AddImageUrl.py)
 # ---------------------------------------------------------------------------
@@ -627,21 +725,34 @@ def build_image_query(brand, description):
     return query[:200]
 
 
-# Trusted retailer image CDNs, checked as a substring of the result's
-# domain -- these are real product-photo pages, so a match here is much
-# more likely to actually be a photo of the product than a generic image
-# search result is.
-TRUSTED_IMAGE_DOMAINS = ("walmart", "kroger", "amazon")
+# Retailers whose image hosts are real product-photo pages -- a hit on
+# one of these is much more likely to be a photo of the actual product than
+# a generic image-search result is, so it's used before any other image.
+# The long, distinctive names are matched anywhere in the host
+# ("i5.walmartimages.com", "images.kroger.com", "instacartassets.com",
+# "m.media-amazon.com"); the short ones ("target", "aldi") only as a whole
+# dot-separated label ("target.scene7.com", "images.aldi.us"), so an
+# unrelated host that merely contains those letters doesn't count.
+TRUSTED_IMAGE_SUBSTRINGS = ("walmart", "kroger", "instacart", "amazon")
+TRUSTED_IMAGE_LABELS = ("target", "aldi")
+
+
+def is_trusted_image_host(netloc):
+    netloc = netloc.lower().split(":")[0]
+    if any(name in netloc for name in TRUSTED_IMAGE_SUBSTRINGS):
+        return True
+    return any(label in TRUSTED_IMAGE_LABELS for label in netloc.split("."))
 
 
 def search_image(ddgs, query, cfg):
-    """Returns (image_url_or_None, reason). Prefers a result hosted on a
-    trusted retailer domain (Walmart, Kroger, Amazon -- see
-    TRUSTED_IMAGE_DOMAINS) over anything else, since those are real
-    product-photo pages and generic image search results were turning up
-    unrelated, non-food images often enough to be a problem. Only falls
-    back to a non-trusted result if none of the trusted domains show up
-    at all in this query's results."""
+    """Returns (image_url_or_None, reason). Same DuckDuckGo Images
+    technique as AddImageUrl.py, except that a result hosted by Walmart,
+    Kroger, Instacart, Target, Aldi or Amazon (see is_trusted_image_host)
+    is taken before any other result -- even if it isn't the first one
+    returned -- since those are real product-photo pages and generic
+    image search results were turning up unrelated, non-food images often
+    enough to be a problem. Only falls back to another source if none of
+    those retailers show up in this query's results."""
     region = cfg["ddg_image"]["region"]
     safesearch = cfg["ddg_image"]["safesearch"]
     max_retries = cfg["ddg_image"]["max_retries"]
@@ -656,8 +767,7 @@ def search_image(ddgs, query, cfg):
                 url = r.get("image")
                 if not url or not url.startswith("http"):
                     continue
-                netloc = urlparse(url).netloc.lower()
-                if any(domain in netloc for domain in TRUSTED_IMAGE_DOMAINS):
+                if is_trusted_image_host(urlparse(url).netloc):
                     return url, "ok_trusted_domain"
                 if first_fallback is None:
                     first_fallback = url
@@ -687,14 +797,16 @@ def search_image(ddgs, query, cfg):
 
 
 # ---------------------------------------------------------------------------
-# Step 3.5: USDA serving-size lookup (calories still come from Gemini below --
-# this is only for the "serving" field)
+# Step 5: calories = max(USDA, Open Food Facts, Gemini); servings_per_container
+# from USDA. Modeled on DataCleaning/Max_Calories_Count.py (calories) and
+# DataCleaning/build_meal_pool.py (servings_per_container).
 # ---------------------------------------------------------------------------
 
-def clean_usda_query_name(raw_name):
-    """Same cleanup build_meal_pool.py's clean_product_name() does:
-    strips trailing size/count descriptors and stray punctuation so the
-    USDA search gets a cleaner query."""
+def clean_api_query_name(raw_name):
+    """Same cleanup build_meal_pool.py's / Max_Calories_Count.py's
+    clean_product_name() does: strips trailing size/count descriptors and
+    stray punctuation so the USDA and Open Food Facts searches get a
+    cleaner query."""
     if not raw_name:
         return ""
     cleaned = re.sub(r",?\s*Frozen Meals.*", "", raw_name, flags=re.IGNORECASE)
@@ -729,19 +841,45 @@ def clean_serving_text(raw):
     return text or "N/A"
 
 
-def fetch_usda_serving(product_name, usda_api_key, cfg):
-    """Looks up a product's serving-size TEXT -- the amount of ONE
-    serving ("1 cup", "0.25 pizza", "3 oz"), not how many servings are
-    in the container -- from the USDA FoodData Central Branded Foods
-    database. Same search endpoint/technique as build_meal_pool.py's
-    fetch_usda_info(), but only for this one field: calories still come
-    from Gemini in this script (see step 4), not from USDA. Deliberately
-    prefers "householdServingFullText" (the descriptive amount) over the
-    bare "servingsPerContainer" count field, which is a different fact.
-    Returns "N/A" if nothing usable is found or the request fails."""
-    query = clean_usda_query_name(product_name)
+def _usda_food_calories(food):
+    """Calories per serving for one USDA branded-food record, or None.
+    Same order Max_Calories_Count.py's usda_lookup() uses: the label's
+    own calories value first; else the per-100g energy value scaled by
+    the serving size in grams; else the raw per-100g value."""
+    label_nutrients = food.get("labelNutrients") or {}
+    if "calories" in label_nutrients and label_nutrients["calories"].get("value") is not None:
+        return float(label_nutrients["calories"]["value"])
+
+    serving_size = food.get("servingSize")
+    serving_size_unit = (food.get("servingSizeUnit") or "").upper()
+    for n in food.get("foodNutrients", []):
+        n_id = n.get("nutrientId") or n.get("nutrient", {}).get("id")
+        n_name = n.get("nutrientName") or n.get("nutrient", {}).get("name", "")
+        unit = n.get("unitName") or n.get("nutrient", {}).get("unitName", "")
+        if n_id in (1008, 2047) or (n_name.lower() == "energy" and unit.lower() == "kcal"):
+            per_100g = n.get("value") if "value" in n else n.get("amount")
+            if per_100g is None:
+                continue
+            if serving_size and serving_size_unit in ("GRM", "G"):
+                return round(per_100g * serving_size / 100.0, 1)
+            return float(per_100g)  # per-100g fallback, better than nothing
+    return None
+
+
+def fetch_usda_info(product_name, usda_api_key, cfg):
+    """One USDA FoodData Central Branded Foods search, used for TWO
+    fields: returns {"calories": float or None, "servings_per_container":
+    str}. servings_per_container is pulled exactly the way
+    build_meal_pool.py's fetch_usda_info() pulls it --
+    householdServingFullText, else packageWeight, run through
+    clean_serving_text() -- which is the amount of ONE serving ("1 cup",
+    "0.25 pizza"), not how many servings are in the container. It's
+    "N/A" if USDA has no match. Calories use the same logic as
+    Max_Calories_Count.py's usda_lookup()."""
+    empty = {"calories": None, "servings_per_container": "N/A"}
+    query = clean_api_query_name(product_name)
     if not query:
-        return "N/A"
+        return empty
 
     timeout = cfg["usda"]["timeout_seconds"]
     max_retries = cfg["usda"]["max_retries"]
@@ -763,20 +901,110 @@ def fetch_usda_serving(product_name, usda_api_key, cfg):
                 time.sleep(retry_delay)
 
     if not foods:
-        return "N/A"
+        return empty
 
     best = foods[0]
-    serving = best.get("householdServingFullText")
-    if not serving:
-        size, unit = best.get("servingSize"), best.get("servingSizeUnit")
-        if size and unit:
-            serving = f"{size} {unit}"
+    serving_raw = best.get("householdServingFullText") or best.get("packageWeight")
+    serving = clean_serving_text(str(serving_raw).strip()) if serving_raw else "N/A"
+    return {"calories": _usda_food_calories(best), "servings_per_container": serving}
 
-    return clean_serving_text(serving) if serving else "N/A"
+
+def fetch_off_calories(product_name, cfg):
+    """Open Food Facts search (no API key, just a descriptive User-Agent).
+    Returns (calories_per_serving or None, is_100g_fallback). Same logic
+    as Max_Calories_Count.py's off_lookup(): prefers the label's own
+    per-serving kcal, then per-100g kcal scaled by serving_quantity
+    (grams), and as a last resort the raw per-100g value with
+    is_100g_fallback=True -- less directly comparable, so it's flagged
+    ("off_100g_fallback") in _calorie_max_source. That last resort rarely
+    OVERSTATES a serving (most frozen entree servings are >100g), which
+    keeps it safe for a "take the max" comparison."""
+    query = clean_api_query_name(product_name)
+    if not query:
+        return None, False
+
+    off_cfg = cfg["open_food_facts"]
+    max_retries = off_cfg["max_retries"]
+    retry_delay = off_cfg["retry_delay_seconds"]
+
+    data = None
+    for attempt in range(max_retries + 1):
+        try:
+            resp = requests.get(
+                "https://world.openfoodfacts.org/cgi/search.pl",
+                params={
+                    "search_terms": query, "search_simple": 1, "action": "process",
+                    "json": 1, "page_size": 5,
+                    "fields": "product_name,nutriments,serving_quantity,serving_size",
+                },
+                headers={"User-Agent": off_cfg["user_agent"]},
+                timeout=off_cfg["timeout_seconds"],
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            break
+        except (requests.RequestException, ValueError):
+            if attempt < max_retries:
+                time.sleep(retry_delay)
+
+    products = (data or {}).get("products") or []
+    if not products:
+        return None, False
+    nutriments = products[0].get("nutriments") or {}
+
+    per_serving = nutriments.get("energy-kcal_serving")
+    if per_serving is not None:
+        try:
+            return float(per_serving), False
+        except (TypeError, ValueError):
+            pass
+
+    per_100g = nutriments.get("energy-kcal_100g")
+    serving_qty = products[0].get("serving_quantity")
+    if per_100g is not None and serving_qty:
+        try:
+            return round(float(per_100g) * float(serving_qty) / 100.0, 1), False
+        except (TypeError, ValueError):
+            pass
+
+    if per_100g is not None:
+        try:
+            return float(per_100g), True
+        except (TypeError, ValueError):
+            pass
+    return None, False
+
+
+def round_to_nearest_ten(value):
+    """260 -> 260, 263.4 -> 260, 265 -> 270 (halves round up, not to the
+    nearest even number the way Python's round() would)."""
+    return int(value / 10.0 + 0.5) * 10
+
+
+def pick_max_calories(usda_cal, off_cal, off_is_100g, gemini_cal):
+    """The "largest wins" rule from Max_Calories_Count.py, applied to the
+    three sources a new item has: USDA, Open Food Facts, Gemini. Any that
+    came back empty (or zero -- no real entree is 0 calories) are ignored.
+    Returns (calories, source_label, {source: value, ...}) -- calories and
+    label are None if nothing usable came back from any of them. Ties go
+    to the earlier of USDA, Open Food Facts, Gemini. The winning value is
+    returned as-is (unrounded); main() rounds it to the nearest ten when
+    it builds the record, so "_calorie_sources" keeps the raw numbers."""
+    values = {}
+    if usda_cal is not None and usda_cal > 0:
+        values["usda"] = usda_cal
+    if off_cal is not None and off_cal > 0:
+        values["off_100g_fallback" if off_is_100g else "open_food_facts"] = off_cal
+    if gemini_cal is not None and gemini_cal > 0:
+        values["gemini"] = gemini_cal
+    if not values:
+        return None, None, {}
+    source = max(values, key=lambda k: values[k])
+    return values[source], source, values
 
 
 # ---------------------------------------------------------------------------
-# Step 4: Gemini calories/price (+ fallback sku_guess) fill-in
+# Step 5 (cont.): Gemini calorie estimate -- the third input to the max()
 # ---------------------------------------------------------------------------
 
 _JSON_ARRAY_RE = re.compile(r"\[.*\]", re.DOTALL)
@@ -805,12 +1033,9 @@ def extract_json_array(text):
 
 def build_batch_prompt(cfg, enriched_batch):
     """enriched_batch is a list of (candidate, walmart, image_url,
-    image_query, image_reason) tuples. Uses Kroger's own product
-    description as the name -- the Walmart-URL-slug version was tried
-    instead for a while, but some slugs are truncated/abbreviated
-    versions of the real product name, so Kroger's description (also
-    what ends up in PRODUCT_NAME and the DDG image search) is used here
-    too, so Gemini is asked about the same name shown everywhere else."""
+    image_query, image_reason) tuples. Each product is described to
+    Gemini by Kroger's own product description, brand and size -- the
+    same name that ends up in PRODUCT_NAME."""
     item_line_tmpl = cfg["prompt"]["item_line"]
     lines = []
     for n, (c, walmart, *_rest) in enumerate(enriched_batch, start=1):
@@ -839,43 +1064,24 @@ def normalize_gemini_result(raw):
         except (TypeError, ValueError):
             calories = None
 
-    price = raw.get("price")
-    if price is not None:
-        try:
-            price = round(float(str(price).replace("$", "").strip()), 2)
-        except (TypeError, ValueError):
-            price = None
-
-    sku_guess = raw.get("sku_guess")
-    if sku_guess is not None:
-        digits = re.sub(r"\D", "", str(sku_guess))
-        sku_guess = digits if digits else None
-
     return {
         "index": index,
         "recognized": bool(raw.get("recognized")),
         "calories": calories,
-        "price": price,
-        "sku_guess": sku_guess,
         "notes": str(raw.get("notes", "")).strip(),
     }
 
 
-def gemini_result_is_complete(result):
-    """True only if Gemini recognized the product AND returned both
-    calories and price -- not just one of them. (Serving size is
-    sourced from USDA now, not Gemini -- see fetch_usda_serving() --
-    and isn't part of this gate: a real "not found in USDA" is treated
-    as an acceptable N/A, not a reason to drop an otherwise-good item,
-    the same way the original 2022 pool already tolerates N/A servings
-    for some rows.) A candidate with no result, or an incomplete one,
-    doesn't get added."""
-    return (
-        result is not None
-        and result["recognized"]
-        and result["calories"] is not None
-        and result["price"] is not None
-    )
+def gemini_calories(result):
+    """Gemini's calorie estimate if it's usable as an input to the
+    max(): the product was recognized AND a number came back. A guess it
+    flagged as unrecognized is ignored. None otherwise. (This is one of
+    three calorie sources now -- USDA and Open Food Facts are the others
+    -- so a missing/unrecognized Gemini answer no longer blocks an item
+    the way it used to when Gemini was the only source.)"""
+    if result is None or not result["recognized"]:
+        return None
+    return result["calories"]
 
 
 def match_results_to_candidates(candidates, raw_results):
@@ -990,101 +1196,84 @@ def add_pickup_param(url):
     return f"{url}{separator}fulfillmentIntent=Pickup"
 
 
-def build_instacart_search_url(text):
-    """Builds an Instacart search-results URL from a product name:
-    truncates at the first comma first (e.g. "Great Value Garlic Texas
-    Toast, 11.25 oz, 8 Count" -> "Great Value Garlic Texas Toast") --
-    the part after a comma is usually size/count/variant detail that
-    makes the search too specific and narrows/misses results, so
-    dropping it tends to get better matches. Then keeps apostrophes as a
-    literal "%27" in place (so a possessive like "Callender's" becomes
-    "Callender%27s", not "Callender s" or "Callenders"), replaces
-    everything else that isn't a letter/digit/space with a space,
-    lowercases, and joins words with "+" -- e.g. "Marie Callender's Pot
-    Roast, Frozen Meal" ->
-    https://www.instacart.com/store/s?k=marie+callender%27s+pot+roast"""
-    text = (text or "").split(",", 1)[0]
-    placeholder = "\x00"  # stands in for an apostrophe so the strip-special-chars
-                          # step below doesn't touch it before it becomes %27
-    cleaned = text.replace("'", placeholder).replace("\u2019", placeholder)
-    cleaned = re.sub(r"[^a-zA-Z0-9\s" + placeholder + r"]", " ", cleaned)
-    words = cleaned.lower().split()
-    joined = "+".join(words).replace(placeholder, "%27")
-    return f"https://www.instacart.com/store/s?k={joined}" if words else ""
+def build_instacart_search_url(name):
+    """Builds an Instacart search-results URL from a product name, using
+    the exact same cleaned words the fuzzy "already in the pool?" check
+    compares (clean_search_words(): cut at the first comma, sizes and
+    numbers removed, punctuation removed, lowercased). Apostrophes stay
+    as a literal "%27" in place (so "Callender's" becomes "callender%27s",
+    not "callender s" or "callenders"), and the words are joined with
+    "+" -- e.g. "Marie Callender's Pot Roast, Frozen Meal, 10 oz" ->
+    https://www.instacart.com/store/s?k=marie+callender%27s+pot+roast
+
+    This URL is BUILT, not looked up: nothing checks that the search
+    actually returns anything on Instacart."""
+    words = clean_search_words(name)
+    if not words:
+        return ""
+    return "https://www.instacart.com/store/s?k=" + "+".join(words).replace("'", "%27")
+
+
+def _money(value):
+    return f"{value:.2f}" if value is not None else ""
 
 
 def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
-                       gemini_result, gemini_model, serving_text, instacart_result, idx, run_date):
-    sku = walmart["sku"]
-    sku_is_estimate = False
-    if not sku and gemini_result and gemini_result.get("sku_guess"):
-        sku = gemini_result["sku_guess"]
-        sku_is_estimate = True
-
-    categories = candidate["categories"]
-    price = gemini_result["price"] if gemini_result and gemini_result["recognized"] else None
-    calories = gemini_result["calories"] if gemini_result and gemini_result["recognized"] else None
-
-    # PRODUCT_NAME comes straight from Kroger -- the Walmart-URL-slug
-    # version was tried instead for a while, but some slugs are
-    # truncated/abbreviated versions of the real name, so Kroger's own
-    # (generally fuller) description is what's used here, for DDG image
-    # search, and for the Gemini calories/price prompt. "serving" comes
-    # from USDA (fetch_usda_serving()), not from Gemini or Kroger.
+                       calories, calorie_source, calorie_values, servings_per_container,
+                       gemini_result, gemini_model, location_id, idx, run_date):
+    # PRODUCT_NAME and both prices come straight from Kroger. SKU is the
+    # numeric id parsed out of the Walmart URL (find_walmart_listing only
+    # returns a URL when it found one, so there's always a SKU with it).
     product_name = candidate["description"]
 
     record = {
         "BRAND": candidate["brand"],
-        "BREADCRUMBS": "Frozen/" + (categories[-1] if categories else "Frozen"),
-        "CATEGORY": categories[-1] if categories else "Frozen",
+        "BREADCRUMBS": "Frozen/" + (candidate["categories"][-1] if candidate["categories"] else "Frozen"),
+        "CATEGORY": candidate["categories"][-1] if candidate["categories"] else "Frozen",
         "DEPARTMENT": "Frozen",
-        "PRICE_CURRENT": f"{price:.2f}" if price is not None else "",
-        "PRICE_RETAIL": "",
+        "PRICE_CURRENT": _money(candidate["price_current"]),
+        "PRICE_RETAIL": _money(candidate["price_regular"]),
         "PRODUCT_NAME": product_name,
         "PRODUCT_SIZE": candidate["size"],
-        "PRODUCT_URL": add_pickup_param(walmart["product_url"]) if walmart["product_url"] else "",
+        "PRODUCT_URL": add_pickup_param(walmart["product_url"]),
         "PROMOTION": "",
         "RunDate": run_date,
         "SHIPPING_LOCATION": "",
-        "SKU": sku or "",
+        "SKU": walmart["sku"],
         "SOURCE": "Kroger",  # every row from this script -- distinguishes it from
                               # the original 2022 Walmart-CSV rows, which have no
                               # SOURCE column at all (absent, not blank).
-        "SUBCATEGORY": categories[0] if categories else "",
-        "active": True,  # Serper.dev already confirmed a live walmart.com page for
-                          # this UPC before this record was ever assembled (see
-                          # find_walmart_listing) -- check_active_urls.py's
-                          # Playwright checks are unreliable here (Walmart bot-
-                          # blocks it), so that confirmation is trusted directly
-                          # instead of waiting on a check that mostly won't run.
-        "calories": calories if calories is not None else "N/A",
+        "SUBCATEGORY": candidate["categories"][0] if candidate["categories"] else "",
+        "active": True,  # Serper.dev already confirmed a live walmart.com page before
+                          # this record was ever assembled (see find_walmart_listing) --
+                          # check_active_urls.py's Playwright checks are unreliable here
+                          # (Walmart bot-blocks it), so that confirmation is trusted
+                          # directly instead of waiting on a check that mostly won't run.
+        "calories": calories,
         "image_url": image_url,
-        # A real Serper-confirmed match (see find_instacart_listing) is
-        # preferred; the guessed search-results URL is only a fallback
-        # for when nothing was confirmed, so there's still SOME link.
-        "INSTACART_URL": (instacart_result["instacart_url"] if instacart_result and instacart_result["instacart_url"]
-                           else build_instacart_search_url(product_name)),
-        "instacart_active": bool(instacart_result and instacart_result["instacart_url"]),
+        "INSTACART_URL": build_instacart_search_url(product_name),  # built, never searched
         "index": f"kroger-{idx}",
-        "serving": serving_text or "N/A",
+        "servings_per_container": servings_per_container or "N/A",
         "tid": "",
         # Provenance metadata -- "SOURCE" above is the human-readable
         # column; these _-prefixed fields are the detail behind it, kept
         # separate from check_active_urls.py's own "_active_check_*" writes.
         "_kroger_upc": candidate["upc"],
         "_kroger_discovered_at": run_date,
+        "_kroger_location_id": location_id,
+        "_price_source": "Kroger",
         "_serper_query": walmart["query"],
         "_serper_reason": walmart["reason"],
         "_serper_top_result_url": walmart["top_result_url"],
-        "_instacart_check_query": instacart_result["query"] if instacart_result else None,
-        "_instacart_check_reason": instacart_result["reason"] if instacart_result else None,
-        "_instacart_check_url": instacart_result["top_result_url"] if instacart_result else None,
+        "_walmart_url_slug_name": walmart.get("product_name"),  # debug/reference only -- not
+                                                                  # PRODUCT_NAME (Kroger's is).
         "_image_search_query": image_query,
         "_image_search_reason": image_reason,
-        "_sku_is_estimate": sku_is_estimate,
-        "_walmart_url_slug_name": walmart.get("product_name"),  # kept for reference/debugging
-                                                                  # only -- not used as PRODUCT_NAME
-                                                                  # since some slugs are truncated.
+        # Same two bookkeeping fields Max_Calories_Count.py writes, so a
+        # later run of that script treats this row as already checked.
+        "_calorie_max_checked_at": run_date,
+        "_calorie_max_source": calorie_source,
+        "_calorie_sources": calorie_values,  # every source that returned a number
     }
 
     if gemini_result:
@@ -1092,7 +1281,6 @@ def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
         record["_gemini_model"] = gemini_model
         record["_gemini_notes"] = gemini_result["notes"]
         record["_gemini_recognized"] = gemini_result["recognized"]
-        record["_gemini_price_is_estimate"] = True
 
     return record
 
@@ -1101,180 +1289,258 @@ def build_pool_record(candidate, walmart, image_url, image_query, image_reason,
 # Main
 # ---------------------------------------------------------------------------
 
+class AbortRun(Exception):
+    """Something that would fail every remaining candidate the same way
+    (e.g. Serper rejecting the API key) -- stop the run instead of
+    burning through the list."""
+
+
+# Serper "reason"s that are about THIS product and won't change tomorrow
+# (as opposed to a network error or a rate limit, which are worth retrying
+# on a later run). Only these get the product's UPC written to the
+# skipped-UPCs file.
+_PERMANENT_WALMART_REASONS = {
+    "no_search_results", "no_walmart_result_in_top_results", "walmart_domain_but_no_ip_pattern",
+}
+
+
+def ask_gemini_for_calories(c, walmart, image_url, image_query, image_reason, gemini_key, cfg, rate_limiter):
+    """One Gemini call for one product. Returns (result_or_None, model,
+    call_failed) -- call_failed is True if the call itself blew up (quota,
+    network), as opposed to Gemini answering "I don't recognize this"."""
+    batch = [(c, walmart, image_url, image_query, image_reason)]
+    try:
+        raw_results, model = call_gemini_batch(build_batch_prompt(cfg, batch), gemini_key, cfg, rate_limiter)
+    except DailyQuotaExceeded as e:
+        log(f"  Gemini fallback chain exhausted: {e}")
+        return None, None, True
+    except Exception as e:  # noqa: BLE001 -- one bad call shouldn't kill the run
+        log(f"  Gemini call failed: {e}")
+        return None, None, True
+    matched = match_results_to_candidates(batch, raw_results)
+    return matched[0], model, False
+
+
+def enrich_candidate(c, ctx):
+    """Runs one NEW Kroger product through the rest of the pipeline and
+    returns (outcome, detail):
+      ("added", record)         -- built and ready to append to the pool
+      ("tagged", pool_item)     -- its Walmart SKU is already active in the pool, so it
+                                   IS that existing product; the UPC was recorded on it
+      ("skip", reason)          -- can't be added, and won't be able to later either;
+                                   the caller records its UPC in the skipped-UPCs file
+      ("retry_later", reason)   -- failed for a transient reason (network, rate limit);
+                                   nothing is recorded, so a later run tries it again
+    Cheapest-to-fail steps come first, so Open Food Facts and Gemini calls
+    aren't spent on products with no Walmart page (Kroger's own store
+    brands, mostly)."""
+    cfg = ctx.cfg
+
+    # Walmart page via Serper.dev -> PRODUCT_URL + SKU (the id in the URL).
+    walmart = find_walmart_listing(c, ctx.serper_key, cfg)
+    if not walmart["product_url"]:
+        reason = walmart["reason"]
+        if reason.startswith("auth_error"):
+            raise AbortRun(reason)
+        return ("skip" if reason in _PERMANENT_WALMART_REASONS else "retry_later"), f"no Walmart link ({reason})"
+
+    sku = walmart["sku"]
+    if sku in ctx.active_skus:
+        item = tag_existing_pool_item_with_upc(ctx.pool, sku, c["upc"])
+        return "tagged", item
+
+    # Image via DuckDuckGo (same technique as AddImageUrl.py).
+    image_query = build_image_query(c["brand"], c["description"])
+    image_url, image_reason = search_image(ctx.ddgs, image_query, cfg)
+    if not image_url:
+        return ("skip" if image_reason == "no_results" else "retry_later"), f"no image ({image_reason})"
+    time.sleep(random.uniform(cfg["ddg_image"]["min_delay_seconds"], cfg["ddg_image"]["max_delay_seconds"]))
+
+    # Calories + servings_per_container from USDA; calories also from Open
+    # Food Facts and Gemini; the highest calorie number wins.
+    usda = fetch_usda_info(c["description"], ctx.usda_key, cfg)
+    time.sleep(cfg["usda"]["min_call_interval_seconds"])
+    off_cal, off_is_100g = fetch_off_calories(c["description"], cfg)
+    time.sleep(cfg["open_food_facts"]["min_call_interval_seconds"])
+    gemini_result, gemini_model, gemini_failed = ask_gemini_for_calories(
+        c, walmart, image_url, image_query, image_reason, ctx.gemini_key, cfg, ctx.rate_limiter)
+
+    calories_raw, calorie_source, calorie_values = pick_max_calories(
+        usda["calories"], off_cal, off_is_100g, gemini_calories(gemini_result))
+    calories = round_to_nearest_ten(calories_raw) if calories_raw else 0
+    if calories <= 0:
+        note = gemini_result["notes"] if gemini_result and gemini_result["notes"] else "no USDA/OFF match"
+        return ("retry_later" if gemini_failed else "skip"), f"no calorie number from USDA, Open Food Facts, or Gemini ({note})"
+
+    ctx.idx += 1
+    record = build_pool_record(
+        c, walmart, image_url, image_query, image_reason,
+        calories, calorie_source, calorie_values, usda["servings_per_container"],
+        gemini_result, gemini_model, ctx.location_id, ctx.idx, ctx.run_date,
+    )
+    return "added", record
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--config", default=str(DEFAULT_CONFIG_PATH))
     parser.add_argument("--max-new-items", type=int, default=None,
                          help="Override run.max_new_items for this run")
     parser.add_argument("--dry-run", action="store_true",
-                         help="Run Kroger discovery + dedup only; skip Serper/DDG/Gemini and don't write the pool")
+                         help="Pull Kroger and fuzzy-match only: list the new products it would enrich, "
+                              "write nothing (no UPC tagging, no pool changes), skip Serper/DDG/USDA/OFF/Gemini")
+    parser.add_argument("--find-location", metavar="ZIP", default=None,
+                         help="Print Kroger store ids near this ZIP code (for kroger.location_id), then exit")
     args = parser.parse_args()
+
+    cfg = load_config(args.config)
 
     kroger_id = os.environ.get("KROGER_CLIENT_ID")
     kroger_secret = os.environ.get("KROGER_CLIENT_SECRET")
     serper_key = os.environ.get("SERPER_API_KEY")
     gemini_key = os.environ.get("GEMINI_KEY")
     usda_key = os.environ.get("USDA_API_KEY")
+    # The env var wins over the yaml, so a one-off run can point at a
+    # different store without editing the config.
+    location_id = (os.environ.get("KROGER_LOCATION_ID") or str(cfg["kroger"].get("location_id") or "")).strip()
 
-    missing = [name for name, val in [
-        ("KROGER_CLIENT_ID", kroger_id), ("KROGER_CLIENT_SECRET", kroger_secret),
-        ("SERPER_API_KEY", serper_key), ("GEMINI_KEY", gemini_key),
-        ("USDA_API_KEY", usda_key),
-    ] if not val]
-    if missing:
-        log(f"Missing env var(s) {', '.join(missing)} -- skipping kroger_new_items run.")
+    if args.find_location:
+        if not (kroger_id and kroger_secret):
+            log("--find-location needs KROGER_CLIENT_ID and KROGER_CLIENT_SECRET set.")
+            return
+        token = get_kroger_token(kroger_id, kroger_secret, cfg["kroger"]["timeout_seconds"])
+        stores = find_kroger_locations(token, args.find_location, cfg["kroger"]["timeout_seconds"])
+        if not stores:
+            log(f"No Kroger-family stores found near {args.find_location}.")
+        for loc_id, desc in stores:
+            print(f"{loc_id}  {desc}")
         return
 
-    cfg = load_config(args.config)
+    required = [("KROGER_CLIENT_ID", kroger_id), ("KROGER_CLIENT_SECRET", kroger_secret)]
+    if not args.dry_run:
+        required += [("SERPER_API_KEY", serper_key), ("GEMINI_KEY", gemini_key), ("USDA_API_KEY", usda_key)]
+    missing = [name for name, val in required if not val]
+    if not location_id:
+        missing.append("KROGER_LOCATION_ID (or kroger.location_id in kroger_new_items.yaml)")
+    if missing:
+        log(f"Missing {', '.join(missing)} -- skipping kroger_new_items run.")
+        return
+
     max_new_items = args.max_new_items or cfg["run"]["max_new_items"]
+    max_attempts = cfg["run"]["max_enrichment_attempts"]
+    deadline = time.monotonic() + cfg["run"]["max_runtime_minutes"] * 60
     pool_path = _SCRIPT_DIR / cfg["pool"]["path"]
+    skipped_path = _SCRIPT_DIR / cfg["pool"]["skipped_upcs_path"]
 
     pool = load_pool(pool_path)
-    existing_names, existing_upcs = existing_name_and_upc_sets(pool)
+    skipped_upcs = load_skipped_upcs(skipped_path)
+    matcher = PoolNameMatcher(pool, cfg["dedup"]["fuzzy_threshold"])
+    known_upcs = existing_upc_set(pool, skipped_upcs)
     active_skus = existing_active_skus(pool)
-    log(f"Loaded {len(pool)} existing pool item(s) ({len(existing_upcs)} with a known Kroger UPC, "
-        f"{len(active_skus)} active with a known SKU).")
+    log(f"Loaded {len(pool)} existing pool item(s) and {len(skipped_upcs)} skipped UPC(s); "
+        f"{len(known_upcs)} Kroger UPC(s) already known, {len(active_skus)} active pool SKU(s). "
+        f"Fuzzy-dedup threshold: score > {matcher.threshold}. Target: {max_new_items} new item(s).")
 
     log("Fetching Kroger OAuth token...")
     token = get_kroger_token(kroger_id, kroger_secret, cfg["kroger"]["timeout_seconds"])
 
-    candidates, total_found = discover_new_candidates(token, cfg, existing_names, existing_upcs, max_new_items)
-    log(f"Discovery done: {total_found} new candidate(s) found in total, "
-        f"{len(candidates)} selected to enrich this run (cap {max_new_items}).")
+    stats = {"pulled": 0, "not_frozen_or_unpriced": 0, "known_upc": 0, "matched_existing": 0}
+    unsaved_tags = 0
 
-    if not candidates:
-        log("Nothing new found this run.")
-        return
+    def on_existing_match(item, upc):
+        """A Kroger product fuzzy-matched a pool item: record its UPC on
+        that (highest-scoring) item so the next pull skips it."""
+        nonlocal unsaved_tags
+        if args.dry_run:
+            return
+        tag_pool_item_with_upc(item, upc)
+        known_upcs.add(upc)
+        unsaved_tags += 1
+
+    new_candidates = iter_new_candidates(
+        token, cfg, location_id, matcher, known_upcs, stats, on_existing_match)
 
     if args.dry_run:
-        for c in candidates:
-            log(f"  [dry-run] would enrich: {c['brand']} {c['description']} (UPC {c['upc']})")
+        for n, c in enumerate(new_candidates, start=1):
+            log(f"  [dry-run] new: {c['brand']} {c['description']} (UPC {c['upc']}, "
+                f"Kroger price {c['price_current']:.2f}, instacart {build_instacart_search_url(c['description'])})")
+            if n >= max_new_items:
+                break
+        log(f"[dry-run] pulled {stats['pulled']} Kroger product(s); nothing written.")
         return
 
-    # --- Step 2 + 3: Serper.dev link + DDG image for every candidate first,
-    # so Gemini is only ever spent on candidates that already cleared the
-    # "must have both a link and an image" bar. ---
-    ddgs = DDGS()
-    enriched = []
-    skus_added_this_run = set()
-    skus_tagged = 0
-    for c in candidates:
-        walmart = find_walmart_listing(c, serper_key, cfg)
-        if not walmart["product_url"]:
-            log(f"  SKIP (no Walmart link): {c['brand']} {c['description']} -- {walmart['reason']}")
-            continue
+    ctx = SimpleNamespace(
+        cfg=cfg, pool=pool, active_skus=active_skus, location_id=location_id,
+        serper_key=serper_key, gemini_key=gemini_key, usda_key=usda_key,
+        ddgs=DDGS(), rate_limiter=_RateLimiter(cfg["gemini"]["min_call_interval_seconds"]),
+        idx=next_index(pool), run_date=datetime.now(timezone.utc).isoformat(),
+    )
 
-        if walmart["sku"] and (walmart["sku"] in active_skus or walmart["sku"] in skus_added_this_run):
-            if tag_existing_pool_item_with_upc(pool, walmart["sku"], c["upc"]):
-                skus_tagged += 1
-            log(f"  SKIP (SKU {walmart['sku']} already active in pool): {c['brand']} {c['description']}")
-            continue
+    added = attempts = tagged_by_sku = skipped = retry_later = 0
+    stop_reason = "Kroger had nothing more new to pull"
 
-        image_query = build_image_query(c["brand"], c["description"])
-        image_url, image_reason = search_image(ddgs, image_query, cfg)
-        if not image_url:
-            log(f"  SKIP (no image): {c['brand']} {c['description']} -- {image_reason}")
-            continue
+    while True:
+        if added >= max_new_items:
+            stop_reason = f"reached the target of {max_new_items} new item(s)"
+            break
+        if attempts >= max_attempts:
+            stop_reason = f"hit run.max_enrichment_attempts ({max_attempts})"
+            break
+        if time.monotonic() >= deadline:
+            stop_reason = f"hit run.max_runtime_minutes ({cfg['run']['max_runtime_minutes']})"
+            break
 
-        if walmart["sku"]:
-            skus_added_this_run.add(walmart["sku"])
-        enriched.append((c, walmart, image_url, image_query, image_reason))
-        log(f"  OK: {c['brand']} {c['description']} -> {walmart['product_url']}")
-        time.sleep(random.uniform(cfg["ddg_image"]["min_delay_seconds"], cfg["ddg_image"]["max_delay_seconds"]))
+        c = next(new_candidates, None)   # pulls more from Kroger only when it has to
+        if c is None:
+            break
+        attempts += 1
+        label = brand_and_name(c)
 
-    log(f"{len(enriched)}/{len(candidates)} candidate(s) got both a Walmart link and an image.")
-    if not enriched:
-        log("Nothing to add this run (all candidates failed link/image lookup).")
-        # No early return here: even with nothing new to enrich, this run
-        # may have tagged existing pool items with a newly discovered
-        # Kroger UPC (see the SKU-already-active branch above) -- those
-        # edits still need saving, so execution falls through to
-        # save_pool() below. Every loop from here on is a harmless no-op
-        # over an empty `enriched`.
-
-    # --- Step 2.5: Instacart verification, one Serper call per candidate
-    # that made it into `enriched` -- real search-result confirmation,
-    # not just a guessed search-results URL. Never a gate on whether the
-    # item gets added (that's Walmart's job, via active_skus above); a
-    # candidate with no Instacart match just gets instacart_active=False
-    # and falls back to the guessed URL for INSTACART_URL. ---
-    instacart_by_upc = {}
-    for c, *_rest in enriched:
-        instacart_by_upc[c["upc"]] = find_instacart_listing(c, serper_key, cfg)
-
-    # --- Step 3.5: USDA serving-size lookup, one call per candidate that
-    # made it into `enriched` -- independent of Gemini/calories, and not
-    # a gate on whether the item gets added (a genuine "not found in
-    # USDA" becomes "N/A", same as the original 2022 pool already
-    # tolerates for some rows, rather than blocking the item). ---
-    usda_serving_by_upc = {}
-    for c, *_rest in enriched:
-        usda_serving_by_upc[c["upc"]] = fetch_usda_serving(c["description"], usda_key, cfg)
-        time.sleep(cfg["usda"]["min_call_interval_seconds"])
-
-    # --- Step 4: Gemini, batched, for calories/price (+ sku_guess
-    # only where step 2 found a link but couldn't parse a SKU out of it). ---
-    items_per_call = cfg["batch"]["items_per_call"]
-    rate_limiter = _RateLimiter(cfg["gemini"]["min_call_interval_seconds"])
-    gemini_results_by_upc = {}
-    gemini_model_used = None
-
-    for i in range(0, len(enriched), items_per_call):
-        batch = enriched[i:i + items_per_call]
-        prompt = build_batch_prompt(cfg, batch)
         try:
-            raw_results, model_used = call_gemini_batch(prompt, gemini_key, cfg, rate_limiter)
-            gemini_model_used = model_used
-        except DailyQuotaExceeded as e:
-            log(f"  Gemini fallback chain exhausted: {e} -- remaining items get no calorie/price estimate this run.")
-            continue
-        except Exception as e:  # noqa: BLE001 -- one bad call shouldn't kill the run
-            log(f"  Gemini call failed: {e}")
-            continue
+            outcome, detail = enrich_candidate(c, ctx)
+        except AbortRun as e:
+            stop_reason = f"aborted: {e}"
+            break
 
-        matched = match_results_to_candidates(batch, raw_results)
-        for entry, result in zip(batch, matched):
-            if result is not None:
-                gemini_results_by_upc[entry[0]["upc"]] = result
+        if outcome == "added":
+            pool.append(detail)
+            matcher.add(detail)
+            ctx.active_skus.add(detail["SKU"])
+            added += 1
+            log(f"  ADDED [{added}/{max_new_items}]: {detail['PRODUCT_NAME']} -- SKU {detail['SKU']}, "
+                f"calories={detail['calories']} (max of {detail['_calorie_sources']}, from {detail['_calorie_max_source']}, "
+                f"rounded to nearest 10), price={detail['PRICE_CURRENT']} (Kroger), "
+                f"servings_per_container={detail['servings_per_container']}")
+            save_pool(pool_path, pool)
+            unsaved_tags = 0
+        elif outcome == "tagged":
+            tagged_by_sku += 1
+            unsaved_tags += 1
+            log(f"  EXISTS (its Walmart SKU is already active in the pool): {label} -> UPC {c['upc']} "
+                f"recorded on {(detail or {}).get('PRODUCT_NAME')!r}")
+        elif outcome == "skip":
+            skipped += 1
+            skipped_upcs[c["upc"]] = {"name": c["description"], "reason": detail, "at": ctx.run_date}
+            save_skipped_upcs(skipped_path, skipped_upcs)
+            log(f"  SKIP: {label} -- {detail} (UPC {c['upc']} recorded so it isn't retried)")
+        else:
+            retry_later += 1
+            log(f"  SKIP for now: {label} -- {detail} (nothing recorded; a later run will retry it)")
 
-    # --- Assemble + append records. Only candidates with a COMPLETE
-    # Gemini result (recognized, and calories + price both present) make
-    # it in -- everything else is dropped, not added with gaps. Serving
-    # (from USDA, above) is best-effort and never gates this. ---
-    idx = next_index(pool)
-    run_date = datetime.now(timezone.utc).isoformat()
-    added = 0
-    skipped_incomplete = 0
+        if unsaved_tags >= 25:
+            save_pool(pool_path, pool)
+            unsaved_tags = 0
 
-    for c, walmart, image_url, image_query, image_reason in enriched:
-        gemini_result = gemini_results_by_upc.get(c["upc"])
-        if not gemini_result_is_complete(gemini_result):
-            skipped_incomplete += 1
-            reason = (gemini_result["notes"] if gemini_result and gemini_result["notes"]
-                       else "not recognized or missing calories/price")
-            log(f"  SKIP (incomplete Gemini result): {c['brand']} {c['description']} -- {reason}")
-            continue
-
-        idx += 1
-        record = build_pool_record(
-            c, walmart, image_url, image_query, image_reason,
-            gemini_result, gemini_model_used, usda_serving_by_upc.get(c["upc"]),
-            instacart_by_upc.get(c["upc"]), idx, run_date,
-        )
-        pool.append(record)
-        added += 1
-        sku_note = " (estimated SKU)" if record["_sku_is_estimate"] else ""
-        log(f"  ADDED: {record['PRODUCT_NAME']} -- SKU {record['SKU']}{sku_note}, "
-            f"calories={record['calories']}, price={record['PRICE_CURRENT']}, "
-            f"serving={record['serving']}")
-
-    if skipped_incomplete:
-        log(f"{skipped_incomplete} candidate(s) had a Walmart link + image but no complete "
-            f"Gemini calories/price -- not added.")
-
+    # Final save -- also persists UPCs recorded on existing pool items even
+    # when nothing new was added this run.
     save_pool(pool_path, pool)
-    log(f"Done. Added {added} new item(s), tagged {skus_tagged} existing item(s) with a newly "
-        f"discovered Kroger UPC, to {pool_path.name} (pool size now {len(pool)}).")
+    log(f"Stopped: {stop_reason}.")
+    log(f"Kroger pulled {stats['pulled']} product(s): {stats['not_frozen_or_unpriced']} not frozen/unpriced (ignored), "
+        f"{stats['known_upc']} UPC already known, {stats['matched_existing']} fuzzy-matched an existing item "
+        f"(UPC recorded on it), {tagged_by_sku} matched by Walmart SKU (UPC recorded), "
+        f"{attempts} treated as new.")
+    log(f"Done. Added {added} new item(s); {skipped} new product(s) couldn't be added and were remembered, "
+        f"{retry_later} skipped for now. Pool size now {len(pool)}.")
 
 
 if __name__ == "__main__":

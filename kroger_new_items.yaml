@@ -1,45 +1,49 @@
 # Configuration for kroger_new_items.py.
 #
-# This script finds NEW frozen items (not already in candidate_pool.json)
-# by searching Kroger's live product catalog, since Kroger's API is the
-# one live, free, non-scraped source of "what frozen products currently
-# exist" available here. Kroger has no "date added" field, so "newer than
-# the 2022 pool" is approximated as: in Kroger's catalog today AND not
-# already present in candidate_pool.json by normalized product name. See
-# the module docstring in kroger_new_items.py for the full reasoning.
+# This script adds NEW frozen items (not already in candidate_pool.json)
+# by pulling Kroger's live product catalog -- the one live, free,
+# non-scraped source of "what frozen products currently exist" available
+# here. Kroger has no "date added" field, so "new" means: in Kroger's
+# catalog today AND not already in candidate_pool.json by fuzzy name
+# match. It runs 4x a day (see .github/workflows/kroger-new-items.yml),
+# pulling Kroger until it has added run.max_new_items new products. See
+# the module docstring in kroger_new_items.py for the full step-by-step.
 #
-# Kroger itself is only used for discovery (name/brand/categories/UPC) --
-# not price. PRODUCT_NAME comes from Kroger's own description (not the
-# Walmart URL's slug -- some slugs are truncated/abbreviated versions of
-# the real name), and that same name drives the DuckDuckGo image search
-# and the Gemini prompt too. A Walmart PRODUCT_URL comes from Serper.dev
-# (searched by brand + product name, not UPC -- Walmart's pages don't
-# reliably surface the raw UPC as indexable text), with
-# ?fulfillmentIntent=Pickup appended; image_url comes from DuckDuckGo,
-# preferring a Walmart/Kroger/Amazon-hosted result over anything else
-# (generic results were too often unrelated/non-food images) and only
-# falling back to another source if none of those three show up; an
-# INSTACART_URL is built from the same product name; "serving" (the
-# amount of ONE serving, not how many servings are in the container)
-# comes from USDA FoodData Central, same technique build_meal_pool.py
-# uses; and calories/price come from Gemini (no search -- same as
-# gemini_meal_lookup.py, so treat price as a rough estimate, not a live
-# price).
+# Where each field on a new pool record comes from:
+#   _kroger_upc, PRODUCT_NAME, BRAND, PRICE_CURRENT/PRICE_RETAIL -- Kroger
+#       (price is the price at the store in kroger.location_id below)
+#   PRODUCT_URL, SKU -- Serper.dev search for the Walmart page; SKU is the
+#       id part of that URL, and ?fulfillmentIntent=Pickup is appended to
+#       the URL
+#   INSTACART_URL -- BUILT from the cleaned product name (never searched)
+#   image_url -- DuckDuckGo Images, taking a Walmart/Kroger/Instacart/
+#       Target/Aldi/Amazon-hosted result before any other
+#   calories -- the LARGEST of USDA FoodData Central, Open Food Facts and
+#       Gemini (Gemini answers from its own knowledge, no search), rounded
+#       to the nearest 10 -- same "largest wins" rule as
+#       DataCleaning/Max_Calories_Count.py
+#   servings_per_container -- USDA FoodData Central, pulled the way
+#       DataCleaning/build_meal_pool.py pulls it
+#   SOURCE -- always "Kroger", to tell these rows apart from the original
+#       2022 Walmart-CSV rows (which have no SOURCE column at all)
 #
-# An item is only added to the pool if it has ALL of: a Walmart
-# PRODUCT_URL (via Serper.dev) whose SKU isn't already on an
-# active=True pool item, an image_url (via DuckDuckGo), AND a complete
-# Gemini result -- recognized, with both calories AND price present,
-# not just one of them. Missing any one of those, and the candidate is
-# dropped, not added with gaps. "serving" (USDA) is the one exception --
-# a genuine USDA miss becomes "N/A" rather than blocking the item, since
-# that's a real answer from an authoritative source, not an unreliable
-# guess. SKU is extracted from the real Walmart URL whenever possible;
-# only if that extraction fails does Gemini get asked to guess one, and
-# that guess is flagged with _sku_is_estimate: true so it's never
-# confused with a verified SKU. Every row this script adds also gets a
-# plain "SOURCE": "Kroger" column, so it's easy to tell apart from the
-# original 2022 Walmart-CSV rows (which have no SOURCE column at all).
+# A product is only added if it has ALL of: a Kroger price, a Walmart
+# PRODUCT_URL whose SKU isn't already on an active=True pool item, an
+# image_url, and at least one calorie number from the three sources.
+# servings_per_container is the one exception -- a USDA miss becomes "N/A"
+# rather than blocking the item.
+
+dedup:
+  # A Kroger item is treated as ALREADY IN THE POOL when its cleaned name
+  # scores ABOVE this (0-100, rapidfuzz token_sort_ratio) against any
+  # existing PRODUCT_NAME, cleaned the same way. "Cleaned" = the same
+  # cleanup used to build the Instacart search: everything after the
+  # first comma, sizes like "27 oz"/"6 ct", other numbers, punctuation
+  # and the word "frozen" removed. The pool item with the HIGHEST score
+  # gets the Kroger UPC recorded on it. Raise this to be pickier about
+  # what counts as a duplicate (more items get added); lower it to skip
+  # more.
+  fuzzy_threshold: 75
 
 usda:
   timeout_seconds: 15
@@ -49,7 +53,27 @@ usda:
   # a courtesy delay, not a rate-limit workaround.
   min_call_interval_seconds: 0.5
 
+open_food_facts:
+  # No API key, but Open Food Facts asks for a descriptive User-Agent, and
+  # its anonymous SEARCH endpoint is tightly rate-limited (they document
+  # roughly 10 requests/minute for searches) -- hence the long spacing.
+  # Only a handful of new items get looked up per run, so this is cheap.
+  user_agent: "FrozenMealDiet/1.0 (github.com/mzaiger/FrozenMealDiet)"
+  timeout_seconds: 15
+  max_retries: 2
+  retry_delay_seconds: 5
+  min_call_interval_seconds: 6.5
+
 kroger:
+  # The Kroger store to take prices from. REQUIRED -- Kroger's API only
+  # returns prices when a search is scoped to a store, and this script
+  # skips the run if there isn't one. The KROGER_LOCATION_ID environment
+  # variable, if set, overrides this. To find an id, run:
+  #     python kroger_new_items.py --find-location <ZIP>
+  # (needs KROGER_CLIENT_ID / KROGER_CLIENT_SECRET set) and paste the
+  # 8-character locationId of the store you want here, e.g. "01400943".
+  location_id: ""
+
   # Kroger's own department groupings don't map 1:1 to Walmart's, so
   # this is a set of search terms run against filter.term instead of a
   # category ID. Deliberately broad/generic (e.g. "bowl", "meal" --
@@ -80,10 +104,11 @@ kroger:
     - "egg bites"
   # Kroger's product search caps at 50 results per page (filter.limit).
   results_per_term: 50
-  # How many pages (of results_per_term each) to pull per search term --
-  # with broader terms above returning far more than 50 total matches,
-  # one page per term left a lot of the catalog unseen.
-  pages_per_term: 3
+  # The run pulls Kroger one page at a time (round-robin across the terms
+  # above) and stops as soon as it has added run.max_new_items new
+  # products, so this is only a ceiling on how deep it will page into any
+  # one term. Kroger's filter.start tops out at 1000, i.e. 20 pages of 50.
+  max_pages_per_term: 20
   timeout_seconds: 15
 
 serper:
@@ -99,10 +124,10 @@ ddg_image:
   region: "us-en"
   safesearch: "moderate"
   # Pulled higher than AddImageUrl.py's 5, so there's more of a chance a
-  # trusted retailer domain (Walmart/Kroger/Amazon -- see
-  # TRUSTED_IMAGE_DOMAINS in kroger_new_items.py) actually shows up
-  # somewhere in the batch, since search_image() prefers one of those
-  # over any other result whenever one's present.
+  # trusted retailer (Walmart/Kroger/Instacart/Target/Aldi/Amazon -- see
+  # is_trusted_image_host() in kroger_new_items.py) actually shows up
+  # somewhere in the results, since search_image() takes one of those
+  # before any other result whenever one's present.
   max_results: 8
 
 gemini:
@@ -117,32 +142,39 @@ gemini:
   retry_delay_seconds: 60
   max_retries: 3
 
-batch:
-  # New items bundled into a single Gemini prompt/call.
-  items_per_call: 8
-
 run:
-  # Brand-new items fully enriched (Serper + DDG + Gemini) per run.
-  # Kept small since each item costs one Serper call and one DDG
-  # image search, both of which are rate-limited/quota-limited services.
+  # Brand-new items to ADD per run. The run keeps pulling Kroger (it may
+  # pull 100+ products to find this many new ones) until it has this many.
   max_new_items: 20
+  # Ceiling on how many new products get run through the Serper/DDG
+  # steps in one run, counting the ones that fail (no Walmart page, no
+  # image, no calories) -- protects the Serper credit quota if Kroger's
+  # remaining new products mostly turn out to be unsellable at Walmart.
+  max_enrichment_attempts: 60
+  # Stop starting new products after this long, so the workflow has time to
+  # commit what the run did instead of being killed mid-run (which would
+  # lose it). Keep it under the workflow's timeout-minutes.
+  max_runtime_minutes: 35
 
 pool:
   path: candidate_pool.json
+  # New Kroger products that couldn't be added for a lasting reason (no
+  # Walmart page, no image results, no calorie number) -- their UPCs are
+  # kept here so they aren't retried every run. Delete an entry to retry.
+  skipped_upcs_path: kroger_skipped_upcs.json
 
-# {n}/{product_name}/{brand}/{size} are filled in per item within a
-# batch; {count}/{products_block} wrap the whole batch. {product_name}
-# here is the name read off the matched Walmart URL's own slug (e.g.
-# "Banquet Salisbury Steak 9 oz"), not Kroger's raw description -- see
-# build_batch_prompt() in kroger_new_items.py.
+# {n}/{product_name}/{brand}/{size} are filled in per item; {count}/
+# {products_block} wrap the request (one product per call now).
+# {product_name} is Kroger's own product description for the item. Gemini
+# is only asked for calories -- price comes from Kroger,
+# servings_per_container from USDA, and the SKU from the Walmart URL.
 prompt:
   item_line: |
     {n}. {product_name} ({brand}, size: {size})
   intro: |
-    You are estimating information for {count} frozen food products that
-    may be sold at Walmart, based on what you already know -- you do NOT
-    have the ability to browse the web or visit walmart.com right now,
-    so do not claim to have looked anything up live.
+    You are estimating the calories of {count} frozen food products, based
+    on what you already know -- you do NOT have the ability to browse the
+    web right now, so do not claim to have looked anything up live.
 
     Products:
     {products_block}
@@ -153,15 +185,6 @@ prompt:
        be guessing blindly.
     2. "calories" -- calories per serving, as it would appear on the
        product's nutrition facts.
-    3. "price" -- a typical/recent price in USD at Walmart. Treat this as
-       an approximate estimate, not a live price -- it may be out of date.
-    4. "servings_per_container" -- short text as it would appear on the
-       label (e.g. "1 bowl (269g)"), or null if unknown.
-    5. "sku_guess" -- ONLY fill this in if told to for a specific item (see
-       below); otherwise leave it null. When asked, give your best guess
-       at a plausible-looking Walmart item ID (digits only, 8-9 digits is
-       typical) -- this is explicitly a fallback GUESS, not a real lookup,
-       and will be stored flagged as an estimate, never as a verified SKU.
 
     Return ONLY a JSON array with exactly {count} objects, in the same
     order as the list above, and nothing else -- no markdown code
@@ -170,12 +193,9 @@ prompt:
     - "index": integer -- the product's number from the list above (1-based)
     - "recognized": boolean
     - "calories": integer or JSON null if unknown
-    - "price": number or JSON null if unknown (e.g. 3.98, no dollar sign)
-    - "servings_per_container": string or JSON null if unknown
-    - "sku_guess": string of digits or JSON null
     - "notes": string -- one short sentence on your confidence or
       reasoning, or why you don't recognize it
 
-    Do not invent a source URL or claim to have verified anything on
-    walmart.com. If you do not recognize a product, set "recognized" to
-    false and the other fields to null for it.
+    Do not invent a source or claim to have verified anything on a
+    website. If you do not recognize a product, set "recognized" to false
+    and "calories" to null for it.
