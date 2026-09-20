@@ -1455,7 +1455,7 @@
     "index": "318896",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Meals & Snacks",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Meals & Snacks",
     "SKU": "21838815",
@@ -1485,7 +1485,8 @@
     "_calorie_max_checked_at": "2026-09-19T09:15:44.205809+00:00",
     "_calorie_max_source": "current",
     "_image_walmart_url_checked_at": "2026-09-20T05:07:07.368915+00:00",
-    "_kroger_upc": "0003100010130"
+    "_kroger_upc": "0003100010130",
+    "_previous_category": "Frozen Meals & Snacks"
   },
   {
     "index": "318900",
@@ -1704,7 +1705,7 @@
     "index": "318906",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Meals & Snacks",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Meals & Snacks",
     "SKU": "46675150",
@@ -1733,7 +1734,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=great+value+cinnamon+french+toast+bites",
     "_calorie_max_checked_at": "2026-09-19T09:16:36.229149+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:08:03.427997+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:08:03.427997+00:00",
+    "_previous_category": "Frozen Meals & Snacks"
   },
   {
     "index": "318910",
@@ -5486,7 +5488,7 @@
     "index": "319088",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Meals & Snacks",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Meals & Snacks",
     "SKU": "53989286",
@@ -5515,7 +5517,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+cinnamon+french+toast+sausage+on+a+stick",
     "_calorie_max_checked_at": "2026-09-19T09:24:32.610855+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:20:38.927176+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:20:38.927176+00:00",
+    "_previous_category": "Frozen Meals & Snacks"
   },
   {
     "index": "319089",
@@ -7559,7 +7562,7 @@
     "index": "319316",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Meals & Snacks",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Meals & Snacks",
     "SKU": "40839820",
@@ -7584,7 +7587,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:28:26.570796+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:27:33.776112+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:27:33.776112+00:00",
+    "_previous_category": "Frozen Meals & Snacks"
   },
   {
     "index": "319319",
@@ -7935,7 +7939,7 @@
     "index": "319330",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Meals & Snacks",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Meals & Snacks",
     "SKU": "24217387",
@@ -7964,7 +7968,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+ham+cheese+croissant+sandwich",
     "_calorie_max_checked_at": "2026-09-19T09:29:08.603431+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:28:50.749918+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:28:50.749918+00:00",
+    "_previous_category": "Frozen Meals & Snacks"
   },
   {
     "index": "319333",
@@ -8006,7 +8011,7 @@
     "index": "319331",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Meals & Snacks",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Meals & Snacks",
     "SKU": "152841447",
@@ -8035,7 +8040,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+sausage+biscuit+snack+size+sandwich",
     "_calorie_max_checked_at": "2026-09-19T09:29:14.146017+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:29:04.032051+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:29:04.032051+00:00",
+    "_previous_category": "Frozen Meals & Snacks"
   },
   {
     "index": "319329",
@@ -8249,7 +8255,7 @@
     "index": "319354",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Meals & Snacks",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Meals & Snacks",
     "SKU": "40839825",
@@ -8274,7 +8280,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:29:35.275274+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:29:54.395828+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:29:54.395828+00:00",
+    "_previous_category": "Frozen Meals & Snacks"
   },
   {
     "index": "319360",
@@ -12155,7 +12162,7 @@
     "index": "319527",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Meals & Snacks",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Meals & Snacks",
     "SKU": "679990736",
@@ -12180,7 +12187,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:36:10.083090+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:43:24.943247+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:43:24.943247+00:00",
+    "_previous_category": "Frozen Meals & Snacks"
   },
   {
     "index": "319528",
@@ -13613,7 +13621,7 @@
     "index": "319641",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Meals & Snacks",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Meals & Snacks",
     "SKU": "252199240",
@@ -13638,7 +13646,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:38:22.634706+00:00",
     "_calorie_max_source": "none_found",
-    "_image_walmart_url_checked_at": "2026-09-20T05:48:20.573816+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:48:20.573816+00:00",
+    "_previous_category": "Frozen Meals & Snacks"
   },
   {
     "index": "319642",
@@ -13869,7 +13878,7 @@
     "index": "319648",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Meals & Snacks",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Meals & Snacks",
     "SKU": "743454409",
@@ -13894,7 +13903,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:38:54.314460+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T05:49:16.046084+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:49:16.046084+00:00",
+    "_previous_category": "Frozen Meals & Snacks"
   },
   {
     "index": "319647",
@@ -15498,7 +15508,7 @@
     "index": "319696",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Meals & Snacks",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Meals & Snacks",
     "SKU": "49015183",
@@ -15523,7 +15533,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:42:13.666709+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:54:54.456678+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:54:54.456678+00:00",
+    "_previous_category": "Frozen Meals & Snacks"
   },
   {
     "index": "319698",
@@ -17626,7 +17637,7 @@
     "index": "319761",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Meals & Snacks",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Meals & Snacks",
     "SKU": "49358452",
@@ -17655,7 +17666,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=morningstar+farms+veggie+breakfast+meatless+sausage+patties",
     "_calorie_max_checked_at": "2026-09-19T09:46:29.119090+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:02:18.784804+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:02:18.784804+00:00",
+    "_previous_category": "Frozen Meals & Snacks"
   },
   {
     "index": "319767",
@@ -17692,7 +17704,7 @@
     "index": "319768",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Meals & Snacks",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Meals & Snacks",
     "SKU": "864111437",
@@ -17717,7 +17729,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:46:39.578947+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:02:31.871341+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:02:31.871341+00:00",
+    "_previous_category": "Frozen Meals & Snacks"
   },
   {
     "index": "319770",
@@ -23308,7 +23321,7 @@
     "index": "329875",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "10452829",
@@ -23337,7 +23350,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=pepperidge+farm+raisin+cinnamon+swirl+breakfast+bread",
     "_calorie_max_checked_at": "2026-09-19T09:56:47.427337+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:22:20.528581+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:22:20.528581+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "329876",
@@ -24213,7 +24227,7 @@
     "index": "330240",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "10452822",
@@ -24242,7 +24256,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=pepperidge+farm+swirl+cinnamon+breakfast+bread",
     "_calorie_max_checked_at": "2026-09-19T09:58:45.501007+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:25:40.783455+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:25:40.783455+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330250",
@@ -26769,7 +26784,7 @@
     "index": "330973",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "487343982",
@@ -26794,7 +26809,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:04:20.845525+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:34:43.535996+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:34:43.535996+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330976",
@@ -48762,7 +48778,7 @@
     "index": "371680",
     "SHIPPING_LOCATION": "23111",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Meals & Snacks",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Meals & Snacks",
     "SKU": "112508801",
@@ -48787,7 +48803,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:50:34.724192+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:57:46.325267+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:57:46.325267+00:00",
+    "_previous_category": "Frozen Meals & Snacks"
   },
   {
     "index": "371685",
@@ -58350,7 +58367,7 @@
   {
     "BRAND": "El Monterey",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "1.00",
     "PRICE_RETAIL": "1.50",
@@ -58395,12 +58412,13 @@
       "0007100714478",
       "0007100714937",
       "0007100714842"
-    ]
+    ],
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "El Monterey",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "1.00",
     "PRICE_RETAIL": "1.50",
@@ -58440,7 +58458,8 @@
     "_gemini_notes": "Recognize this specific 4.5 oz El Monterey breakfast burrito based on typical nutrition facts for this variety.",
     "_gemini_recognized": true,
     "_image_walmart_url_checked_at": "2026-09-20T08:34:23.418339+00:00",
-    "_kroger_upc": "0007100714690"
+    "_kroger_upc": "0007100714690",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Kevin's Natural Foods",
@@ -58672,7 +58691,7 @@
   {
     "BRAND": "Red's",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "6.99",
     "PRICE_RETAIL": "7.49",
@@ -58714,7 +58733,8 @@
     "_kroger_upc": "0085001191135",
     "_kroger_upc_aliases": [
       "0085041600227"
-    ]
+    ],
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "El Monterey",
@@ -59222,7 +59242,7 @@
   {
     "BRAND": "Eggo",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "5.99",
     "PRICE_RETAIL": "5.99",
@@ -59263,12 +59283,13 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Eggo Protein Waffles Buttermilk Vanilla as having about 190 calories per 2-waffle serving.",
     "_gemini_recognized": true,
-    "_image_walmart_url_checked_at": "2026-09-20T11:13:23.858726+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T11:13:23.858726+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "De Wafelbakkers",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "3.99",
     "PRICE_RETAIL": "3.99",
@@ -59309,12 +59330,13 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize De Wafelbakkers Homestyle Pancakes, where a typical serving of 3 pancakes is around 190 calories.",
     "_gemini_recognized": true,
-    "_image_walmart_url_checked_at": "2026-09-20T11:13:33.018096+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T11:13:33.018096+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Kodiak",
     "BREADCRUMBS": "Frozen/Natural & Organic",
-    "CATEGORY": "Natural & Organic",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "7.49",
     "PRICE_RETAIL": "7.49",
@@ -59355,12 +59377,13 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized Kodiak Protein-Packed Frozen Cinnamon French Toast Sticks, which typically contain around 290 calories per serving of 4 sticks.",
     "_gemini_recognized": true,
-    "_image_walmart_url_checked_at": "2026-09-20T11:13:42.129771+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T11:13:42.129771+00:00",
+    "_previous_category": "Natural & Organic"
   },
   {
     "BRAND": "Kodiak",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "7.49",
     "PRICE_RETAIL": "7.49",
@@ -59401,7 +59424,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized Kodiak Protein-Packed Buttermilk French Toast Sticks, which typically contain around 290 calories per serving of 4 sticks.",
     "_gemini_recognized": true,
-    "_image_walmart_url_checked_at": "2026-09-20T11:13:50.506255+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T11:13:50.506255+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Stouffer's",
@@ -59730,7 +59754,7 @@
   {
     "BRAND": "Jimmy Dean",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "3.29",
     "PRICE_RETAIL": "3.29",
@@ -59770,12 +59794,13 @@
     "_gemini_checked_at": "2026-09-20T10:41:52.439864+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized well based on standard nutritional data for this Jimmy Dean breakfast bowl.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Banquet",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "3.99",
     "PRICE_RETAIL": "3.99",
@@ -59815,12 +59840,13 @@
     "_gemini_checked_at": "2026-09-20T10:41:52.439864+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this specific Banquet MEGA Breakfast Bowl, which typically contains around 540 calories due to its heavy meat and cheese content.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Banquet",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "3.99",
     "PRICE_RETAIL": "3.99",
@@ -59863,12 +59889,13 @@
     "_gemini_recognized": true,
     "_kroger_upc_aliases": [
       "0003100000444"
-    ]
+    ],
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Banquet",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "3.99",
     "PRICE_RETAIL": "3.99",
@@ -59908,7 +59935,8 @@
     "_gemini_checked_at": "2026-09-20T10:41:52.439864+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize the Banquet MEGA Breakfast Bowl Bacon Frozen Meal as a high-calorie frozen breakfast option.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Hot Pockets",
@@ -60514,7 +60542,7 @@
   {
     "BRAND": "Kellogg's",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "5.99",
     "PRICE_RETAIL": "5.99",
@@ -60554,12 +60582,13 @@
     "_gemini_checked_at": "2026-09-20T10:54:38.632559+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized Eggo Protein Blueberry waffles, which typically contain around 190 calories per serving of two waffles.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Kellogg's",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "5.99",
     "PRICE_RETAIL": "5.99",
@@ -60599,12 +60628,13 @@
     "_gemini_checked_at": "2026-09-20T10:54:38.632559+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized Eggo Protein Vanilla pancakes, which typically contain around 290 calories per serving of 3 pancakes.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Premier Protein",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "6.49",
     "PRICE_RETAIL": "6.99",
@@ -60644,12 +60674,13 @@
     "_gemini_checked_at": "2026-09-20T10:54:38.632559+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized based on standard nutritional data for Premier Protein frozen waffles, typically around 190 calories per 2-waffle serving.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Jimmy Dean",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "6.99",
     "PRICE_RETAIL": "7.49",
@@ -60693,7 +60724,8 @@
     "_gemini_recognized": true,
     "_kroger_upc_aliases": [
       "0007790000271"
-    ]
+    ],
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Marie Callender's",
@@ -60789,7 +60821,7 @@
   {
     "BRAND": "Banquet",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "1.79",
     "PRICE_RETAIL": "1.79",
@@ -60829,7 +60861,8 @@
     "_gemini_checked_at": "2026-09-20T10:59:16.824113+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized as a standard frozen breakfast sausage patty product with typical calorie density for pork sausage.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Marie Callender's",
@@ -61677,7 +61710,7 @@
   {
     "BRAND": "Banquet",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "3.99",
     "PRICE_RETAIL": "3.99",
@@ -61719,7 +61752,8 @@
     "_gemini_notes": "Recognize the Banquet MEGA Breakfast Bowl line, which typically ranges from 450 to 550 calories for a 10 oz sausage variety.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:13:26.642516+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:13:26.642516+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Banquet",
@@ -61818,7 +61852,7 @@
   {
     "BRAND": "Eggo",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "3.49",
     "PRICE_RETAIL": "3.49",
@@ -61861,12 +61895,13 @@
     "_gemini_notes": "Recognize Eggo Minis Chocolatey Chip Pancakes based on typical frozen breakfast pouch calorie counts for a 1.68 oz serving.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:13:49.713268+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:13:49.713268+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Eggo",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "3.49",
     "PRICE_RETAIL": "3.49",
@@ -61909,12 +61944,13 @@
     "_gemini_notes": "Recognized well as a standard serving size of 3 frozen buttermilk pancakes.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:13:56.110275+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:13:56.110275+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Eggo",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "3.49",
     "PRICE_RETAIL": "3.49",
@@ -61956,7 +61992,8 @@
     "_gemini_notes": "Recognized well as a standard serving size of 8 mini pancakes, which is about 360 calories.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:14:01.550986+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:14:01.550986+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Uno",
@@ -62341,7 +62378,7 @@
   {
     "BRAND": "El Monterey",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "1.00",
     "PRICE_RETAIL": "1.50",
@@ -62383,7 +62420,8 @@
     "_gemini_notes": "I recognize this specific 4.5 oz El Monterey breakfast burrito flavor and its typical calorie count.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:15:08.188641+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:15:08.188641+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "DIGIORNO",
@@ -62529,7 +62567,7 @@
   {
     "BRAND": "Odom's Tennessee Pride",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "6.99",
     "PRICE_RETAIL": "6.99",
@@ -62571,7 +62609,8 @@
     "_gemini_notes": "Recognized as a standard frozen breakfast sandwich with pancake and sausage, typically around 240 calories per single sandwich serving.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:15:35.563303+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:15:35.563303+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Perdue",
@@ -62670,7 +62709,7 @@
   {
     "BRAND": "Jimmy Dean",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "6.99",
     "PRICE_RETAIL": "7.49",
@@ -62712,12 +62751,13 @@
     "_gemini_notes": "I recognize this Jimmy Dean frozen breakfast sandwich variant and its typical calorie content per serving.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:15:53.613110+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:15:53.613110+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Jimmy Dean",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "5.49",
     "PRICE_RETAIL": "5.99",
@@ -62759,12 +62799,13 @@
     "_gemini_notes": "Recognized based on standard Jimmy Dean frozen protein waffle nutritional profiles for a 2-waffle serving.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:16:02.942003+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:02.942003+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Jimmy Dean",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "5.49",
     "PRICE_RETAIL": "5.99",
@@ -62806,12 +62847,13 @@
     "_gemini_notes": "Recognized based on standard Jimmy Dean frozen breakfast product nutrition profiles for protein waffles.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:16:12.066941+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:12.066941+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Jimmy Dean",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "4.00",
     "PRICE_RETAIL": "4.49",
@@ -62853,12 +62895,13 @@
     "_gemini_notes": "Recognize this Jimmy Dean protein breakfast bowl; the classic sausage, bacon, and cheese variety is typically around 480 calories per 7.25 oz bowl.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:16:18.207098+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:18.207098+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Jimmy Dean",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "6.49",
     "PRICE_RETAIL": "7.49",
@@ -62900,12 +62943,13 @@
     "_gemini_notes": "Recognize this Jimmy Dean frozen breakfast croissant sandwich as having approximately 390 calories per serving.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:16:26.339313+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:26.339313+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Jimmy Dean",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "6.49",
     "PRICE_RETAIL": "7.49",
@@ -62947,12 +62991,13 @@
     "_gemini_notes": "Recognize this Jimmy Dean protein breakfast sandwich; typically around 300 calories per sandwich.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:16:31.494828+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:31.494828+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Jimmy Dean",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "4.00",
     "PRICE_RETAIL": "4.49",
@@ -62994,12 +63039,13 @@
     "_gemini_notes": "I recognize this specific Jimmy Dean protein breakfast bowl variety and its standard calorie content.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:16:40.851848+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:40.851848+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Jimmy Dean",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "7.49",
     "PRICE_RETAIL": "7.99",
@@ -63041,12 +63087,13 @@
     "_gemini_notes": "I recognize these fully cooked turkey sausage patties as having about 110 calories per two-patty serving.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:16:45.709758+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:45.709758+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Premier Protein",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "6.49",
     "PRICE_RETAIL": "6.99",
@@ -63087,12 +63134,13 @@
     "_gemini_notes": "I do not recognize this specific Premier Protein frozen pancake product well enough to provide accurate calorie information.",
     "_gemini_recognized": false,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:16:52.124413+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:52.124413+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Kodiak Cakes",
     "BREADCRUMBS": "Frozen/Natural & Organic",
-    "CATEGORY": "Natural & Organic",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "6.99",
     "PRICE_RETAIL": "6.99",
@@ -63134,12 +63182,13 @@
     "_gemini_notes": "Recognized based on standard nutritional data for Kodiak frozen flapjack puffs per serving.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:16:56.961654+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:16:56.961654+00:00",
+    "_previous_category": "Natural & Organic"
   },
   {
     "BRAND": "Kodiak",
     "BREADCRUMBS": "Frozen/Frozen",
-    "CATEGORY": "Frozen",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "6.99",
     "PRICE_RETAIL": "6.99",
@@ -63181,12 +63230,13 @@
     "_gemini_notes": "I recognize Kodiak Sausage & Cheddar breakfast sandwiches, which typically contain around 390 calories per single sandwich serving.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:17:05.624686+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:17:05.624686+00:00",
+    "_previous_category": "Frozen"
   },
   {
     "BRAND": "Kodiak",
     "BREADCRUMBS": "Frozen/Natural & Organic",
-    "CATEGORY": "Natural & Organic",
+    "CATEGORY": "Frozen Breakfast",
     "DEPARTMENT": "Frozen",
     "PRICE_CURRENT": "6.99",
     "PRICE_RETAIL": "6.99",
@@ -63228,7 +63278,8 @@
     "_gemini_notes": "I recognize this specific Kodiak protein breakfast sandwich, which typically contains around 390 calories per single sandwich serving.",
     "_gemini_recognized": true,
     "_walmart_url_source": "manual (walmart_url in kroger_skipped_upcs.json)",
-    "_image_walmart_url_checked_at": "2026-09-20T17:17:12.675440+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T17:17:12.675440+00:00",
+    "_previous_category": "Natural & Organic"
   },
   {
     "BRAND": "bibigo",
