@@ -18,6 +18,9 @@ through Kroger's product catalog (`kroger_new_items.py`, 4× a day).
 | `index.html` | The meal planner. Reads `candidate_pool.json` in the browser. |
 | `products.html` | Product browser over `candidate_pool.json`. |
 | `candidate_pool.json` | The pool. Every script below reads and/or writes it. |
+| `kroger_new_items.py` / `kroger_new_items.yaml` | Finds and adds new products from Kroger's catalog — see [Adding new products](#adding-new-products-kroger_new_itemspy). |
+| `kroger_add_skipped_items.py` | Adds the products in `kroger_skipped_upcs.json` whose `walmart_url` you filled in by hand — see [Adding skipped products](#adding-skipped-products-by-hand-supplied-walmart-url-kroger_add_skipped_itemspy). Imports from `kroger_new_items.py` and reads `kroger_new_items.yaml`. |
+| `kroger_skipped_upcs.json` | Written by `kroger_new_items.py` (created on first use): Kroger UPCs of new products that couldn't be added, so they aren't retried. You can add a `walmart_url` to an entry for `kroger_add_skipped_items.py` to pick up; that script writes `status` / `detail` / `processed_at` back onto the entries it handles. |
 | `.github/workflows/` | The three scheduled GitHub Actions workflows — see [Workflows](#workflows). |
 | `DataCleaning/` | Scripts, config and source data for building and maintaining the pool — see below. |
 
@@ -38,8 +41,6 @@ pool from scratch and then maintain it.
 | `check_active_urls.py` | Uses Playwright (with stealth) to visit each item's `PRODUCT_URL` on walmart.com and tag it `active: true/false/null` (null = couldn't tell, e.g. bot-blocked), with reason/query/checked-URL metadata in `_active_check_*` fields. `--only-unknown`, `--limit`. | **Yes** — `check-active-urls.yml`, hourly. |
 | `check_walmart_links.py` | Alternate liveness check: searches Google via Serper.dev for `site:walmart.com <product_id>` and checks whether walmart.com is the top result. Takes a URL list or a pool JSON (`--json`), resumable, `--debug` checks the first 10. Needs `SERPER_API_KEY`. | No — not wired into any workflow; `check_active_urls.py` is the one that runs. |
 | `check_instacart_urls.py` | Searches `instacart <brand> <product name>` via Serper.dev and scans every result for one on instacart.com. Sets `INSTACART_URL` (only overwritten when a real match is found) and `instacart_active`. Resumable, `--limit`, `--debug`, `--out`. Needs `SERPER_API_KEY`. | No — run manually. |
-| `kroger_new_items.py` / `kroger_new_items.yaml` | Finds and adds new products from Kroger's catalog — see [Adding new products](#adding-new-products-kroger_new_itemspy). |
-| `kroger_skipped_upcs.json` | Written by `kroger_new_items.py` (created on first use): Kroger UPCs of new products that couldn't be added, so they aren't retried. |
 | `update_instacart_urls.py` | Sets/refreshes `INSTACART_URL` on **every** row in `candidate_pool.json` from each row's own `PRODUCT_NAME` (text cut at the first comma, apostrophes kept as `%27`, everything else non-alphanumeric turned into `+`). Pure local transform — no network, no API key. `--only-missing` fills blanks only; `--dry-run` previews. (`kroger_new_items.py` builds its Instacart URLs with a slightly stricter cleanup that also drops sizes and numbers, so URLs on new Kroger rows can differ in form from ones this script writes.) | No — run manually. |
 | `Max_Calories_Count.py` | Cross-checks each item's `calories` against USDA and Open Food Facts and keeps the **largest** of {current, USDA, Open Food Facts} — only ever raises a value, never lowers it. Adds `_calorie_max_checked_at` / `_calorie_max_source` to each item (that's what makes it resumable) and writes `calorie_max_check_diff.csv` listing every change, for spot-checking. `--limit`, `--recheck-all`, `--dry-run`. Needs `USDA_API_KEY`; Open Food Facts needs none. | No — run manually. |
 | `gemini_meal_lookup.py` | Asks Gemini for an estimated calories-per-serving and price for a rotating batch of pool items (oldest/never-checked first), from Gemini's own knowledge — no live web search. Writes back only what differs, plus `_gemini_*` bookkeeping fields. Needs `GEMINI_KEY`. | **Yes** — `gemini-meal-lookup.yml`, weekly. |
@@ -60,9 +61,11 @@ to find 20. For each Kroger product:
    the configured store, or its Kroger UPC is already known (recorded on a
    pool item, or in `kroger_skipped_upcs.json`).
 2. **Fuzzy name match, same brand only.** The Kroger name and the pool
-   `PRODUCT_NAME`s are cleaned the same way an Instacart search is built —
-   cut at the first comma, sizes (`27 oz`, `6 ct`), other numbers,
-   punctuation and the word "frozen" removed, lowercased — and compared
+   `PRODUCT_NAME`s are cleaned the same way — sizes (`27 oz`, `6 ct`), other
+   numbers, punctuation and the word "frozen" removed, lowercased, every
+   other word kept (including ones after a comma, so `Amy's Frozen Bowls,
+   Vegan Mexican Casserole` and `Amy's Frozen Bowls, Mac & Cheese` stay
+   distinguishable) — and compared
    with rapidfuzz `token_sort_ratio` (0–100). Only pool items with a
    **matching brand** are compared: a different brand is never a match,
    however alike the names look. (The pool's `BRAND` column is unreliable —
@@ -82,7 +85,7 @@ to find 20. For each Kroger product:
    | `calories` | The **highest** of USDA, Open Food Facts and Gemini, **rounded to the nearest 10**. Winning source in `_calorie_max_source`, every source's raw number in `_calorie_sources`. |
    | `servings_per_container` | USDA FoodData Central, pulled the way `build_meal_pool.py` does (`householdServingFullText`, else `packageWeight`); `N/A` if USDA has no match |
    | `PRODUCT_URL`, `SKU` | Serper.dev search `site:walmart.com <brand> <name>` (10 results). A result only counts if it's the **same product**: the product name in the Walmart URL must contain Kroger's brand and score at least `serper.min_name_match_score` (85) against Kroger's name — Serper returns the *closest* page, which is often a different flavor or brand. The first result that passes is used (its score is saved as `_walmart_name_match_score`); if none does, the product is skipped and its UPC remembered. The URL (with `?fulfillmentIntent=Pickup`) and the numeric id from it are stored. If that SKU is already **active** in the pool, the product *is* that item and its UPC is recorded there instead. If the SKU is already in the pool on a row that's **inactive** (or was never checked), that row is refreshed in place rather than duplicated: `PRODUCT_URL` becomes the looked-up URL, `active` becomes `true`, and everything else in this table is filled in as for a new product (the row keeps its `index` and any UPC it already had; `_reactivated_at` is set). A refreshed row counts toward the run's 20. |
-   | `INSTACART_URL` | **Built** from the cleaned name (`https://www.instacart.com/store/s?k=…`) — never searched for, not verified |
+   | `INSTACART_URL` | **Built** from the cleaned name, cut at its first comma like the other Instacart-URL scripts (`https://www.instacart.com/store/s?k=…`) — never searched for, not verified |
    | `image_url` | DuckDuckGo Images, searched with the product's Walmart URL as the query; the top result wins, whoever hosts it (retry/backoff as in `AddImageUrl.py`) |
    | `SOURCE`, `active` | `"Kroger"`; `true` (Serper confirmed a live Walmart page) |
 
@@ -114,6 +117,46 @@ python kroger_new_items.py --dry-run          # pull + fuzzy-match only, writes 
 python kroger_new_items.py --max-new-items 5  # small real run
 ```
 
+## Adding skipped products by hand-supplied Walmart URL (`kroger_add_skipped_items.py`)
+
+`kroger_new_items.py` skips a Kroger product when it can't find a matching
+Walmart page. If you look those up yourself and put the link in the entry's
+`walmart_url` field in `kroger_skipped_upcs.json`, this script finishes the
+job. It's the same pipeline as above with the Serper Walmart lookup replaced
+by your URL. For every entry with a `walmart_url` that isn't finished yet:
+
+1. The URL must be a walmart.com `/ip/<name>/<id>` product page; the number
+   is the `SKU`, and `PRODUCT_URL` is the URL (query string removed, then
+   `?fulfillmentIntent=Pickup` added).
+2. **If that SKU is already in `candidate_pool.json`** (on any row, active or
+   not) the product *is* that row: the Kroger UPC is recorded on it
+   (`_kroger_upc` / `_kroger_upc_aliases`) and nothing is added. Inactive
+   rows are not revived.
+3. **Otherwise** the UPC is looked up in Kroger (at your store, see above)
+   for `BRAND`, `PRODUCT_NAME`, size and **price**; the image is the **first**
+   DuckDuckGo Images result when searching with the Walmart URL itself;
+   `calories` is the highest of USDA / Open Food Facts / Gemini (rounded to
+   the nearest 10); `servings_per_container` is the USDA serving text; and
+   `INSTACART_URL` is built from the product name. The row is appended with
+   `active: true` and `SOURCE: "Kroger"`.
+4. A product is only added with a Kroger price, an image and a calorie
+   number (`--allow-missing-image` adds it with a blank `image_url` instead).
+   Anything not finished (no Kroger price at your store, no image, a network
+   error…) keeps its entry in the file with a `status` and `detail` and is
+   retried on the next run.
+
+```
+python kroger_add_skipped_items.py --dry-run   # offline: how many would be tagged vs added
+python kroger_add_skipped_items.py --limit 5   # small real run
+python kroger_add_skipped_items.py             # everything with a walmart_url
+```
+
+The `kroger-add-skipped-items.yml` workflow runs it from GitHub with
+`--allow-missing-image` (see [Workflows](#workflows)). `--max-minutes N` stops
+it cleanly after N minutes; the entries not reached are picked up next run.
+
+Needs the same keys as `kroger_new_items.py` except `SERPER_API_KEY`.
+
 ## Workflows
 
 | File | What it does |
@@ -121,6 +164,7 @@ python kroger_new_items.py --max-new-items 5  # small real run
 | `.github/workflows/check-active-urls.yml` | Runs `check_active_urls.py --only-unknown --limit 100` hourly (`17 * * * *`) to keep dead Walmart links tagged `active: false`. Runnable manually with an overridable `batch_size`. |
 | `.github/workflows/gemini-meal-lookup.yml` | Runs `gemini_meal_lookup.py` weekly (`0 0 * * 2`, Tuesdays 00:00 UTC) and commits the updated `candidate_pool.json`. Runnable manually with overridable `items_per_call` and `calls_per_run` (default 10 each). |
 | `.github/workflows/kroger-new-items.yml` | Runs `kroger_new_items.py` 4× a day (`45 1,7,13,19 * * *`, UTC) and commits `candidate_pool.json` and `kroger_skipped_upcs.json`. Runnable manually with an overridable `max_new_items` (default 20). |
+| `.github/workflows/kroger-add-skipped-items.yml` | Manual only (Actions tab → "Run workflow"): runs `kroger_add_skipped_items.py --allow-missing-image --max-minutes 100` — so products DuckDuckGo finds no image for are still added, with a blank `image_url` — and commits `candidate_pool.json` and `kroger_skipped_upcs.json`. Optional inputs: `limit` (max entries, 0 = all) and `dry_run`. Shares a concurrency group with `kroger-new-items.yml` so the two never edit the pool at the same time. |
 
 ### Disabling a scheduled workflow
 
@@ -166,12 +210,12 @@ from an environment variable at runtime:
 
 | Variable | Used by | Required for |
 |---|---|---|
-| `USDA_API_KEY` | `build_meal_pool.py`, `Max_Calories_Count.py`, `kroger_new_items.py` | USDA FoodData Central calorie and serving lookups. |
+| `USDA_API_KEY` | `build_meal_pool.py`, `Max_Calories_Count.py`, `kroger_new_items.py`, `kroger_add_skipped_items.py` | USDA FoodData Central calorie and serving lookups. |
 | `SERPER_API_KEY` | `check_walmart_links.py`, `check_instacart_urls.py`, `kroger_new_items.py` | Serper.dev Google searches — Walmart/Instacart link checks, and finding each new product's Walmart URL/SKU. |
-| `GEMINI_KEY` | `gemini_meal_lookup.py`, `kroger_new_items.py` | The weekly Gemini estimate workflow, and the Gemini calorie estimate for new products. |
-| `KROGER_CLIENT_ID` / `KROGER_CLIENT_SECRET` | `kroger_new_items.py` | Kroger's OAuth client-credentials app (register at developer.kroger.com) — product catalog search and store lookup. |
-| `KROGER_ZIP` | `kroger_new_items.py` | ZIP code, turned into the nearest Kroger-family store whose prices are used. Secret or repo variable. Not needed if a store id is set below. |
-| `KROGER_LOCATION_ID` *(optional)* | `kroger_new_items.py` | Pins one specific store; wins over `KROGER_ZIP` and over `kroger.location_id` in `kroger_new_items.yaml`. |
+| `GEMINI_KEY` | `gemini_meal_lookup.py`, `kroger_new_items.py`, `kroger_add_skipped_items.py` | The weekly Gemini estimate workflow, and the Gemini calorie estimate for new products. |
+| `KROGER_CLIENT_ID` / `KROGER_CLIENT_SECRET` | `kroger_new_items.py`, `kroger_add_skipped_items.py` | Kroger's OAuth client-credentials app (register at developer.kroger.com) — product catalog search and store lookup. |
+| `KROGER_ZIP` | `kroger_new_items.py`, `kroger_add_skipped_items.py` | ZIP code, turned into the nearest Kroger-family store whose prices are used. Secret or repo variable. Not needed if a store id is set below. |
+| `KROGER_LOCATION_ID` *(optional)* | `kroger_new_items.py`, `kroger_add_skipped_items.py` | Pins one specific store; wins over `KROGER_ZIP` and over `kroger.location_id` in `kroger_new_items.yaml`. |
 
 Open Food Facts needs no key. `check_active_urls.py` and `AddImageUrl.py`
 don't need any key either.
