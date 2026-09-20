@@ -292,7 +292,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+swedish+meatballs+bowl",
     "_calorie_max_checked_at": "2026-09-19T09:13:51.434512+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:03:19.787136+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:03:19.787136+00:00",
+    "_kroger_upc": "0002113100028"
   },
   {
     "index": "318859",
@@ -510,7 +511,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+mega+bowls+country+fried+chicken",
     "_calorie_max_checked_at": "2026-09-19T09:14:13.700588+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:03:59.717824+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:03:59.717824+00:00",
+    "_kroger_upc": "0003100012612"
   },
   {
     "index": "318865",
@@ -1090,7 +1092,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+roasted+garlic+chicken+bowl",
     "_calorie_max_checked_at": "2026-09-19T09:15:07.099464+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:05:48.077521+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:05:48.077521+00:00",
+    "_kroger_upc": "0002113150664"
   },
   {
     "index": "318885",
@@ -1369,7 +1372,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:15:32.304298+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:06:44.738465+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:06:44.738465+00:00",
+    "_kroger_upc": "0002113190553"
   },
   {
     "index": "318888",
@@ -1817,7 +1821,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+sweet+sour+chicken",
     "_calorie_max_checked_at": "2026-09-19T09:16:50.519807+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:08:25.364540+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:08:25.364540+00:00",
+    "_kroger_upc": "0002113150645"
   },
   {
     "index": "318914",
@@ -1989,7 +1994,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+mega+bowls+buffalo+style+chicken+mac+%27n+cheese",
     "_calorie_max_checked_at": "2026-09-19T09:17:08.025852+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:09:00.247273+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:09:00.247273+00:00",
+    "_kroger_upc": "0003100012610"
   },
   {
     "index": "318911",
@@ -2378,7 +2384,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+roasted+turkey+breast+stuffing",
     "_calorie_max_checked_at": "2026-09-19T09:17:59.466493+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:10:13.948283+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:10:13.948283+00:00",
+    "_kroger_upc": "0002113190531"
   },
   {
     "index": "318926",
@@ -3322,7 +3329,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+grilled+chicken+alfredo+bake+bowl",
     "_calorie_max_checked_at": "2026-09-19T09:19:48.039880+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:13:23.265559+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:13:23.265559+00:00",
+    "_kroger_upc": "0002113150663"
   },
   {
     "index": "318955",
@@ -7875,7 +7883,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:29:07.071269+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T05:28:44.328259+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:28:44.328259+00:00",
+    "_kroger_upc": "0081841100176"
   },
   {
     "index": "319330",
@@ -28877,7 +28886,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+sausage+gravy+breakfast+bowl",
     "_calorie_max_checked_at": "2026-09-19T10:08:01.666322+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:42:38.997186+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:42:38.997186+00:00",
+    "_kroger_upc": "0007790047141"
   },
   {
     "index": "332890",
@@ -29170,7 +29180,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+sausage+breakfast+bowl",
     "_calorie_max_checked_at": "2026-09-19T10:08:44.252086+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T06:43:36.919539+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:43:36.919539+00:00",
+    "_kroger_upc": "0007790047132"
   },
   {
     "index": "332901",
@@ -29546,7 +29557,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+delights+turkey+sausage+breakfast+bowl",
     "_calorie_max_checked_at": "2026-09-19T10:09:21.937064+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T06:44:56.516616+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:44:56.516616+00:00",
+    "_kroger_upc": "0007790047133"
   },
   {
     "index": "332914",
@@ -29919,7 +29931,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+morning+combos+mini+maple+pancakes+and+maple+sausage+bites",
     "_calorie_max_checked_at": "2026-09-19T10:10:02.864688+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:46:21.068736+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:46:21.068736+00:00",
+    "_kroger_upc": "0007790011496"
   },
   {
     "index": "332953",
@@ -32408,7 +32421,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:15:55.531686+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:55:40.236850+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:55:40.236850+00:00",
+    "_kroger_upc": "0001380083442"
   },
   {
     "index": "335155",
@@ -32688,7 +32702,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tgi+fridays+honey+bbq+boneless+chicken+bites+frozen+snacks",
     "_calorie_max_checked_at": "2026-09-19T10:16:41.765752+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:56:48.572296+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:56:48.572296+00:00",
+    "_kroger_upc": "0004670462075"
   },
   {
     "index": "335437",
@@ -35554,7 +35569,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=michelina%27s+wheels+and+cheese",
     "_calorie_max_checked_at": "2026-09-19T10:23:16.298317+00:00",
     "_calorie_max_source": "off_100g_fallback",
-    "_image_walmart_url_checked_at": "2026-09-20T07:07:41.063000+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:07:41.063000+00:00",
+    "_kroger_upc": "0071785410525"
   },
   {
     "index": "339809",
@@ -39779,7 +39795,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+macaroni+and+cheese+with+broccoli",
     "_calorie_max_checked_at": "2026-09-19T10:32:00.131077+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:23:59.171190+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:23:59.171190+00:00",
+    "_kroger_upc": "0001380044792"
   },
   {
     "index": "344495",
@@ -60302,6 +60319,281 @@
     "_gemini_checked_at": "2026-09-20T10:47:43.827494+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Farm Rich Buffalo Chicken Rollups typically contain around 230 calories per serving of 3 rollups.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Kellogg's",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "5.99",
+    "PRICE_RETAIL": "5.99",
+    "PRODUCT_NAME": "Eggo® Protein Blueberry Frozen Waffles",
+    "PRODUCT_SIZE": "10 ct / 1.24 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Kellogg-s-Eggo-Waffles-Blueberry-12-35oz/18022312075?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:54:38.632559+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "18022312075",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 190,
+    "image_url": "https://assets.wakefern.com/is/image/wakefern/3800040320-001?$Mi9Product_detail$",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=eggo+protein+blueberry+waffles",
+    "index": "kroger-554133",
+    "servings_per_container": "2 Waffles",
+    "tid": "",
+    "_kroger_upc": "0003800031327",
+    "_kroger_discovered_at": "2026-09-20T10:54:38.632559+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Kellogg's Eggo® Protein Blueberry Frozen Waffles",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Kellogg-s-Eggo-Waffles-Blueberry-12-35oz/18022312075",
+    "_walmart_name_match_score": 88.57142857142857,
+    "_walmart_url_slug_name": "Kellogg s Eggo Waffles Blueberry 12 35oz",
+    "_image_search_query": "https://www.walmart.com/ip/Kellogg-s-Eggo-Waffles-Blueberry-12-35oz/18022312075",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:54:38.632559+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 179.9,
+      "gemini": 190
+    },
+    "_gemini_checked_at": "2026-09-20T10:54:38.632559+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognized Eggo Protein Blueberry waffles, which typically contain around 190 calories per serving of two waffles.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Kellogg's",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "5.99",
+    "PRICE_RETAIL": "5.99",
+    "PRODUCT_NAME": "Eggo® Frozen Protein Pancakes Vanilla",
+    "PRODUCT_SIZE": "12 ct / 1.23 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Kellogg-s-Eggo-Pancakes-Vanilla-14-8oz/13389865355?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:54:38.632559+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "13389865355",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 290,
+    "image_url": "https://i5.walmartimages.com/seo/Kellogg-s-Eggo-Pancakes-Vanilla-14-8oz_56babe93-f34f-44d7-99fa-7d43f28cfd23.87ada43f49d745d9fe440e4b7ccb0efe.jpeg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=eggo+protein+pancakes+vanilla",
+    "index": "kroger-554134",
+    "servings_per_container": "1 Pouch",
+    "tid": "",
+    "_kroger_upc": "0003800030589",
+    "_kroger_discovered_at": "2026-09-20T10:54:38.632559+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Kellogg's Eggo® Frozen Protein Pancakes Vanilla",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Kellogg-s-Eggo-Pancakes-Vanilla-14-8oz/13389865355",
+    "_walmart_name_match_score": 88.23529411764706,
+    "_walmart_url_slug_name": "Kellogg s Eggo Pancakes Vanilla 14 8oz",
+    "_image_search_query": "https://www.walmart.com/ip/Kellogg-s-Eggo-Pancakes-Vanilla-14-8oz/13389865355",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:54:38.632559+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 207.3,
+      "gemini": 290
+    },
+    "_gemini_checked_at": "2026-09-20T10:54:38.632559+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognized Eggo Protein Vanilla pancakes, which typically contain around 290 calories per serving of 3 pancakes.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Premier Protein",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "6.49",
+    "PRICE_RETAIL": "6.99",
+    "PRODUCT_NAME": "Premier Protein® Frozen Protein Waffles",
+    "PRODUCT_SIZE": "10 ct / 12.3 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Premier-Protein-Frozen-Protein-Waffles-12-3-oz-Box-10-Count/6836774294?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:54:38.632559+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "6836774294",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 240,
+    "image_url": "https://i5.walmartimages.com/seo/Premier-Protein-Frozen-Protein-Waffles-12-3-oz-Box-10-Count_487f1067-520a-494d-b004-2924a37bd401.c81fae3e26c8bd10acf963706e17b279.jpeg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=premier+protein+protein+waffles",
+    "index": "kroger-554135",
+    "servings_per_container": "2 Waffles (74g)",
+    "tid": "",
+    "_kroger_upc": "0067984410355",
+    "_kroger_discovered_at": "2026-09-20T10:54:38.632559+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Premier Protein® Frozen Protein Waffles",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Premier-Protein-Frozen-Protein-Waffles-12-3-oz-Box-10-Count/6836774294",
+    "_walmart_name_match_score": 93.93939393939394,
+    "_walmart_url_slug_name": "Premier Protein Frozen Protein Waffles 12 3 oz Box 10 Count",
+    "_image_search_query": "https://www.walmart.com/ip/Premier-Protein-Frozen-Protein-Waffles-12-3-oz-Box-10-Count/6836774294",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:54:38.632559+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 239.8,
+      "gemini": 190
+    },
+    "_gemini_checked_at": "2026-09-20T10:54:38.632559+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognized based on standard nutritional data for Premier Protein frozen waffles, typically around 190 calories per 2-waffle serving.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Jimmy Dean",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "6.99",
+    "PRICE_RETAIL": "7.49",
+    "PRODUCT_NAME": "Jimmy Dean Chicken Honey Biscuit",
+    "PRODUCT_SIZE": "16.4 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Jimmy-Dean-Chicken-Honey-Biscuit-16-4-oz-4-Count-Frozen/5474721143?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:54:38.632559+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "5474721143",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 390,
+    "image_url": "https://i5.walmartimages.com/seo/Jimmy-Dean-Chicken-Honey-Biscuit-16-4-oz-4-Count-Frozen_fd26237b-810f-4b88-b6d3-d199a3a310ac.88d10a7f77f8f93810a99d512ac79380.jpeg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+chicken+honey+biscuit",
+    "index": "kroger-554136",
+    "servings_per_container": "3.21 OZ SERVING",
+    "tid": "",
+    "_kroger_upc": "0007790000273",
+    "_kroger_discovered_at": "2026-09-20T10:54:38.632559+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Jimmy Dean Chicken Honey Biscuit",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Jimmy-Dean-Chicken-Honey-Biscuit-16-4-oz-4-Count-Frozen/5474721143",
+    "_walmart_name_match_score": 100.0,
+    "_walmart_url_slug_name": "Jimmy Dean Chicken Honey Biscuit 16 4 oz 4 Count Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/Jimmy-Dean-Chicken-Honey-Biscuit-16-4-oz-4-Count-Frozen/5474721143",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:54:38.632559+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 270.0,
+      "open_food_facts": 320.0,
+      "gemini": 390
+    },
+    "_gemini_checked_at": "2026-09-20T10:54:38.632559+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "I recognize this frozen breakfast sandwich, where a single biscuit sandwich typically contains around 390 calories.",
+    "_gemini_recognized": true,
+    "_kroger_upc_aliases": [
+      "0007790000271"
+    ]
+  },
+  {
+    "BRAND": "Marie Callender's",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "2.99",
+    "PRICE_RETAIL": "2.99",
+    "PRODUCT_NAME": "Marie Callender's Creamy Chicken & Dumplings Bowl",
+    "PRODUCT_SIZE": "12 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Marie-Callender-s-Creamy-Chicken-Dumplings-Bowl-Frozen-Meal-12-oz-Bowl-Frozen/419731488?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:54:38.632559+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "419731488",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 480,
+    "image_url": "https://i5.walmartimages.com/seo/Marie-Callender-s-Creamy-Chicken-Dumplings-Bowl-Frozen-Meal-12-oz-Bowl-Frozen_c392d585-c533-4154-9b8e-018b619168ca.80159aa5a8ad51df5dbd3af3b25c3913.jpeg?odnHeight=784&odnWidth=580&odnBg=FFFFFF",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+creamy+chicken+and+dumplings+bowl",
+    "index": "kroger-554137",
+    "servings_per_container": "1 meal (340g)",
+    "tid": "",
+    "_kroger_upc": "0002113150085",
+    "_kroger_discovered_at": "2026-09-20T10:54:38.632559+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Marie Callender's Creamy Chicken & Dumplings Bowl",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Marie-Callender-s-Creamy-Chicken-Dumplings-Bowl-Frozen-Meal-12-oz-Bowl-Frozen/419731488",
+    "_walmart_name_match_score": 90.19607843137256,
+    "_walmart_url_slug_name": "Marie Callender s Creamy Chicken Dumplings Bowl Frozen Meal 12 oz Bowl Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/Marie-Callender-s-Creamy-Chicken-Dumplings-Bowl-Frozen-Meal-12-oz-Bowl-Frozen/419731488",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:54:38.632559+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 360.4,
+      "open_food_facts": 360.0,
+      "gemini": 480
+    },
+    "_gemini_checked_at": "2026-09-20T10:54:38.632559+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognized well based on standard nutrition profiles for Marie Callender's pot pie and bowl products.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Marie Callender's",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "2.99",
+    "PRICE_RETAIL": "2.99",
+    "PRODUCT_NAME": "Marie Callender's Classic Chicken Parmigiana Bowl",
+    "PRODUCT_SIZE": "12.5 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Marie-Callender-s-Classic-Chicken-Parmigiana-Bowl-Frozen-Meal-12-5-oz-Frozen/912119996?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:54:38.632559+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "912119996",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 530,
+    "image_url": "https://i5.walmartimages.com/seo/Marie-Callender-s-Classic-Chicken-Parmigiana-Bowl-Frozen-Meal-12-5-oz-Frozen_750a89aa-145e-4c4d-8705-37cfe5121bf0.2bb550c363ffe6e91ffa3991091333c0.jpeg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+classic+chicken+parmigiana+bowl",
+    "index": "kroger-554138",
+    "servings_per_container": "1 meal (354g)",
+    "tid": "",
+    "_kroger_upc": "0002113100041",
+    "_kroger_discovered_at": "2026-09-20T10:54:38.632559+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Marie Callender's Classic Chicken Parmigiana Bowl",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Marie-Callender-s-Classic-Chicken-Parmigiana-Bowl-Frozen-Meal-12-5-oz-Frozen/912119996",
+    "_walmart_name_match_score": 95.04950495049505,
+    "_walmart_url_slug_name": "Marie Callender s Classic Chicken Parmigiana Bowl Frozen Meal 12 5 oz Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/Marie-Callender-s-Classic-Chicken-Parmigiana-Bowl-Frozen-Meal-12-5-oz-Frozen/912119996",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:54:38.632559+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 531.0,
+      "gemini": 510
+    },
+    "_gemini_checked_at": "2026-09-20T10:54:38.632559+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognized based on typical nutritional content for Marie Callender's pasta bowls.",
     "_gemini_recognized": true
   }
 ]
