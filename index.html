@@ -591,21 +591,19 @@
     color:var(--ink-soft);
   }
 
-  /* Blue text on a glowing blue background -- same ring/tint/glow treatment as
-     the Filtered Pool Size badge, in the Generate button's blue. */
+  /* Same faded-tint pill as before, just blue (the Generate button's blue)
+     instead of green. */
   .save-confirmation{
     font-size:13px;
     font-weight:600;
     color:var(--blue);
-    background:radial-gradient(circle at 32% 28%, rgba(30,95,140,0.28), rgba(30,95,140,0.04));
-    border:2px solid var(--blue);
+    background:rgba(30,95,140,0.1);
     border-radius:6px;
-    padding:8px 12px;
+    padding:10px 14px;
     margin-top:16px;
     margin-bottom:16px;
     display:block;
     width:fit-content;
-    box-shadow:0 0 16px rgba(30,95,140,0.4), inset 0 0 12px rgba(30,95,140,0.18);
   }
 
   .tab-delete{
