@@ -47,8 +47,14 @@ find 20 new ones. For every Kroger product pulled:
          -- the same service check_walmart_links.py uses -- checking each
          result for the real /ip/<slug>/<id> product-page shape. The URL
          (+ ?fulfillmentIntent=Pickup) goes in PRODUCT_URL and the numeric
-         id in SKU. If that SKU is already on an active pool item the
-         product IS that item: its UPC is recorded there instead;
+         id in SKU. If that SKU is already on an ACTIVE pool item the
+         product IS that item: its UPC is recorded there instead. If it's
+         already on an item that is marked inactive (or was never
+         checked), that row is refreshed in place instead of a duplicate
+         being added: PRODUCT_URL is replaced with the looked-up URL,
+         active becomes True, and everything else below is filled in
+         as for a new product (the row keeps its "index" and any UPC it
+         already had) -- it counts toward the run's target of new items;
        - image_url: DuckDuckGo Images, searching with the Walmart URL
          itself as the query and taking the top result, whoever hosts it
          (retry/backoff as in AddImageUrl.py);
@@ -447,6 +453,38 @@ def tag_existing_pool_item_with_upc(pool, sku, upc):
             tag_pool_item_with_upc(item, upc)
             return item
     return None
+
+
+def revive_pool_item(item, record, upc, run_date):
+    """Refreshes an existing pool row with a freshly built record. Used
+    when the Walmart page Serper just found has the same SKU as a row
+    that was marked inactive (or never checked): the product IS that row,
+    and Serper has just proved the page is live. Every field of `record`
+    (Walmart URL, active=True, Kroger name/price, calories, servings,
+    image, Instacart URL, ...) replaces what the row had, exactly as if it
+    were being added new -- except the row keeps its original "index", and
+    keeps any Kroger UPC it already had (the new UPC is added as an alias
+    if it differs). Old "_active_check_*" and "_gemini_*" bookkeeping the
+    record didn't regenerate is dropped, since it described the old,
+    dead-link state."""
+    old_index = item.get("index")
+    old_primary = item.get("_kroger_upc")
+    old_aliases = item.get("_kroger_upc_aliases")
+
+    for key in list(item):
+        if key.startswith(("_active_check", "_gemini_")) and key not in record:
+            del item[key]
+    item.update(record)
+
+    if old_index is not None:
+        item["index"] = old_index
+    if old_primary:
+        item["_kroger_upc"] = old_primary
+    if old_aliases:
+        item["_kroger_upc_aliases"] = old_aliases
+    tag_pool_item_with_upc(item, upc)
+    item["_reactivated_at"] = run_date
+    return item
 
 
 def load_skipped_upcs(path):
@@ -1372,8 +1410,12 @@ def enrich_candidate(c, ctx):
     """Runs one NEW Kroger product through the rest of the pipeline and
     returns (outcome, detail):
       ("added", record)         -- built and ready to append to the pool
-      ("tagged", pool_item)     -- its Walmart SKU is already active in the pool, so it
+      ("tagged", pool_item)     -- its Walmart SKU is already ACTIVE in the pool, so it
                                    IS that existing product; the UPC was recorded on it
+      ("revived", pool_item)    -- its Walmart SKU is already in the pool on a row that is
+                                   inactive (or never checked): that row was refreshed in
+                                   place with the new Walmart URL, active=True, and
+                                   everything else filled in as for a new product
       ("skip", reason)          -- can't be added, and won't be able to later either;
                                    the caller records its UPC in the skipped-UPCs file
       ("retry_later", reason)   -- failed for a transient reason (network, rate limit);
@@ -1395,6 +1437,9 @@ def enrich_candidate(c, ctx):
     if sku in ctx.active_skus:
         item = tag_existing_pool_item_with_upc(ctx.pool, sku, c["upc"])
         return "tagged", item
+    # A row with this SKU that ISN'T active (dead link, or never checked)
+    # gets revived once the rest of the pipeline succeeds -- see the end.
+    revive_item = next((it for it in ctx.pool if str(it.get("SKU", "")).strip() == sku), None)
 
     # Image via DuckDuckGo: the Walmart URL itself is the search query and
     # the top result wins, whoever hosts it.
@@ -1420,12 +1465,14 @@ def enrich_candidate(c, ctx):
         note = gemini_result["notes"] if gemini_result and gemini_result["notes"] else "no USDA/OFF match"
         return ("retry_later" if gemini_failed else "skip"), f"no calorie number from USDA, Open Food Facts, or Gemini ({note})"
 
-    ctx.idx += 1
     record = build_pool_record(
         c, walmart, image_url, image_query, image_reason,
         calories, calorie_source, calorie_values, usda["servings_per_container"],
-        gemini_result, gemini_model, ctx.location_id, ctx.idx, ctx.run_date,
+        gemini_result, gemini_model, ctx.location_id, ctx.idx + 1, ctx.run_date,
     )
+    if revive_item is not None:
+        return "revived", revive_pool_item(revive_item, record, c["upc"], ctx.run_date)
+    ctx.idx += 1
     return "added", record
 
 
@@ -1543,7 +1590,7 @@ def main():
         idx=next_index(pool), run_date=datetime.now(timezone.utc).isoformat(),
     )
 
-    added = attempts = tagged_by_sku = skipped = retry_later = 0
+    added = attempts = tagged_by_sku = revived = skipped = retry_later = 0
     stop_reason = "Kroger had nothing more new to pull"
 
     while True:
@@ -1580,6 +1627,19 @@ def main():
                 f"servings_per_container={detail['servings_per_container']}")
             save_pool(pool_path, pool)
             unsaved_tags = 0
+        elif outcome == "revived":
+            # Counts toward the target: it went through the full pipeline
+            # and the row is now live with fresh data.
+            matcher.add(detail)   # its name changed -- let the new name match too
+            ctx.active_skus.add(detail["SKU"])
+            added += 1
+            revived += 1
+            log(f"  REVIVED [{added}/{max_new_items}]: SKU {detail['SKU']} was inactive/unchecked -> "
+                f"{detail['PRODUCT_NAME']} -- new Walmart URL, active=True, "
+                f"calories={detail['calories']} (from {detail['_calorie_max_source']}), "
+                f"price={detail['PRICE_CURRENT']} (Kroger), servings_per_container={detail['servings_per_container']}")
+            save_pool(pool_path, pool)
+            unsaved_tags = 0
         elif outcome == "tagged":
             tagged_by_sku += 1
             unsaved_tags += 1
@@ -1604,9 +1664,10 @@ def main():
     log(f"Stopped: {stop_reason}.")
     log(f"Kroger pulled {stats['pulled']} product(s): {stats['not_frozen_or_unpriced']} not frozen/unpriced (ignored), "
         f"{stats['known_upc']} UPC already known, {stats['matched_existing']} fuzzy-matched an existing item "
-        f"(UPC recorded on it), {tagged_by_sku} matched by Walmart SKU (UPC recorded), "
+        f"(UPC recorded on it), {tagged_by_sku} matched an already-active row by Walmart SKU (UPC recorded), "
         f"{attempts} treated as new.")
-    log(f"Done. Added {added} new item(s); {skipped} new product(s) couldn't be added and were remembered, "
+    log(f"Done. Added {added} item(s) ({revived} of them refreshed inactive/unchecked rows that already had "
+        f"the same Walmart SKU); {skipped} new product(s) couldn't be added and were remembered, "
         f"{retry_later} skipped for now. Pool size now {len(pool)}.")
 
 
