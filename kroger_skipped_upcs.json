@@ -14,6 +14,11 @@
     "name": "Kroger® Bacon Egg and Cheese Croissant Breakfast Sandwich",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Delights Egg wich Parmesan Egg Frittatas Turkey Sausage and Cheese 4 Count Frozen' (name match 0, needs 85)"
   },
+  "0001111009683": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Kroger® Lite Turkey Sausage Egg White and Cheese English Muffin Breakfast Sandwich",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Delights Turkey Sausage Egg White Cheese English Muffin Sandwich 20 oz 4 Ct Frozen' (name match 0, needs 85)"
+  },
   "0001111010549": {
     "at": "2026-09-20T10:31:42.463810+00:00",
     "name": "Simple Truth® Gluten Free Homestyle Waffles",
@@ -54,10 +59,25 @@
     "name": "Simple Truth® Protein Uncured Bacon Egg and Gouda Wheat Multigrain Bagel Breakfast Sandwiches",
     "reason": "no Walmart link (no_search_results)"
   },
+  "0001111011724": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Private Selection® Italian Sausage and Meat Lasagna Family Size",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Private Selection Italian Penne Rigate 16 oz Pack of 1' (name match 62, needs 85)"
+  },
+  "0001111012023": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Kroger® Vegetable Lasagna Family Size",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kroger Salad Rainbow Twirls Pasta 12 oz 5 Pack' (name match 46, needs 85)"
+  },
   "0001111013661": {
     "at": "2026-09-20T00:16:34.743546+00:00",
     "name": "Simple Truth® Cheese and Uncured Bacon Egg Bites",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0001111013834": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Kroger® Frozen Fully Cooked Crispy Chicken Bites",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Frozen Crispy Chicken Breast Strips Family Pack 2 5 lb Bag Frozen' (name match 0, needs 85)"
   },
   "0001111014805": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -99,6 +119,51 @@
     "name": "Simple Truth® Protein Hazelnut with Cocoa Snack Sized Filled Pancakes",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
+  "0001111015501": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Kroger® Frozen Fully Cooked Spicy Chicken Nuggets",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kroger 90 Second Roasted Chicken Rice 3 Pack 8 8 oz' (name match 53, needs 85)"
+  },
+  "0001111015763": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Kroger® Lasagna with Meat Sauce Family Size",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kroger Original Macaroni and Cheese Cups 8 ct 2 05 oz Pack of 1' (name match 37, needs 85)"
+  },
+  "0001111015764": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Kroger® Meat Lasagna Party Size",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kroger Salad Rainbow Twirls Pasta 12 oz 5 Pack' (name match 51, needs 85)"
+  },
+  "0001111015832": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Private Selection® Italian Sausage and Meat Lasagna Family Size",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Private Selection Italian Penne Rigate 16 oz Pack of 1' (name match 62, needs 85)"
+  },
+  "0001111015835": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Kroger® Frozen Fully Cooked Zoo Crispy Chicken Nuggets",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0001111015836": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Simple Truth® Frozen Fully Cooked Lightly Breaded Chicken Breast Bites",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Just Bare Frozen Fully Cooked Lightly Breaded Breast Bite 24oz 16g Protein Serving Size 3oz Frozen' (name match 0, needs 85)"
+  },
+  "0001111015903": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Simple Truth® Frozen Fully Cooked Animal Shaped Lightly Breaded Chicken Nuggets",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Realgood Foods Co Lightly Breaded Chicken Breast Nuggets 20 oz Bag Frozen' (name match 0, needs 85)"
+  },
+  "0001111015932": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Kroger® Frozen Fully Cooked Crispy Chicken Nuggets",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Frozen Crispy Chicken Breast Strips Family Pack 2 5 lb Bag Frozen' (name match 0, needs 85)"
+  },
+  "0001111015934": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Kroger® Frozen Fully Cooked Crispy Chicken Nuggets BIG DEAL!",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Frozen Crispy Chicken Breast Strips Family Pack 2 5 lb Bag Frozen' (name match 0, needs 85)"
+  },
   "0001111016165": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Simple Truth® Fully Cooked Chicken and Maple Breakfast Sausage Links",
@@ -119,6 +184,26 @@
     "name": "Simple Truth® Protein Single-Serve 3 Meat Frozen Pizza",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Simple Truth Protein Crisp Crackers Sour Cream Onion Naturally Flavored Non GMO 4 25 oz 2 Pack Bonus' (name match 45, needs 85)"
   },
+  "0001111016304": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Kroger® Sausage Egg and Cheese Breakfast Biscuit Sandwich",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Odom s Tennessee Pride Sausage Buttermilk Biscuits Snack Size Breakfast Sandwiches 24 Count Frozen' (name match 0, needs 85)"
+  },
+  "0001111016306": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Kroger® Sausage Egg and Cheese Biscuit Sandwiches",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Odom s Tennessee Pride Sausage Buttermilk Biscuits Snack Size Breakfast Sandwiches 24 Count Frozen' (name match 0, needs 85)"
+  },
+  "0001111016307": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Kroger® Sausage Egg and Cheese Biscuit Breakfast Sandwich",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Odom s Tennessee Pride Sausage Buttermilk Biscuits Snack Size Breakfast Sandwiches 24 Count Frozen' (name match 0, needs 85)"
+  },
+  "0001111016322": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Private Selection® Black Forest Ham Egg and Cheddar Cheese Everything Bagel Breakfast Sandwich",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Land O Frost Premium Meat Sandwich Sliced Deli Lunch Meat Black Forest Ham 1 lb' (name match 0, needs 85)"
+  },
   "0001111016411": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Simple Truth® Cantina Style Chicken and Quinoa Bowl",
@@ -133,6 +218,11 @@
     "at": "2026-09-20T00:16:34.743546+00:00",
     "name": "Simple Truth® Sweet Sriracha Style Chicken and Brown Rice Bowl",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0001111016504": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Kroger® Frozen Fully Cooked Garlic Parmesan Boneless Chicken Bites",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'bettergoods Chicken Wings with Garlic Butter Dry Rub 22 oz Frozen' (name match 0, needs 85)"
   },
   "0001111078635": {
     "at": "2026-09-20T10:31:42.463810+00:00",
@@ -209,6 +299,11 @@
     "name": "Stouffer's Stuffed Peppers Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Stouffer s Stuffed Peppers Large Size Meal 15 5 oz Frozen' (name match 85, needs 85)"
   },
+  "0001380023260": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Stouffer's Classic Lasagna with Meat & Sauce Family Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Stouffer s Lasagna with Meat and Sauce Frozen Meal 19 oz Frozen' (name match 84, needs 85)"
+  },
   "0001380026680": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Lean Cuisine Maple Bourbon Chicken Frozen Meal",
@@ -219,15 +314,55 @@
     "name": "Stouffer's Chicken Bacon Ranch Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Stouffers CLASSICS Chicken Broccoli Pasta Bake Family Size Frozen Meal 40 oz' (name match 60, needs 85)"
   },
+  "0001380055131": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Stouffer's Classic Lasagna with Meat & Sauce Family Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Stouffer s Lasagna with Meat and Sauce Frozen Meal 19 oz Frozen' (name match 84, needs 85)"
+  },
   "0001380055478": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Stouffer's Salisbury Steak Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Stouffer s Salisbury Steak Individual Frozen Meal 9 6 oz Frozen' (name match 85, needs 85)"
   },
+  "0001380083865": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Stouffer's Five Cheese Lasagna Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Stouffers Beef Lasagna Caesar Salad French Bread Meal Bundle' (name match 62, needs 85)"
+  },
+  "0002113100114": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Marie Callender's Lasagna With Meat & Sauce Bowl",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Marie Callender s Lasagna With Meat Sauce Bowl With Mozzarella Cheese Frozen Meal 11 75 oz' (name match 76, needs 85)"
+  },
+  "0002370001415": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Tyson Any’tizers Frozen Crispy Boneless Chicken Bites",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Any tizers Fully Cooked Crispy Boneless Chicken Bites 1 5 lb Bag Frozen' (name match 72, needs 85)"
+  },
+  "0002370001452": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Tyson Frozen Dino Nuggets",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Chicken Dino Nuggets 29 oz Frozen' (name match 82, needs 85)"
+  },
+  "0002370006172": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Tyson High Protein Unbreaded Simple Ingredients Chicken Nuggets",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Fully Cooked Lightly Breaded Boneless Chicken Bites 1 25 lb Bag Frozen' (name match 37, needs 85)"
+  },
   "0002370006218": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Tyson® Pepperoni Pizza Seasoned and Stuffed Raw Chicken Breast, Frozen Entree",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'John Soules Foods Fresh Spicy Style Chicken Breast Sandwich 2 Pack 11oz Serving Size 1 Sandwich' (name match 0, needs 85)"
+  },
+  "0002370006306": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Nature Raised Farms® Lightly Breaded Chicken Nuggets Fully Cooked Frozen",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0002531705518": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Applegate All Natural Frozen Chicken Nuggets",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Applegate Natural Gluten Free Chicken Nuggets 16oz Resealable Bag Frozen' (name match 68, needs 85)"
   },
   "0002531737428": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -364,6 +499,11 @@
     "name": "Farm Rich High Protein Blueberry French Toast Sticks, 18.4oz",
     "reason": "no Walmart link (no_search_results)"
   },
+  "0004227200032": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Amy's Vegetable Lasagna",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Amy s Vegetable Lasagna 9 5 oz Pack of 12' (name match 85, needs 85)"
+  },
   "0004227200071": {
     "at": "2026-09-20T10:27:32.991017+00:00",
     "name": "Amy's Cheddar Cheese Burrito",
@@ -383,6 +523,11 @@
     "at": "2026-09-20T10:27:32.991017+00:00",
     "name": "Amy's® Frozen Organic Non-Dairy Gluten Free Bean & Rice Burrito",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Amy s Frozen Meals Bean and Rice Burrito Gluten Free Microwave Meals 5 5 oz' (name match 72, needs 85)"
+  },
+  "0004227200814": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Amy's® Vegan Gluten Free Vegetable Lasagna Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Amy s Frozen Meals Vegetable Lasagna Microwave Meals 9 5 oz' (name match 67, needs 85)"
   },
   "0004227200833": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -424,10 +569,20 @@
     "name": "Cholula Chili Lime Carnitas Frozen Burrito Bowl",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Cholula Pork Carnitas Seasoning' (name match 51, needs 85)"
   },
+  "0005100029679": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Campbell's Chunky Meat Lovers' Lasagna Bowl Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Chunky Frozen Meat Lovers Lasagna Bowl' (name match 0, needs 85)"
+  },
   "0007057504009": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "On-Cor® Gravy & 6 Salisbury Steaks Frozen Package Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'On Cor Gravy 6 Salisbury Steaks Entree Regular 28 Ounce Package Meal Frozen' (name match 85, needs 85)"
+  },
+  "0007057504022": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "On-Cor® Lasagna with Meat Sauce",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'On Cor Homestyle Gravy Meatloaf Entree Regular 24 Ounce Packaged Meal Frozen' (name match 44, needs 85)"
   },
   "0007100701467": {
     "at": "2026-09-20T10:27:32.991017+00:00",
@@ -489,10 +644,20 @@
     "name": "Odom's Tennessee Pride Sausage Buttermilk Biscuits",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Odom s Tennessee Pride Sausage Buttermilk Biscuits Snack Size Breakfast Sandwiches 12 Count Frozen' (name match 75, needs 85)"
   },
+  "0007229000957": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Odom’s Tennessee Pride Maple Pancake Sausage Sandwiches Frozen Breakfast Sandwiches",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Odom s Tennessee Pride Maple Sausage Breakfast Sausage Roll 16 oz' (name match 68, needs 85)"
+  },
   "0007229001252": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Odom's Tennessee Pride Sausage Buttermilk Biscuits",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Odom s Tennessee Pride Sausage Buttermilk Biscuits Snack Size Breakfast Sandwiches 12 Count Frozen' (name match 75, needs 85)"
+  },
+  "0007229081222": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Odom's Tennessee Pride Chicken Sandwiches Snack Size Frozen Breakfast Sandwiches",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Odom s Tennessee Pride Chicken Buttermilk Biscuits Snack Size Breakfast Sandwiches 18 Count Frozen' (name match 80, needs 85)"
   },
   "0007265522011": {
     "at": "2026-09-20T00:16:34.743546+00:00",
@@ -529,6 +694,31 @@
     "name": "Screamin Sicilian™ Pepperoni Stuffed Crust Frozen Pizza",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Totino s Ultimate Pizza Pepperoni' (name match 0, needs 85)"
   },
+  "0007701301235": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Pilgrim's x Flamin' Hot® Fully Cooked Boneless Chicken Bites Breaded Chicken Breast Bites",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Pilgrim s Frozen Fully Cooked Mini Nugget Chicken 24 oz 11g Protein Serving Size 7 pieces Frozen' (name match 45, needs 85)"
+  },
+  "0007701361575": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Just Bare Just Bare Fully Cooked Lightly Breaded Chicken Breast Bites Family Pack",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Just Bare Fully Cooked Bnls Sknl Lightly Breaded Chicken Breast Bites' (name match 81, needs 85)"
+  },
+  "0007790000168": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Jimmy Dean® Blueberry Griddle Cake Sausage, Egg and Cheese Sandwiches",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Blueberry Griddle Cake Sausage Egg and Cheese Sandwiches 18 8 oz 4 Count Frozen' (name match 79, needs 85)"
+  },
+  "0007790000348": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Jimmy Dean® Protein Breakfast Sausage Egg Cheese Croissant Fully Cooked Frozen Sandwiches",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Sausage Egg Cheese Croissant Sandwiches 18 oz 4 Ct Frozen' (name match 76, needs 85)"
+  },
+  "0007790000349": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Jimmy Dean® Protein Breakfast Grilled Chicken Egg Cheese Ciabatta Frozen Sandwiches Fully Cooked",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Grilled Chicken Peppered Egg and Sharp Cheddar Cheese Breakfast Sandwich on ciabatta' (name match 0, needs 85)"
+  },
   "0007790019487": {
     "at": "2026-09-20T10:27:32.991017+00:00",
     "name": "Jimmy Dean Frozen Egg Sausage and Cheese Breakfast Burritos",
@@ -538,6 +728,16 @@
     "at": "2026-09-20T10:27:32.991017+00:00",
     "name": "Jimmy Dean Meat Lovers Frozen Breakfast Burritos",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Simple Scrambles Meat Lovers 5 35 oz' (name match 55, needs 85)"
+  },
+  "0007790047172": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Jimmy Dean Delights® Bacon Spinach Onion Frozen Breakfast Egg'wich",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Delights Bacon Spinach Onion Eggwich 4 count per pack 6 per Case' (name match 82, needs 85)"
+  },
+  "0007790050239": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Jimmy Dean® Buttermilk Chicken Biscuit Sandwiches",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Sausage Egg Cheese Biscuit Sandwich 36 oz 8 Count Frozen' (name match 68, needs 85)"
   },
   "0067984410346": {
     "at": "2026-09-20T10:31:42.463810+00:00",
@@ -619,6 +819,21 @@
     "name": "Rao'S® Made For Home® Chicken Parmesan With Spaghetti Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: '8 pack Rao s Homemade Spaghetti Premium Italian Pasta Made from Durum Semolina Flour 16 Oz' (name match 55, needs 85)"
   },
+  "0074747930003": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Rao'S® Made For Home® Meat Lasagna Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: '3 pack Rao s Made for Home Four Cheese Pasta Bake Family Size Frozen Dinner 25 oz' (name match 44, needs 85)"
+  },
+  "0081669702070": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Impossible® Breakfast Sandwich",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Flame broiled beef burger Peppered Egg Sharp Cheddar Cheese on a Brioche Bun' (name match 0, needs 85)"
+  },
+  "0085001027961": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Real Good Foods Lasagna Bowl",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Applegate Natural Gluten Free Chicken Nuggets 16oz Resealable Bag Frozen' (name match 0, needs 85)"
+  },
   "0085001191128": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Red’s Egg’Wich Turkey Sausage Frozen Breakfast Sandwich",
@@ -638,6 +853,16 @@
     "at": "2026-09-20T10:31:42.463810+00:00",
     "name": "Evergreen™ Thick & Fluffy Blueberry Frozen Waffles",
     "reason": "no Walmart link (no_search_results)"
+  },
+  "0085003616803": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Real Good Foods Lightly Breaded Chicken Nuggets",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Realgood Foods Co Lightly Breaded Chicken Breast Nuggets 20 oz Bag Frozen' (name match 0, needs 85)"
+  },
+  "0085004819923": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Counter High Protein Lazy Lasagna Multiserve Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Stouffer s Macaroni and Cheese Pasta Frozen Meal 12 oz Frozen' (name match 0, needs 85)"
   },
   "0085004819925": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -743,6 +968,11 @@
     "at": "2026-09-20T00:16:34.743546+00:00",
     "name": "Mason Dixie® Pancake with Sausage & Egg Frozen Breakfast Sandwich",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0086000721995": {
+    "at": "2026-09-20T10:35:12.402614+00:00",
+    "name": "Mason Dixie® Buttermilk Biscuit with Sausage, Egg, & Cheese Frozen Breakfast Sandwich",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Sausage Egg Cheese Biscuit Sandwich 36 oz 8 Count Frozen' (name match 0, needs 85)"
   },
   "0086000721997": {
     "at": "2026-09-20T00:16:34.743546+00:00",

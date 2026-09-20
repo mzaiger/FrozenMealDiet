@@ -3089,7 +3089,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=odom%27s+tennessee+pride+snack+size+sausage+buttermilk+biscuits",
     "_calorie_max_checked_at": "2026-09-19T09:19:26.343488+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:12:39.623135+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:12:39.623135+00:00",
+    "_kroger_upc": "0007229000223"
   },
   {
     "index": "318954",
@@ -4858,7 +4859,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=lean+cuisine+favorites+lasagna+with+meat+sauce",
     "_calorie_max_checked_at": "2026-09-19T09:23:30.441704+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:18:36.988379+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:18:36.988379+00:00",
+    "_kroger_upc": "0001380016668"
   },
   {
     "index": "319035",
@@ -4999,7 +5001,12 @@
     "_calorie_max_checked_at": "2026-09-19T09:23:39.871985+00:00",
     "_calorie_max_source": "usda",
     "_image_walmart_url_checked_at": "2026-09-20T05:19:05.068376+00:00",
-    "_kroger_upc": "0001380079188"
+    "_kroger_upc": "0001380079188",
+    "_kroger_upc_aliases": [
+      "0001380083662",
+      "0001380023056",
+      "0001380086980"
+    ]
   },
   {
     "index": "319039",
@@ -6128,7 +6135,10 @@
     "_calorie_max_checked_at": "2026-09-19T09:25:54.772772+00:00",
     "_calorie_max_source": "current",
     "_image_walmart_url_checked_at": "2026-09-20T05:22:53.350738+00:00",
-    "_kroger_upc": "0007790000169"
+    "_kroger_upc": "0007790000169",
+    "_kroger_upc_aliases": [
+      "0007790050209"
+    ]
   },
   {
     "index": "319108",
@@ -6163,7 +6173,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+fully+cooked+fun+chicken+nuggets",
     "_calorie_max_checked_at": "2026-09-19T09:25:56.148602+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:22:57.982278+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:22:57.982278+00:00",
+    "_kroger_upc": "0002370006026"
   },
   {
     "index": "319110",
@@ -8309,7 +8320,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=applegate+natural+chicken+nuggets",
     "_calorie_max_checked_at": "2026-09-19T09:29:48.776722+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:30:24.320964+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:30:24.320964+00:00",
+    "_kroger_upc": "0002531705519"
   },
   {
     "index": "319359",
@@ -8344,7 +8356,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+sausage+egg+cheese+biscuit+sandwich",
     "_calorie_max_checked_at": "2026-09-19T09:29:50.464584+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:30:30.568437+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:30:30.568437+00:00",
+    "_kroger_upc": "0007790050311"
   },
   {
     "index": "319362",
@@ -8379,7 +8392,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+bacon+egg+cheese+croissant+sandwich",
     "_calorie_max_checked_at": "2026-09-19T09:29:52.098041+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:30:37.229938+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:30:37.229938+00:00",
+    "_kroger_upc": "0007790050186"
   },
   {
     "index": "319363",
@@ -8485,7 +8499,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+delights+turkey+sausage",
     "_calorie_max_checked_at": "2026-09-19T09:30:06.867917+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:30:57.168281+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:30:57.168281+00:00",
+    "_kroger_upc": "0007790050257"
   },
   {
     "index": "319366",
@@ -8586,7 +8601,11 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:30:11.692852+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:31:17.230754+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:31:17.230754+00:00",
+    "_kroger_upc": "0007790050241",
+    "_kroger_upc_aliases": [
+      "0007790050192"
+    ]
   },
   {
     "index": "319369",
@@ -11040,7 +11059,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+bacon+egg+cheese+biscuit+sandwich",
     "_calorie_max_checked_at": "2026-09-19T09:34:19.277425+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:39:50.510833+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:39:50.510833+00:00",
+    "_kroger_upc": "0007790050212"
   },
   {
     "index": "319495",
@@ -29432,7 +29452,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+sausage+biscuit+snack+size+sandwiches",
     "_calorie_max_checked_at": "2026-09-19T10:09:20.447907+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:44:50.830227+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:44:50.830227+00:00",
+    "_kroger_upc": "0007790031101",
+    "_kroger_upc_aliases": [
+      "0007790011101"
+    ]
   },
   {
     "index": "332928",
@@ -39928,7 +39952,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+vegetable+lasagna",
     "_calorie_max_checked_at": "2026-09-19T10:32:47.261710+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:25:02.296790+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:25:02.296790+00:00",
+    "_kroger_upc": "0001380010323"
   },
   {
     "index": "344615",
@@ -51063,7 +51088,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=michael+angelo%27s+lasagna+with+meat+sauce",
     "_calorie_max_checked_at": "2026-09-19T10:55:11.928854+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T08:07:22.423362+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:07:22.423362+00:00",
+    "_kroger_upc": "0003736300612"
   },
   {
     "index": "404843",
@@ -59115,6 +59141,186 @@
     "_gemini_checked_at": "2026-09-20T10:31:42.463810+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized Kodiak Protein-Packed Buttermilk French Toast Sticks, which typically contain around 290 calories per serving of 4 sticks.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Stouffer's",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "10.00",
+    "PRICE_RETAIL": "10.00",
+    "PRODUCT_NAME": "Stouffer's Lasagna Italiano Family Frozen Meal",
+    "PRODUCT_SIZE": "38 oz / 1 pk",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Stouffer-s-Italiano-Family-Size-Lasagna-Frozen-Frozen-Meal-38-oz-Frozen/10804783?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:35:12.402614+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "10804783",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 370,
+    "image_url": "https://www.thesslstore.com/blog/wp-content/uploads/2022/11/https-vs-http-connections-768x595.png",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+lasagna+italiano+family+meal",
+    "index": "kroger-554133",
+    "servings_per_container": "1/12 Package (222 g)",
+    "tid": "",
+    "_kroger_upc": "0001380014331",
+    "_kroger_discovered_at": "2026-09-20T10:35:12.402614+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Stouffer's Lasagna Italiano Family Frozen Meal",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Stouffer-s-Meat-and-Sauce-Lasagna-Family-Size-Ready-Dinner-Boxed-Food-Meal-34-oz-Frozen/10318308",
+    "_walmart_name_match_score": 93.82716049382715,
+    "_walmart_url_slug_name": "Stouffer s Italiano Family Size Lasagna Frozen Frozen Meal 38 oz Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/Stouffer-s-Italiano-Family-Size-Lasagna-Frozen-Frozen-Meal-38-oz-Frozen/10804783",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:35:12.402614+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 290.8,
+      "gemini": 370
+    },
+    "_gemini_checked_at": "2026-09-20T10:35:12.402614+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Stouffer's family size lasagna typically contains around 370 calories per serving based on standard nutrition labels.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Healthy Choice",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "2.99",
+    "PRICE_RETAIL": "3.59",
+    "PRODUCT_NAME": "Healthy Choice Cafe Steamers Turkey Sausage Lasagna Bowl, Frozen Meal",
+    "PRODUCT_SIZE": "10 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Healthy-Choice-Cafe-Steamers-Turkey-Sausage-Lasagna-Bowl-Frozen-Meal-10-oz-Frozen/1276830641?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:35:12.402614+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "1276830641",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 240,
+    "image_url": "https://www.thesslstore.com/blog/wp-content/uploads/2022/11/https-vs-http-connections-768x595.png",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=healthy+choice+cafe+steamers+turkey+sausage+lasagna+bowl",
+    "index": "kroger-554134",
+    "servings_per_container": "1 meal (269g)",
+    "tid": "",
+    "_kroger_upc": "0007265555627",
+    "_kroger_discovered_at": "2026-09-20T10:35:12.402614+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Healthy Choice Cafe Steamers Turkey Sausage Lasagna Bowl, Frozen Meal",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Healthy-Choice-Cafe-Steamers-Turkey-Sausage-Lasagna-Bowl-Frozen-Meal-10-oz-Frozen/1276830641",
+    "_walmart_name_match_score": 95.72649572649573,
+    "_walmart_url_slug_name": "Healthy Choice Cafe Steamers Turkey Sausage Lasagna Bowl Frozen Meal 10 oz Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/Healthy-Choice-Cafe-Steamers-Turkey-Sausage-Lasagna-Bowl-Frozen-Meal-10-oz-Frozen/1276830641",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:35:12.402614+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 180.2,
+      "gemini": 240
+    },
+    "_gemini_checked_at": "2026-09-20T10:35:12.402614+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Healthy Choice Cafe Steamers Turkey Sausage Lasagna Bowls are typically around 240 calories per 10 oz serving.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Just Bare",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "11.99",
+    "PRICE_RETAIL": "11.99",
+    "PRODUCT_NAME": "Just Bare Fully Cooked Lightly Breaded Chicken Breast Bites",
+    "PRODUCT_SIZE": "1.5 lb",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Just-Bare-Fully-Cooked-Bnls-Sknl-Lightly-Breaded-Chicken-Breast-Bites/12941510518?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:35:12.402614+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "12941510518",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 190,
+    "image_url": "https://www.thesslstore.com/blog/wp-content/uploads/2022/11/https-vs-http-connections-768x595.png",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=just+bare+fully+cooked+lightly+breaded+chicken+breast+bites",
+    "index": "kroger-554135",
+    "servings_per_container": "3 ONZ",
+    "tid": "",
+    "_kroger_upc": "0007701361557",
+    "_kroger_discovered_at": "2026-09-20T10:35:12.402614+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Just Bare Fully Cooked Lightly Breaded Chicken Breast Bites",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Just-Bare-Frozen-Fully-Cooked-Lightly-Breaded-Breast-Bite-24oz-16g-Protein-Serving-Size-3oz-Frozen/1609859667",
+    "_walmart_name_match_score": 92.1875,
+    "_walmart_url_slug_name": "Just Bare Fully Cooked Bnls Sknl Lightly Breaded Chicken Breast Bites",
+    "_image_search_query": "https://www.walmart.com/ip/Just-Bare-Fully-Cooked-Bnls-Sknl-Lightly-Breaded-Chicken-Breast-Bites/12941510518",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:35:12.402614+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 159.6,
+      "gemini": 190
+    },
+    "_gemini_checked_at": "2026-09-20T10:35:12.402614+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognize this popular brand of lightly breaded chicken breast bites, typically 190 calories per 3 oz serving.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Tyson",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "12.99",
+    "PRICE_RETAIL": "14.99",
+    "PRODUCT_NAME": "Tyson Frozen Chicken Nuggets Family Pack",
+    "PRODUCT_SIZE": "4 lb",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Tyson-White-Meat-Chicken-Nuggets-Family-Pack-4-lb-Frozen/8127074395?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:35:12.402614+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "8127074395",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 270,
+    "image_url": "https://www.thesslstore.com/blog/wp-content/uploads/2022/11/https-vs-http-connections-768x595.png",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+chicken+nuggets+family+pack",
+    "index": "kroger-554136",
+    "servings_per_container": "3.21 OZ SERVING",
+    "tid": "",
+    "_kroger_upc": "0002370006025",
+    "_kroger_discovered_at": "2026-09-20T10:35:12.402614+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Tyson Frozen Chicken Nuggets Family Pack",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Tyson-White-Meat-Chicken-Nuggets-Family-Pack-4-lb-Frozen/8127074395",
+    "_walmart_name_match_score": 85.71428571428572,
+    "_walmart_url_slug_name": "Tyson White Meat Chicken Nuggets Family Pack 4 lb Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/Tyson-White-Meat-Chicken-Nuggets-Family-Pack-4-lb-Frozen/8127074395",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:35:12.402614+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 270.0,
+      "gemini": 270
+    },
+    "_gemini_checked_at": "2026-09-20T10:35:12.402614+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognized as standard breaded Tyson chicken nuggets, typically around 270 calories per 4-ounce serving.",
     "_gemini_recognized": true
   }
 ]
