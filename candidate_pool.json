@@ -58686,7 +58686,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 280,
-    "image_url": "https://i5.walmartimages.com/seo/Safety-Face-Shields-Glasses-Frames-Pack-4-Ultra-Clear-Protective-Full-Face-Shields-Protect-Eyes-Nose-Mouth-Anti-Fog-PET-Plastic-Goggles-Sanitary-Drop_ed59054a-1dda-48cf-aa7d-3af013ff498e.18c48bfa86337c305719a495f04c86a3.jpeg",
+    "image_url": "https://i5.walmartimages.com/seo/Healthy-Choice-Caf-Steamers-Chicken-Alfredo-Frozen-Meal-9-25-oz-frozen_f3b23340-0ad2-4819-93c0-d13fa8c796e2.e7bf38ac443660475d623e4c0162c90c.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=healthy+choice+cafe+steamers+chicken+alfredo",
     "index": "kroger-554133",
     "servings_per_container": "1 Meal (283g)",
@@ -58711,7 +58711,8 @@
     "_gemini_checked_at": "2026-09-20T10:22:37.403248+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this Healthy Choice Cafe Steamers meal as typically containing around 240 calories per 9.25 oz serving.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:12:28.630550+00:00"
   },
   {
     "BRAND": "Birds Eye",
@@ -58731,7 +58732,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 320,
-    "image_url": "https://m.media-amazon.com/images/I/81ScdCpGTcL._AC_SL1500_.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Birds-Eye-Voila-Family-Size-Cheesy-Ranch-Chicken-Skillet-TV-Dinner-Meal-42-oz-Frozen_0bb8ec10-244e-4922-9fdc-7cbbb1b31b93.39fadd9551646770a411d57deac4233b.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=birds+eye+voila+cheesy+chicken+family+size+skillet+meal",
     "index": "kroger-554134",
     "servings_per_container": "1 1/2 cups (237g) frozen, 1 cup cooked",
@@ -58756,7 +58757,8 @@
     "_gemini_checked_at": "2026-09-20T10:22:37.403248+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized based on standard Birds Eye Voila! family size frozen skillet meal nutritional data for the cheesy chicken variety per serving.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:12:33.838874+00:00"
   },
   {
     "BRAND": "Lean Cuisine",
@@ -58776,7 +58778,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 330,
-    "image_url": "https://i.dawn.com/primary/2024/02/65cbdaeb68cae.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Lean-Cuisine-Macaroni-Cheese-10-oz-Pack-of-12_75189fae-db75-4fa3-97a7-20e9481fe0f6_3.e9eedfef40f46ed2a853f623d6718a24.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=lean+cuisine+macaroni+and+cheese+meal",
     "index": "kroger-554135",
     "servings_per_container": "1 sandwich (170g)",
@@ -58802,7 +58804,8 @@
     "_gemini_checked_at": "2026-09-20T10:22:37.403248+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this Lean Cuisine classic comfort food item, which typically contains around 260 calories per 10 oz package.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:12:39.472195+00:00"
   },
   {
     "BRAND": "Banquet",
@@ -58822,7 +58825,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 380,
-    "image_url": "https://barcoemnoronha.com.br/wp-content/uploads/elementor/thumbs/snorkel-fotosub-noronha-3-ri56ageyhclggfxohftqp4jb50rzyhvvd0wbq5i2dk.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Banquet-Basic-Chicken-Nuggets-and-Fries-4-85oz-PACK-OF-12_d0b098c1-4b18-4bd5-b778-3686ab01992d.9a40c04d9197708d5f6b189ee328acb8.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+chicken+nuggets+and+fries",
     "index": "kroger-554136",
     "servings_per_container": "1 Meal (137g)",
@@ -58847,7 +58850,8 @@
     "_gemini_checked_at": "2026-09-20T10:22:37.403248+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this classic small Banquet TV dinner size and its typical calorie range for nuggets and fries.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:12:44.669428+00:00"
   },
   {
     "BRAND": "El Monterey",
@@ -58867,7 +58871,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 360,
-    "image_url": "https://safebooru.org/samples/3413/sample_e96b97bab080d96074de7cd32ab7238d33ed6a9e.jpg?3550767",
+    "image_url": "https://i5.walmartimages.com/seo/El-Monterey-Signature-Entr-e-Steak-Enchilada-9-oz-Frozen_8dd5a026-f9df-4f7a-a187-0f8f33ccbef6.238ce937dd1e045f39838152ea939cfa.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+signature+entree+steak+enchilada",
     "index": "kroger-554137",
     "servings_per_container": "0.5 PACKAGE",
@@ -58892,7 +58896,8 @@
     "_gemini_checked_at": "2026-09-20T10:22:37.403248+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized based on typical nutritional profiles for frozen single-serve enchilada entrées of this brand and size.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:12:53.624796+00:00"
   },
   {
     "BRAND": "Marie Callender's",
@@ -58912,7 +58917,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 570,
-    "image_url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjAiSg_1A1gDUTcXS-NCuX2fHTx_8HA_GNbghyphenhyphenssy332rfmg1KWSz2xvLAy4SHkq3tZM4vFIKTa5vdyQHsiOfSBSJJTScALEihdi6GmKCYpFv1P5ytleGqCRfjcWJRtYa2Fn-6RbxXhDfov/s1600/ensalada+de+marisco7.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Marie-Callender-s-Family-Size-Chicken-Parmesan-and-Penne-Pasta-Frozen-Meal-38-oz_c5e1542c-4278-4281-b3f0-4651aa387fdc.587f84ce8c63ecad28b53607f83f172d.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+family+size+chicken+parmesan+meal",
     "index": "kroger-554138",
     "servings_per_container": "1/4 pie (319g)",
@@ -58937,7 +58942,8 @@
     "_gemini_checked_at": "2026-09-20T10:22:37.403248+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized well based on standard nutrition profiles for Marie Callender's large frozen family meals.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:12:58.879235+00:00"
   },
   {
     "BRAND": "Caulipower",
@@ -58957,7 +58963,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 400,
-    "image_url": "https://www.thesslstore.com/blog/wp-content/uploads/2022/11/https-vs-http-connections-768x595.png",
+    "image_url": "https://i5.walmartimages.com/seo/Caulipower-Cauliflower-Uncured-Gluten-Free-Pepperoni-Pizza-Bites-Frozen-7-5-oz_9b332cb3-64a0-478d-b3a9-bfb37ef591d2.0d58d717186d540ee77ecd9920e0eefd.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=caulipower+uncured+pepperoni+gluten+free+cauliflower+crust+pizza",
     "index": "kroger-554133",
     "servings_per_container": "0.5 pizza",
@@ -58982,7 +58988,8 @@
     "_gemini_checked_at": "2026-09-20T10:27:32.991017+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this cauliflower crust pepperoni pizza, where half a pizza is typically around 360 calories.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:13:03.640847+00:00"
   },
   {
     "BRAND": "Red's",
@@ -59002,7 +59009,7 @@
     "SUBCATEGORY": "Natural & Organic",
     "active": true,
     "calories": 380,
-    "image_url": "https://www.thesslstore.com/blog/wp-content/uploads/2022/11/https-vs-http-connections-768x595.png",
+    "image_url": "https://i5.walmartimages.com/seo/Red-s-Grilled-Chicken-Cheddar-16-oz-4-Count-Frozen_a9ab82a7-be70-4d54-8cfc-6da0a8e881a7.2a9f94adaa16c8797428515ceef2f9fe.jpeg?odnHeight=580&odnWidth=580&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red%27s+grilled+chicken+and+cheddar+burrito",
     "index": "kroger-554134",
     "servings_per_container": "1 BURRITO",
@@ -59027,7 +59034,8 @@
     "_gemini_checked_at": "2026-09-20T10:27:32.991017+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize Red's Grilled Chicken & Cheddar Burritos, which typically contain around 310 calories per single burrito serving.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:13:10.043089+00:00"
   },
   {
     "BRAND": "Red's",
@@ -59047,7 +59055,7 @@
     "SUBCATEGORY": "Natural & Organic",
     "active": true,
     "calories": 380,
-    "image_url": "https://www.thesslstore.com/blog/wp-content/uploads/2022/11/https-vs-http-connections-768x595.png",
+    "image_url": "https://i5.walmartimages.com/seo/Red-s-Cheesy-Beef-and-Bean-Burrito-16-oz-4-Count-Frozen_bceb81ae-84d1-4daf-807e-caf1a3824389.73c37d31f3935038861045d39db733a2.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red%27s+cheesy+beef+and+bean+burrito",
     "index": "kroger-554135",
     "servings_per_container": "1 BURRITO",
@@ -59073,7 +59081,8 @@
     "_gemini_checked_at": "2026-09-20T10:27:32.991017+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Red's Cheesy Beef & Bean Burrito (5 oz) as typically containing around 310 calories.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:13:19.149656+00:00"
   },
   {
     "BRAND": "Eggo",
@@ -59118,7 +59127,8 @@
     "_gemini_checked_at": "2026-09-20T10:31:42.463810+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Eggo Protein Waffles Buttermilk Vanilla as having about 190 calories per 2-waffle serving.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:13:23.858726+00:00"
   },
   {
     "BRAND": "De Wafelbakkers",
@@ -59163,7 +59173,8 @@
     "_gemini_checked_at": "2026-09-20T10:31:42.463810+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize De Wafelbakkers Homestyle Pancakes, where a typical serving of 3 pancakes is around 190 calories.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:13:33.018096+00:00"
   },
   {
     "BRAND": "Kodiak",
@@ -59208,7 +59219,8 @@
     "_gemini_checked_at": "2026-09-20T10:31:42.463810+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized Kodiak Protein-Packed Frozen Cinnamon French Toast Sticks, which typically contain around 290 calories per serving of 4 sticks.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:13:42.129771+00:00"
   },
   {
     "BRAND": "Kodiak",
@@ -59253,7 +59265,8 @@
     "_gemini_checked_at": "2026-09-20T10:31:42.463810+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized Kodiak Protein-Packed Buttermilk French Toast Sticks, which typically contain around 290 calories per serving of 4 sticks.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:13:50.506255+00:00"
   },
   {
     "BRAND": "Stouffer's",
@@ -59273,7 +59286,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 370,
-    "image_url": "https://www.thesslstore.com/blog/wp-content/uploads/2022/11/https-vs-http-connections-768x595.png",
+    "image_url": "https://i5.walmartimages.com/asr/914a205d-cebb-432c-b80f-37d6f502dcd8.697a248530f31d2221ebc927a60ee230.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+lasagna+italiano+family+meal",
     "index": "kroger-554133",
     "servings_per_container": "1/12 Package (222 g)",
@@ -59298,7 +59311,8 @@
     "_gemini_checked_at": "2026-09-20T10:35:12.402614+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Stouffer's family size lasagna typically contains around 370 calories per serving based on standard nutrition labels.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:13:58.788756+00:00"
   },
   {
     "BRAND": "Healthy Choice",
@@ -59318,7 +59332,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 240,
-    "image_url": "https://www.thesslstore.com/blog/wp-content/uploads/2022/11/https-vs-http-connections-768x595.png",
+    "image_url": "https://www.kroger.com/product/images/xlarge/front/0007265555627",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=healthy+choice+cafe+steamers+turkey+sausage+lasagna+bowl",
     "index": "kroger-554134",
     "servings_per_container": "1 meal (269g)",
@@ -59343,7 +59357,8 @@
     "_gemini_checked_at": "2026-09-20T10:35:12.402614+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Healthy Choice Cafe Steamers Turkey Sausage Lasagna Bowls are typically around 240 calories per 10 oz serving.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:14:04.202627+00:00"
   },
   {
     "BRAND": "Just Bare",
@@ -59363,7 +59378,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 190,
-    "image_url": "https://www.thesslstore.com/blog/wp-content/uploads/2022/11/https-vs-http-connections-768x595.png",
+    "image_url": "https://i5.walmartimages.com/seo/Just-Bare-Frozen-Fully-Cooked-Lightly-Breaded-Breast-Bite-24oz-16g-Protein-Serving-Size-3oz-Frozen_3d42adb3-1284-49b1-b617-e954da836b1d.291baec4788391a77c5ab60debb2e52e.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=just+bare+fully+cooked+lightly+breaded+chicken+breast+bites",
     "index": "kroger-554135",
     "servings_per_container": "3 ONZ",
@@ -59388,7 +59403,8 @@
     "_gemini_checked_at": "2026-09-20T10:35:12.402614+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this popular brand of lightly breaded chicken breast bites, typically 190 calories per 3 oz serving.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:14:09.081267+00:00"
   },
   {
     "BRAND": "Tyson",
@@ -59408,7 +59424,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 270,
-    "image_url": "https://www.thesslstore.com/blog/wp-content/uploads/2022/11/https-vs-http-connections-768x595.png",
+    "image_url": "https://i5.walmartimages.com/seo/Tyson-White-Meat-Chicken-Nuggets-Family-Pack-4-lb-Frozen_1370440f-7b62-4d87-a89a-a25b1183167e.d984af0034e7688e31ee0ce65a52cfef.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+chicken+nuggets+family+pack",
     "index": "kroger-554136",
     "servings_per_container": "3.21 OZ SERVING",
@@ -59433,7 +59449,8 @@
     "_gemini_checked_at": "2026-09-20T10:35:12.402614+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized as standard breaded Tyson chicken nuggets, typically around 270 calories per 4-ounce serving.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:14:15.794791+00:00"
   },
   {
     "BRAND": "Tyson",
@@ -59453,7 +59470,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 220,
-    "image_url": "https://cdn.releases.com/img/image/c4b050f8-e9a8-4ad2-a828-0f5bbc58b021.jpg/200",
+    "image_url": "https://i5.walmartimages.com/seo/Tyson-Grilled-Chicken-Tenders-20-oz_1b7cfb08-9fb7-4471-8828-0ad810f5602a.88fadb67f8931e488b1f6340f497c693.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+grilled+chicken+tenders",
     "index": "kroger-554133",
     "servings_per_container": "100 GRAM",
@@ -59478,7 +59495,8 @@
     "_gemini_checked_at": "2026-09-20T10:38:29.507363+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize Tyson Fully Cooked Grilled Chicken Breast Tenders, which typically contain around 160 calories per 3 oz serving.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:14:20.836219+00:00"
   },
   {
     "BRAND": "Tai Pei",
@@ -59498,7 +59516,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 420,
-    "image_url": "https://i.pinimg.com/originals/f1/89/68/f1896854ef9c144941045da3f0c941ce.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Tai-Pei-Shrimp-Fried-Rice-Frozen-Asian-Meal-14-oz_5ca3731f-f4e1-4e4c-bf63-d3258abcee38.089317125eeb76ba3a905d2db67c246f.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tai+pei+shrimp+fried+rice+asian+meal",
     "index": "kroger-554134",
     "servings_per_container": "1 PACKAGE",
@@ -59523,7 +59541,8 @@
     "_gemini_checked_at": "2026-09-20T10:38:29.507363+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized this frozen single-serve Asian meal, where a 9 oz package typically contains about 280 calories.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:14:26.115767+00:00"
   },
   {
     "BRAND": "Veggies Made Great",
@@ -59993,7 +60012,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 810,
-    "image_url": "https://img.icons8.com/color/1200/microsoft-outlook-2025.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Red-Baron-Deep-Dish-XL-Ultimate-Pepperoni-Frozen-Pizza_b484957a-c8ea-4ccf-b80a-32475613fdad.2d847054b524df12b17f145ff1fd46ae.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+ultimate+pepperoni+deep+dish+xl+pizza",
     "index": "kroger-554133",
     "servings_per_container": "1 PIZZA",
@@ -60018,7 +60037,8 @@
     "_gemini_checked_at": "2026-09-20T10:47:43.827494+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize Red Baron Deep Dish XL pizzas as high-calorie single/double-serving frozen meals, typically around 800 calories per whole pizza.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:14:34.833528+00:00"
   },
   {
     "BRAND": "Lean Cuisine",
@@ -60038,7 +60058,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 360,
-    "image_url": "https://st.focusedcollection.com/9163412/i/650/focused_205552432-stock-photo-boy-sitting-on-bed.jpg",
+    "image_url": "https://www.goodnes.com/sites/g/files/jgfbjl321/files/gdn_product/field_product_images/leancuisine-pwk9hf8sxuzabfwigm0g.jpg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=lean+cuisine+pepperoni+french+bread+personal+pizza",
     "index": "kroger-554134",
     "servings_per_container": "1 Package",
@@ -60063,7 +60083,8 @@
     "_gemini_checked_at": "2026-09-20T10:47:43.827494+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this Lean Cuisine French bread pizza product and its standard nutritional profile.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:14:42.466856+00:00"
   },
   {
     "BRAND": "California Pizza Kitchen",
@@ -60083,7 +60104,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 530,
-    "image_url": "https://katefork.com/wp-content/uploads/2026/05/mexican-street-tacos.webp",
+    "image_url": "https://i5.walmartimages.com/seo/California-Pizza-Kitchen-Cheese-Pizza-Frozen-Food-with-Crispy-Thin-Crust-12-6-oz_1155a39b-a380-4a23-a73a-4fddaef2ab93.6eb8db624809f989b9db042a7d1a1697.jpeg?odnHeight=350&odnWidth=350&odnBg=FFFFFF",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=california+pizza+kitchen+four+cheese+crispy+thin+crust+pizza",
     "index": "kroger-554135",
     "servings_per_container": "1 pizza",
@@ -60109,7 +60130,8 @@
     "_gemini_checked_at": "2026-09-20T10:47:43.827494+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this specific CPK frozen pizza; a typical serving (1/3 of the pizza) is around 380 calories.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:14:51.379805+00:00"
   },
   {
     "BRAND": "DIGIORNO",
@@ -60129,7 +60151,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 360,
-    "image_url": "https://admin.pulsouniversitario.mx/images/planteles/zBrpdtjpxIeFBFC8mWKv.png",
+    "image_url": "https://i5.walmartimages.com/seo/DiGiorno-Frozen-Pizza-Pepperoni-Classic-Crust-Pizza-with-Marinara-Sauce-19-3-oz-Frozen_b9cc46b4-1690-4855-b5d8-87389aa363d6.b637521a173d7305c056d0adde3c482c.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=digiorno+classic+thin+crust+pepperoni+pizza",
     "index": "kroger-554136",
     "servings_per_container": "1/4 pizza (146g)",
@@ -60154,7 +60176,8 @@
     "_gemini_checked_at": "2026-09-20T10:47:43.827494+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this specific Digiorno thin crust pepperoni pizza, typically around 330 calories per serving with about 5 servings per pizza.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:14:57.487237+00:00"
   },
   {
     "BRAND": "DIGIORNO",
@@ -60174,7 +60197,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 370,
-    "image_url": "https://wallpapers.com/images/hd/himiko-toga-detailed-fanart-l6lj7iv6vuhwtput.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/DIGIORNO-Frozen-Wood-Fired-Pizza-Premium-Pepperoni-15-7oz-Box_4aca431f-7c42-4c9c-8091-5680cec8c5ed.cde7933c3f7fb5b47b6cd0bd00dcad0a.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=digiorno+premium+pepperoni+wood+fired+style+crust+pizza",
     "index": "kroger-554137",
     "servings_per_container": "0.2 pizza",
@@ -60199,7 +60222,8 @@
     "_gemini_checked_at": "2026-09-20T10:47:43.827494+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize DiGiorno Wood Fired Style Crust Pepperoni pizza, where a typical serving (1/4 of the pizza) is around 370 calories.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:15:06.311233+00:00"
   },
   {
     "BRAND": "Red Baron",
@@ -60219,7 +60243,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 380,
-    "image_url": "https://lh3.googleusercontent.com/LOAmL9sn2nbcfnOllyLHpbLnYy1tm9waroPqD56Juf3FebJeKtuFAyVqZbfPbno0BdJ176n5i8dwwka5rtivLQ2lFst-BfcK0CFsJNACPHYLlYWDKvlfyRnRuLiQN_vqDRibF2TK4jxidiFzThk00vE",
+    "image_url": "https://i5.walmartimages.com/seo/Red-Baron-Crunch-Time-Pepperoni-Frozen-Microwave-Pizza-14-88-oz_205e866f-7336-44db-b8de-04a1861ba0d5.6d29f8e117aa517927928a8d87ea15f9.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+crunchtime+pepperoni+microwave+pizza",
     "index": "kroger-554138",
     "servings_per_container": "0.25 PIZZA",
@@ -60244,7 +60268,8 @@
     "_gemini_checked_at": "2026-09-20T10:47:43.827494+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Estimated based on typical nutritional content for single-serve frozen microwave pizzas of this size and brand.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:15:11.020249+00:00"
   },
   {
     "BRAND": "Red Baron",
@@ -60264,7 +60289,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 790,
-    "image_url": "https://logos-world.net/wp-content/uploads/2024/01/Oklahoma-Sooners-Logo-History.jpg",
+    "image_url": "https://i5.walmartimages.com/seo/Red-Baron-Deep-Dish-XL-Super-Supreme-Frozen-Pizza-11-62-oz_c08e701d-88a1-4205-97e7-ab3aeacef851.8c8023bfc1080563e2758351290ad263.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+deep+dish+xl+super+supreme+pizza",
     "index": "kroger-554139",
     "servings_per_container": "1 PIZZA",
@@ -60289,7 +60314,8 @@
     "_gemini_checked_at": "2026-09-20T10:47:43.827494+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize Red Baron Deep Dish XL Super Supreme Pizza and its general nutritional profile for the whole package.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:15:17.951201+00:00"
   },
   {
     "BRAND": "Farm Rich",
@@ -60309,7 +60335,7 @@
     "SUBCATEGORY": "Frozen",
     "active": true,
     "calories": 230,
-    "image_url": "https://blog.midespacho.cloud/wp-content/uploads/2026/02/Copia-de-Miniaturas-blog-9.png",
+    "image_url": "https://i5.walmartimages.com/seo/Farm-Rich-Buffalo-Chicken-Rollups-12oz_cf0d08c8-9c62-4037-9b36-4c7740196f51.e5466cefda21aa40502b8f884c09ce3f.jpeg",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=farm+rich+buffalo+chicken+rollups",
     "index": "kroger-554140",
     "servings_per_container": "1 container",
@@ -60334,7 +60360,8 @@
     "_gemini_checked_at": "2026-09-20T10:47:43.827494+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Farm Rich Buffalo Chicken Rollups typically contain around 230 calories per serving of 3 rollups.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_image_walmart_url_checked_at": "2026-09-20T11:15:25.664942+00:00"
   },
   {
     "BRAND": "Kellogg's",
