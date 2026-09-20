@@ -3785,7 +3785,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tai+pei+beef+broccoli+frozen+asian+entre",
     "_calorie_max_checked_at": "2026-09-19T09:20:54.259946+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:15:00.352669+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:15:00.352669+00:00",
+    "_kroger_upc": "0007007781120"
   },
   {
     "index": "318974",
@@ -9723,7 +9724,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+fish+filet",
     "_calorie_max_checked_at": "2026-09-19T09:32:02.171747+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:35:01.977292+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:35:01.977292+00:00",
+    "_kroger_upc": "0001380010201"
   },
   {
     "index": "319416",
@@ -21137,7 +21139,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+deep+dish+singles+four+cheese+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:53:10.035488+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T06:15:22.232200+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:15:22.232200+00:00",
+    "_kroger_upc": "0007218056638"
   },
   {
     "index": "329720",
@@ -21274,7 +21277,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+deep+dish+singles+supreme+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:53:25.793334+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:15:47.249430+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:15:47.249430+00:00",
+    "_kroger_upc": "0007218073367"
   },
   {
     "index": "329723",
@@ -21683,7 +21687,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tony%27s+pizzeria+style+crust+cheese+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:54:13.360480+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:17:05.643293+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:17:05.643293+00:00",
+    "_kroger_upc": "0007218063718"
   },
   {
     "index": "329785",
@@ -21927,7 +21932,10 @@
     "_calorie_max_checked_at": "2026-09-19T09:54:29.303323+00:00",
     "_calorie_max_source": "usda",
     "_image_walmart_url_checked_at": "2026-09-20T06:17:54.325591+00:00",
-    "_kroger_upc": "0007218063243"
+    "_kroger_upc": "0007218063243",
+    "_kroger_upc_aliases": [
+      "0007218063247"
+    ]
   },
   {
     "index": "329790",
@@ -22067,7 +22075,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tombstone+five+cheese",
     "_calorie_max_checked_at": "2026-09-19T09:54:45.411527+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:18:22.442972+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:18:22.442972+00:00",
+    "_kroger_upc": "0007192170282"
   },
   {
     "index": "329797",
@@ -23319,7 +23328,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:57:00.861066+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:22:33.904426+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:22:33.904426+00:00",
+    "_kroger_upc": "0007218050133"
   },
   {
     "index": "329881",
@@ -31489,7 +31499,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=hungry+man+smokin%27+backyard+barbeque+frozen+dinner",
     "_calorie_max_checked_at": "2026-09-19T10:13:15.600992+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:52:21.248863+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:52:21.248863+00:00",
+    "_kroger_upc": "0065827620278"
   },
   {
     "index": "334858",
@@ -37589,7 +37600,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+brown+%27n+serve+fully+cooked+turkey+sausage+links",
     "_calorie_max_checked_at": "2026-09-19T10:27:44.537570+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T07:15:32.319028+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:15:32.319028+00:00",
+    "_kroger_upc": "0003100018462"
   },
   {
     "index": "342576",
@@ -43772,7 +43784,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+signature+chicken+enchiladas",
     "_calorie_max_checked_at": "2026-09-19T10:40:38.220134+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T07:39:05.963604+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:39:05.963604+00:00",
+    "_kroger_upc": "0007100700170"
   },
   {
     "index": "346842",
@@ -48362,7 +48375,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:50:08.692355+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:56:44.772214+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:56:44.772214+00:00",
+    "_kroger_upc": "0007265500210"
   },
   {
     "index": "370745",
@@ -54442,7 +54456,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tai+pei+orange+chicken+frozen+asian+entre",
     "_calorie_max_checked_at": "2026-09-19T11:01:06.849295+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T08:19:48.961254+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:19:48.961254+00:00",
+    "_kroger_upc": "0007007781126"
   },
   {
     "index": "444277",
@@ -60594,6 +60609,231 @@
     "_gemini_checked_at": "2026-09-20T10:54:38.632559+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized based on typical nutritional content for Marie Callender's pasta bowls.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Banquet",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "1.79",
+    "PRICE_RETAIL": "1.79",
+    "PRODUCT_NAME": "Banquet Brown'N Serve Original Fully Cooked Sausage Patties Frozen Breakfast",
+    "PRODUCT_SIZE": "6.4 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Banquet-Brown-N-Serve-Original-Fully-Cooked-Sausage-Patties-Frozen-Meat-32-oz-40-count-Frozen/47376071?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:59:16.824113+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "47376071",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 190,
+    "image_url": "https://i5.walmartimages.com/seo/Banquet-Brown-N-Serve-Original-Fully-Cooked-Sausage-Patties-Frozen-Meat-32-oz-40-count-Frozen_a388b76f-dee5-4e84-adfb-3597f208f51b.454dc97c2cc16eebde82dcdaadc53231.jpeg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+brown%27n+serve+original+fully+cooked+sausage+patties+breakfast",
+    "index": "kroger-554133",
+    "servings_per_container": "2 patties (45g)",
+    "tid": "",
+    "_kroger_upc": "0003100018464",
+    "_kroger_discovered_at": "2026-09-20T10:59:16.824113+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Banquet Brown'N Serve Original Fully Cooked Sausage Patties Frozen Breakfast",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Banquet-Brown-N-Serve-Original-Fully-Cooked-Sausage-Links-Frozen-Meat-32-oz-About-50-Count-Frozen/46715973",
+    "_walmart_name_match_score": 86.36363636363636,
+    "_walmart_url_slug_name": "Banquet Brown N Serve Original Fully Cooked Sausage Patties Frozen Meat 32 oz 40 count Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/Banquet-Brown-N-Serve-Original-Fully-Cooked-Sausage-Patties-Frozen-Meat-32-oz-40-count-Frozen/47376071",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:59:16.824113+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 139.9,
+      "gemini": 190
+    },
+    "_gemini_checked_at": "2026-09-20T10:59:16.824113+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognized as a standard frozen breakfast sausage patty product with typical calorie density for pork sausage.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Marie Callender's",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "9.99",
+    "PRICE_RETAIL": "9.99",
+    "PRODUCT_NAME": "Marie Callender's Family Size Cheesy Chicken & Rice",
+    "PRODUCT_SIZE": "36 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Marie-Callender-s-Family-Size-Cheesy-Chicken-and-Rice-Frozen-Meal-36-oz/14341000691?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:59:16.824113+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "14341000691",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 570,
+    "image_url": "https://i5.walmartimages.com/seo/Marie-Callender-s-Family-Size-Cheesy-Chicken-and-Rice-Frozen-Meal-36-oz_8e615878-e03d-419b-9c25-33bbed2711ea.e0457ca63229536769212a538bdd9b74.jpeg?odnHeight=640&odnWidth=640&odnBg=FFFFFF",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+family+size+cheesy+chicken+and+rice",
+    "index": "kroger-554134",
+    "servings_per_container": "1/4 pie (319g)",
+    "tid": "",
+    "_kroger_upc": "0002113100077",
+    "_kroger_discovered_at": "2026-09-20T10:59:16.824113+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Marie Callender's Family Size Cheesy Chicken & Rice",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Marie-Callender-s-Cheesy-Chicken-and-Rice-Meal-to-Share-Frozen-Meal-27-oz-Frozen/975176274",
+    "_walmart_name_match_score": 95.04950495049505,
+    "_walmart_url_slug_name": "Marie Callender s Family Size Cheesy Chicken and Rice Frozen Meal 36 oz",
+    "_image_search_query": "https://www.walmart.com/ip/Marie-Callender-s-Family-Size-Cheesy-Chicken-and-Rice-Frozen-Meal-36-oz/14341000691",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:59:16.824113+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 571.0,
+      "gemini": 380
+    },
+    "_gemini_checked_at": "2026-09-20T10:59:16.824113+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognize this frozen family size meal, with an estimated 380 calories per serving based on similar creamy chicken and rice casseroles.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "El Monterey",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "11.99",
+    "PRICE_RETAIL": "12.99",
+    "PRODUCT_NAME": "El Monterey® Signature Family Size Frozen Beef Enchiladas",
+    "PRODUCT_SIZE": "6 ct / 30 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/El-Monterey-Signature-Family-Size-Beef-Enchiladas-6-ct-30-oz-Frozen/5153726796?classType=REGULAR&fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:59:16.824113+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "5153726796",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 360,
+    "image_url": "https://www.kroger.com/product/images/xlarge/front/0007100700171",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+signature+family+size+beef+enchiladas",
+    "index": "kroger-554135",
+    "servings_per_container": "0.5 PACKAGE",
+    "tid": "",
+    "_kroger_upc": "0007100700171",
+    "_kroger_discovered_at": "2026-09-20T10:59:16.824113+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com El Monterey® Signature Family Size Frozen Beef Enchiladas",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/El-Monterey-Signature-Entr-e-Steak-Enchilada-9-oz-Frozen/5377553611",
+    "_walmart_name_match_score": 100.0,
+    "_walmart_url_slug_name": "El Monterey Signature Family Size Beef Enchiladas 6 ct 30 oz Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/El-Monterey-Signature-Family-Size-Beef-Enchiladas-6-ct-30-oz-Frozen/5153726796?classType=REGULAR",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:59:16.824113+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 359.4,
+      "gemini": 310
+    },
+    "_gemini_checked_at": "2026-09-20T10:59:16.824113+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Based on standard nutritional profile for El Monterey frozen beef enchilada family size meals per serving.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Lean Cuisine",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "3.79",
+    "PRICE_RETAIL": "3.79",
+    "PRODUCT_NAME": "Lean Cuisine Signature BBQ Recipe Chicken Pizza Personal Pizza",
+    "PRODUCT_SIZE": "5.75 oz",
+    "PRODUCT_URL": "https://business.walmart.com/ip/Lean-Cuisine-Signature-BBQ-Recipe-Chicken-Pizza-Personal-Pizza-5-75-oz-Frozen/16495373703?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:59:16.824113+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "16495373703",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 390,
+    "image_url": "https://i5.walmartimages.com/seo/LEAN-CUISINE-French-Bread-Pepperoni-Pizza-5-25oz-Box_c1f009ec-862b-4fda-b516-239f71871c75.caef0ef70b2493f0fbe852945f7f84dc.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=lean+cuisine+signature+bbq+recipe+chicken+pizza+personal+pizza",
+    "index": "kroger-554136",
+    "servings_per_container": "0.333 PIZZA",
+    "tid": "",
+    "_kroger_upc": "0001380051605",
+    "_kroger_discovered_at": "2026-09-20T10:59:16.824113+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Lean Cuisine Signature BBQ Recipe Chicken Pizza Personal Pizza",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/LEAN-CUISINE-French-Bread-Pepperoni-Pizza-5-25oz-Box/16495373703",
+    "_walmart_name_match_score": 100.0,
+    "_walmart_url_slug_name": "Lean Cuisine Signature BBQ Recipe Chicken Pizza Personal Pizza 5 75 oz Frozen",
+    "_image_search_query": "https://business.walmart.com/ip/Lean-Cuisine-Signature-BBQ-Recipe-Chicken-Pizza-Personal-Pizza-5-75-oz-Frozen/16495373703",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:59:16.824113+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 369.6,
+      "gemini": 390
+    },
+    "_gemini_checked_at": "2026-09-20T10:59:16.824113+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "I recognize this Lean Cuisine personal pizza based on typical nutritional profiles for this product line.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Red Baron",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "4.99",
+    "PRICE_RETAIL": "6.99",
+    "PRODUCT_NAME": "Red Baron CRUNCHTIME Four Cheese Frozen Microwave Pizza",
+    "PRODUCT_SIZE": "14.9 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Red-Baron-Crunch-Time-Four-Cheese-Frozen-Microwave-Pizza-14-91-oz/19438213343?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:59:16.824113+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "19438213343",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 380,
+    "image_url": "https://i5.walmartimages.com/seo/Red-Baron-Crunch-Time-Four-Cheese-Frozen-Microwave-Pizza-14-91-oz_07ff7a5e-185e-44e0-beb8-fbbb5a1dcd99.1a8479b406998770c10c221f354a796e.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+crunchtime+four+cheese+microwave+pizza",
+    "index": "kroger-554137",
+    "servings_per_container": "0.25 PIZZA",
+    "tid": "",
+    "_kroger_upc": "0007218050138",
+    "_kroger_discovered_at": "2026-09-20T10:59:16.824113+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Red Baron CRUNCHTIME Four Cheese Frozen Microwave Pizza",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Red-Baron-Crunch-Time-Four-Cheese-Frozen-Microwave-Pizza-14-91-oz/19438213343",
+    "_walmart_name_match_score": 90.72164948453609,
+    "_walmart_url_slug_name": "Red Baron Crunch Time Four Cheese Frozen Microwave Pizza 14 91 oz",
+    "_image_search_query": "https://www.walmart.com/ip/Red-Baron-Crunch-Time-Four-Cheese-Frozen-Microwave-Pizza-14-91-oz/19438213343",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:59:16.824113+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 329.4,
+      "gemini": 380
+    },
+    "_gemini_checked_at": "2026-09-20T10:59:16.824113+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Estimated based on typical nutritional profiles for frozen individual microwave pizzas of this weight.",
     "_gemini_recognized": true
   }
 ]
