@@ -1,0 +1,78 @@
+name: Add skipped Kroger products (hand-supplied Walmart URLs)
+
+# Manual only: run it from the Actions tab after you've filled in
+# "walmart_url" on entries in kroger_skipped_upcs.json and pushed the file.
+# It processes every entry that has a walmart_url and isn't finished yet
+# (kroger_add_skipped_items.py), always with --allow-missing-image, so a
+# product DuckDuckGo finds no image for is still added with a blank
+# image_url (UpdateImageUrlsFromWalmartUrl.py can fill those in later).
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Max entries to process this run (0 = all)"
+        required: false
+        default: "0"
+      dry_run:
+        description: "Dry run: only report which entries would be tagged vs added; write nothing"
+        type: boolean
+        required: false
+        default: false
+
+# Same group as kroger-new-items.yml: both edit candidate_pool.json, so they
+# wait for each other instead of running at the same time.
+concurrency:
+  group: kroger-new-items
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  add-skipped:
+    runs-on: ubuntu-latest
+    # Must stay above --max-minutes below (100), so the script stops on its
+    # own and the commit step still gets to run.
+    timeout-minutes: 120
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests pyyaml ddgs rapidfuzz
+
+      - name: Add skipped products
+        env:
+          KROGER_CLIENT_ID: ${{ secrets.KROGER_CLIENT_ID }}
+          KROGER_CLIENT_SECRET: ${{ secrets.KROGER_CLIENT_SECRET }}
+          GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
+          USDA_API_KEY: ${{ secrets.USDA_API_KEY }}
+          # Store to take Kroger prices from -- same as kroger-new-items.yml:
+          # KROGER_ZIP (secret or variable) picks the nearest store, and the
+          # optional KROGER_LOCATION_ID variable pins one store instead.
+          KROGER_ZIP: ${{ secrets.KROGER_ZIP || vars.KROGER_ZIP }}
+          KROGER_LOCATION_ID: ${{ vars.KROGER_LOCATION_ID }}
+          LIMIT: ${{ github.event.inputs.limit }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: |
+          case "$LIMIT" in ''|*[!0-9]*) LIMIT=0 ;; esac
+          args="--allow-missing-image --max-minutes 100"
+          if [ "$LIMIT" != "0" ]; then args="$args --limit $LIMIT"; fi
+          if [ "$DRY_RUN" = "true" ]; then args="$args --dry-run"; fi
+          echo "python kroger_add_skipped_items.py $args"
+          python kroger_add_skipped_items.py $args
+
+      - name: Commit updated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add candidate_pool.json kroger_skipped_upcs.json
+          git diff --staged --quiet || git commit -m "Add hand-matched skipped Kroger products [automated]"
+          git pull --rebase
+          git push
