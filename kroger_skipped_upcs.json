@@ -4,10 +4,25 @@
     "name": "Kroger® Original Flavor French Toast Stick BIG DEAL!",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
+  "0001111007712": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Kroger® Blueberry Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kroger Complete Original Pancake Waffle Mix 32 oz 3 Pack' (name match 51, needs 85)"
+  },
   "0001111009680": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Kroger® Bacon Egg and Cheese Croissant Breakfast Sandwich",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Delights Egg wich Parmesan Egg Frittatas Turkey Sausage and Cheese 4 Count Frozen' (name match 0, needs 85)"
+  },
+  "0001111010549": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Simple Truth® Gluten Free Homestyle Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Simple Truth Homestyle Waffles 2 Pack 19 75 oz' (name match 83, needs 85)"
+  },
+  "0001111010550": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Simple Truth® Gluten Free Blueberry Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Simple Truth Homestyle Waffles 2 Pack 19 75 oz' (name match 69, needs 85)"
   },
   "0001111010552": {
     "at": "2026-09-20T10:27:32.991017+00:00",
@@ -18,6 +33,16 @@
     "at": "2026-09-20T10:27:32.991017+00:00",
     "name": "Simple Truth® Four Cheese Gluten Free Cauliflower Crust Frozen Pizza",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Quest Thin Crust Pizza 4 Cheese High Protein 11oz Frozen Pizza' (name match 0, needs 85)"
+  },
+  "0001111010813": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Simple Truth® Buttermilk Vanilla Protein Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Simple Truth Protein Pancake Mix Chocolate Chip 2 Pack 18 oz' (name match 55, needs 85)"
+  },
+  "0001111011016": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Kroger® Bacon Egg and Cheese Croissant Breakfast Sandwich",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Delights Egg wich Parmesan Egg Frittatas Turkey Sausage and Cheese 4 Count Frozen' (name match 0, needs 85)"
   },
   "0001111011339": {
     "at": "2026-09-20T00:16:34.743546+00:00",
@@ -38,6 +63,41 @@
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Kroger® Egg Potato Bacon and Cheese Burritos",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'SeaPak Shrimp Spring Rolls with Sweet Thai Chili Sauce 18 oz BAP Certified Frozen' (name match 0, needs 85)"
+  },
+  "0001111014829": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Simple Truth® Protein Cinnamon French Toast Sticks",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Simple Truth Organic Apple Mini Rice Cakes 1 4 oz' (name match 53, needs 85)"
+  },
+  "0001111014879": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Simple Truth® Protein Blueberry Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Simple Truth Homestyle Waffles 2 Pack 19 75 oz' (name match 71, needs 85)"
+  },
+  "0001111014986": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Kroger® Cinnamon French Toast Bites",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'French Toast Crunch Sweetened Breakfast Cereal 17 4 OZ Family Size Cereal Box' (name match 0, needs 85)"
+  },
+  "0001111015282": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Kroger® Cinnamon French Toast Sticks BIG DEAL!",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'French Toast Crunch Sweetened Breakfast Cereal 17 4 OZ Family Size Cereal Box' (name match 0, needs 85)"
+  },
+  "0001111015493": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Simple Truth® Protein Buttermilk Mini Pancakes",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Simple Truth Homestyle Waffles 2 Pack 19 75 oz' (name match 48, needs 85)"
+  },
+  "0001111015494": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Simple Truth® Protein Blueberry Snack Sized Filled Pancakes",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0001111015495": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Simple Truth® Protein Hazelnut with Cocoa Snack Sized Filled Pancakes",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
   "0001111016165": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -74,6 +134,16 @@
     "name": "Simple Truth® Sweet Sriracha Style Chicken and Brown Rice Bowl",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
+  "0001111078635": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Kroger® Buttermilk Pancakes",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kroger Complete Buttermilk Pancake Waffle Mix 32 oz 3 Pack' (name match 70, needs 85)"
+  },
+  "0001111078970": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Kroger® Homestyle Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kroger Complete Original Pancake Waffle Mix 32 oz 3 Pack' (name match 57, needs 85)"
+  },
   "0001111078990": {
     "at": "2026-09-20T10:27:32.991017+00:00",
     "name": "Kroger® Buttermilk Waffles",
@@ -103,6 +173,11 @@
     "at": "2026-09-20T10:27:32.991017+00:00",
     "name": "Kroger® Buttermilk Waffles",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kroger Complete Original Pancake Waffle Mix 32 oz 3 Pack' (name match 47, needs 85)"
+  },
+  "0001111089399": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Private Selection® Belgian Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Private Selection Sweet Buttery Belgian Waffle Butter Crisps Biscuits 3 52 oz Pack of 3' (name match 58, needs 85)"
   },
   "0001380010171": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -164,10 +239,110 @@
     "name": "Smart Ones Fettuccine Alfredo Frozen Dinner",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Smart Ones Savory Italian Recipes Fettuccine Alfredo 9 25oz PACK OF 12' (name match 60, needs 85)"
   },
+  "0003800005199": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Original French Toaster Sticks",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Minis Original French Toast 3 03 Ounce 72 per case' (name match 71, needs 85)"
+  },
+  "0003800011190": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Minis Chocolatey Chip Pancakes",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kellogg s Eggo Minis Chocolate Chip French Toast 3 03 Oz 72 Ct Frozen' (name match 68, needs 85)"
+  },
+  "0003800013192": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Thick and Fluffy Blueberry Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Thick and Fluffy Original Waffles Frozen Breakfast 23 2 oz 12 Count' (name match 71, needs 85)"
+  },
+  "0003800024713": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Buttermilk Pancakes",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Buttermilk Waffles Frozen Breakfast 29 6 oz 24 Count' (name match 67, needs 85)"
+  },
+  "0003800025603": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Minis Cinnamon Toast Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Minis Cinnamon Toast Waffle Bites Frozen Breakfast 25 8 oz 24 Count' (name match 79, needs 85)"
+  },
+  "0003800026066": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Minis Buttermilk Pancakes",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kelloggs Eggo Mini Buttermilk Pancake 14 1 Ounce 8 per case' (name match 74, needs 85)"
+  },
+  "0003800027552": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Buttery Maple Flavor Belgian-Style Frozen Street Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Pillsbury Thaw and Serve Belgian Style Waffle 6 34 Pound' (name match 0, needs 85)"
+  },
+  "0003800029156": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Frozen Protein Waffles Chocolate Chip Brownie",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kelloggs Eggo Homestyle Waffles 12 3 Ounce 8 per case' (name match 53, needs 85)"
+  },
+  "0003800029306": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Frozen Protein Waffles Strawberry Delight",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Buttermilk Waffles Frozen Breakfast 29 6 oz 24 Count' (name match 44, needs 85)"
+  },
+  "0003800031167": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Frozen Protein Pancake Minis Buttermilk Vanilla",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kelloggs Eggo Mini Buttermilk Pancake 14 1 Ounce 8 per case' (name match 80, needs 85)"
+  },
+  "0003800033047": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Cinnamon Roll Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tee Luv Men s Distressed Kellogg s Eggo Waffle Food Logo Shirt 3XL' (name match 51, needs 85)"
+  },
+  "0003800033049": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Cookies and Creme Frozen Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Cinnamon French Toast Sticks Frozen Breakfast 12 7 oz 32 Count Regular' (name match 0, needs 85)"
+  },
+  "0003800033360": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Blueberry Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Blueberry Waffles Frozen Breakfast 12 3 oz 10 Count' (name match 81, needs 85)"
+  },
+  "0003800033364": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Chocolatey Chip Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Chocolatey Chip Waffles Frozen Breakfast 29 6 oz 24 Count' (name match 85, needs 85)"
+  },
+  "0003800033595": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Zero Blueberry Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Chocolatey Chip Waffles Frozen Breakfast 24 Count' (name match 52, needs 85)"
+  },
+  "0003800040260": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Homestyle Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Homestyle Waffles Frozen Breakfast 29 6 oz 24 Count' (name match 81, needs 85)"
+  },
+  "0003800040280": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Homestyle Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Homestyle Waffles Frozen Breakfast 29 6 oz 24 Count' (name match 81, needs 85)"
+  },
+  "0003800040290": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Buttermilk Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Buttermilk Waffles Frozen Breakfast 29 6 oz 24 Count' (name match 82, needs 85)"
+  },
+  "0003800040310": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Buttermilk Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Buttermilk Waffles Frozen Breakfast 29 6 oz 24 Count' (name match 82, needs 85)"
+  },
   "0003800040320": {
     "at": "2026-09-20T10:27:32.991017+00:00",
     "name": "Eggo® Blueberry Waffles",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Blueberry Waffles Frozen Breakfast 12 3 oz 10 Count' (name match 81, needs 85)"
+  },
+  "0003800040340": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Eggo® Strawberry Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Strawberry Waffles Frozen Breakfast 12 3 oz 10 Count Regular' (name match 72, needs 85)"
   },
   "0003800040440": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -178,6 +353,16 @@
     "at": "2026-09-20T10:27:32.991017+00:00",
     "name": "Eggo® Chocolatey Chip Waffles",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Chocolatey Chip Waffles Frozen Breakfast 29 6 oz 24 Count' (name match 85, needs 85)"
+  },
+  "0004132224589": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Farm Rich High Protein Cinnamon French Toast Sticks",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Great Value Cinnamon French Toast Sticks 16 oz Frozen' (name match 0, needs 85)"
+  },
+  "0004132226061": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Farm Rich High Protein Blueberry French Toast Sticks, 18.4oz",
+    "reason": "no Walmart link (no_search_results)"
   },
   "0004227200071": {
     "at": "2026-09-20T10:27:32.991017+00:00",
@@ -354,6 +539,11 @@
     "name": "Jimmy Dean Meat Lovers Frozen Breakfast Burritos",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Simple Scrambles Meat Lovers 5 35 oz' (name match 55, needs 85)"
   },
+  "0067984410346": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Premier Protein® Microwavable Pancakes",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Premier Protein Mini Pancakes 14 1 oz 40 Count Frozen' (name match 82, needs 85)"
+  },
   "0069781201268": {
     "at": "2026-09-20T09:35:33.691622+00:00",
     "name": "Italpizza® Wood Fired Holy Margherita Frozen Pizza",
@@ -369,10 +559,40 @@
     "name": "Italpizza® Wood Fired Cheesy Cheese Frozen Pizza",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
+  "0070559901221": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Kodiak® Protein-Packed Buttermilk and Vanilla Frozen Power Waffles® with 12g Protein",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kodiak Protein Packed Buttermilk and Vanilla Power Waffles 13 4 oz 10 Count Frozen' (name match 0, needs 85)"
+  },
+  "0070559901270": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Kodiak® Protein-Packed Dark Chocolate Frozen Power Waffles® with 12g Protein",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kodiak Cakes Protein Packed Flapjack and Waffle Mix Dark Chocolate 18 oz Pack of 4' (name match 73, needs 85)"
+  },
+  "0070559901320": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Kodiak® Protein-Packed Chocolate Chip Frozen Power Waffles® with 12g Protein",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kodiak Protein Packed Chocolate Chip Power Waffles 10 72 oz 8 Count Frozen' (name match 0, needs 85)"
+  },
+  "0070559901322": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Kodiak® Buttermilk Frozen Protein Pancakes",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kodiak Cakes Power Cakes Protein Pancake' (name match 71, needs 85)"
+  },
+  "0070559901480": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Kodiak® Protein-Packed Buttermilk and Vanilla Frozen Thick and Fluffy Power Waffles®",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kodiak Protein Packed Thick and Fluffy Buttermilk Vanilla Power Waffles 14 8 oz 6 Count Frozen' (name match 0, needs 85)"
+  },
   "0070559901482": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Kodiak® Protein-Packed Blueberry Frozen Thick and Fluffy Power Waffles® with 10g Protein",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kodiak Protein Packed Blueberry Power Waffles 10 72 oz 8 Count Frozen' (name match 0, needs 85)"
+  },
+  "0070559901817": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Kodiak® Protein-Packed Buttermilk Frozen Flapjack Puffs with 10g Protein",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kodiak Protein Packed Buttermilk Flapjack Puffs 10 oz' (name match 0, needs 85)"
   },
   "0070559902026": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -383,6 +603,11 @@
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Kodiak® Protein-Packed Bacon & Colby Jack Cheese Frozen Breakfast Sandwiches",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kodiak Frozen Breakfast Sandwich Maple Pancake Bacon and Colby Jack Cheese 2 ct Box' (name match 83, needs 85)"
+  },
+  "0070559902100": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Kodiak® Homestyle Frozen Power Waffles®",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kodiak Protein Packed Chocolate Chip Power Waffles 10 72 oz 8 Count Frozen' (name match 62, needs 85)"
   },
   "0071785415209": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -409,10 +634,20 @@
     "name": "Red's® Chicken Sausage with Egg & Cheese Croissant Breakfast Sandwiches",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Red s Gluten Free Turkey Sausage Egg wich Breakfast Sandwich 15 6 oz 4 Count Frozen' (name match 67, needs 85)"
   },
+  "0085002664831": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Evergreen™ Thick & Fluffy Blueberry Frozen Waffles",
+    "reason": "no Walmart link (no_search_results)"
+  },
   "0085004819925": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Counter High Protein 3 Cheese Chicken Alfredo Multiserve Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Birds Eye Voila Value Size Cheesy Chicken Frozen Meal 60 oz Bag Frozen' (name match 0, needs 85)"
+  },
+  "0085005839509": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Feel Good Foods® GF Chocolate Chip French Toast Sticks 12oz",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
   "0085006515807": {
     "at": "2026-09-20T00:16:34.743546+00:00",
@@ -489,6 +724,16 @@
     "name": "Saffron Road® Chicken Enchiladas Al Chipotle Gluten-Free Mexican Frozen Dinner",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Saffron Road Chipotle Al Enchiladas 10 Ounce 8 per case' (name match 70, needs 85)"
   },
+  "0086000162722": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Evergreen™ Peanut Butter & Banana Frozen Mini Waffles",
+    "reason": "no Walmart link (no_search_results)"
+  },
+  "0086000162723": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Evergreen™ Zucchini & Carrot Frozen Mini Waffles",
+    "reason": "no Walmart link (no_search_results)"
+  },
   "0086000701432": {
     "at": "2026-09-20T00:16:34.743546+00:00",
     "name": "Mason Dixie® English Muffin with Canadian Bacon, Egg & Cheese Frozen Breakfast Sandwich",
@@ -508,5 +753,10 @@
     "at": "2026-09-20T10:27:32.991017+00:00",
     "name": "Motor City Pizza Co.® Pepperoni Detroit Deep Dish Frozen Pizza",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'AUTHENTIC MOTOR CITY PIZZA CO Pepperoni Detroit Style Pizza Tomato Sauce 26 17 oz Frozen' (name match 69, needs 85)"
+  },
+  "0089903900263": {
+    "at": "2026-09-20T10:31:42.463810+00:00",
+    "name": "Feel Good Foods® GF Buttermilk Pancake Balls 12.7oz",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kodiak Cakes Power Cakes Dark Chocolate Flapjack and Waffle Mix 18 Oz' (name match 0, needs 85)"
   }
 }
