@@ -327,7 +327,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+chicken+pot+pie+large+size",
     "_calorie_max_checked_at": "2026-09-19T09:13:55.449723+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:03:24.584992+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:03:24.584992+00:00",
+    "_kroger_upc": "0002113150691"
   },
   {
     "index": "318861",
@@ -1463,7 +1464,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+frozen+pot+pie+breakfast",
     "_calorie_max_checked_at": "2026-09-19T09:15:44.205809+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:07:07.368915+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:07:07.368915+00:00",
+    "_kroger_upc": "0003100010130"
   },
   {
     "index": "318900",
@@ -2575,7 +2577,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=healthy+choice+simply+steamers+chicken+fried+rice",
     "_calorie_max_checked_at": "2026-09-19T09:18:17.027430+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:10:54.747299+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:10:54.747299+00:00",
+    "_kroger_upc": "0007265540104"
   },
   {
     "index": "318939",
@@ -2676,7 +2679,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:18:31.596713+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T05:11:17.183782+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:11:17.183782+00:00",
+    "_kroger_upc": "0071785430551"
   },
   {
     "index": "318941",
@@ -3160,7 +3164,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s",
     "_calorie_max_checked_at": "2026-09-19T09:19:37.008862+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:12:55.736760+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:12:55.736760+00:00",
+    "_kroger_upc": "0002113150114"
   },
   {
     "index": "318956",
@@ -3476,7 +3481,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+frozen+pot+pie+dinner",
     "_calorie_max_checked_at": "2026-09-19T09:20:18.328966+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:14:01.083457+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:14:01.083457+00:00",
+    "_kroger_upc": "0003100010102"
   },
   {
     "index": "318962",
@@ -3682,7 +3688,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=innovasian+vegetable+fried+rice",
     "_calorie_max_checked_at": "2026-09-19T09:20:36.680026+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:14:48.645369+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:14:48.645369+00:00",
+    "_kroger_upc": "0069511912014"
   },
   {
     "index": "318970",
@@ -3853,7 +3860,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s",
     "_calorie_max_checked_at": "2026-09-19T09:21:08.746398+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:15:20.262045+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:15:20.262045+00:00",
+    "_kroger_upc": "0002113150693",
+    "_kroger_upc_aliases": [
+      "0002113150692"
+    ]
   },
   {
     "index": "318975",
@@ -4481,7 +4492,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+chicken+pot+pie",
     "_calorie_max_checked_at": "2026-09-19T09:22:46.187827+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T05:17:25.245680+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:17:25.245680+00:00",
+    "_kroger_upc": "0002113180027"
   },
   {
     "index": "319025",
@@ -7083,7 +7095,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+any%27tizers+buffalo+style+boneless+chicken+bites",
     "_calorie_max_checked_at": "2026-09-19T09:27:26.039728+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:26:10.939377+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:26:10.939377+00:00",
+    "_kroger_upc": "0002370001405"
   },
   {
     "index": "319307",
@@ -8570,7 +8583,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=impossible+foods+plant+based+chicken+nuggets",
     "_calorie_max_checked_at": "2026-09-19T09:30:10.101525+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:31:11.304871+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:31:11.304871+00:00",
+    "_kroger_upc": "0081669702114"
   },
   {
     "index": "319368",
@@ -9227,7 +9241,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=birds+eye+voila+family+size+chicken+stir+fry",
     "_calorie_max_checked_at": "2026-09-19T09:31:17.187265+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:33:31.796490+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:33:31.796490+00:00",
+    "_kroger_upc": "0001450001278"
   },
   {
     "index": "319387",
@@ -14463,7 +14478,13 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+meatless+chick%27n+pot+pie",
     "_calorie_max_checked_at": "2026-09-19T09:40:13.459733+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:51:39.745028+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:51:39.745028+00:00",
+    "_kroger_upc": "0002113150111",
+    "_kroger_upc_aliases": [
+      "0002113130104",
+      "0002113150699",
+      "0002113150702"
+    ]
   },
   {
     "index": "319671",
@@ -33805,7 +33826,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s",
     "_calorie_max_checked_at": "2026-09-19T10:19:19.147965+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:01:17.804498+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:01:17.804498+00:00",
+    "_kroger_upc": "0002113150696",
+    "_kroger_upc_aliases": [
+      "0002113150694"
+    ]
   },
   {
     "index": "335938",
@@ -34301,7 +34326,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+cheesy+chicken+bacon+pot+pie",
     "_calorie_max_checked_at": "2026-09-19T10:20:24.783198+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:03:05.941248+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:03:05.941248+00:00",
+    "_kroger_upc": "0002113150695"
   },
   {
     "index": "336035",
@@ -41320,7 +41346,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:36:29.240919+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T07:30:09.537749+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:30:09.537749+00:00",
+    "_kroger_upc": "0003100010091"
   },
   {
     "index": "345223",
@@ -45663,7 +45690,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+chicken+nuggets",
     "_calorie_max_checked_at": "2026-09-19T10:44:57.884977+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T07:46:40.405272+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:46:40.405272+00:00",
+    "_kroger_upc": "0003100080921"
   },
   {
     "index": "352149",
@@ -59321,6 +59349,96 @@
     "_gemini_checked_at": "2026-09-20T10:35:12.402614+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognized as standard breaded Tyson chicken nuggets, typically around 270 calories per 4-ounce serving.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Tyson",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "9.99",
+    "PRICE_RETAIL": "9.99",
+    "PRODUCT_NAME": "Tyson Frozen Grilled Chicken Tenders",
+    "PRODUCT_SIZE": "20 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Tyson-Grilled-Chicken-Tenders-20-oz/14714608795?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:38:29.507363+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "14714608795",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 220,
+    "image_url": "https://cdn.releases.com/img/image/c4b050f8-e9a8-4ad2-a828-0f5bbc58b021.jpg/200",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=tyson+grilled+chicken+tenders",
+    "index": "kroger-554133",
+    "servings_per_container": "100 GRAM",
+    "tid": "",
+    "_kroger_upc": "0002370006043",
+    "_kroger_discovered_at": "2026-09-20T10:38:29.507363+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Tyson Frozen Grilled Chicken Tenders",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Tyson-Grilled-Chicken-Breast-Strips-22-oz-Frozen/14664699",
+    "_walmart_name_match_score": 100.0,
+    "_walmart_url_slug_name": "Tyson Grilled Chicken Tenders 20 oz",
+    "_image_search_query": "https://www.walmart.com/ip/Tyson-Grilled-Chicken-Tenders-20-oz/14714608795",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:38:29.507363+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 219.0,
+      "gemini": 160
+    },
+    "_gemini_checked_at": "2026-09-20T10:38:29.507363+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "I recognize Tyson Fully Cooked Grilled Chicken Breast Tenders, which typically contain around 160 calories per 3 oz serving.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Tai Pei",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "3.79",
+    "PRICE_RETAIL": "3.79",
+    "PRODUCT_NAME": "Tai Pei Shrimp Fried Rice Asian Meal, 9 oz (Frozen)",
+    "PRODUCT_SIZE": "9 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Tai-Pei-Shrimp-Fried-Rice-Frozen-Asian-Meal-14-oz/10813752?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:38:29.507363+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "10813752",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 420,
+    "image_url": "https://i.pinimg.com/originals/f1/89/68/f1896854ef9c144941045da3f0c941ce.jpg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=tai+pei+shrimp+fried+rice+asian+meal",
+    "index": "kroger-554134",
+    "servings_per_container": "1 PACKAGE",
+    "tid": "",
+    "_kroger_upc": "0007007781131",
+    "_kroger_discovered_at": "2026-09-20T10:38:29.507363+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Tai Pei Shrimp Fried Rice Asian Meal, 9 oz (Frozen)",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Tai-Pei-Shrimp-Fried-Rice-Frozen-Asian-Entr-e-9-oz/532906145",
+    "_walmart_name_match_score": 100.0,
+    "_walmart_url_slug_name": "Tai Pei Shrimp Fried Rice Frozen Asian Meal 14 oz",
+    "_image_search_query": "https://www.walmart.com/ip/Tai-Pei-Shrimp-Fried-Rice-Frozen-Asian-Meal-14-oz/10813752",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:38:29.507363+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 421.6,
+      "gemini": 280
+    },
+    "_gemini_checked_at": "2026-09-20T10:38:29.507363+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognized this frozen single-serve Asian meal, where a 9 oz package typically contains about 280 calories.",
     "_gemini_recognized": true
   }
 ]

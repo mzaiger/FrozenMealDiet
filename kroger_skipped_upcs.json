@@ -1,4 +1,14 @@
 {
+  "0001111004161": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Kroger® Chinese Inspirations Chicken Fried Rice",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kenmin Instant Fried Rice Vermicelli 65g Ready to Cook Made in JAPAN Tokyo Sakura Mall' (name match 0, needs 85)"
+  },
+  "0001111005009": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Private Selection® Chinese Inspired Riced Cauliflower Stir Fry",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
   "0001111007691": {
     "at": "2026-09-20T00:16:34.743546+00:00",
     "name": "Kroger® Original Flavor French Toast Stick BIG DEAL!",
@@ -8,6 +18,21 @@
     "at": "2026-09-20T10:31:42.463810+00:00",
     "name": "Kroger® Blueberry Waffles",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kroger Complete Original Pancake Waffle Mix 32 oz 3 Pack' (name match 51, needs 85)"
+  },
+  "0001111008804": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Private Selection® Indian Inspired Butter Chicken Pot Pie",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0001111008819": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Private Selection® Caramelized Onion and Chicken Pot Pie",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0001111008853": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Private Selection® Mediterranean Inspired Vegetable Pot Pie",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
   "0001111009680": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -164,6 +189,11 @@
     "name": "Kroger® Frozen Fully Cooked Crispy Chicken Nuggets BIG DEAL!",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Frozen Crispy Chicken Breast Strips Family Pack 2 5 lb Bag Frozen' (name match 0, needs 85)"
   },
+  "0001111015935": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Kroger® Frozen Fully Cooked Crispy Chicken Tenders",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Frozen Crispy Chicken Breast Strips Family Pack 2 5 lb Bag Frozen' (name match 0, needs 85)"
+  },
   "0001111016165": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Simple Truth® Fully Cooked Chicken and Maple Breakfast Sausage Links",
@@ -219,10 +249,20 @@
     "name": "Simple Truth® Sweet Sriracha Style Chicken and Brown Rice Bowl",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
+  "0001111016503": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Kroger® Frozen Fully Cooked Buffalo Style Boneless Chicken Bites",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kinder s Buttery Buffalo Frozen Chicken Wings 19 oz' (name match 0, needs 85)"
+  },
   "0001111016504": {
     "at": "2026-09-20T10:35:12.402614+00:00",
     "name": "Kroger® Frozen Fully Cooked Garlic Parmesan Boneless Chicken Bites",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'bettergoods Chicken Wings with Garlic Butter Dry Rub 22 oz Frozen' (name match 0, needs 85)"
+  },
+  "0001111068793": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Kroger® Breaded Chicken Tenders",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Great Value Famous Fingers 3 lbs Frozen' (name match 0, needs 85)"
   },
   "0001111078635": {
     "at": "2026-09-20T10:31:42.463810+00:00",
@@ -309,6 +349,11 @@
     "name": "Lean Cuisine Maple Bourbon Chicken Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Square Table Gourmet Maple Bourban Bacon Chicken 15oz' (name match 0, needs 85)"
   },
+  "0001380027353": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Stouffer's Hawaiian Chicken and Fried Rice Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Stouffer s Air Fryer Buffalo Style Chicken Frozen Meal Kit 22 oz Frozen' (name match 61, needs 85)"
+  },
   "0001380049955": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Stouffer's Chicken Bacon Ranch Frozen Meal",
@@ -318,6 +363,11 @@
     "at": "2026-09-20T10:35:12.402614+00:00",
     "name": "Stouffer's Classic Lasagna with Meat & Sauce Family Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Stouffer s Lasagna with Meat and Sauce Frozen Meal 19 oz Frozen' (name match 84, needs 85)"
+  },
+  "0001380055239": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Lean Cuisine Classic Chicken Fried Rice Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Stouffers Lean Cuisine Chicken Fried Rice 9 Ounce 12 per Case' (name match 70, needs 85)"
   },
   "0001380055478": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -329,10 +379,35 @@
     "name": "Stouffer's Five Cheese Lasagna Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Stouffers Beef Lasagna Caesar Salad French Bread Meal Bundle' (name match 62, needs 85)"
   },
+  "0002113100010": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Marie Callender's Broccoli Cheddar And Potato Pot Pie Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Marie Callender s Cheesy Chicken Bacon Pot Pie Frozen Meal 15 oz Frozen' (name match 72, needs 85)"
+  },
+  "0002113100093": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Marie Callender's® Savory Chicken Fried Rice Bowl Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Marie Callender s Fried Chicken and Mashed Potato Bowl Frozen Meal 11 5 oz frozen' (name match 81, needs 85)"
+  },
   "0002113100114": {
     "at": "2026-09-20T10:35:12.402614+00:00",
     "name": "Marie Callender's Lasagna With Meat & Sauce Bowl",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Marie Callender s Lasagna With Meat Sauce Bowl With Mozzarella Cheese Frozen Meal 11 75 oz' (name match 76, needs 85)"
+  },
+  "0002113150697": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Marie Callender's Chicken Corn Chowder Pot Pie Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Marie Callender s Chicken Pot Pie Soup 14 75 Oz Can' (name match 70, needs 85)"
+  },
+  "0002113150701": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Marie Callender's Plant-Based Gardein Be'F Pot Pie Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Gardein Plant Based Ground Be f Vegan 13 7 oz Frozen' (name match 0, needs 85)"
+  },
+  "0002370001409": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Tyson Frozen Buffalo Style Chicken Strips",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Fully Cooked Buffalo Style Chicken Strips 1 56 lb Bag Frozen' (name match 80, needs 85)"
   },
   "0002370001415": {
     "at": "2026-09-20T10:35:12.402614+00:00",
@@ -344,6 +419,26 @@
     "name": "Tyson Frozen Dino Nuggets",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Chicken Dino Nuggets 29 oz Frozen' (name match 82, needs 85)"
   },
+  "0002370001493": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Tyson Any'tizers Frozen Sweet BBQ Flavored Boneless Chicken Bites",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Any tizers Sweet BBQ Boneless Chicken Bites 24 oz Bag Frozen' (name match 76, needs 85)"
+  },
+  "0002370004866": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Tyson Any'tizers Frozen Crispy Boneless Chicken Bites Family Pack",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Any tizers Fully Cooked Crispy Boneless Chicken Bites 1 5 lb Bag Frozen' (name match 73, needs 85)"
+  },
+  "0002370005829": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Tyson Frozen Dino Nuggets",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Chicken Dino Nuggets 29 oz Frozen' (name match 82, needs 85)"
+  },
+  "0002370006045": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Tyson Frozen Grilled Boneless Chicken Bites",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Grilled Chicken Breast Strips 22 oz Frozen' (name match 70, needs 85)"
+  },
   "0002370006172": {
     "at": "2026-09-20T10:35:12.402614+00:00",
     "name": "Tyson High Protein Unbreaded Simple Ingredients Chicken Nuggets",
@@ -353,6 +448,16 @@
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Tyson® Pepperoni Pizza Seasoned and Stuffed Raw Chicken Breast, Frozen Entree",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'John Soules Foods Fresh Spicy Style Chicken Breast Sandwich 2 Pack 11oz Serving Size 1 Sandwich' (name match 0, needs 85)"
+  },
+  "0002370006228": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Tyson® Restaurant-Style Crispy Nuggets Uncooked Frozen Chicken Appetizers",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Frozen Tyson Tempura Chicken Breast Nugget 10 Pound' (name match 56, needs 85)"
+  },
+  "0002370006271": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Tyson® Fully Cooked, Grilled, Boneless Mediterranean Chicken Bites",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Mediterranean Grilled Boneless Chicken Bites Cup 5 2 oz Frozen Fully Cooked' (name match 42, needs 85)"
   },
   "0002370006306": {
     "at": "2026-09-20T10:35:12.402614+00:00",
@@ -373,6 +478,46 @@
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Smart Ones Fettuccine Alfredo Frozen Dinner",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Smart Ones Savory Italian Recipes Fettuccine Alfredo 9 25oz PACK OF 12' (name match 60, needs 85)"
+  },
+  "0003100000735": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Banquet Chicken Strips with Mac and Cheese, Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: '12 Pack Banquet Fingers With Mac And Cheese Chicken 6 5 oz' (name match 81, needs 85)"
+  },
+  "0003100010100": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Banquet Chicken and Broccoli Pot Pie, Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Banquet Chicken Pot Pie 7 Oz' (name match 84, needs 85)"
+  },
+  "0003100010103": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Banquet Turkey Pot Pie, Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Banquet Turkey Deep Dish Pot Pie Frozen Meal 7 oz Frozen' (name match 75, needs 85)"
+  },
+  "0003100010131": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Banquet Cheesy Ham and Potato Deep Dish Pot Pie, Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: '4 pack Banquet Sausage and Gravy Deep Dish Pot Pie Frozen Meal 7 oz Frozen' (name match 69, needs 85)"
+  },
+  "0003100044995": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Banquet Salisbury Steak Deep Dish Pot Pie, Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Banquet Turkey Deep Dish Pot Pie Frozen Meal 7 oz Frozen' (name match 74, needs 85)"
+  },
+  "0003100090932": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "P.F. Chang's® Home Menu Shrimp Fried Rice Skillet Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'P F Chang s Home Menu Shrimp Lo Mein Skillet Meal Frozen Meal 22 oz Frozen' (name match 79, needs 85)"
+  },
+  "0003469590153": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Soules Kitchen Crispy Chicken Strips",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'John Soules Foods Fresh Flame Grilled Chicken Breast Strips Family Size 16oz' (name match 62, needs 85)"
+  },
+  "0003469590327": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Soules Kitchen™ Southern Style Chicken Breast Bites",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
   "0003800005199": {
     "at": "2026-09-20T10:31:42.463810+00:00",
@@ -489,6 +634,11 @@
     "name": "Eggo® Chocolatey Chip Waffles",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Chocolatey Chip Waffles Frozen Breakfast 29 6 oz 24 Count' (name match 85, needs 85)"
   },
+  "0004116400048": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Mrs. T's® Loaded Baked Potato Pierogies",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Mrs Ts Pierogies Loaded Baked Potato 12 count per pack 12 per case' (name match 80, needs 85)"
+  },
   "0004132224589": {
     "at": "2026-09-20T10:31:42.463810+00:00",
     "name": "Farm Rich High Protein Cinnamon French Toast Sticks",
@@ -573,6 +723,11 @@
     "at": "2026-09-20T10:35:12.402614+00:00",
     "name": "Campbell's Chunky Meat Lovers' Lasagna Bowl Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Chunky Frozen Meat Lovers Lasagna Bowl' (name match 0, needs 85)"
+  },
+  "0006456322681": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Yummy Dino Buddies Frozen Fully Cooked Dinosaur Shaped Chicken Breast Nuggets",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Yummy Dino Buddies Gluten Free Chicken Breast Nuggets Meal 18 oz Size Frozen' (name match 74, needs 85)"
   },
   "0007057504009": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -664,6 +819,11 @@
     "name": "Healthy Choice Cafe Steamers Mexican-Style Street Corn, Frozen Meal",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
+  "0007274580423": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Perdue® Frozen Fully Cooked Breaded Chicken Breast Nuggets",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Perdue No Antibiotics Ever Frozen Chicken Breast Nuggets 29 oz' (name match 69, needs 85)"
+  },
   "0007320289201": {
     "at": "2026-09-20T10:27:32.991017+00:00",
     "name": "Jose Ole Beef & Cheese Burrito 5 oz",
@@ -704,6 +864,11 @@
     "name": "Just Bare Just Bare Fully Cooked Lightly Breaded Chicken Breast Bites Family Pack",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Just Bare Fully Cooked Bnls Sknl Lightly Breaded Chicken Breast Bites' (name match 81, needs 85)"
   },
+  "0007701361611": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Just Bare Fully Cooked Roasted Chicken Breast Bites",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Just Bare Fully Cooked Bnls Sknl Lightly Breaded Chicken Breast Bites' (name match 75, needs 85)"
+  },
   "0007790000168": {
     "at": "2026-09-20T10:35:12.402614+00:00",
     "name": "Jimmy Dean® Blueberry Griddle Cake Sausage, Egg and Cheese Sandwiches",
@@ -739,10 +904,20 @@
     "name": "Jimmy Dean® Buttermilk Chicken Biscuit Sandwiches",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Sausage Egg Cheese Biscuit Sandwich 36 oz 8 Count Frozen' (name match 68, needs 85)"
   },
+  "0019269900122": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Buldak® Carbonara Spicy Fried Rice",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Asian Mart Samyang Buldak Carbonara Fried Rice' (name match 76, needs 85)"
+  },
   "0067984410346": {
     "at": "2026-09-20T10:31:42.463810+00:00",
     "name": "Premier Protein® Microwavable Pancakes",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Premier Protein Mini Pancakes 14 1 oz 40 Count Frozen' (name match 82, needs 85)"
+  },
+  "0069511912028": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "InnovAsian Grilled Steak Fried Rice Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'InnovAsian Cuisine Vegetable Fried Rice 18 oz' (name match 65, needs 85)"
   },
   "0069781201268": {
     "at": "2026-09-20T09:35:33.691622+00:00",
@@ -809,6 +984,11 @@
     "name": "Kodiak® Homestyle Frozen Power Waffles®",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kodiak Protein Packed Chocolate Chip Power Waffles 10 72 oz 8 Count Frozen' (name match 62, needs 85)"
   },
+  "0071785415100": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Michelina's® Stir Fry Rice & Vegetables",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tai Pei Sweet Sour Chicken with Vegetable Rice Frozen Meal 11 oz' (name match 0, needs 85)"
+  },
   "0071785415209": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Michelina's® Pop'n™ Chicken and Potato Nuggets Frozen Meal",
@@ -823,6 +1003,36 @@
     "at": "2026-09-20T10:35:12.402614+00:00",
     "name": "Rao'S® Made For Home® Meat Lasagna Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: '3 pack Rao s Made for Home Four Cheese Pasta Bake Family Size Frozen Dinner 25 oz' (name match 44, needs 85)"
+  },
+  "0080717654067": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Bibigo Frozen Kimchi Cheese Fried Rice",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Bibigo Stir Fried Kimchi Rice 6 8 65 oz Each' (name match 83, needs 85)"
+  },
+  "0080717671413": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Bibigo Frozen Korean BBQ Style Chicken Fried Rice",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'bibigo Fried Rice Korean BBQ Flavor 7 05oz 6ct' (name match 75, needs 85)"
+  },
+  "0081088201154": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Kidfresh White Meat Chicken Nuggets & Buttered Pasta",
+    "reason": "no Walmart link (no_search_results)"
+  },
+  "0081167003295": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Ocean's Halo® Original Fried Rice Kimbap Roll",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Taokaenoi USA Seaweed Grilled Original 6 Pack 0 63 oz Pack Of 12' (name match 0, needs 85)"
+  },
+  "0081669702039": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Impossible® Wild Nuggies™ Plant-Based Chicken Nuggets",
+    "reason": "no Walmart link (no_search_results)"
+  },
+  "0081669702061": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Impossible® Plant-Based Frozen Spicy Chicken Nuggets",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Impossible Foods Chicken Nuggets Meat from Plants Frozen Fully Cooked 13 5 oz' (name match 62, needs 85)"
   },
   "0081669702070": {
     "at": "2026-09-20T10:35:12.402614+00:00",
@@ -859,6 +1069,16 @@
     "name": "Real Good Foods Lightly Breaded Chicken Nuggets",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Realgood Foods Co Lightly Breaded Chicken Breast Nuggets 20 oz Bag Frozen' (name match 0, needs 85)"
   },
+  "0085003616805": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Real Good Foods Lightly Breaded Chicken Strips",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Realgood Foods Co Lightly Breaded Chicken Breast Strips Gluten Free 20 oz Regular Bag Frozen' (name match 0, needs 85)"
+  },
+  "0085004459933": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Tattooed Chef™ Organic Riced Cauliflower Stir Fry",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
   "0085004819923": {
     "at": "2026-09-20T10:35:12.402614+00:00",
     "name": "Counter High Protein Lazy Lasagna Multiserve Frozen Meal",
@@ -868,6 +1088,11 @@
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Counter High Protein 3 Cheese Chicken Alfredo Multiserve Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Birds Eye Voila Value Size Cheesy Chicken Frozen Meal 60 oz Bag Frozen' (name match 0, needs 85)"
+  },
+  "0085004938479": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Realgood Foods Co.® Lightly Breaded Chicken Nuggets",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Realgood Foods Co Lightly Breaded Chicken Breast Nuggets 20 oz Bag Frozen' (name match 0, needs 85)"
   },
   "0085005839509": {
     "at": "2026-09-20T10:31:42.463810+00:00",
@@ -897,6 +1122,11 @@
   "0085006633904": {
     "at": "2026-09-20T00:16:34.743546+00:00",
     "name": "Kanzen Meal, Spicy Dan Dan Noodles 11.3 oz",
+    "reason": "no Walmart link (no_search_results)"
+  },
+  "0085006772929": {
+    "at": "2026-09-20T10:38:29.507363+00:00",
+    "name": "Skinny Butcher Crazy Grilled 21oz Chicken Tenders",
     "reason": "no Walmart link (no_search_results)"
   },
   "0085041600222": {
