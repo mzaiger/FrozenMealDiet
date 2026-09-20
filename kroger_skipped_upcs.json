@@ -44,6 +44,11 @@
     "name": "Kroger® Lite Turkey Sausage Egg White and Cheese English Muffin Breakfast Sandwich",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Delights Turkey Sausage Egg White Cheese English Muffin Sandwich 20 oz 4 Ct Frozen' (name match 0, needs 85)"
   },
+  "0001111010218": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Simple Truth® Protein Cheese and Uncured Bacon Egg Bites",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Freshness Guaranteed Original Macaroni Salad Ready to Serve 32 oz Tub Refrigerated' (name match 0, needs 85)"
+  },
   "0001111010549": {
     "at": "2026-09-20T10:31:42.463810+00:00",
     "name": "Simple Truth® Gluten Free Homestyle Waffles",
@@ -94,15 +99,30 @@
     "name": "Kroger® Vegetable Lasagna Family Size",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kroger Salad Rainbow Twirls Pasta 12 oz 5 Pack' (name match 46, needs 85)"
   },
+  "0001111013660": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Simple Truth® Protein Cheddar and Mozzarella Egg Bites",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
   "0001111013661": {
     "at": "2026-09-20T00:16:34.743546+00:00",
     "name": "Simple Truth® Cheese and Uncured Bacon Egg Bites",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
+  "0001111013662": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Simple Truth® Protein Cheddar Cheese and Spinach Egg Bites",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Three Dog Bakery 2 Pack Lick n Crunch Carob Peanut Butter Golden Vanilla' (name match 0, needs 85)"
+  },
   "0001111013834": {
     "at": "2026-09-20T10:35:12.402614+00:00",
     "name": "Kroger® Frozen Fully Cooked Crispy Chicken Bites",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Frozen Crispy Chicken Breast Strips Family Pack 2 5 lb Bag Frozen' (name match 0, needs 85)"
+  },
+  "0001111014109": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Private Selection® Tomato Feta and Kale Egg White Frittatas",
+    "reason": "no Walmart link (no_search_results)"
   },
   "0001111014805": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -193,6 +213,11 @@
     "at": "2026-09-20T10:38:29.507363+00:00",
     "name": "Kroger® Frozen Fully Cooked Crispy Chicken Tenders",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Frozen Crispy Chicken Breast Strips Family Pack 2 5 lb Bag Frozen' (name match 0, needs 85)"
+  },
+  "0001111016109": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Simple Truth® Gluten Free Cauliflower Frozen Pizza Crust",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Pizza Dough Baking Mix' (name match 0, needs 85)"
   },
   "0001111016165": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -309,6 +334,16 @@
     "name": "Private Selection® Belgian Waffles",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Private Selection Sweet Buttery Belgian Waffle Butter Crisps Biscuits 3 52 oz Pack of 3' (name match 58, needs 85)"
   },
+  "0001380010066": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Stouffer's Stuffed Bell Peppers Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Stouffer s Stuffed Peppers Large Size Meal 15 5 oz Frozen' (name match 84, needs 85)"
+  },
+  "0001380010070": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Stouffer's Salisbury Steak Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Stouffer s Salisbury Steak Individual Frozen Meal 9 6 oz Frozen' (name match 85, needs 85)"
+  },
   "0001380010171": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Stouffer's Chicken Parmesan Frozen Meal",
@@ -323,6 +358,11 @@
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Lean Cuisine Classic Fettuccine Alfredo Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Lean Cuisine Alfredo Pasta Microwavable Meals for Lunch or Dinner 10 oz Frozen' (name match 53, needs 85)"
+  },
+  "0001380016695": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Lean Cuisine Signature Meatloaf with Mashed Potatoes Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Lean Cuisine Meatloaf And Mashed Potatoes Meal 9 375 oz 12 Count' (name match 85, needs 85)"
   },
   "0001380017115": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -354,6 +394,16 @@
     "name": "Stouffer's Hawaiian Chicken and Fried Rice Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Stouffer s Air Fryer Buffalo Style Chicken Frozen Meal Kit 22 oz Frozen' (name match 61, needs 85)"
   },
+  "0001380044786": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Stouffer's Escalloped Chicken & Noodles Casserole Frozen Meal",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0001380044790": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Stouffer's Turkey Tetrazzini Casserole Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Stouffer s Tuna Noodle Casserole Frozen Frozen Meal 12 oz Frozen' (name match 69, needs 85)"
+  },
   "0001380049955": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Stouffer's Chicken Bacon Ranch Frozen Meal",
@@ -383,6 +433,11 @@
     "at": "2026-09-20T10:38:29.507363+00:00",
     "name": "Marie Callender's Broccoli Cheddar And Potato Pot Pie Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Marie Callender s Cheesy Chicken Bacon Pot Pie Frozen Meal 15 oz Frozen' (name match 72, needs 85)"
+  },
+  "0002113100026": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Marie Callender's Four Cheese Fettuccini Alfredo Bowl Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Marie Callender s Fettuccini With Chicken Broccoli Frozen Meal 13 oz frozen' (name match 74, needs 85)"
   },
   "0002113100093": {
     "at": "2026-09-20T10:38:29.507363+00:00",
@@ -434,6 +489,11 @@
     "name": "Tyson Frozen Dino Nuggets",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Chicken Dino Nuggets 29 oz Frozen' (name match 82, needs 85)"
   },
+  "0002370006030": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Tyson Frozen Country Fried Steaks with Gravy Mix",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tyson Steak Fingers with Gravy Mix 22 75 oz Frozen' (name match 80, needs 85)"
+  },
   "0002370006045": {
     "at": "2026-09-20T10:38:29.507363+00:00",
     "name": "Tyson Frozen Grilled Boneless Chicken Bites",
@@ -469,10 +529,25 @@
     "name": "Applegate All Natural Frozen Chicken Nuggets",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Applegate Natural Gluten Free Chicken Nuggets 16oz Resealable Bag Frozen' (name match 68, needs 85)"
   },
+  "0002531731407": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Applegate Naturals Egg, Uncured Bacon and Cheese Frittata Bites, 19g of Protein, 8.4oz (Frozen)",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0002531731411": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Applegate Naturals® Chicken Sausage, Red Pepper, Onions and Spinach Frittata Bites, 19g of Protein",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Applegate Naturals Chicken Maple Breakfast Sausage Links 20oz Frozen' (name match 76, needs 85)"
+  },
   "0002531737428": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Applegate Naturals Turkey Breakfast Sausage Sandwich (Frozen)",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Applegate Naturals Chicken Maple Breakfast Sausage Links 20oz Frozen' (name match 67, needs 85)"
+  },
+  "0002580002013": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Smart Ones Chicken Fettuccine Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Smart Ones Savory Italian Recipes Fettuccine Alfredo 9 25oz PACK OF 12' (name match 55, needs 85)"
   },
   "0002580002020": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -499,10 +574,30 @@
     "name": "Banquet Cheesy Ham and Potato Deep Dish Pot Pie, Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: '4 pack Banquet Sausage and Gravy Deep Dish Pot Pie Frozen Meal 7 oz Frozen' (name match 69, needs 85)"
   },
+  "0003100012611": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Banquet MEGA Bowls Chicken Fried Beef Steak Bowl Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Banquet MEGA Bowls Spicy Chicken Queso Burrito Bowl Frozen Meal 13 oz frozen' (name match 70, needs 85)"
+  },
+  "0003100012614": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Banquet Mega Meals Salisbury Steak with Mashed Potatoes Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Banquet Mega Meals Salisbury Steak Frozen Meal 16 95 oz Frozen' (name match 79, needs 85)"
+  },
   "0003100044995": {
     "at": "2026-09-20T10:38:29.507363+00:00",
     "name": "Banquet Salisbury Steak Deep Dish Pot Pie, Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Banquet Turkey Deep Dish Pot Pie Frozen Meal 7 oz Frozen' (name match 74, needs 85)"
+  },
+  "0003100067104": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Bertolli Chicken Florentine & Farfalle, Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Bertolli Frozen Skillet Meals Family Size Chicken Florentine Farfalle 36 oz' (name match 73, needs 85)"
+  },
+  "0003100080943": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Banquet MEGA Bowls Dynamite Penne with Meatballs High Protein Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Banquet Mega Bowls Dynamite Penne and Meatballs Frozen Meal 14 oz Frozen' (name match 84, needs 85)"
   },
   "0003100090932": {
     "at": "2026-09-20T10:38:29.507363+00:00",
@@ -634,6 +729,11 @@
     "name": "Eggo® Chocolatey Chip Waffles",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Chocolatey Chip Waffles Frozen Breakfast 29 6 oz 24 Count' (name match 85, needs 85)"
   },
+  "0003952890148": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Uno® 6in Chicago Style Deep Dish Cheese and Pepperoni Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Uno 6in Chicago Style Deep Dish Cheese and Pepperoni Pizza 2 Pack 23 oz Marinara Sauce Fresh' (name match 84, needs 85)"
+  },
   "0004116400048": {
     "at": "2026-09-20T10:38:29.507363+00:00",
     "name": "Mrs. T's® Loaded Baked Potato Pierogies",
@@ -694,6 +794,11 @@
     "name": "Amy's Bean, Rice & Cheese Burrito 4 Pack",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Amys Bean and Rice Burrito 5 5 Ounce 12 per case' (name match 45, needs 85)"
   },
+  "0004227201449": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Amy's Veggie Combo Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Amy s Roasted Vegetable Pizza Frozen Pizza 12 Oz' (name match 56, needs 85)"
+  },
   "0004280011400": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Totino's™ Party Pizza Pepperoni 17g Protein Thin Crust Frozen Pizza",
@@ -738,6 +843,11 @@
     "at": "2026-09-20T10:35:12.402614+00:00",
     "name": "On-Cor® Lasagna with Meat Sauce",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'On Cor Homestyle Gravy Meatloaf Entree Regular 24 Ounce Packaged Meal Frozen' (name match 44, needs 85)"
+  },
+  "0007080023437": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Smithfield® Apple Cinnamon Breakfast in a Blanket",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
   "0007100701467": {
     "at": "2026-09-20T10:27:32.991017+00:00",
@@ -874,6 +984,11 @@
     "name": "Jimmy Dean® Blueberry Griddle Cake Sausage, Egg and Cheese Sandwiches",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Blueberry Griddle Cake Sausage Egg and Cheese Sandwiches 18 8 oz 4 Count Frozen' (name match 79, needs 85)"
   },
+  "0007790000346": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Jimmy Dean® Protein Breakfast Bowl Classic Sausage Bacon Cheese & Scrambled Egg Frozen",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Eggs Potatoes Bacon Cheddar Cheese Breakfast Bowl 7 oz Frozen' (name match 72, needs 85)"
+  },
   "0007790000348": {
     "at": "2026-09-20T10:35:12.402614+00:00",
     "name": "Jimmy Dean® Protein Breakfast Sausage Egg Cheese Croissant Fully Cooked Frozen Sandwiches",
@@ -883,6 +998,11 @@
     "at": "2026-09-20T10:35:12.402614+00:00",
     "name": "Jimmy Dean® Protein Breakfast Grilled Chicken Egg Cheese Ciabatta Frozen Sandwiches Fully Cooked",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Grilled Chicken Peppered Egg and Sharp Cheddar Cheese Breakfast Sandwich on ciabatta' (name match 0, needs 85)"
+  },
+  "0007790000350": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Jimmy Dean® Protein Breakfast Bowl Chipotle Chicken Scrambled Egg & Monterey Jack Cheese Frozen",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Egg Blend Chipotle Chicken Cheddar Cheese' (name match 0, needs 85)"
   },
   "0007790019487": {
     "at": "2026-09-20T10:27:32.991017+00:00",
@@ -994,6 +1114,11 @@
     "name": "Michelina's® Pop'n™ Chicken and Potato Nuggets Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Michelina s Pop n Chicken Meal 4 5oz Frozen Dinner' (name match 73, needs 85)"
   },
+  "0073891202233": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Boston Market® Home Style Meals Beef Steak & Pasta Frozen Meal",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Boston Market Country Fried Beef Steak Meal 13 2oz Frozen Dinner' (name match 63, needs 85)"
+  },
   "0074747930001": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Rao'S® Made For Home® Chicken Parmesan With Spaghetti Frozen Meal",
@@ -1013,6 +1138,11 @@
     "at": "2026-09-20T10:38:29.507363+00:00",
     "name": "Bibigo Frozen Korean BBQ Style Chicken Fried Rice",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'bibigo Fried Rice Korean BBQ Flavor 7 05oz 6ct' (name match 75, needs 85)"
+  },
+  "0081026402742": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Kevin's Natural Foods™ Orange Chicken 16 oz",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
   "0081088201154": {
     "at": "2026-09-20T10:38:29.507363+00:00",
@@ -1079,6 +1209,26 @@
     "name": "Tattooed Chef™ Organic Riced Cauliflower Stir Fry",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
   },
+  "0085004459946": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Tattooed Chef™ Organic Acai Bowl",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: '2 pack RollinGreens Plant Based Chic ken Teriyaki Rice Bowl 2 5oz 1 Count' (name match 0, needs 85)"
+  },
+  "0085004459947": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Tattooed Chef™ Peanut Butter Acai Bowl",
+    "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0085004459998": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Tattooed Chef™  Spicy Vodka Cottage Cheese Crust Pizza",
+    "reason": "no Walmart link (no_search_results)"
+  },
+  "0085004459999": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Tattooed Chef™ Killer Bee Cottage Cheese Crust Pizza",
+    "reason": "no Walmart link (no_search_results)"
+  },
   "0085004819923": {
     "at": "2026-09-20T10:35:12.402614+00:00",
     "name": "Counter High Protein Lazy Lasagna Multiserve Frozen Meal",
@@ -1098,6 +1248,26 @@
     "at": "2026-09-20T10:31:42.463810+00:00",
     "name": "Feel Good Foods® GF Chocolate Chip French Toast Sticks 12oz",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0085006423419": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Red's® Sausage Egge & Cheese Breakfast Burritos",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Red s Turkey Sausage Breakfast Burrito 16 oz 4 Count Frozen' (name match 75, needs 85)"
+  },
+  "0085006423451": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Red’s Snackers Chicken Maple Breakfast Burritos",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Red s Turkey Sausage Breakfast Burrito 16 oz 4 Count Frozen' (name match 64, needs 85)"
+  },
+  "0085006423452": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Red’s Snackers Egg & Cheese Breakfast Burritos",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Red s Turkey Sausage Breakfast Burrito 16 oz 4 Count Frozen' (name match 66, needs 85)"
+  },
+  "0085006501617": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Pitaya Foods® Organic Protein Smoothie Bowl - Acai Strawberry Banana",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Pitaya Foods Organic Acai Blueberry Frozen Smoothie Pop 3 oz 4 Count' (name match 71, needs 85)"
   },
   "0085006515807": {
     "at": "2026-09-20T00:16:34.743546+00:00",
@@ -1129,6 +1299,16 @@
     "name": "Skinny Butcher Crazy Grilled 21oz Chicken Tenders",
     "reason": "no Walmart link (no_search_results)"
   },
+  "0085007788400": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Tattooed Chef™ Bianca Cottage Cheese Crust Pizza",
+    "reason": "no Walmart link (no_search_results)"
+  },
+  "0085007788401": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Tattooed Chef™ 4-Cheese Cottage Cheese Crust Pizza",
+    "reason": "no Walmart link (no_search_results)"
+  },
   "0085041600222": {
     "at": "2026-09-20T10:27:32.991017+00:00",
     "name": "Red’s Grilled Chicken & Cheddar Frozen Burrito",
@@ -1138,6 +1318,11 @@
     "at": "2026-09-20T10:27:32.991017+00:00",
     "name": "Red’s Organic Bean & Cheese Frozen Burrito",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Red s Cheesy Beef and Bean Burrito 16 oz 4 Count Frozen' (name match 70, needs 85)"
+  },
+  "0085041600247": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Red’s Chicken Chorizo Frozen Breakfast Burrito",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Green Chile Food Egg and Chorizo Breakfast Burrito with Hashbrowns Green Chile Cheddar and Salsa 7 Ounce 12 per case' (name match 0, needs 85)"
   },
   "0085041600288": {
     "at": "2026-09-20T10:27:32.991017+00:00",
@@ -1158,6 +1343,16 @@
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Saffron Road® Coconut Curry Chicken Gluten-Free Indian Frozen Dinner",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Saffron Road Coconut Curry Chicken with Basmati Rice 10 Ounce 8 per case' (name match 66, needs 85)"
+  },
+  "0085493400735": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Caulipower® Gluten Free Dill Pickle Cauliflower Crust Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Harvest Creations Dipt N Dusted Crispy Cauliflower 3 Pound 4 per case' (name match 0, needs 85)"
+  },
+  "0085510900681": {
+    "at": "2026-09-20T10:41:52.439864+00:00",
+    "name": "Manini's™ Frozen Gluten Free Mini Pizza Crusts",
+    "reason": "no Walmart link (no_search_results)"
   },
   "0085706300202": {
     "at": "2026-09-20T10:22:37.403248+00:00",
