@@ -36,6 +36,7 @@ pool from scratch and then maintain it.
 | `build_meal_pool.py` | Reads `frozen_food_deduped.csv`, cleans each product name, looks up calories and the serving size from the USDA FoodData Central API (serving = `householdServingFullText`, else `packageWeight`, cleaned), and writes `candidate_pool.json`. Resumable (skips SKUs already in the pool), rate-limited to 15 items/minute, `--debug` for a 3-minute trial run. Needs `USDA_API_KEY`. | No — run manually to (re)build the pool from scratch. |
 | `rename_and_clean_serving.py` | One-time migration: renames the `servings_per_container` key to `serving` on every row and cleans messy values (e.g. `"2.71 OZ SERVING, 36 Servings Per Container"` → `"2.71 OZ SERVING"`). Idempotent; `--dry-run` to preview. **Note:** `index.html` and `kroger_new_items.py` use the `servings_per_container` key, so don't run this on the live pool unless they're changed to match. | No — one-time. |
 | `AddImageUrl.py` | For every `active` item in `candidate_pool.json`, searches DuckDuckGo Images and writes the result to `image_url`. Rate-limit-conscious: one reused session, jittered delays, exponential backoff, a cooldown after repeated failures, per-query caching, and checkpointing so it's safe to Ctrl-C and re-run. `--limit`, `--force`, `--dry-run`, `--proxy`. No API key. | No — run manually. |
+| `UpdateImageUrlsFromWalmartUrl.py` | Re-does `image_url` for **every** product that has a `PRODUCT_URL` (active or not; `--only-active` to limit): searches DuckDuckGo Images with the product's Walmart URL (query string removed) as the query and takes the **top result, whoever hosts it**. A product whose search finds nothing (or errors) keeps its existing `image_url` — it never blanks one. Same rate-limit hygiene as `AddImageUrl.py` (one session, jittered delays, backoff, cooldowns, checkpointing, `--proxy`); resumable via `_image_walmart_url_checked_at` (`--force` redoes all). `--limit`, `--dry-run`. About 3 hours for the full pool at default delays. No API key. | No — run manually. |
 | `check_active_urls.py` | Uses Playwright (with stealth) to visit each item's `PRODUCT_URL` on walmart.com and tag it `active: true/false/null` (null = couldn't tell, e.g. bot-blocked), with reason/query/checked-URL metadata in `_active_check_*` fields. `--only-unknown`, `--limit`. | **Yes** — `check-active-urls.yml`, hourly. |
 | `check_walmart_links.py` | Alternate liveness check: searches Google via Serper.dev for `site:walmart.com <product_id>` and checks whether walmart.com is the top result. Takes a URL list or a pool JSON (`--json`), resumable, `--debug` checks the first 10. Needs `SERPER_API_KEY`. | No — not wired into any workflow; `check_active_urls.py` is the one that runs. |
 | `check_instacart_urls.py` | Searches `instacart <brand> <product name>` via Serper.dev and scans every result for one on instacart.com. Sets `INSTACART_URL` (only overwritten when a real match is found) and `instacart_active`. Resumable, `--limit`, `--debug`, `--out`. Needs `SERPER_API_KEY`. | No — run manually. |
@@ -58,16 +59,22 @@ to find 20. For each Kroger product:
 1. **Skipped for free** if it isn't in a frozen category, has no price at
    the configured store, or its Kroger UPC is already known (recorded on a
    pool item, or in `kroger_skipped_upcs.json`).
-2. **Fuzzy name match.** The Kroger name and every pool `PRODUCT_NAME` are
-   cleaned the same way an Instacart search is built — cut at the first
-   comma, sizes (`27 oz`, `6 ct`), other numbers, punctuation and the word
-   "frozen" removed, lowercased — and compared with rapidfuzz
-   `token_sort_ratio` (0–100).
-3. **Score above 75 → already exists.** The Kroger UPC is written to the
-   pool item with the highest score (`_kroger_upc`, or
+2. **Fuzzy name match, same brand only.** The Kroger name and the pool
+   `PRODUCT_NAME`s are cleaned the same way an Instacart search is built —
+   cut at the first comma, sizes (`27 oz`, `6 ct`), other numbers,
+   punctuation and the word "frozen" removed, lowercased — and compared
+   with rapidfuzz `token_sort_ratio` (0–100). Only pool items with a
+   **matching brand** are compared: a different brand is never a match,
+   however alike the names look. (The pool's `BRAND` column is unreliable —
+   e.g. `Homestyle Bakes` on Banquet products — so a brand also counts as
+   matching when it appears in the other product's name; near-identical
+   spellings like `Birds Eye` / `Birdseye` match too, see
+   `dedup.brand_min_similarity`.)
+3. **Score above 90 → already exists.** The Kroger UPC is written to the
+   same-brand pool item with the highest score (`_kroger_upc`, or
    `_kroger_upc_aliases` if it already has one), so later pulls skip it,
    and the run moves on to the next Kroger product.
-4. **Score 75 or below → new.** A new pool object is built:
+4. **Score 90 or below → new.** A new pool object is built:
 
    | Field | Source |
    |---|---|
@@ -76,7 +83,7 @@ to find 20. For each Kroger product:
    | `servings_per_container` | USDA FoodData Central, pulled the way `build_meal_pool.py` does (`householdServingFullText`, else `packageWeight`); `N/A` if USDA has no match |
    | `PRODUCT_URL`, `SKU` | Serper.dev search `site:walmart.com <brand> <name>`; the URL (with `?fulfillmentIntent=Pickup`) and the numeric id from it. If that SKU is already active in the pool, the product *is* that item and its UPC is recorded there instead. |
    | `INSTACART_URL` | **Built** from the cleaned name (`https://www.instacart.com/store/s?k=…`) — never searched for, not verified |
-   | `image_url` | DuckDuckGo Images, same technique as `AddImageUrl.py`, taking a Walmart, Kroger, Instacart, Target, Aldi or Amazon result before any other |
+   | `image_url` | DuckDuckGo Images, searched with the product's Walmart URL as the query; the top result wins, whoever hosts it (retry/backoff as in `AddImageUrl.py`) |
    | `SOURCE`, `active` | `"Kroger"`; `true` (Serper confirmed a live Walmart page) |
 
    A new product is only added if it has a Kroger price, a Walmart URL/SKU,

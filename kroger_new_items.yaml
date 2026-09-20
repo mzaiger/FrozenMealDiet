@@ -17,8 +17,8 @@
 #       id part of that URL, and ?fulfillmentIntent=Pickup is appended to
 #       the URL
 #   INSTACART_URL -- BUILT from the cleaned product name (never searched)
-#   image_url -- DuckDuckGo Images, taking a Walmart/Kroger/Instacart/
-#       Target/Aldi/Amazon-hosted result before any other
+#   image_url -- DuckDuckGo Images, searched with the item's Walmart URL
+#       as the query; the top result wins, whoever hosts it
 #   calories -- the LARGEST of USDA FoodData Central, Open Food Facts and
 #       Gemini (Gemini answers from its own knowledge, no search), rounded
 #       to the nearest 10 -- same "largest wins" rule as
@@ -40,11 +40,25 @@ dedup:
   # existing PRODUCT_NAME, cleaned the same way. "Cleaned" = the same
   # cleanup used to build the Instacart search: everything after the
   # first comma, sizes like "27 oz"/"6 ct", other numbers, punctuation
-  # and the word "frozen" removed. The pool item with the HIGHEST score
-  # gets the Kroger UPC recorded on it. Raise this to be pickier about
-  # what counts as a duplicate (more items get added); lower it to skip
-  # more.
-  fuzzy_threshold: 75
+  # and the word "frozen" removed. Only pool items with a matching brand
+  # are compared, and the one with the HIGHEST score gets the Kroger UPC
+  # recorded on it. Raise this to be pickier about what counts as a
+  # duplicate (more items get added); lower it to skip more.
+  # Why 90 and not lower: this pool is full of same-brand products whose
+  # names differ by one flavor word ("Great Value Blueberry Waffles" vs
+  # "Great Value Buttermilk Waffles" scores 81), and a low threshold
+  # treats those as the same product. At 90, only near-identical names
+  # (the same product in another size, say) count as duplicates. A real
+  # duplicate that slips through anyway is caught later: if its Walmart
+  # SKU is already active in the pool, its UPC is recorded on that item.
+  fuzzy_threshold: 90
+  # Brands must also match for two products to count as the same one -- a
+  # different brand is never a duplicate, however alike the names look.
+  # The pool's BRAND column is unreliable (e.g. "Homestyle Bakes" on
+  # Banquet products), so a brand also matches when it appears in the
+  # other product's name. This is the minimum similarity (0-100) for two
+  # brand spellings to count as the same brand ("Birds Eye" ~ "Birdseye").
+  brand_min_similarity: 88
 
 usda:
   timeout_seconds: 15
@@ -134,12 +148,10 @@ ddg_image:
   max_retries: 5
   region: "us-en"
   safesearch: "moderate"
-  # Pulled higher than AddImageUrl.py's 5, so there's more of a chance a
-  # trusted retailer (Walmart/Kroger/Instacart/Target/Aldi/Amazon -- see
-  # is_trusted_image_host() in kroger_new_items.py) actually shows up
-  # somewhere in the results, since search_image() takes one of those
-  # before any other result whenever one's present.
-  max_results: 8
+  # The Walmart URL is the search query and the TOP result that has an
+  # image URL is used, whoever hosts it -- so this only needs to be big
+  # enough to skip over a result or two that come back without one.
+  max_results: 5
 
 gemini:
   # Same fallback chain as gemini_meal_lookup.py -- gemini-2.5-flash-lite

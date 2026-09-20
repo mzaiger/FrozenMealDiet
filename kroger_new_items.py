@@ -25,16 +25,20 @@ find 20 new ones. For every Kroger product pulled:
   2. Its Kroger UPC is already known -> ignored. A UPC is "known" when it
      is on a pool item ("_kroger_upc" / "_kroger_upc_aliases"), or in
      kroger_skipped_upcs.json (see step 8), or already seen this run.
-  3. Otherwise the product name is cleaned and fuzzy-matched against
-     EVERY product name in the pool, cleaned the same way (see
-     clean_search_words(): cut at the first comma, sizes like "27 oz",
-     other numbers, punctuation and the word "frozen" removed,
-     lowercased). The score is rapidfuzz token_sort_ratio, 0-100.
-  4. Best score ABOVE dedup.fuzzy_threshold (75) -> it already exists. The
-     Kroger UPC is written onto the pool item with the HIGHEST score, so
-     the product is skipped on every later pull, and the run moves on to
-     the next Kroger product.
-  5. Best score 75 or below -> it's new, and gets a new pool object:
+  3. Otherwise the product name is cleaned and fuzzy-matched against the
+     product names of the pool items that have the SAME BRAND, cleaned the
+     same way (see clean_search_words(): cut at the first comma, sizes
+     like "27 oz", other numbers, punctuation and the word "frozen"
+     removed, lowercased). The score is rapidfuzz token_sort_ratio,
+     0-100. A pool item with a different brand is never a match, however
+     similar the names (see brands_match(): the pool's BRAND column is
+     unreliable, so a brand also counts if it appears in the other
+     side's product name).
+  4. Best score ABOVE dedup.fuzzy_threshold (90) -> it already exists. The
+     Kroger UPC is written onto the same-brand pool item with the HIGHEST
+     score, so the product is skipped on every later pull, and the run
+     moves on to the next Kroger product.
+  5. Best score 90 or below -> it's new, and gets a new pool object:
        - Kroger UPC ("_kroger_upc"), PRODUCT_NAME (Kroger's description),
          and price (PRICE_CURRENT = promo price if Kroger lists one else
          regular; PRICE_RETAIL = regular) -- all straight from Kroger, at
@@ -45,10 +49,9 @@ find 20 new ones. For every Kroger product pulled:
          (+ ?fulfillmentIntent=Pickup) goes in PRODUCT_URL and the numeric
          id in SKU. If that SKU is already on an active pool item the
          product IS that item: its UPC is recorded there instead;
-       - image_url: DuckDuckGo Images, same technique as AddImageUrl.py,
-         except a result hosted by Walmart, Kroger, Instacart, Target,
-         Aldi or Amazon is taken before any other, even if it isn't the
-         first result;
+       - image_url: DuckDuckGo Images, searching with the Walmart URL
+         itself as the query and taking the top result, whoever hosts it
+         (retry/backoff as in AddImageUrl.py);
        - calories + servings_per_container from USDA FoodData Central
          (servings_per_container the way build_meal_pool.py pulls it:
          householdServingFullText, else packageWeight, cleaned with
@@ -236,6 +239,20 @@ _SIZE_RE = re.compile(
 _NOISE_WORDS = {"frozen"}
 
 
+def fix_mojibake(text):
+    """Repairs text that was UTF-8 but got read as Windows-1252 somewhere
+    upstream -- the pool has a few of these ("JosÃ© OlÃ©", "Julianâ€™s
+    Recipe") -- so it cleans/compares the same as the correct spelling
+    Kroger sends. Returns the text unchanged if it doesn't look broken
+    or can't be repaired."""
+    if not text or ("Ã" not in text and "â€" not in text):
+        return text
+    try:
+        return text.encode("cp1252").decode("utf-8")
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return text
+
+
 def clean_search_words(text):
     """Cleans a product name down to the words that identify it, the same
     way an Instacart search query is built: everything after the first
@@ -249,7 +266,7 @@ def clean_search_words(text):
 
     e.g. "Marie Callender's Pot Roast, Frozen Meal, 10 oz" ->
          ["marie", "callender's", "pot", "roast"]"""
-    text = (text or "").split(",", 1)[0].lower()
+    text = fix_mojibake(text or "").split(",", 1)[0].lower()
     text = unicodedata.normalize("NFD", text)
     text = "".join(ch for ch in text if not unicodedata.combining(ch))
     text = text.replace("\u2019", "'").replace("&", " and ")
@@ -270,23 +287,71 @@ def compare_key(name):
     return " ".join(clean_search_words(name)).replace("'", "")
 
 
+def normalize_brand(brand):
+    """Brand -> lowercase words with accents, apostrophes, symbols and
+    punctuation dropped, "&" as "and": "Marie Callender's" ->
+    "marie callenders", "Birds Eye®" -> "birds eye"."""
+    text = fix_mojibake(brand or "").lower()
+    text = unicodedata.normalize("NFD", text)
+    text = "".join(ch for ch in text if not unicodedata.combining(ch))
+    text = text.replace("&", " and ")
+    text = re.sub(r"[\u2019'`]", "", text)
+    text = re.sub(r"[^a-z0-9\s]", " ", text)
+    return " ".join(text.split())
+
+
+def _phrase_in(phrase, text):
+    """True if `phrase` appears in `text` as whole words."""
+    return bool(phrase) and f" {phrase} " in f" {text} "
+
+
+def brands_match(cand_brand, cand_name_key, pool_brand, pool_name_key, min_similarity):
+    """Do a Kroger product and a pool item carry the same brand? Both
+    brands are already normalize_brand()'d and both names are already
+    compare_key()'d. The pool's BRAND column can't be trusted on its own
+    (it says "Homestyle Bakes" on Banquet products, "Ezekiel 4:9" on a
+    Stouffer's one), so a brand also counts as matching when it shows up
+    as whole words in the OTHER side's product name. Any one of these is
+    a match:
+      - the two brands are the same, near-identical (ratio >= min_similarity,
+        so "Birds Eye" ~ "Birdseye"), or one contains the other ("Amy's" /
+        "Amy's Kitchen");
+      - Kroger's brand appears in the pool item's product name;
+      - the pool item's brand appears in Kroger's product name.
+    Anything else -- including a Kroger product with no brand at all when
+    the pool brand isn't in its name -- is NOT a match."""
+    if cand_brand and pool_brand:
+        if cand_brand == pool_brand or fuzz.ratio(cand_brand, pool_brand) >= min_similarity:
+            return True
+        if _phrase_in(cand_brand, pool_brand) or _phrase_in(pool_brand, cand_brand):
+            return True
+    if _phrase_in(cand_brand, pool_name_key):
+        return True
+    if _phrase_in(pool_brand, cand_name_key):
+        return True
+    return False
+
+
 class PoolNameMatcher:
     """Fuzzy "does this product already exist in the pool?" check.
 
     Every PRODUCT_NAME in the pool is reduced with compare_key() once, up
-    front; best_match() then scores a Kroger product's name against all
-    of them with rapidfuzz's token_sort_ratio (0-100; word order doesn't
-    matter, but extra/missing words cost points, so "Banquet Chicken"
-    doesn't count as a match for "Banquet Chicken Fried Steak") and
-    returns the single HIGHEST-scoring pool item, so the caller knows
-    exactly which object to tag with the Kroger UPC. Anything scoring
-    ABOVE `threshold` counts as already existing. add() lets a record
-    appended during this run join the comparison set, so a second size
-    variant of a product just added isn't added again."""
+    front. For a Kroger product, best_match() first throws out every pool
+    item whose BRAND doesn't match the product's brand (brands_match() --
+    different brands are never the same product, however alike the names
+    look), then scores the Kroger name against the rest with rapidfuzz's
+    token_sort_ratio (0-100; word order doesn't matter, but extra/missing
+    words cost points) and returns the single HIGHEST-scoring pool item,
+    so the caller knows exactly which object to tag with the Kroger UPC.
+    Anything scoring ABOVE `threshold` counts as already existing. add()
+    lets a record appended during this run join the comparison set, so a
+    second size variant of a product just added isn't added again."""
 
-    def __init__(self, pool, threshold):
+    def __init__(self, pool, threshold, brand_min_similarity=88):
         self.threshold = threshold
+        self.brand_min_similarity = brand_min_similarity
         self._keys = []
+        self._brands = []
         self._items = []
         for item in pool:
             self.add(item)
@@ -295,18 +360,27 @@ class PoolNameMatcher:
         key = compare_key(item.get("PRODUCT_NAME"))
         if key:
             self._keys.append(key)
+            self._brands.append(normalize_brand(item.get("BRAND")))
             self._items.append(item)
 
-    def best_match(self, name):
-        """Returns (closest_pool_item_or_None, score 0-100)."""
+    def best_match(self, name, brand):
+        """Returns (closest_pool_item_or_None, score 0-100), considering
+        only pool items with a matching brand."""
         key = compare_key(name)
         if not key or not self._keys:
             return None, 0.0
-        hit = process.extractOne(key, self._keys, scorer=fuzz.token_sort_ratio)
+        cand_brand = normalize_brand(brand)
+        eligible = [
+            i for i in range(len(self._keys))
+            if brands_match(cand_brand, key, self._brands[i], self._keys[i], self.brand_min_similarity)
+        ]
+        if not eligible:
+            return None, 0.0
+        hit = process.extractOne(key, [self._keys[i] for i in eligible], scorer=fuzz.token_sort_ratio)
         if hit is None:
             return None, 0.0
-        _choice, score, idx = hit
-        return self._items[idx], float(score)
+        _choice, score, pos = hit
+        return self._items[eligible[pos]], float(score)
 
     def __len__(self):
         return len(self._keys)
@@ -568,11 +642,13 @@ def iter_new_candidates(token, cfg, location_id, matcher, known_upcs, stats, on_
       - its UPC is already known (on a pool item, or in the skipped-UPCs
         file, or seen earlier this run) -> ignored, free;
       - otherwise its name is cleaned (clean_search_words) and fuzzy-
-        matched against every pool item's cleaned name, keeping the single
-        HIGHEST score. Score above matcher.threshold (75) -> it already
+        matched against the cleaned name of every pool item WITH A MATCHING
+        BRAND (a pool item with a different brand is never a candidate --
+        see brands_match()), keeping the single HIGHEST score. Score
+        above matcher.threshold (90) -> it already
         exists: on_existing_match(pool_item, upc) records the UPC on that
         best-matching item so the product is skipped next run, and the
-        loop moves on to the next Kroger product. Score at or below 75 ->
+        loop moves on to the next Kroger product. Score at or below 90 ->
         it's new, and it's yielded.
 
     `stats` is a dict this fills in (pulled / not_frozen_or_unpriced /
@@ -589,7 +665,7 @@ def iter_new_candidates(token, cfg, location_id, matcher, known_upcs, stats, on_
             stats["known_upc"] += 1
             continue
 
-        item, score = matcher.best_match(candidate["description"])
+        item, score = matcher.best_match(candidate["description"], candidate["brand"])
         if item is not None and score > matcher.threshold:
             stats["matched_existing"] += 1
             log(f"    exists ({score:.0f}): {candidate['description']!r} ~ {item.get('PRODUCT_NAME')!r} "
@@ -723,43 +799,14 @@ def find_walmart_listing(candidate, api_key, cfg):
 
 
 # ---------------------------------------------------------------------------
-# Step 3: DuckDuckGo image lookup (same technique as AddImageUrl.py)
+# Step 4: DuckDuckGo image lookup (same retry technique as AddImageUrl.py)
 # ---------------------------------------------------------------------------
 
-def build_image_query(brand, description):
-    query = f"{brand} {description}".strip() if brand and brand.lower() not in description.lower() else description
-    query = re.sub(r"\s+", " ", query).replace('"', "")
-    return query[:200]
-
-
-# Retailers whose image hosts are real product-photo pages -- a hit on
-# one of these is much more likely to be a photo of the actual product than
-# a generic image-search result is, so it's used before any other image.
-# The long, distinctive names are matched anywhere in the host
-# ("i5.walmartimages.com", "images.kroger.com", "instacartassets.com",
-# "m.media-amazon.com"); the short ones ("target", "aldi") only as a whole
-# dot-separated label ("target.scene7.com", "images.aldi.us"), so an
-# unrelated host that merely contains those letters doesn't count.
-TRUSTED_IMAGE_SUBSTRINGS = ("walmart", "kroger", "instacart", "amazon")
-TRUSTED_IMAGE_LABELS = ("target", "aldi")
-
-
-def is_trusted_image_host(netloc):
-    netloc = netloc.lower().split(":")[0]
-    if any(name in netloc for name in TRUSTED_IMAGE_SUBSTRINGS):
-        return True
-    return any(label in TRUSTED_IMAGE_LABELS for label in netloc.split("."))
-
-
 def search_image(ddgs, query, cfg):
-    """Returns (image_url_or_None, reason). Same DuckDuckGo Images
-    technique as AddImageUrl.py, except that a result hosted by Walmart,
-    Kroger, Instacart, Target, Aldi or Amazon (see is_trusted_image_host)
-    is taken before any other result -- even if it isn't the first one
-    returned -- since those are real product-photo pages and generic
-    image search results were turning up unrelated, non-food images often
-    enough to be a problem. Only falls back to another source if none of
-    those retailers show up in this query's results."""
+    """Returns (image_url_or_None, reason). DuckDuckGo Images, searched
+    with the product's Walmart URL as the query (main() passes it in), and
+    the TOP result that has an image URL is taken -- whoever hosts it.
+    Retry/backoff behavior is the same as AddImageUrl.py's."""
     region = cfg["ddg_image"]["region"]
     safesearch = cfg["ddg_image"]["safesearch"]
     max_retries = cfg["ddg_image"]["max_retries"]
@@ -769,17 +816,10 @@ def search_image(ddgs, query, cfg):
     for attempt in range(1, max_retries + 1):
         try:
             results = ddgs.images(query, region=region, safesearch=safesearch, max_results=max_results)
-            first_fallback = None
             for r in results:
                 url = r.get("image")
-                if not url or not url.startswith("http"):
-                    continue
-                if is_trusted_image_host(urlparse(url).netloc):
-                    return url, "ok_trusted_domain"
-                if first_fallback is None:
-                    first_fallback = url
-            if first_fallback:
-                return first_fallback, "ok_fallback_domain"
+                if url and url.startswith("http"):
+                    return url, "ok"
             return None, "no_results"
         except RatelimitException:
             wait = min(backoff + random.uniform(0, backoff * 0.5), 120.0)
@@ -1356,8 +1396,9 @@ def enrich_candidate(c, ctx):
         item = tag_existing_pool_item_with_upc(ctx.pool, sku, c["upc"])
         return "tagged", item
 
-    # Image via DuckDuckGo (same technique as AddImageUrl.py).
-    image_query = build_image_query(c["brand"], c["description"])
+    # Image via DuckDuckGo: the Walmart URL itself is the search query and
+    # the top result wins, whoever hosts it.
+    image_query = walmart["product_url"]
     image_url, image_reason = search_image(ctx.ddgs, image_query, cfg)
     if not image_url:
         return ("skip" if image_reason == "no_results" else "retry_later"), f"no image ({image_reason})"
@@ -1446,12 +1487,12 @@ def main():
 
     pool = load_pool(pool_path)
     skipped_upcs = load_skipped_upcs(skipped_path)
-    matcher = PoolNameMatcher(pool, cfg["dedup"]["fuzzy_threshold"])
+    matcher = PoolNameMatcher(pool, cfg["dedup"]["fuzzy_threshold"], cfg["dedup"]["brand_min_similarity"])
     known_upcs = existing_upc_set(pool, skipped_upcs)
     active_skus = existing_active_skus(pool)
     log(f"Loaded {len(pool)} existing pool item(s) and {len(skipped_upcs)} skipped UPC(s); "
         f"{len(known_upcs)} Kroger UPC(s) already known, {len(active_skus)} active pool SKU(s). "
-        f"Fuzzy-dedup threshold: score > {matcher.threshold}. Target: {max_new_items} new item(s).")
+        f"Fuzzy-dedup threshold: score > {matcher.threshold}, same brand only. Target: {max_new_items} new item(s).")
 
     log("Fetching Kroger OAuth token...")
     token = get_kroger_token(kroger_id, kroger_secret, cfg["kroger"]["timeout_seconds"])
