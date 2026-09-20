@@ -83,6 +83,7 @@
   .controls .field,
   .controls .tolerance,
   .controls button,
+  .controls .pool-badge,
   .controls .row-break{
     order:var(--o-d);
   }
@@ -105,6 +106,7 @@
     .controls .field,
     .controls .tolerance,
     .controls button,
+    .controls .pool-badge,
     .controls .row-break{
       order:var(--o-m);
     }
@@ -226,11 +228,66 @@
   button#generate:hover{ background:var(--blue-deep); }
   button#generate:focus-visible{ outline:2px solid var(--blue-deep); outline-offset:2px; }
 
-  .pool-status{
-    font-size:12px;
+  /* Filtered pool counter -- same glowing-ring treatment as the stat circles on
+     the Sportsbook dashboard (picks.html), recolored to the Generate button's
+     blue and scaled down. Label sits to the LEFT of the circle. The count is a
+     stacked fraction (filtered over total) so 4-digit pool sizes still fit. */
+  .pool-badge{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    white-space:nowrap;
+  }
+
+  .pool-badge-title{
+    display:flex;
+    flex-direction:column;
+    line-height:1.05;
+    text-align:right;
+  }
+
+  .pool-badge-title b{
+    font-family:'Bebas Neue', sans-serif;
+    font-weight:400;
+    font-size:19px;
+    letter-spacing:0.02em;
+    color:var(--ink);
+    text-transform:uppercase;
+  }
+
+  .pool-badge-title span{
+    font-size:11px;
+    font-weight:600;
     color:var(--ink-soft);
-    margin-top:14px;
+    margin-top:2px;
+  }
+
+  .pool-circle{
+    width:54px;
+    height:54px;
+    flex:none;
+    border-radius:50%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
     font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:13px;
+    line-height:1;
+    color:var(--blue);
+    border:3px solid var(--blue);
+    background:radial-gradient(circle at 32% 28%, rgba(30,95,140,0.28), rgba(30,95,140,0.04));
+    box-shadow:0 0 16px rgba(30,95,140,0.4), inset 0 0 12px rgba(30,95,140,0.18);
+  }
+
+  .pool-circle .bar{
+    display:block;
+    width:30px;
+    height:2px;
+    margin:3px 0;
+    border-radius:1px;
+    background:var(--blue);
   }
 
   .calc-note{
@@ -616,11 +673,14 @@
     </div>
     <div class="row-break mobile-only" style="--o-m:15;"></div>
     <button id="generate" style="--o-d:13; --o-m:16;">Generate week</button>
+    <div class="pool-badge" id="pool-badge" style="--o-d:14; --o-m:17;" title="Meals matching your current filters / total meals in the pool">
+      <div class="pool-badge-title"><b>Filtered</b><span>Pool Size</span></div>
+      <div class="pool-circle" aria-label="Filtered pool size"><span id="pool-filtered">&ndash;</span><span class="bar"></span><span id="pool-total">&ndash;</span></div>
+    </div>
   </div>
   </div>
-  <div class="pool-status" id="pool-status">Loading meal pool&hellip;</div>
   <div class="budget-summary" id="budget-summary" style="display:none;"></div>
-  <div class="calc-note">* Calorie and price figures come from product/retailer data and may be out of date or inaccurate — always double-check at the store.</div>
+  <div class="calc-note" id="calc-note">* Calorie and price figures come from product/retailer data as recent as <strong id="data-date">&hellip;</strong>. May be out of date or inaccurate — always double-check at the store.</div>
 </header>
 
 <main>
@@ -691,11 +751,13 @@ const VEGETARIAN_KEYWORDS = ['vegetarian', 'vegan', 'plant based', 'plant-based'
 const VEG_DISH_KEYWORDS = ['pancake', 'flapjack', 'waffle', 'muffin', 'bread', 'breadstick', 'texas toast',
   'pasta', 'fettuccine', 'fettucine', 'fettuccini', 'alfredo', 'spaghetti', 'lasagna', 'ravioli',
   'linguine', 'penne', 'rigatoni', 'ziti', 'noodle', 'mac & cheese', 'mac and cheese', 'macaroni',
-  'tortellini', 'gnocchi', 'cavatelli', 'pizza'];
+  'tortellini', 'gnocchi', 'cavatelli', 'pizza', 'burrito'];
 const MEAT_WORDS = ['chicken', 'beef', 'pork', 'saus', 'bacon', 'shrimp', 'turkey', 'ham', 'steak', 'meat', 'chili',
   'pepperoni', 'fish', 'salmon', 'tuna', 'sirloin', 'anchov', 'prosciutto', 'salami',
   'chorizo', 'pastrami', 'brisket', 'rib', 'wing', 'lamb', 'seafood', 'crawfish', 'haddock', 'calamari',
-  'scallop', 'boudin', 'veal', 'venison', 'duck', 'crab', 'clam', 'oyster'];
+  'scallop', 'boudin', 'veal', 'venison', 'duck', 'crab', 'clam', 'oyster',
+  // Spanish meat names -- burritos are the dish type these tend to show up on.
+  'carne', 'pollo', 'barbacoa', 'machaca', 'al pastor'];
 // Pizza-topping code words -- these only signal meat on an actual pizza (a
 // "Supreme" or "Hawaiian" pizza is pepperoni/sausage/ham by convention; a
 // "Mexican Style" pizza is taco-seasoned beef/sausage). Off a pizza they mean
@@ -743,6 +805,11 @@ function isVegetarianMeal(meal){
 
   const isDish = VEG_DISH_KEYWORDS.some(kw => name.includes(kw));
   if(!isDish) return false;
+  // A "burrito bowl" doesn't tell you what's in it (e.g. "Unwrapped Burrito
+  // Bowl" with no protein named), and "burrito tortillas" is a bag of wraps, not
+  // a burrito -- only a named burrito with no meat word (bean & cheese, egg &
+  // cheese, ...) is treated as vegetarian.
+  if(name.includes('burrito bowl') || name.includes('tortilla')) return false;
   const hasMeatWord = MEAT_WORDS.some(w => name.includes(w));
   if(hasMeatWord) return false;
   const isPizza = name.includes('pizza');
@@ -999,6 +1066,60 @@ function recalcDailyTarget(){
   document.getElementById('calorie-target').value = dailyTarget;
 }
 
+// Newest timestamp anywhere in the pool's price/calorie bookkeeping: the
+// original scrape date (RunDate) or any later refresh (calorie check, Gemini
+// lookup, Kroger discovery). Image-only checks are deliberately excluded.
+const DATA_DATE_FIELDS = ['RunDate', '_calorie_max_checked_at', '_gemini_checked_at', '_kroger_discovered_at'];
+
+function parseDataTimestamp(raw){
+  if(!raw || typeof raw !== 'string') return NaN;
+  // "2022-09-11 21:20:04" -> ISO (Safari needs the T); trim microseconds to ms.
+  const iso = raw.trim().replace(' ', 'T').replace(/(\.\d{3})\d+/, '$1');
+  return Date.parse(iso);
+}
+
+function latestDataDate(items){
+  let newest = NaN;
+  items.forEach(item => {
+    DATA_DATE_FIELDS.forEach(field => {
+      const t = parseDataTimestamp(item[field]);
+      if(!isNaN(t) && (isNaN(newest) || t > newest)) newest = t;
+    });
+  });
+  return isNaN(newest) ? null : new Date(newest);
+}
+
+function setDataDate(date){
+  const note = document.getElementById('calc-note');
+  if(date){
+    document.getElementById('data-date').textContent = date.toLocaleDateString();
+  }else{
+    // No usable date -- drop the "as recent as" clause rather than show a blank.
+    note.textContent = '* Calorie and price figures come from product/retailer data. May be out of date or inaccurate — always double-check at the store.';
+  }
+}
+
+// Filtered Pool Size badge: how many meals survive the current price cap /
+// diet filters (the same pools "Generate week" draws from) out of the whole pool.
+function updatePoolCount(){
+  const totalEl = document.getElementById('pool-total');
+  const filteredEl = document.getElementById('pool-filtered');
+  if(!totalEl || !filteredEl) return;
+  const total = (pool.breakfast || []).length + (pool.general || []).length;
+  if(!total){
+    filteredEl.textContent = '\u2013';
+    totalEl.textContent = '\u2013';
+    return;
+  }
+  const maxPrice = parseFloat(document.getElementById('max-per-meal').value);
+  const capActive = document.getElementById('max-per-meal-enabled').checked && !isNaN(maxPrice) && maxPrice > 0;
+  const healthyOnly = document.getElementById('healthy-only').checked;
+  const vegetarianOnly = document.getElementById('vegetarian-only').checked;
+  const { breakfastPool, generalPool } = computeActivePools(maxPrice, capActive, healthyOnly, vegetarianOnly);
+  filteredEl.textContent = String(breakfastPool.length + generalPool.length);
+  totalEl.textContent = String(total);
+}
+
 async function loadPool(){
   try{
     const res = await fetch('candidate_pool.json', { cache: 'no-store' });
@@ -1036,10 +1157,8 @@ async function loadPool(){
       general: generalItems
     };
 
-    const status = document.getElementById('pool-status');
-    const dateStr = pool.generated_at ? new Date(pool.generated_at).toLocaleDateString() : 'recently';
-    const totalPoolSize = (pool.breakfast || []).length + (pool.general || []).length;
-    status.textContent = `Pool size: ${totalPoolSize.toLocaleString()} items (updated ${dateStr}).`;
+    setDataDate(latestDataDate(items));
+    updatePoolCount();
 
     document.getElementById('empty-state').style.display = 'none';
     if(restoreCurrentWeek()){
@@ -1049,7 +1168,7 @@ async function loadPool(){
     renderCurrentOrSaved();
     updateSaveButton();
   }catch(err){
-    document.getElementById('pool-status').textContent = '';
+    setDataDate(null);
     document.getElementById('prompt-state').style.display = 'none';
     document.getElementById('empty-state').style.display = 'block';
   }
@@ -1195,27 +1314,27 @@ function updateBudgetSummary(capActive, maxPrice, overCapCount, capFallback, hea
   if(vegetarianFallback) dietNotes.push('not enough vegetarian meals in the pool — some non-vegetarian meals were included instead');
   const dietNote = dietNotes.length ? ` (${dietNotes.join('; ')})` : '';
 
-  if(!capActive){
-    if(dietNotes.length){
-      summary.style.display = 'inline-block';
-      summary.className = 'budget-summary off-range';
-      summary.textContent = dietNotes.map(n => n.charAt(0).toUpperCase() + n.slice(1)).join('; ') + '.';
-    }else{
-      summary.style.display = 'none';
-    }
+  if(capActive && capFallback){
+    summary.style.display = 'inline-block';
+    summary.className = 'budget-summary off-range';
+    summary.textContent = `Not enough meals priced at $${maxPrice.toFixed(2)} or under in the pool — showing the closest calorie matches instead, some may be over cap.${dietNote}`;
+    return;
+  }
+  if(capActive && overCapCount > 0){
+    summary.style.display = 'inline-block';
+    summary.className = 'budget-summary off-range';
+    summary.textContent = `${overCapCount} meal${overCapCount === 1 ? '' : 's'} this week landed over the $${maxPrice.toFixed(2)} cap.${dietNote}`;
     return;
   }
 
-  summary.style.display = 'inline-block';
-  if(capFallback){
+  // Everything landed within the cap (or no cap is set): only diet-filter
+  // fallback warnings are worth showing.
+  if(dietNotes.length){
+    summary.style.display = 'inline-block';
     summary.className = 'budget-summary off-range';
-    summary.textContent = `Not enough meals priced at $${maxPrice.toFixed(2)} or under in the pool — showing the closest calorie matches instead, some may be over cap.${dietNote}`;
-  }else if(overCapCount > 0){
-    summary.className = 'budget-summary off-range';
-    summary.textContent = `${overCapCount} meal${overCapCount === 1 ? '' : 's'} this week landed over the $${maxPrice.toFixed(2)} cap.${dietNote}`;
+    summary.textContent = dietNotes.map(n => n.charAt(0).toUpperCase() + n.slice(1)).join('; ') + '.';
   }else{
-    summary.className = dietNotes.length ? 'budget-summary off-range' : 'budget-summary in-range';
-    summary.textContent = `Every meal this week is at or under $${maxPrice.toFixed(2)}.${dietNote}`;
+    summary.style.display = 'none';
   }
 }
 
@@ -1500,7 +1619,9 @@ document.getElementById('activity-level').addEventListener('change', () => { rec
 document.getElementById('lose-per-week').addEventListener('input', () => { recalcDailyTarget(); saveFormData(); });
 document.getElementById('calories-burned').addEventListener('input', () => { recalcDailyTarget(); saveFormData(); });
 document.getElementById('calorie-target').addEventListener('input', saveFormData);
-document.getElementById('max-per-meal').addEventListener('input', saveFormData);
+document.getElementById('max-per-meal').addEventListener('input', () => { saveFormData(); updatePoolCount(); });
+document.getElementById('healthy-only').addEventListener('change', updatePoolCount);
+document.getElementById('vegetarian-only').addEventListener('change', updatePoolCount);
 document.getElementById('max-per-meal-enabled').addEventListener('change', function(){
   const input = document.getElementById('max-per-meal');
   input.disabled = !this.checked;
@@ -1508,6 +1629,7 @@ document.getElementById('max-per-meal-enabled').addEventListener('change', funct
     input.value = '6.00';
   }
   saveFormData();
+  updatePoolCount();
 });
 document.getElementById('save-week').addEventListener('click', saveCurrentWeek);
 document.getElementById('save-week-top').addEventListener('click', saveCurrentWeek);
