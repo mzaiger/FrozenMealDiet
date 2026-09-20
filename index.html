@@ -573,18 +573,34 @@
     font-family:'Inter', sans-serif;
     font-weight:600;
     font-size:14px;
-    background:var(--blue-deep);
-    color:#fff;
-    border:none;
+    /* Blue text on a glowing blue background -- the same ring/tint/glow
+       treatment as the Filtered Pool Size badge, in the Generate button's blue. */
+    color:var(--blue);
+    background:radial-gradient(circle at 32% 28%, rgba(30,95,140,0.28), rgba(30,95,140,0.04));
+    border:2px solid var(--blue);
     border-radius:6px;
-    padding:11px 18px;
+    padding:9px 16px;
     cursor:pointer;
+    box-shadow:0 0 16px rgba(30,95,140,0.4), inset 0 0 12px rgba(30,95,140,0.18);
+    transition:box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
   }
 
   button#save-week:hover,
-  button#save-week-top:hover{ background:var(--blue); }
+  button#save-week-top:hover{
+    color:var(--blue-deep);
+    background:radial-gradient(circle at 32% 28%, rgba(30,95,140,0.4), rgba(30,95,140,0.1));
+    box-shadow:0 0 22px rgba(30,95,140,0.55), inset 0 0 14px rgba(30,95,140,0.25);
+  }
+  button#save-week:focus-visible,
+  button#save-week-top:focus-visible{ outline:2px solid var(--blue-deep); outline-offset:3px; }
   button#save-week:disabled,
-  button#save-week-top:disabled{ background:var(--line); color:var(--ink-soft); cursor:default; }
+  button#save-week-top:disabled{
+    background:var(--line);
+    color:var(--ink-soft);
+    border-color:var(--line);
+    cursor:default;
+    box-shadow:none;
+  }
 
   .save-note{
     font-size:12px;
