@@ -731,12 +731,19 @@ let activeCapInfo = { capActive: false, maxPrice: 0, capFallback: false, healthy
 // against this pool's actual product names, deliberately excluding "veggie" and
 // "dairy free", both of which false-positive against real meat items here (e.g.
 // "Bacon, Ham & Veggies Frittata", "Cauliflower, Cheese & Bacon Veggie Tots").
-const HEALTHY_BRANDS = ['lean cuisine', 'healthy choice', 'smart ones', 'life cuisine', 'atkins', 'realgood foods co.', 'caulipower', 'birdseye', 'birds eye voila', 'garden lites', 'garden lites veggies made great', 'kodiak', 'kodiak cakes', 'quest nutrition', "kevin's natural foods", "kevin's"];
+const HEALTHY_BRANDS = ['lean cuisine', 'healthy choice', 'smart ones', 'life cuisine', 'atkins', 'realgood foods co.', 'caulipower', 'birdseye', 'birds eye voila', 'garden lites', 'garden lites veggies made great', 'kodiak', 'kodiak cakes', 'quest nutrition', "kevin's natural foods", "kevin's",
+  // Added after checking the pool's top brands against dietitian "healthy frozen
+  // meal" roundups: Amy's (both spellings in the pool), plus Evol, Saffron Road
+  // and Green Giant.
+  "amy's kitchen", "amy's", 'evol', 'saffron road', 'green giant'];
 // Name-level healthy signal for a specific line within a brand that isn't
 // otherwise a "healthy" brand overall (Jimmy Dean's regular lineup is not),
 // plus a blanket "protein" callout -- if the product itself advertises its
 // protein content in the name, treat that as a healthy signal.
-const HEALTHY_KEYWORDS = ['simple scrambles', 'protein', 'organic'];
+// "jimmy dean delights" is Jimmy Dean's lighter egg-white/turkey-sausage line;
+// it has to be the full phrase since plain "delights" also matches unrelated
+// products (e.g. Caribbean Food Delights beef patties).
+const HEALTHY_KEYWORDS = ['simple scrambles', 'jimmy dean delights', 'protein', 'organic'];
 // Cheese sticks are never "healthy" -- not even when the name carries a healthy
 // keyword (e.g. Farm Rich's "High Protein Snack" mozzarella sticks). They ARE
 // treated as vegetarian below.
