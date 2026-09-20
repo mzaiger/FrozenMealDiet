@@ -33,7 +33,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+salisbury+steaks+brown+gravy+family+size",
     "_calorie_max_checked_at": "2026-09-19T09:13:08.377542+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:02:28.000370+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:02:28.000370+00:00",
+    "_kroger_upc": "0003100011305"
   },
   {
     "index": "318855",
@@ -213,7 +214,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+chicken+pot+pie",
     "_calorie_max_checked_at": "2026-09-19T09:13:38.336639+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:03:02.369480+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:03:02.369480+00:00",
+    "_kroger_upc": "0003100010101"
   },
   {
     "index": "318860",
@@ -249,7 +251,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+lasagna+with+meat+sauce",
     "_calorie_max_checked_at": "2026-09-19T09:13:47.399420+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:03:10.904594+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:03:10.904594+00:00",
+    "_kroger_upc": "0001380010321",
+    "_kroger_upc_aliases": [
+      "0001380055812"
+    ]
   },
   {
     "index": "318857",
@@ -861,7 +867,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=healthy+choice+caf+steamers+asian+inspired+beef+teriyaki",
     "_calorie_max_checked_at": "2026-09-19T09:14:57.066599+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:05:06.724203+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:05:06.724203+00:00",
+    "_kroger_upc": "0007265500110"
   },
   {
     "index": "318874",
@@ -933,7 +940,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=tai+pei+chicken+fried+rice+frozen+asian+entre",
     "_calorie_max_checked_at": "2026-09-19T09:15:00.375071+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:05:21.481901+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:05:21.481901+00:00",
+    "_kroger_upc": "0007007781129"
   },
   {
     "index": "318879",
@@ -1112,7 +1120,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=on+cor+chicken+parmagiana+w+tomato+sauce",
     "_calorie_max_checked_at": "2026-09-19T09:15:08.684069+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:05:52.679779+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:05:52.679779+00:00",
+    "_kroger_upc": "0007057504049"
   },
   {
     "index": "318884",
@@ -1932,7 +1941,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+country+fried+chicken+gravy",
     "_calorie_max_checked_at": "2026-09-19T09:17:03.748255+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:08:52.609939+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:08:52.609939+00:00",
+    "_kroger_upc": "0002113190533"
   },
   {
     "index": "318918",
@@ -2002,7 +2012,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=devour+white+cheddar+mac+cheese+with+smoked+bacon",
     "_calorie_max_checked_at": "2026-09-19T09:17:16.975764+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:09:05.782495+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:09:05.782495+00:00",
+    "_kroger_upc": "0002515505705"
   },
   {
     "index": "318919",
@@ -2072,7 +2083,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+macaroni+cheese",
     "_calorie_max_checked_at": "2026-09-19T09:17:22.941513+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T05:09:20.373823+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:09:20.373823+00:00",
+    "_kroger_upc": "0001380010340"
   },
   {
     "index": "318909",
@@ -2457,7 +2469,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=birds+eye+voila+alfredo+chicken",
     "_calorie_max_checked_at": "2026-09-19T09:18:06.504381+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:10:33.280727+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:10:33.280727+00:00",
+    "_kroger_upc": "0001450001419"
   },
   {
     "index": "318930",
@@ -2970,7 +2983,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=healthy+choice+cafe+steamers+beef+merlot",
     "_calorie_max_checked_at": "2026-09-19T09:19:21.708395+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:12:17.120920+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:12:17.120920+00:00",
+    "_kroger_upc": "0007265500102"
   },
   {
     "index": "318950",
@@ -3425,7 +3439,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=devour+buffalo+style+chicken+mac+cheese+with+buffalo+cheddar+cheese+sauce+blue+cheese",
     "_calorie_max_checked_at": "2026-09-19T09:20:09.132558+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:13:52.518335+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:13:52.518335+00:00",
+    "_kroger_upc": "0002515505704"
   },
   {
     "index": "318963",
@@ -3938,7 +3953,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+sausage+egg+cheese+croissant+sandwich",
     "_calorie_max_checked_at": "2026-09-19T09:21:27.737103+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:15:37.902455+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:15:37.902455+00:00",
+    "_kroger_upc": "0007790050210",
+    "_kroger_upc_aliases": [
+      "0007790050308"
+    ]
   },
   {
     "index": "319009",
@@ -4358,7 +4377,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+family+size+grandma%27s+chicken+vegetable+rice+bake",
     "_calorie_max_checked_at": "2026-09-19T09:22:31.605605+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:17:06.413910+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:17:06.413910+00:00",
+    "_kroger_upc": "0001380019086"
   },
   {
     "index": "319026",
@@ -4665,7 +4685,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=zatarain%27s+blackened+chicken+alfredo",
     "_calorie_max_checked_at": "2026-09-19T09:23:15.188262+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:18:03.030142+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:18:03.030142+00:00",
+    "_kroger_upc": "0007142900246"
   },
   {
     "index": "319031",
@@ -4976,7 +4997,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+family+size+meat+lovers+lasagna",
     "_calorie_max_checked_at": "2026-09-19T09:23:39.871985+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:19:05.068376+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:19:05.068376+00:00",
+    "_kroger_upc": "0001380079188"
   },
   {
     "index": "319039",
@@ -6103,7 +6125,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:25:54.772772+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:22:53.350738+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:22:53.350738+00:00",
+    "_kroger_upc": "0007790000169"
   },
   {
     "index": "319108",
@@ -7868,7 +7891,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=odom%27s+tennessee+pride+frozen+sausage+biscuits",
     "_calorie_max_checked_at": "2026-09-19T09:29:12.501848+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:28:57.390376+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:28:57.390376+00:00",
+    "_kroger_upc": "0007229000507"
   },
   {
     "index": "319331",
@@ -10729,7 +10753,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:33:49.679125+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:38:55.884059+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:38:55.884059+00:00",
+    "_kroger_upc": "0085706300200"
   },
   {
     "index": "319447",
@@ -11813,7 +11838,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+tuna+noodle+casserole",
     "_calorie_max_checked_at": "2026-09-19T09:35:43.405809+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:42:38.612469+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:42:38.612469+00:00",
+    "_kroger_upc": "0001380044788"
   },
   {
     "index": "319522",
@@ -12077,7 +12103,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+family+size+chicken+enchiladas",
     "_calorie_max_checked_at": "2026-09-19T09:36:12.695881+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:43:40.241383+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:43:40.241383+00:00",
+    "_kroger_upc": "0001380019023"
   },
   {
     "index": "319530",
@@ -12757,7 +12784,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:36:59.005353+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:46:01.323389+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:46:01.323389+00:00",
+    "_kroger_upc": "0003100067000"
   },
   {
     "index": "319581",
@@ -13072,7 +13100,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=p+f+chang%27s+home+menu+chicken+fried+rice+skillet+meal",
     "_calorie_max_checked_at": "2026-09-19T09:37:27.390615+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:47:01.829429+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:47:01.829429+00:00",
+    "_kroger_upc": "0003100070000"
   },
   {
     "index": "319587",
@@ -13204,7 +13233,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=p+f+chang%27s+home+menu+orange+chicken+skillet+meal",
     "_calorie_max_checked_at": "2026-09-19T09:37:46.100838+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:47:29.206773+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:47:29.206773+00:00",
+    "_kroger_upc": "0003100067002"
   },
   {
     "index": "319594",
@@ -18430,7 +18460,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:48:21.229004+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:06:01.725886+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:06:01.725886+00:00",
+    "_kroger_upc": "0085706300206"
   },
   {
     "index": "319798",
@@ -20349,7 +20380,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:51:51.823499+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:13:10.629675+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:13:10.629675+00:00",
+    "_kroger_upc": "0007218063473"
   },
   {
     "index": "329699",
@@ -20454,7 +20486,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:52:07.048910+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T06:13:37.662962+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:13:37.662962+00:00",
+    "_kroger_upc": "0007218063429"
   },
   {
     "index": "329696",
@@ -20761,7 +20794,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:52:36.942427+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:14:38.229855+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:14:38.229855+00:00",
+    "_kroger_upc": "0007218063471"
   },
   {
     "index": "329707",
@@ -21103,7 +21137,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=red+baron+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:53:17.239047+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:15:41.329375+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:15:41.329375+00:00",
+    "_kroger_upc": "0007218063811"
   },
   {
     "index": "329721",
@@ -28492,7 +28527,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=jimmy+dean+biscuit+sausage+gravy+breakfast+bowl",
     "_calorie_max_checked_at": "2026-09-19T10:07:24.342315+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T06:41:44.028941+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:41:44.028941+00:00",
+    "_kroger_upc": "0007790047150"
   },
   {
     "index": "332880",
@@ -28527,7 +28563,12 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=pillsbury+toaster+strudel",
     "_calorie_max_checked_at": "2026-09-19T10:07:32.844835+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:41:50.424691+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:41:50.424691+00:00",
+    "_kroger_upc": "0001800042697",
+    "_kroger_upc_aliases": [
+      "0001800042698",
+      "0001800042689"
+    ]
   },
   {
     "index": "332885",
@@ -28931,7 +28972,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=de+wafelbakkers+buttermilk+pancakes",
     "_calorie_max_checked_at": "2026-09-19T10:08:34.919393+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:43:16.923963+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:43:16.923963+00:00",
+    "_kroger_upc": "0067984410457"
   },
   {
     "index": "332896",
@@ -35596,7 +35638,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+classic+spaghetti+and+meatballs+bowl+single+serve",
     "_calorie_max_checked_at": "2026-09-19T10:23:52.073754+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T07:08:29.379714+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:08:29.379714+00:00",
+    "_kroger_upc": "0002113100039"
   },
   {
     "index": "339896",
@@ -37301,7 +37344,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+brown+%27n+serve+fully+cooked+vermont+maple+sausage+links",
     "_calorie_max_checked_at": "2026-09-19T10:27:39.906539+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T07:15:10.419274+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:15:10.419274+00:00",
+    "_kroger_upc": "0003100018454"
   },
   {
     "index": "342561",
@@ -37828,7 +37872,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=de+wafelbakkers+buttermilk+mini+pancakes",
     "_calorie_max_checked_at": "2026-09-19T10:28:29.537351+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T07:17:15.610894+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:17:15.610894+00:00",
+    "_kroger_upc": "0067984410442"
   },
   {
     "index": "343252",
@@ -38200,7 +38245,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=applegate+natural+chicken+maple+breakfast+sausage",
     "_calorie_max_checked_at": "2026-09-19T10:29:15.616380+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:18:47.182922+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:18:47.182922+00:00",
+    "_kroger_upc": "0002531737427"
   },
   {
     "index": "343339",
@@ -41641,7 +41687,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:37:24.685214+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:31:41.046794+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:31:41.046794+00:00",
+    "_kroger_upc": "0003100010093"
   },
   {
     "index": "345246",
@@ -43625,7 +43672,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:40:50.726015+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:39:17.761099+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:39:17.761099+00:00",
+    "_kroger_upc": "0007100730679"
   },
   {
     "index": "346855",
@@ -52181,7 +52229,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:57:28.408076+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T08:12:09.215820+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:12:09.215820+00:00",
+    "_kroger_upc": "0003100067006"
   },
   {
     "index": "418408",
@@ -58022,7 +58071,11 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this specific 4.5 oz El Monterey breakfast burrito from standard frozen food nutrition data.",
     "_gemini_recognized": true,
-    "_image_walmart_url_checked_at": "2026-09-20T08:34:14.448563+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:34:14.448563+00:00",
+    "_kroger_upc": "0007100714571",
+    "_kroger_upc_aliases": [
+      "0007100714478"
+    ]
   },
   {
     "BRAND": "El Monterey",
@@ -58066,7 +58119,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this specific 4.5 oz El Monterey breakfast burrito based on typical nutrition facts for this variety.",
     "_gemini_recognized": true,
-    "_image_walmart_url_checked_at": "2026-09-20T08:34:23.418339+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:34:23.418339+00:00",
+    "_kroger_upc": "0007100714690"
   },
   {
     "BRAND": "Kevin's Natural Foods",
@@ -58111,7 +58165,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this specific Kevin's Natural Foods meal from its standard refrigerated/frozen entree profile.",
     "_gemini_recognized": true,
-    "_image_walmart_url_checked_at": "2026-09-20T08:35:25.924566+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:35:25.924566+00:00",
+    "_kroger_upc": "0081026402712"
   },
   {
     "BRAND": "Kevin's Natural Foods",
@@ -58156,7 +58211,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this specific Kevin's Natural Foods refrigerated/frozen entree, where a serving is typically around 210 calories.",
     "_gemini_recognized": true,
-    "_image_walmart_url_checked_at": "2026-09-20T08:35:33.878336+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:35:33.878336+00:00",
+    "_kroger_upc": "0081026402713"
   },
   {
     "BRAND": "On-Cor",
@@ -58200,7 +58256,8 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this On-Cor frozen boxed meal and its typical nutritional profile per serving.",
     "_gemini_recognized": true,
-    "_image_walmart_url_checked_at": "2026-09-20T08:35:50.155956+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:35:50.155956+00:00",
+    "_kroger_upc": "0007057504058"
   },
   {
     "BRAND": "DIGIORNO",
@@ -58417,5 +58474,276 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I do not recognize this specific frozen burrito bowl product well enough to provide a reliable calorie estimate.",
     "_gemini_recognized": false
+  },
+  {
+    "BRAND": "Healthy Choice",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "2.99",
+    "PRICE_RETAIL": "3.59",
+    "PRODUCT_NAME": "Healthy Choice Cafe Steamers Chicken Alfredo, Frozen Meal",
+    "PRODUCT_SIZE": "9.25 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Healthy-Choice-Caf-Steamers-Chicken-Alfredo-Frozen-Meal-9-25-oz-frozen/5216163145?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:22:37.403248+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "5216163145",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 280,
+    "image_url": "https://i5.walmartimages.com/seo/Safety-Face-Shields-Glasses-Frames-Pack-4-Ultra-Clear-Protective-Full-Face-Shields-Protect-Eyes-Nose-Mouth-Anti-Fog-PET-Plastic-Goggles-Sanitary-Drop_ed59054a-1dda-48cf-aa7d-3af013ff498e.18c48bfa86337c305719a495f04c86a3.jpeg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=healthy+choice+cafe+steamers+chicken+alfredo",
+    "index": "kroger-554133",
+    "servings_per_container": "1 Meal (283g)",
+    "tid": "",
+    "_kroger_upc": "0007265500909",
+    "_kroger_discovered_at": "2026-09-20T10:22:37.403248+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Healthy Choice Cafe Steamers Chicken Alfredo, Frozen Meal",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Healthy-Choice-Caf-Steamers-Chicken-Fettuccini-Alfredo-With-Broccoli-Frozen-10oz-frozen/51726946",
+    "_walmart_name_match_score": 93.47826086956522,
+    "_walmart_url_slug_name": "Healthy Choice Caf Steamers Chicken Alfredo Frozen Meal 9 25 oz frozen",
+    "_image_search_query": "https://www.walmart.com/ip/Healthy-Choice-Caf-Steamers-Chicken-Alfredo-Frozen-Meal-9-25-oz-frozen/5216163145",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:22:37.403248+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 280.2,
+      "gemini": 240
+    },
+    "_gemini_checked_at": "2026-09-20T10:22:37.403248+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "I recognize this Healthy Choice Cafe Steamers meal as typically containing around 240 calories per 9.25 oz serving.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Birds Eye",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "7.99",
+    "PRICE_RETAIL": "8.99",
+    "PRODUCT_NAME": "Birds Eye Voila! Cheesy Chicken Family Size Frozen Skillet Meal",
+    "PRODUCT_SIZE": "42 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Birds-Eye-Voila-Family-Size-Cheesy-Ranch-Chicken-Skillet-TV-Dinner-Meal-42-oz-Frozen/20918325?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:22:37.403248+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "20918325",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 320,
+    "image_url": "https://m.media-amazon.com/images/I/81ScdCpGTcL._AC_SL1500_.jpg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=birds+eye+voila+cheesy+chicken+family+size+skillet+meal",
+    "index": "kroger-554134",
+    "servings_per_container": "1 1/2 cups (237g) frozen, 1 cup cooked",
+    "tid": "",
+    "_kroger_upc": "0001450001420",
+    "_kroger_discovered_at": "2026-09-20T10:22:37.403248+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Birds Eye Voila! Cheesy Chicken Family Size Frozen Skillet Meal",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Birds-Eye-Voila-Value-Size-Cheesy-Chicken-Frozen-Meal-60-oz-Bag-Frozen/465453871",
+    "_walmart_name_match_score": 87.3015873015873,
+    "_walmart_url_slug_name": "Birds Eye Voila Family Size Cheesy Ranch Chicken Skillet TV Dinner Meal 42 oz Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/Birds-Eye-Voila-Family-Size-Cheesy-Ranch-Chicken-Skillet-TV-Dinner-Meal-42-oz-Frozen/20918325",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:22:37.403248+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 279.7,
+      "gemini": 320
+    },
+    "_gemini_checked_at": "2026-09-20T10:22:37.403248+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognized based on standard Birds Eye Voila! family size frozen skillet meal nutritional data for the cheesy chicken variety per serving.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Lean Cuisine",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "2.99",
+    "PRICE_RETAIL": "2.99",
+    "PRODUCT_NAME": "Lean Cuisine Macaroni & Cheese Frozen Meal",
+    "PRODUCT_SIZE": "10 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Lean-Cuisine-Macaroni-Cheese-10-oz-Pack-of-12/193969527?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:22:37.403248+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "193969527",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 330,
+    "image_url": "https://i.dawn.com/primary/2024/02/65cbdaeb68cae.jpg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=lean+cuisine+macaroni+and+cheese+meal",
+    "index": "kroger-554135",
+    "servings_per_container": "1 sandwich (170g)",
+    "tid": "",
+    "_kroger_upc": "0001380018805",
+    "_kroger_discovered_at": "2026-09-20T10:22:37.403248+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Lean Cuisine Macaroni & Cheese Frozen Meal",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/browse/food/frozen-foods/lean-cuisine/976759_976791/YnJhbmQ6TGVhbiiBDdWlzaW5l",
+    "_walmart_name_match_score": 86.95652173913044,
+    "_walmart_url_slug_name": "Lean Cuisine Macaroni Cheese 10 oz Pack of 12",
+    "_image_search_query": "https://www.walmart.com/ip/Lean-Cuisine-Macaroni-Cheese-10-oz-Pack-of-12/193969527",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:22:37.403248+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 329.8,
+      "open_food_facts": 260.0,
+      "gemini": 260
+    },
+    "_gemini_checked_at": "2026-09-20T10:22:37.403248+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "I recognize this Lean Cuisine classic comfort food item, which typically contains around 260 calories per 10 oz package.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Banquet",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "1.69",
+    "PRICE_RETAIL": "1.69",
+    "PRODUCT_NAME": "Banquet Chicken Nuggets and Fries, Frozen Meal",
+    "PRODUCT_SIZE": "4.850 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Banquet-Chicken-Nuggets-with-Fries-Frozen-Meal-4-85-oz-Frozen/47197144?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:22:37.403248+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "47197144",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 380,
+    "image_url": "https://barcoemnoronha.com.br/wp-content/uploads/elementor/thumbs/snorkel-fotosub-noronha-3-ri56ageyhclggfxohftqp4jb50rzyhvvd0wbq5i2dk.jpg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+chicken+nuggets+and+fries",
+    "index": "kroger-554136",
+    "servings_per_container": "1 Meal (137g)",
+    "tid": "",
+    "_kroger_upc": "0003100000708",
+    "_kroger_discovered_at": "2026-09-20T10:22:37.403248+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Banquet Chicken Nuggets and Fries, Frozen Meal",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Banquet-Basic-Chicken-Nuggets-and-Fries-4-85oz-PACK-OF-12/646756228",
+    "_walmart_name_match_score": 85.29411764705883,
+    "_walmart_url_slug_name": "Banquet Chicken Nuggets with Fries Frozen Meal 4 85 oz Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/Banquet-Chicken-Nuggets-with-Fries-Frozen-Meal-4-85-oz-Frozen/47197144",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:22:37.403248+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 249.3,
+      "gemini": 380
+    },
+    "_gemini_checked_at": "2026-09-20T10:22:37.403248+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognize this classic small Banquet TV dinner size and its typical calorie range for nuggets and fries.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "El Monterey",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "4.49",
+    "PRICE_RETAIL": "4.99",
+    "PRODUCT_NAME": "El Monterey Signature Entrée Steak Enchilada, 9 oz (Frozen)",
+    "PRODUCT_SIZE": "9 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/El-Monterey-Signature-Entr-e-Steak-Enchilada-9-oz-Frozen/5377553611?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:22:37.403248+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "5377553611",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 360,
+    "image_url": "https://safebooru.org/samples/3413/sample_e96b97bab080d96074de7cd32ab7238d33ed6a9e.jpg?3550767",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+signature+entree+steak+enchilada",
+    "index": "kroger-554137",
+    "servings_per_container": "0.5 PACKAGE",
+    "tid": "",
+    "_kroger_upc": "0007100700197",
+    "_kroger_discovered_at": "2026-09-20T10:22:37.403248+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com El Monterey Signature Entrée Steak Enchilada, 9 oz (Frozen)",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/El-Monterey-Signature-Entr-e-Steak-Enchilada-9-oz-Frozen/5377553611",
+    "_walmart_name_match_score": 95.45454545454545,
+    "_walmart_url_slug_name": "El Monterey Signature Entr e Steak Enchilada 9 oz Frozen",
+    "_image_search_query": "https://www.walmart.com/ip/El-Monterey-Signature-Entr-e-Steak-Enchilada-9-oz-Frozen/5377553611",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:22:37.403248+00:00",
+    "_calorie_max_source": "gemini",
+    "_calorie_sources": {
+      "usda": 319.8,
+      "gemini": 360
+    },
+    "_gemini_checked_at": "2026-09-20T10:22:37.403248+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognized based on typical nutritional profiles for frozen single-serve enchilada entrées of this brand and size.",
+    "_gemini_recognized": true
+  },
+  {
+    "BRAND": "Marie Callender's",
+    "BREADCRUMBS": "Frozen/Frozen",
+    "CATEGORY": "Frozen",
+    "DEPARTMENT": "Frozen",
+    "PRICE_CURRENT": "9.99",
+    "PRICE_RETAIL": "9.99",
+    "PRODUCT_NAME": "Marie Callender's® Family Size Chicken Parmesan Frozen Meal",
+    "PRODUCT_SIZE": "38 oz",
+    "PRODUCT_URL": "https://www.walmart.com/ip/Marie-Callender-s-Family-Size-Chicken-Parmesan-and-Penne-Pasta-Frozen-Meal-38-oz/14359054406?fulfillmentIntent=Pickup",
+    "PROMOTION": "",
+    "RunDate": "2026-09-20T10:22:37.403248+00:00",
+    "SHIPPING_LOCATION": "",
+    "SKU": "14359054406",
+    "SOURCE": "Kroger",
+    "SUBCATEGORY": "Frozen",
+    "active": true,
+    "calories": 570,
+    "image_url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjAiSg_1A1gDUTcXS-NCuX2fHTx_8HA_GNbghyphenhyphenssy332rfmg1KWSz2xvLAy4SHkq3tZM4vFIKTa5vdyQHsiOfSBSJJTScALEihdi6GmKCYpFv1P5ytleGqCRfjcWJRtYa2Fn-6RbxXhDfov/s1600/ensalada+de+marisco7.jpg",
+    "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+family+size+chicken+parmesan+meal",
+    "index": "kroger-554138",
+    "servings_per_container": "1/4 pie (319g)",
+    "tid": "",
+    "_kroger_upc": "0002113103434",
+    "_kroger_discovered_at": "2026-09-20T10:22:37.403248+00:00",
+    "_kroger_location_id": "61500320",
+    "_price_source": "Kroger",
+    "_serper_query": "site:walmart.com Marie Callender's® Family Size Chicken Parmesan Frozen Meal",
+    "_serper_reason": "ok",
+    "_serper_top_result_url": "https://www.walmart.com/ip/Marie-Callender-s-Family-Size-Chicken-Parmesan-and-Penne-Pasta-Frozen-Meal-38-oz/14359054406",
+    "_walmart_name_match_score": 89.28571428571429,
+    "_walmart_url_slug_name": "Marie Callender s Family Size Chicken Parmesan and Penne Pasta Frozen Meal 38 oz",
+    "_image_search_query": "https://www.walmart.com/ip/Marie-Callender-s-Family-Size-Chicken-Parmesan-and-Penne-Pasta-Frozen-Meal-38-oz/14359054406",
+    "_image_search_reason": "ok",
+    "_calorie_max_checked_at": "2026-09-20T10:22:37.403248+00:00",
+    "_calorie_max_source": "usda",
+    "_calorie_sources": {
+      "usda": 571.0,
+      "gemini": 380
+    },
+    "_gemini_checked_at": "2026-09-20T10:22:37.403248+00:00",
+    "_gemini_model": "gemini-3.5-flash-lite",
+    "_gemini_notes": "Recognized well based on standard nutrition profiles for Marie Callender's large frozen family meals.",
+    "_gemini_recognized": true
   }
 ]
