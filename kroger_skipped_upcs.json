@@ -9,6 +9,16 @@
     "name": "Kroger® Bacon Egg and Cheese Croissant Breakfast Sandwich",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Delights Egg wich Parmesan Egg Frittatas Turkey Sausage and Cheese 4 Count Frozen' (name match 0, needs 85)"
   },
+  "0001111010552": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Kroger® Chocolate Chip Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kroger ChipMates Original Chocolate Chip Cookies 13 oz Pack of 1' (name match 56, needs 85)"
+  },
+  "0001111010773": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Simple Truth® Four Cheese Gluten Free Cauliflower Crust Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Quest Thin Crust Pizza 4 Cheese High Protein 11oz Frozen Pizza' (name match 0, needs 85)"
+  },
   "0001111011339": {
     "at": "2026-09-20T00:16:34.743546+00:00",
     "name": "Simple Truth® Protein Parmesan Garlic Spread and Egg Multigrain Bagel Breakfast Sandwich",
@@ -34,10 +44,20 @@
     "name": "Simple Truth® Fully Cooked Chicken and Maple Breakfast Sausage Links",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Johnsonville Original Breakfast Sausage 8 Patties 12 oz Fresh' (name match 0, needs 85)"
   },
+  "0001111016287": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Simple Truth® Protein Single-Serve Cheese Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Simple Truth Protein Crisp Crackers Sour Cream Onion Naturally Flavored Non GMO 4 25 oz 2 Pack Bonus' (name match 46, needs 85)"
+  },
   "0001111016288": {
     "at": "2026-09-20T09:35:33.691622+00:00",
     "name": "Simple Truth® Protein Single-Serve Uncured Pepperoni Frozen Pizza",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0001111016289": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Simple Truth® Protein Single-Serve 3 Meat Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Simple Truth Protein Crisp Crackers Sour Cream Onion Naturally Flavored Non GMO 4 25 oz 2 Pack Bonus' (name match 45, needs 85)"
   },
   "0001111016411": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -53,6 +73,36 @@
     "at": "2026-09-20T00:16:34.743546+00:00",
     "name": "Simple Truth® Sweet Sriracha Style Chicken and Brown Rice Bowl",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0001111078990": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Kroger® Buttermilk Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kroger Complete Buttermilk Pancake Waffle Mix 32 oz 3 Pack' (name match 69, needs 85)"
+  },
+  "0001111080364": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Kroger® Pepperoni Original Crust Personal Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Screamin Sicilian Original Pizzeria Crust Holy Pepperoni Frozen Pizza 22 3 oz' (name match 0, needs 85)"
+  },
+  "0001111080371": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Kroger® Cheese Original Crust Personal Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'DiGiorno Frozen Pizza Meat Lovers Classic Crust Pizza with Marinara Sauce 19 1 oz Frozen' (name match 0, needs 85)"
+  },
+  "0001111087830": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Kroger® Blueberry Frozen Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Simple Truth Homestyle Waffles 2 Pack 19 75 oz' (name match 0, needs 85)"
+  },
+  "0001111087831": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Kroger® Homestyle Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kroger Complete Original Pancake Waffle Mix 32 oz 3 Pack' (name match 57, needs 85)"
+  },
+  "0001111087832": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Kroger® Buttermilk Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Kroger Complete Original Pancake Waffle Mix 32 oz 3 Pack' (name match 47, needs 85)"
   },
   "0001380010171": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -114,30 +164,140 @@
     "name": "Smart Ones Fettuccine Alfredo Frozen Dinner",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Smart Ones Savory Italian Recipes Fettuccine Alfredo 9 25oz PACK OF 12' (name match 60, needs 85)"
   },
+  "0003800040320": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Eggo® Blueberry Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Blueberry Waffles Frozen Breakfast 12 3 oz 10 Count' (name match 81, needs 85)"
+  },
   "0003800040440": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Eggo® Minis Cinnamon Toast Waffles",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Minis Cinnamon Toast Waffle Bites Frozen Breakfast 25 8 oz 24 Count' (name match 79, needs 85)"
+  },
+  "0003800040500": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Eggo® Chocolatey Chip Waffles",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Eggo Chocolatey Chip Waffles Frozen Breakfast 29 6 oz 24 Count' (name match 85, needs 85)"
+  },
+  "0004227200071": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Amy's Cheddar Cheese Burrito",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Amy s Frozen Meals Cheddar Cheese Burrito Microwave Meals 6 0 oz' (name match 71, needs 85)"
+  },
+  "0004227200101": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Amy's Cheese Original Crust Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Amy s Margherita Pizza Frozen Pizza 13 Oz' (name match 61, needs 85)"
+  },
+  "0004227200199": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Amy's® Margherita Organic Wheat Thin Crust Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Amy s Vegan Margherita Pizza Frozen Pizza 13 5 Oz' (name match 66, needs 85)"
+  },
+  "0004227200352": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Amy's® Frozen Organic Non-Dairy Gluten Free Bean & Rice Burrito",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Amy s Frozen Meals Bean and Rice Burrito Gluten Free Microwave Meals 5 5 oz' (name match 72, needs 85)"
   },
   "0004227200833": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Amy's Mushroom Risotto Bowl Frozen Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Amys Organic Mushroom Risotto Bowl 9 5 Ounce 12 per case' (name match 76, needs 85)"
   },
+  "0004227201388": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Amy’s® Organic Black Bean & Cheese Burrito",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Amy s Frozen Meals Black Bean Burrito Microwave Meals 6 oz' (name match 68, needs 85)"
+  },
+  "0004227201405": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Amy's Bean, Rice & Cheese Burrito 4 Pack",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Amys Bean and Rice Burrito 5 5 Ounce 12 per case' (name match 45, needs 85)"
+  },
   "0004280011400": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "Totino's™ Party Pizza Pepperoni 17g Protein Thin Crust Frozen Pizza",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Totino s Ultimate Pizza Pepperoni' (name match 56, needs 85)"
+  },
+  "0004280011520": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Totino's™ Party Pizza™ Triple Cheese 14g Protein Thin Crust Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Totino s Cheeseburger Pizza Rolls 50 Count' (name match 56, needs 85)"
+  },
+  "0004280011600": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Totino's™ Party Pizza Combination 20g Protein Thin Crust Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Totino s Ultimate Pizza Combination' (name match 58, needs 85)"
+  },
+  "0004280043589": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Totino's™ Party Pizza™ Multipack Pepperoni 17g Protein Thin Crust Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Totino s Party Pizza Pepperoni Frozen Snacks 1 Ct 10 2 oz' (name match 62, needs 85)"
+  },
+  "0004973309024": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Cholula Chili Lime Carnitas Frozen Burrito Bowl",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Cholula Pork Carnitas Seasoning' (name match 51, needs 85)"
   },
   "0007057504009": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "On-Cor® Gravy & 6 Salisbury Steaks Frozen Package Meal",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'On Cor Gravy 6 Salisbury Steaks Entree Regular 28 Ounce Package Meal Frozen' (name match 85, needs 85)"
   },
+  "0007100701467": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "El Monterey® Family Size Beef, Bean & Cheese Flavor Frozen Chimichangas",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'El Monterey Beef Bean Chimichangas 30 4 oz 8 Count Frozen' (name match 55, needs 85)"
+  },
+  "0007100703172": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "El Monterey® Family Size Beef and Bean Red Chili Frozen Burritos",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'El Monterey Beef and Bean Red Chili Burrito 4 ounce 64 per case' (name match 80, needs 85)"
+  },
+  "0007100706140": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "El Monterey® Family Size Bean and Cheese Frozen Burritos",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'El Monterey Bean Cheese Burritos 32 oz 8 Count Frozen' (name match 84, needs 85)"
+  },
+  "0007100714332": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "El Monterey® Signature Egg Cheese & Jalapeño Frozen Breakfast Burrito",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Ruiz El Monterey Egg and Cheese Sausage Breakfast Burrito 4 5 Ounce 24 per case' (name match 74, needs 85)"
+  },
+  "0007100714766": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "El Monterey® Simply Egg Turkey Sausage & Cheese Breakfast Burrito",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Sausage Egg Cheese Croissant Sandwich 36 oz 8 Count Frozen' (name match 0, needs 85)"
+  },
+  "0007192119331": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "DiGiorno Frozen Pizza Rising Crust Supreme Pizza Family Dinner",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'DiGiorno Rising Crust Supreme Meat Pizza with Pepperoni 29 3 oz Frozen' (name match 75, needs 85)"
+  },
+  "0007192123298": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "DiGiorno Frozen Pizza Rising Crust Three Meat Pizza Family Dinner",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'DiGiorno Rising Crust Pizza with Pepperoni Three Meat 27 1 oz Frozen' (name match 74, needs 85)"
+  },
+  "0007192162491": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "California Pizza Kitchen BBQ Recipe Chicken Frozen Pizza Chicken Pizza on a Crispy Thin Crust",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'California Pizza Kitchen BBQ Chicken Personal Size Frozen Pizza with Crispy Thin Crust 5 9 oz' (name match 81, needs 85)"
+  },
   "0007192182379": {
     "at": "2026-09-20T10:22:37.403248+00:00",
     "name": "DiGiorno Frozen Pizza Rising Crust Ultimate Pepperoni Pizza Family Dinner",
     "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'DiGiorno Rising Crust Pepperoni Pizza 24 7 oz Frozen' (name match 72, needs 85)"
+  },
+  "0007192197185": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Tombstone Pepperoni Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tombstone Pepperoni Garlic Bread Crust Pizza 27 oz Frozen' (name match 72, needs 85)"
+  },
+  "0007218063052": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Freschetta Pepperoni Brick Oven Crust Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Freschetta Brick Oven Italian Pepperoni Pizza 22 7 Ounce 16 per case' (name match 82, needs 85)"
   },
   "0007229000227": {
     "at": "2026-09-20T10:22:37.403248+00:00",
@@ -153,6 +313,46 @@
     "at": "2026-09-20T00:16:34.743546+00:00",
     "name": "Healthy Choice Cafe Steamers Mexican-Style Street Corn, Frozen Meal",
     "reason": "no Walmart link (walmart_domain_but_no_ip_pattern)"
+  },
+  "0007320289201": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Jose Ole Beef & Cheese Burrito 5 oz",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jose Ole Beef Cheese Chimichanga Frozen Mexican Food 5 oz' (name match 55, needs 85)"
+  },
+  "0007465330890": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Jack's Cheese Original Thin Crust Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jack s Supreme Original Thin Crust Pizza 15 8 oz Frozen' (name match 81, needs 85)"
+  },
+  "0007465379187": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Jack's Thin Crust Pepperoni Frozen Pizza Easy Dinner",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jack s Pepperoni Original Thin Crust Pizza 14 3 oz Frozen' (name match 75, needs 85)"
+  },
+  "0007570615103": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Screamin' Sicilian® Supremus Maximus Supreme Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Screamin Sicilian Supremus Maximus Pizza 25 oz Pack of 4' (name match 83, needs 85)"
+  },
+  "0007570630778": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Screamin' Sicilian™ Cheese Stuffed Crust Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Daiya Cheeze Lover s Pizza Dairy Free Gluten Free Vegan Pizza 15 7 oz' (name match 0, needs 85)"
+  },
+  "0007570630779": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Screamin Sicilian™ Pepperoni Stuffed Crust Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Totino s Ultimate Pizza Pepperoni' (name match 0, needs 85)"
+  },
+  "0007790019487": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Jimmy Dean Frozen Egg Sausage and Cheese Breakfast Burritos",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Sausage Egg Cheese Biscuit Sandwich 36 oz 8 Count Frozen' (name match 74, needs 85)"
+  },
+  "0007790019488": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Jimmy Dean Meat Lovers Frozen Breakfast Burritos",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Jimmy Dean Simple Scrambles Meat Lovers 5 35 oz' (name match 55, needs 85)"
   },
   "0069781201268": {
     "at": "2026-09-20T09:35:33.691622+00:00",
@@ -239,6 +439,21 @@
     "name": "Kanzen Meal, Spicy Dan Dan Noodles 11.3 oz",
     "reason": "no Walmart link (no_search_results)"
   },
+  "0085041600222": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Red’s Grilled Chicken & Cheddar Frozen Burrito",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Tina s Big Burrito Red Hot Beef Packaged Burrito 9 oz 1 Count' (name match 0, needs 85)"
+  },
+  "0085041600225": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Red’s Organic Bean & Cheese Frozen Burrito",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Red s Cheesy Beef and Bean Burrito 16 oz 4 Count Frozen' (name match 70, needs 85)"
+  },
+  "0085041600288": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Red’s Meat Lovers Frozen Breakfast Burrito",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'Red s Turkey Sausage Breakfast Burrito 16 oz 4 Count Frozen' (name match 68, needs 85)"
+  },
   "0085044600846": {
     "at": "2026-09-20T00:16:34.743546+00:00",
     "name": "Saffron Road® Butter Chicken Gluten-Free Indian Frozen Meal",
@@ -288,5 +503,10 @@
     "at": "2026-09-20T00:16:34.743546+00:00",
     "name": "Mason Dixie® Croissant with Sausage, Egg & Cheese Frozen Breakfast Sandwich",
     "reason": "no Walmart link (no_search_results)"
+  },
+  "0087037500500": {
+    "at": "2026-09-20T10:27:32.991017+00:00",
+    "name": "Motor City Pizza Co.® Pepperoni Detroit Deep Dish Frozen Pizza",
+    "reason": "no Walmart link (no_matching_walmart_page) -- closest Walmart page was a different product: 'AUTHENTIC MOTOR CITY PIZZA CO Pepperoni Detroit Style Pizza Tomato Sauce 26 17 oz Frozen' (name match 69, needs 85)"
   }
 }
