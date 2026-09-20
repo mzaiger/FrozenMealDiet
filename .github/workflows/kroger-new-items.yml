@@ -1,0 +1,66 @@
+name: Discover new frozen items (Kroger + Serper + USDA + Gemini)
+
+on:
+  schedule:
+    # 4 times a day (every 6 hours, UTC). Each run pulls Kroger until it has
+    # added up to 20 new products (see run.max_new_items in
+    # kroger_new_items.yaml), and records the Kroger UPC of everything it
+    # pulled so the next run starts past it.
+    - cron: "45 1,7,13,19 * * *"
+  workflow_dispatch:
+    inputs:
+      max_new_items:
+        description: "New items to add this run"
+        required: false
+        default: "20"
+
+concurrency:
+  group: kroger-new-items
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    # Must stay above run.max_runtime_minutes in kroger_new_items.yaml (35),
+    # so the script stops on its own and the commit step still gets to run.
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests pyyaml ddgs rapidfuzz
+
+      - name: Run Kroger new-item discovery
+        env:
+          KROGER_CLIENT_ID: ${{ secrets.KROGER_CLIENT_ID }}
+          KROGER_CLIENT_SECRET: ${{ secrets.KROGER_CLIENT_SECRET }}
+          SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
+          GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
+          USDA_API_KEY: ${{ secrets.USDA_API_KEY }}
+          # Optional -- overrides kroger.location_id in kroger_new_items.yaml
+          # when set as a repository variable (Settings > Secrets and
+          # variables > Actions > Variables). Empty = use the yaml value.
+          KROGER_LOCATION_ID: ${{ vars.KROGER_LOCATION_ID }}
+        run: |
+          python kroger_new_items.py \
+            --max-new-items "${{ github.event.inputs.max_new_items || 20 }}"
+
+      - name: Commit updated pool
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add candidate_pool.json
+          if [ -f kroger_skipped_upcs.json ]; then git add kroger_skipped_upcs.json; fi
+          git diff --staged --quiet || git commit -m "Add new frozen items discovered via Kroger [automated]"
+          git pull --rebase
+          git push
