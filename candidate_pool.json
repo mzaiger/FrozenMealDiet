@@ -475,7 +475,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s",
     "_calorie_max_checked_at": "2026-09-19T09:14:12.288785+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:03:52.507282+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:03:52.507282+00:00",
+    "_kroger_upc": "0002113190554"
   },
   {
     "index": "318866",
@@ -585,7 +586,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=michelina%27s+pop%27n+chicken",
     "_calorie_max_checked_at": "2026-09-19T09:14:24.571003+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:04:13.002094+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:04:13.002094+00:00",
+    "_kroger_upc": "0071785415209"
   },
   {
     "index": "318871",
@@ -984,7 +986,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=el+monterey+beef",
     "_calorie_max_checked_at": "2026-09-19T09:15:02.247732+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:05:28.769671+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:05:28.769671+00:00",
+    "_kroger_upc": "0007100701467"
   },
   {
     "index": "318881",
@@ -1305,7 +1308,12 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+family+size+lasagna+with+meat+sauce",
     "_calorie_max_checked_at": "2026-09-19T09:15:19.480767+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:06:30.495009+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:06:30.495009+00:00",
+    "_kroger_upc": "0001380055131",
+    "_kroger_upc_aliases": [
+      "0001380023260",
+      "0001380014333"
+    ]
   },
   {
     "index": "318889",
@@ -1548,7 +1556,11 @@
     "_calorie_max_checked_at": "2026-09-19T09:15:56.898742+00:00",
     "_calorie_max_source": "current",
     "_image_walmart_url_checked_at": "2026-09-20T05:07:23.280524+00:00",
-    "_kroger_upc": "0001380010072"
+    "_kroger_upc": "0001380010072",
+    "_kroger_upc_aliases": [
+      "0001380044831",
+      "0001380019020"
+    ]
   },
   {
     "index": "318902",
@@ -2801,7 +2813,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=lean+cuisine+favorites+chicken+enchilada+suiza",
     "_calorie_max_checked_at": "2026-09-19T09:18:43.387546+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:11:36.229937+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:11:36.229937+00:00",
+    "_kroger_upc": "0001380017115"
   },
   {
     "index": "318942",
@@ -2902,7 +2915,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=stouffer%27s+salisbury+steak+individual",
     "_calorie_max_checked_at": "2026-09-19T09:19:09.508033+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:11:55.304123+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:11:55.304123+00:00",
+    "_kroger_upc": "0001380055478",
+    "_kroger_upc_aliases": [
+      "0001380010070"
+    ]
   },
   {
     "index": "318948",
@@ -3115,7 +3132,11 @@
     "_calorie_max_checked_at": "2026-09-19T09:19:26.343488+00:00",
     "_calorie_max_source": "usda",
     "_image_walmart_url_checked_at": "2026-09-20T05:12:39.623135+00:00",
-    "_kroger_upc": "0007229000223"
+    "_kroger_upc": "0007229000223",
+    "_kroger_upc_aliases": [
+      "0007229001252",
+      "0007229000227"
+    ]
   },
   {
     "index": "318954",
@@ -3294,7 +3315,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+mega+bowls",
     "_calorie_max_checked_at": "2026-09-19T09:19:43.776423+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:13:17.954372+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:13:17.954372+00:00",
+    "_kroger_upc": "0003100080943"
   },
   {
     "index": "318958",
@@ -5392,7 +5414,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+frozen+pot+pie+dinner",
     "_calorie_max_checked_at": "2026-09-19T09:24:20.312972+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:20:15.140406+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:20:15.140406+00:00",
+    "_kroger_upc": "0003100010103"
   },
   {
     "index": "319048",
@@ -6218,7 +6241,11 @@
     "_calorie_max_checked_at": "2026-09-19T09:25:56.148602+00:00",
     "_calorie_max_source": "current",
     "_image_walmart_url_checked_at": "2026-09-20T05:22:57.982278+00:00",
-    "_kroger_upc": "0002370006026"
+    "_kroger_upc": "0002370006026",
+    "_kroger_upc_aliases": [
+      "0002370005829",
+      "0002370001452"
+    ]
   },
   {
     "index": "319110",
@@ -6530,7 +6557,10 @@
     "_calorie_max_checked_at": "2026-09-19T09:26:17.736120+00:00",
     "_calorie_max_source": "usda",
     "_image_walmart_url_checked_at": "2026-09-20T05:24:02.565692+00:00",
-    "_kroger_upc": "0007100706711"
+    "_kroger_upc": "0007100706711",
+    "_kroger_upc_aliases": [
+      "0007100706140"
+    ]
   },
   {
     "index": "319117",
@@ -6846,7 +6876,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=hot+pockets+frozen+snacks+hickory+ham+cheddar+crispy+buttery+crust+frozen+sandwiches",
     "_calorie_max_checked_at": "2026-09-19T09:26:51.886385+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:25:09.050757+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:25:09.050757+00:00",
+    "_kroger_upc": "0004369592123"
   },
   {
     "index": "319301",
@@ -6916,7 +6947,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=lean+cuisine+features+meatloaf+with+mashed+potatoes",
     "_calorie_max_checked_at": "2026-09-19T09:27:02.275862+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:25:21.528102+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:25:21.528102+00:00",
+    "_kroger_upc": "0001380016695"
   },
   {
     "index": "319302",
@@ -7163,7 +7195,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=bertolli+frozen+skillet+meals+family+size+chicken+florentine+farfalle",
     "_calorie_max_checked_at": "2026-09-19T09:27:27.840740+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:26:18.649362+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:26:18.649362+00:00",
+    "_kroger_upc": "0003100067104"
   },
   {
     "index": "319308",
@@ -7409,7 +7442,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=lean+cuisine+features+roasted+turkey+breast",
     "_calorie_max_checked_at": "2026-09-19T09:28:05.062180+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:26:59.356113+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:26:59.356113+00:00",
+    "_kroger_upc": "0001380072110"
   },
   {
     "index": "319315",
@@ -7514,7 +7548,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=yummy+dino+buddies+chicken+breast+nuggets",
     "_calorie_max_checked_at": "2026-09-19T09:28:21.974423+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:27:25.322577+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:27:25.322577+00:00",
+    "_kroger_upc": "0006456322681"
   },
   {
     "index": "319316",
@@ -8061,7 +8096,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=lean+cuisine+features+sesame+chicken",
     "_calorie_max_checked_at": "2026-09-19T09:29:20.092497+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T05:29:21.577669+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:29:21.577669+00:00",
+    "_kroger_upc": "0001380065455"
   },
   {
     "index": "319334",
@@ -8369,7 +8405,10 @@
     "_calorie_max_checked_at": "2026-09-19T09:29:48.776722+00:00",
     "_calorie_max_source": "current",
     "_image_walmart_url_checked_at": "2026-09-20T05:30:24.320964+00:00",
-    "_kroger_upc": "0002531705519"
+    "_kroger_upc": "0002531705519",
+    "_kroger_upc_aliases": [
+      "0002531705518"
+    ]
   },
   {
     "index": "319359",
@@ -8899,7 +8938,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=amy%27s+bean+rice+burrito",
     "_calorie_max_checked_at": "2026-09-19T09:30:45.313244+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:32:13.179115+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:32:13.179115+00:00",
+    "_kroger_upc": "0004227200352"
   },
   {
     "index": "319374",
@@ -17854,7 +17894,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+new+orleans+style+chicken+alfredo+bowl",
     "_calorie_max_checked_at": "2026-09-19T09:47:15.113849+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:03:19.031509+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:03:19.031509+00:00",
+    "_kroger_upc": "0002113100022"
   },
   {
     "index": "319775",
@@ -17982,7 +18023,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:47:31.102736+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:03:50.983348+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:03:50.983348+00:00",
+    "_kroger_upc": "0004227200833"
   },
   {
     "index": "319781",
@@ -20373,7 +20415,10 @@
     "_calorie_max_checked_at": "2026-09-19T09:51:44.636924+00:00",
     "_calorie_max_source": "current",
     "_image_walmart_url_checked_at": "2026-09-20T06:12:48.258445+00:00",
-    "_kroger_upc": "0007465339393"
+    "_kroger_upc": "0007465339393",
+    "_kroger_upc_aliases": [
+      "0007465379187"
+    ]
   },
   {
     "index": "329690",
@@ -21723,7 +21768,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=digiorno+supreme",
     "_calorie_max_checked_at": "2026-09-19T09:54:14.599220+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:17:10.305061+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:17:10.305061+00:00",
+    "_kroger_upc": "0007192119331"
   },
   {
     "index": "329786",
@@ -22005,7 +22051,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=motor+city+detroit+style+pepperoni+deep+dish+pizza",
     "_calorie_max_checked_at": "2026-09-19T09:54:39.719638+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:18:08.955509+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:18:08.955509+00:00",
+    "_kroger_upc": "0087037500500"
   },
   {
     "index": "329796",
@@ -23698,7 +23745,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=california+pizza+kitchen+bbq+chicken",
     "_calorie_max_checked_at": "2026-09-19T09:57:52.667492+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:23:53.477460+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:23:53.477460+00:00",
+    "_kroger_upc": "0007192162491"
   },
   {
     "index": "329900",
@@ -25516,7 +25564,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=garden+lites+veggies+made+great+double+chocolate+muffin",
     "_calorie_max_checked_at": "2026-09-19T10:01:21.928158+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:30:25.165845+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:30:25.165845+00:00",
+    "_kroger_upc": "0070486302818"
   },
   {
     "index": "330865",
@@ -28967,7 +29016,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=eggo+frozen+waffles",
     "_calorie_max_checked_at": "2026-09-19T10:08:12.175565+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:42:51.646166+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:42:51.646166+00:00",
+    "_kroger_upc": "0003800040310",
+    "_kroger_upc_aliases": [
+      "0003800040290"
+    ]
   },
   {
     "index": "332895",
@@ -29724,7 +29777,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=eggo+frozen+waffles",
     "_calorie_max_checked_at": "2026-09-19T10:09:37.430703+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:45:31.586534+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:45:31.586534+00:00",
+    "_kroger_upc": "0003800040500",
+    "_kroger_upc_aliases": [
+      "0003800033364"
+    ]
   },
   {
     "index": "332933",
@@ -29817,7 +29874,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=eggo+frozen+waffles",
     "_calorie_max_checked_at": "2026-09-19T10:09:47.164474+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:45:53.250673+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:45:53.250673+00:00",
+    "_kroger_upc": "0003800040320",
+    "_kroger_upc_aliases": [
+      "0003800033360"
+    ]
   },
   {
     "index": "332943",
@@ -29910,7 +29971,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=eggo+frozen+mini+waffles",
     "_calorie_max_checked_at": "2026-09-19T10:10:01.489691+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:46:14.635215+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:46:14.635215+00:00",
+    "_kroger_upc": "0003800040440",
+    "_kroger_upc_aliases": [
+      "0003800025603"
+    ]
   },
   {
     "index": "332947",
@@ -29973,7 +30038,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:10:04.287084+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:46:26.813918+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:46:26.813918+00:00",
+    "_kroger_upc": "0007790047172"
   },
   {
     "index": "332948",
@@ -30036,7 +30102,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=eggo+frozen+waffles",
     "_calorie_max_checked_at": "2026-09-19T10:10:09.786097+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:46:39.876521+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:46:39.876521+00:00",
+    "_kroger_upc": "0003800040340"
   },
   {
     "index": "332952",
@@ -30723,7 +30790,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=kodiak+cakes+kosher+buttermilk+vanilla+power+waffles",
     "_calorie_max_checked_at": "2026-09-19T10:11:32.443379+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:49:27.630148+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:49:27.630148+00:00",
+    "_kroger_upc": "0070559901221"
   },
   {
     "index": "332999",
@@ -30971,7 +31039,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=kodiak+cakes+protein+packed+chocolate+chip+waffles",
     "_calorie_max_checked_at": "2026-09-19T10:12:00.325735+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:50:19.729523+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:50:19.729523+00:00",
+    "_kroger_upc": "0070559901320"
   },
   {
     "index": "333001",
@@ -32090,7 +32159,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=screamin%27+sicilian+original+supremus+maximus+pizza",
     "_calorie_max_checked_at": "2026-09-19T10:15:03.656298+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:54:22.684883+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:54:22.684883+00:00",
+    "_kroger_upc": "0007570615103"
   },
   {
     "index": "334968",
@@ -37194,7 +37264,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+brown+%27n+serve+fully+cooked+original+sausage+links",
     "_calorie_max_checked_at": "2026-09-19T10:27:05.121077+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T07:13:53.921882+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:13:53.921882+00:00",
+    "_kroger_upc": "0003100030744"
   },
   {
     "index": "340169",
@@ -38068,7 +38139,11 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=eggo+frozen+waffles",
     "_calorie_max_checked_at": "2026-09-19T10:28:31.039424+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:17:24.823926+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:17:24.823926+00:00",
+    "_kroger_upc": "0003800040280",
+    "_kroger_upc_aliases": [
+      "0003800040260"
+    ]
   },
   {
     "index": "343256",
@@ -39000,7 +39075,10 @@
     "_calorie_max_checked_at": "2026-09-19T10:30:18.121621+00:00",
     "_calorie_max_source": "open_food_facts",
     "_image_walmart_url_checked_at": "2026-09-20T07:20:52.240341+00:00",
-    "_kroger_upc": "0070559901215"
+    "_kroger_upc": "0070559901215",
+    "_kroger_upc_aliases": [
+      "0070559901482"
+    ]
   },
   {
     "index": "343400",
@@ -39682,7 +39760,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=marie+callender%27s+kansas+city+style+pulled+pork+mac+cheese+bowl",
     "_calorie_max_checked_at": "2026-09-19T10:31:54.575180+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:23:35.812467+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:23:35.812467+00:00",
+    "_kroger_upc": "0002113100021"
   },
   {
     "index": "344482",
@@ -39994,7 +40073,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+mega+meals+salisbury+steak",
     "_calorie_max_checked_at": "2026-09-19T10:32:37.140034+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T07:24:44.351735+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:24:44.351735+00:00",
+    "_kroger_upc": "0003100012614"
   },
   {
     "index": "344605",
@@ -48065,7 +48145,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=banquet+classic+turkey+frozen+single+serve+meal",
     "_calorie_max_checked_at": "2026-09-19T10:49:39.361770+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T07:55:32.217486+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:55:32.217486+00:00",
+    "_kroger_upc": "0003100000737"
   },
   {
     "index": "367004",
@@ -59404,7 +59485,10 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this popular brand of lightly breaded chicken breast bites, typically 190 calories per 3 oz serving.",
     "_gemini_recognized": true,
-    "_image_walmart_url_checked_at": "2026-09-20T11:14:09.081267+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T11:14:09.081267+00:00",
+    "_kroger_upc_aliases": [
+      "0007701361575"
+    ]
   },
   {
     "BRAND": "Tyson",
@@ -59722,7 +59806,10 @@
     "_gemini_checked_at": "2026-09-20T10:41:52.439864+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this Banquet MEGA breakfast bowl and its typical calorie content for a 10.5 oz size.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_kroger_upc_aliases": [
+      "0003100000444"
+    ]
   },
   {
     "BRAND": "Banquet",
@@ -59947,7 +60034,11 @@
     "_gemini_checked_at": "2026-09-20T10:41:52.439864+00:00",
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "Recognize this Stouffer's frozen meal and its typical nutritional profile for a 15.5 oz serving.",
-    "_gemini_recognized": true
+    "_gemini_recognized": true,
+    "_kroger_upc_aliases": [
+      "0001380019021",
+      "0001380010066"
+    ]
   },
   {
     "BRAND": "Marie Callender's",
@@ -60084,7 +60175,10 @@
     "_gemini_model": "gemini-3.5-flash-lite",
     "_gemini_notes": "I recognize this Lean Cuisine French bread pizza product and its standard nutritional profile.",
     "_gemini_recognized": true,
-    "_image_walmart_url_checked_at": "2026-09-20T11:14:42.466856+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T11:14:42.466856+00:00",
+    "_kroger_upc_aliases": [
+      "0001380004717"
+    ]
   },
   {
     "BRAND": "California Pizza Kitchen",
