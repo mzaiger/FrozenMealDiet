@@ -290,11 +290,19 @@
     background:var(--blue);
   }
 
+  /* Hanging indent: the asterisk sits in its own column so line 2 (and any
+     wrapped line) lines up under the text after it. */
   .calc-note{
+    display:flex;
+    gap:0.4em;
     font-size:12px;
     color:var(--ink-soft);
     margin-top:14px;
     line-height:1.5;
+  }
+
+  .calc-note .calc-star{
+    flex:none;
   }
 
   .budget-summary{
@@ -680,7 +688,7 @@
   </div>
   </div>
   <div class="budget-summary" id="budget-summary" style="display:none;"></div>
-  <div class="calc-note" id="calc-note">* Calorie and price figures come from product/retailer data as recent as <strong id="data-date">&hellip;</strong>. May be out of date or inaccurate — always double-check at the store.</div>
+  <div class="calc-note" id="calc-note"><span class="calc-star">*</span><span class="calc-text" id="calc-text">Calorie and price figures come from product/retailer data as recent as <strong id="data-date">&hellip;</strong>.<br>May be out of date or inaccurate — always double-check at the store.</span></div>
 </header>
 
 <main>
@@ -1097,12 +1105,12 @@ function latestDataDate(items){
 }
 
 function setDataDate(date){
-  const note = document.getElementById('calc-note');
+  const note = document.getElementById('calc-text');
   if(date){
     document.getElementById('data-date').textContent = date.toLocaleDateString();
   }else{
     // No usable date -- drop the "as recent as" clause rather than show a blank.
-    note.textContent = '* Calorie and price figures come from product/retailer data. May be out of date or inaccurate — always double-check at the store.';
+    note.innerHTML = 'Calorie and price figures come from product/retailer data.<br>May be out of date or inaccurate — always double-check at the store.';
   }
 }
 
