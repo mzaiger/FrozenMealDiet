@@ -47,9 +47,11 @@ jobs:
           SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
           USDA_API_KEY: ${{ secrets.USDA_API_KEY }}
-          # Optional -- overrides kroger.location_id in kroger_new_items.yaml
-          # when set as a repository variable (Settings > Secrets and
-          # variables > Actions > Variables). Empty = use the yaml value.
+          # Store to take Kroger prices from. KROGER_ZIP (secret or variable)
+          # is turned into the nearest Kroger-family store each run. The
+          # optional KROGER_LOCATION_ID variable pins one store instead and
+          # wins over the ZIP; empty values are ignored.
+          KROGER_ZIP: ${{ secrets.KROGER_ZIP || vars.KROGER_ZIP }}
           KROGER_LOCATION_ID: ${{ vars.KROGER_LOCATION_ID }}
         run: |
           python kroger_new_items.py \
