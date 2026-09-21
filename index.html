@@ -73,7 +73,10 @@
     flex-wrap:wrap;
     align-items:flex-end;
     gap:20px;
-    max-width:600px;
+    /* Wide enough that the last row (Max per meal, filters, Generate, Filtered
+       Pool Size badge) stays on one line even where Safari renders form controls
+       a bit wider than Chrome, e.g. iPad. */
+    max-width:660px;
     background:var(--card);
     border:1px solid var(--line);
     border-radius:10px;
