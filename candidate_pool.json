@@ -7273,7 +7273,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=great+value+garlic+bread",
     "_calorie_max_checked_at": "2026-09-19T09:27:40.630739+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T05:26:29.841910+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T05:26:29.841910+00:00",
+    "_previous_category": "Frozen Meals & Snacks"
   },
   {
     "index": "319311",
@@ -8629,7 +8630,7 @@
     "_active_check_reason": "ok",
     "_active_check_query": "site:walmart.com 106178227",
     "_active_check_url": "https://www.walmart.com/ip/Hot-Pockets-Frozen-Snacks-Ham-and-Cheese-Croissant-Crust-Sandwiches-54-oz-12-Count-Box-Frozen/106178227",
-    "image_url": "https://i5.walmartimages.com/seo/Hot-Pockets-Frozen-Snacks-Ham-and-Cheese-Croissant-Crust-Sandwiches-54-oz-12-Count-Box-Frozen_e44a454d-9174-4dec-a96d-f9c2d134e111.2152f5946afa42995f6fa570dce1b9d5.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
+    "image_url": "https://www.beautyhiddens.com/wm-hot/wp-content/uploads/2025/12/1227a655-1d03-47f5-b7e4-e8eb86e176d0.f660c294d4e3adc0755131b02517a6b4-scaled.jpeg",
     "_image_search_query": "https://www.walmart.com/ip/Hot-Pockets-Frozen-Snacks-Hickory-Ham-Cheddar-Croissant-Crust-Frozen-Sandwiches-54-oz/106178227",
     "_image_search_reason": "ok",
     "_gemini_checked_at": "2026-09-14T09:25:05.086024+00:00",
@@ -8878,7 +8879,7 @@
     "_active_check_reason": "ok",
     "_active_check_query": "site:walmart.com 10891736",
     "_active_check_url": "https://business.walmart.com/ip/MorningStar-Farms-Vegan-Original-Plant-Based-Corn-Dogs-10-oz-4-Count-Box/10891736?classType=REGULAR&athbdg=L1200",
-    "image_url": "https://i5.walmartimages.com/seo/MorningStar-Farms-Vegan-Original-Plant-Based-Corn-Dogs-10-oz-4-Count-Box_ac7f4d82-eaba-4702-a2e5-1fbeb2ebe652.0e80c9eb6275d9e0a676d64dba66c249.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
+    "image_url": "https://beautysuppliers.org/wm-goods/wp-content/uploads/2026/01/e7657b27-cfd9-4740-bdaf-220bb88cde87_1.3013ab2396f7bb55c03adb330ffa7262-scaled.jpeg",
     "_image_search_query": "https://www.walmart.com/ip/MorningStar-Farms-Meatless-Corn-Dogs-Original-10-Oz-Box-Frozen/10891736",
     "_image_search_reason": "ok",
     "_gemini_checked_at": "2026-09-14T09:25:15.311185+00:00",
@@ -10470,7 +10471,7 @@
     "_active_check_reason": "ok",
     "_active_check_query": "site:walmart.com 915831744",
     "_active_check_url": "https://www.walmart.com/reviews/product/915831744?page=19",
-    "image_url": "https://i5.walmartimages.com/seo/Great-Value-Honey-BBQ-Seasoned-Boneless-Fully-Cooked-Chicken-Bites-24-oz-Frozen_36b5ee43-8739-4934-bb6a-92e91a146c02.19f502cb0db7e20760b835e14c8e0eb5.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
+    "image_url": "https://images-cdn.ubuy.co.in/64b3bee542031d479f3e1b98-great-value-honey-barbeque-seasoned.jpg",
     "_image_search_query": "https://www.walmart.com/ip/Great-Value-Honey-Barbeque-Seasoned-Boneless-Fully-Cooked-Breaded-Chicken-Wyngz-24-oz/915831744",
     "_image_search_reason": "ok",
     "_gemini_checked_at": "2026-09-14T17:16:53.236237+00:00",
@@ -22555,7 +22556,7 @@
     "index": "329830",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "10794605",
@@ -22584,7 +22585,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=bridgford+cinnamon+pull+apart+monkey+bread",
     "_calorie_max_checked_at": "2026-09-19T09:55:21.246621+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:19:51.533579+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:19:51.533579+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "329838",
@@ -22859,7 +22861,7 @@
     "index": "329847",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "10805114",
@@ -22888,7 +22890,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=rhodes+bake+n+serv",
     "_calorie_max_checked_at": "2026-09-19T09:55:40.209179+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:20:45.934237+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:20:45.934237+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "329854",
@@ -23420,9 +23423,9 @@
     "index": "329881",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Meals & Snacks",
     "SUBCATEGORY": "Shop all",
-    "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
+    "BREADCRUMBS": "Frozen/Frozen Meals & Snacks",
     "SKU": "10813514",
     "PRODUCT_URL": "https://www.walmart.com/ip/Cole-s-Original-Garlic-Bread-16-oz-Loaf/10813514?fulfillmentIntent=Pickup",
     "PRODUCT_NAME": "Cole's Original Garlic Bread, 16 oz Loaf",
@@ -23445,7 +23448,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T09:57:09.517626+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:22:39.618403+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:22:39.618403+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "329883",
@@ -25034,7 +25038,7 @@
     "index": "330402",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "10452830",
@@ -25063,7 +25067,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=pepperidge+farm+jewish+pumpernickel+dark+pump+bread",
     "_calorie_max_checked_at": "2026-09-19T10:00:26.320454+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:28:29.053381+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:28:29.053381+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330401",
@@ -25100,7 +25105,7 @@
     "index": "330408",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "10452831",
@@ -25129,7 +25134,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=pepperidge+farm+jewish+rye+seeded+bread",
     "_calorie_max_checked_at": "2026-09-19T10:00:29.187851+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:28:45.928402+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:28:45.928402+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330409",
@@ -25237,7 +25243,7 @@
     "index": "330412",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "196260377",
@@ -25266,7 +25272,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=food+for+life+ezekiel+4+9+sprouted+whole+grain+bread",
     "_calorie_max_checked_at": "2026-09-19T10:00:44.282992+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:29:15.126131+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:29:15.126131+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330414",
@@ -25509,7 +25516,7 @@
     "index": "330421",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "741521404",
@@ -25538,7 +25545,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=extraordinary+bites+keto+white+bread",
     "_calorie_max_checked_at": "2026-09-19T10:01:16.300845+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:30:12.098822+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:30:12.098822+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330422",
@@ -25817,7 +25825,7 @@
     "index": "330873",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "186888761",
@@ -25846,13 +25854,14 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=food+for+life+ezekiel+cinnamon+raisin+bread",
     "_calorie_max_checked_at": "2026-09-19T10:01:49.155167+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:31:14.592436+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:31:14.592436+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330872",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "111452217",
@@ -25881,13 +25890,14 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=food+for+life+ezekiel+4+9+sprouted+sesame+bread",
     "_calorie_max_checked_at": "2026-09-19T10:01:53.546947+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:31:19.828180+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:31:19.828180+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330870",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "197909554",
@@ -25916,13 +25926,14 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=food+for+life+ezekiel+4+9+sprouted+whole+grain+english+muffins",
     "_calorie_max_checked_at": "2026-09-19T10:01:55.557835+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:31:26.293813+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:31:26.293813+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330874",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "218998415",
@@ -25947,13 +25958,14 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:02:04.039927+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:31:34.846337+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:31:34.846337+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330879",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "169886822",
@@ -25982,13 +25994,14 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=canyon+bakehouse+mountain+white+bread",
     "_calorie_max_checked_at": "2026-09-19T10:02:08.226002+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:31:41.712588+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:31:41.712588+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330881",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "598387598",
@@ -26017,7 +26030,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=canyon+bakehouse+country+white+bread",
     "_calorie_max_checked_at": "2026-09-19T10:02:17.367467+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:31:50.318532+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:31:50.318532+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330880",
@@ -26128,7 +26142,7 @@
     "index": "330882",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "978204760",
@@ -26153,13 +26167,14 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:02:33.153830+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:32:23.573150+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:32:23.573150+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330884",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "35824694",
@@ -26188,13 +26203,14 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=schar+artisan+baker+white+bread",
     "_calorie_max_checked_at": "2026-09-19T10:02:41.733767+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:32:30.904466+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:32:30.904466+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330885",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "975790663",
@@ -26219,7 +26235,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:02:46.346024+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:32:36.272666+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:32:36.272666+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330886",
@@ -26260,7 +26277,7 @@
     "index": "330883",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "173458592",
@@ -26285,7 +26302,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:02:59.556707+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:32:48.255887+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:32:48.255887+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330888",
@@ -26326,7 +26344,7 @@
     "index": "330887",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "116796470",
@@ -26355,7 +26373,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=beefsteak+soft+rye+bread",
     "_calorie_max_checked_at": "2026-09-19T10:03:17.013311+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:32:58.365803+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:32:58.365803+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330890",
@@ -27111,7 +27130,7 @@
     "index": "330988",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "116993194",
@@ -27140,7 +27159,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=food+for+life+sprouted+grain+bread",
     "_calorie_max_checked_at": "2026-09-19T10:04:53.574897+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:35:51.967724+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:35:51.967724+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330987",
@@ -27243,7 +27263,7 @@
     "index": "330989",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "12018215",
@@ -27272,7 +27292,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=pepperidge+farm+light+style",
     "_calorie_max_checked_at": "2026-09-19T10:05:02.573436+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:36:19.305106+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:36:19.305106+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "330996",
@@ -27437,7 +27458,7 @@
     "index": "331000",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "128321601",
@@ -27462,7 +27483,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:05:23.653502+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T06:37:12.924328+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:37:12.924328+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "331002",
@@ -27561,7 +27583,7 @@
     "index": "331007",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "148400786",
@@ -27586,7 +27608,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:05:43.971238+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:37:38.769053+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:37:38.769053+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "331010",
@@ -27685,7 +27708,7 @@
     "index": "331011",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "10315752",
@@ -27710,7 +27733,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:05:52.122880+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:38:06.152539+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:38:06.152539+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "331089",
@@ -27813,7 +27837,7 @@
     "index": "331093",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "414381007",
@@ -27838,7 +27862,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:06:10.273268+00:00",
     "_calorie_max_source": "none_found",
-    "_image_walmart_url_checked_at": "2026-09-20T06:38:30.254413+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:38:30.254413+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "331092",
@@ -27972,7 +27997,7 @@
     "index": "331097",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "23788433",
@@ -27997,7 +28022,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:06:24.838056+00:00",
     "_calorie_max_source": "usda",
-    "_image_walmart_url_checked_at": "2026-09-20T06:39:02.472774+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:39:02.472774+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "331101",
@@ -28259,7 +28285,7 @@
     "index": "331109",
     "SHIPPING_LOCATION": "66062",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "113253608",
@@ -28284,7 +28310,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:06:53.558857+00:00",
     "_calorie_max_source": "none_found",
-    "_image_walmart_url_checked_at": "2026-09-20T06:40:01.411438+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:40:01.411438+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "331110",
@@ -31689,7 +31716,7 @@
     "index": "334862",
     "SHIPPING_LOCATION": "78130",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Meals & Snacks",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "10996981",
@@ -31714,7 +31741,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=pepperidge+farm+frozen+garlic+garlic+bread",
     "_calorie_max_checked_at": "2026-09-19T10:13:37.242973+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T06:52:39.279625+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T06:52:39.279625+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "334846",
@@ -47586,7 +47614,7 @@
     "_active_check_reason": "ok",
     "_active_check_query": "site:walmart.com 693092967",
     "_active_check_url": "https://business.walmart.com/ip/Udi-s-Gluten-Free-Four-Cheese-Pizza-With-Crispy-Thin-Crust-Frozen-17-53-oz/693092967",
-    "image_url": "https://i5.walmartimages.com/seo/Udi-s-Gluten-Free-Four-Cheese-Pizza-With-Crispy-Thin-Crust-Frozen-17-53-oz_e1d7e064-71d8-4880-a1e5-c8e131620737.829b6f2a57b20a5f2deeafebf29095bb.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
+    "image_url": "https://images.salsify.com/image/upload/s--BJoeAAMy--/if_ar_eq_1:1,c_pad,w_1000,h_1000,dn_72/if_else,c_pad,w_1500,h_1000,dn_72/00fb0c42fb49ff84aa7fb7a8389cd596ee5610dd.jpg",
     "_image_search_query": "https://www.walmart.com/ip/Udi-s-Gluten-Free-Four-Cheese-Pizza-With-Crispy-Thin-Crust-Frozen-17-53-oz/693092967",
     "_image_search_reason": "ok",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=udi%27s+four+cheese+pizza+with+crispy+thin+crust",
@@ -49337,7 +49365,7 @@
     "index": "381675",
     "SHIPPING_LOCATION": "23111",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "819161862",
@@ -49362,7 +49390,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:51:30.707510+00:00",
     "_calorie_max_source": "open_food_facts",
-    "_image_walmart_url_checked_at": "2026-09-20T07:59:54.611942+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T07:59:54.611942+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "379922",
@@ -49988,7 +50017,7 @@
     "index": "387986",
     "SHIPPING_LOCATION": "60007",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "48762177",
@@ -50013,7 +50042,8 @@
     "INSTACART_URL": "https://www.instacart.com/store/s?k=lewis+bake+shop+12+grain+half+loaf+bread",
     "_calorie_max_checked_at": "2026-09-19T10:52:56.861341+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T08:02:15.342373+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:02:15.342373+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "387906",
@@ -50422,7 +50452,7 @@
     "index": "388698",
     "SHIPPING_LOCATION": "60007",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "138722286",
@@ -50447,7 +50477,8 @@
     "_image_search_reason": "ok",
     "_calorie_max_checked_at": "2026-09-19T10:53:42.493474+00:00",
     "_calorie_max_source": "current",
-    "_image_walmart_url_checked_at": "2026-09-20T08:03:56.366096+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:03:56.366096+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "388699",
@@ -53670,7 +53701,7 @@
     "_active_check_reason": "ok",
     "_active_check_query": "site:walmart.com 409756907",
     "_active_check_url": "https://www.walmart.com/ip/Kodiak-Protein-Packed-Gluten-Free-Frontier-Oat-Power-Waffles-9-oz-6-Count-Frozen/409756907",
-    "image_url": "https://i5.walmartimages.com/seo/Kodiak-Protein-Packed-Gluten-Free-Frontier-Oat-Power-Waffles-9-oz-6-Count-Frozen_581ce0d4-8a44-40e0-bac7-8f27148c3a02.b02fe0dfd8392355e6f63b863410dc0f.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF",
+    "image_url": "https://www.ubuy.co.in/productimg/?image=aHR0cHM6Ly9pNS53YWxtYXJ0aW1hZ2VzLmNvbS9hc3IvOWYxZDFjOTUtOGEyMi00MjM5LWI0NzktZWQ5N2IzZWRmZWUzLmQwYzMyYzhhYTM1ZjFlMGRhMGQ4M2U5YzQ0NDk2ODI1LnBuZw.jpg",
     "_image_search_query": "https://www.walmart.com/ip/Kodiak-Cakes-Gluten-Free-Whole-Grain-Protein-Waffles-9oz-6-CT-Box-Frozen/409756907",
     "_image_search_reason": "ok",
     "INSTACART_URL": "https://www.instacart.com/store/s?k=kodiak+cakes+whole+grain+protein+waffles",
@@ -56102,7 +56133,7 @@
     "index": "469581",
     "SHIPPING_LOCATION": "48180",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "122819626",
@@ -56127,7 +56158,8 @@
     "image_url": "https://i5.walmartimages.com/asr/0f617c3a-7949-4903-b172-5bd0f6c2fca7.ffca4e122c479fddf62375ee0a161fee.jpeg",
     "_image_search_query": "https://www.walmart.com/ip/Three-Bakers-7-Ancient-Grains-Whole-Grain-Bread-17-Oz/122819626",
     "_image_search_reason": "ok",
-    "_image_walmart_url_checked_at": "2026-09-20T08:25:20.736608+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:25:20.736608+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "468961",
@@ -56195,7 +56227,7 @@
     "index": "469582",
     "SHIPPING_LOCATION": "48180",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "107029321",
@@ -56220,7 +56252,8 @@
     "image_url": "https://storage.googleapis.com/images-prs-prd-c7e7986.prs.prd.v8.commerce.mi9cloud.com/product-images/zoom/00817350010005_1",
     "_image_search_query": "https://www.walmart.com/ip/Three-Bakers-Whole-Grain-Bread-White/107029321",
     "_image_search_reason": "ok",
-    "_image_walmart_url_checked_at": "2026-09-20T08:25:42.269052+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:25:42.269052+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "469583",
@@ -56754,7 +56787,7 @@
     "index": "507251",
     "SHIPPING_LOCATION": "72034",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "454847768",
@@ -56779,7 +56812,8 @@
     "image_url": "https://storage.googleapis.com/images-bks-prd-1385851.bks.prd.v8.commerce.mi9cloud.com/product-images/detail/e0377849-5131-438e-a468-1b594c981aa5.jpeg",
     "_image_search_query": "https://www.walmart.com/ip/Base-Culture-Nutty-Pumpkin-Bread-Paleo-Gluten-Free-Non-GMO/454847768",
     "_image_search_reason": "ok",
-    "_image_walmart_url_checked_at": "2026-09-20T08:27:55.110123+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:27:55.110123+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "507720",
@@ -57530,7 +57564,7 @@
     "index": "514842",
     "SHIPPING_LOCATION": "53215",
     "DEPARTMENT": "Frozen",
-    "CATEGORY": "Frozen Pizza, Pasta, & Breads",
+    "CATEGORY": "Frozen Breakfast",
     "SUBCATEGORY": "Shop all",
     "BREADCRUMBS": "Frozen/Frozen Pizza, Pasta, & Breads",
     "SKU": "495207023",
@@ -57555,7 +57589,8 @@
     "image_url": "https://contenthandler-raleys.fieldera.com/prod/144973/1/0/0/300400232-Front-Right-Elevated.jpg",
     "_image_search_query": "https://www.walmart.com/ip/Canyon-Bakehouse-Sweet-Hawaiian-Bread-Gluten-Free-Bread-100-Whole-Grain-Frozen-18-oz-Loaf/495207023",
     "_image_search_reason": "ok",
-    "_image_walmart_url_checked_at": "2026-09-20T08:30:56.399509+00:00"
+    "_image_walmart_url_checked_at": "2026-09-20T08:30:56.399509+00:00",
+    "_previous_category": "Frozen Pizza, Pasta, & Breads"
   },
   {
     "index": "514845",
