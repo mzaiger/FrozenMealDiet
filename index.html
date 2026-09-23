@@ -329,15 +329,16 @@
   }
 
   .week-totals{
-    display:inline-flex;
-    flex-wrap:wrap;
-    gap:32px;
+    display:grid;
+    grid-template-columns:repeat(4, auto);
+    gap:24px 32px;
     background:var(--card);
     border:1px solid var(--line);
     border-radius:10px;
     padding:18px 24px;
     margin-top:16px;
     margin-bottom:8px;
+    width:fit-content;
   }
 
   .week-totals .total-item .label{
@@ -351,6 +352,14 @@
     font-size:24px;
     font-weight:700;
     color:var(--blue-deep);
+  }
+
+  @media (max-width:640px){
+    .week-totals{
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:18px 24px;
+      width:100%;
+    }
   }
 
   main{
@@ -704,11 +713,19 @@
   </div>
   <div class="week-totals" id="week-totals" style="display:none;">
     <div class="total-item">
-      <div class="label">Total calories / week</div>
+      <div class="label">Week calorie goal</div>
+      <div class="value" id="week-goal">0</div>
+    </div>
+    <div class="total-item">
+      <div class="label">Week actual calories</div>
       <div class="value" id="total-calories">0</div>
     </div>
     <div class="total-item">
-      <div class="label">Total cost / week</div>
+      <div class="label">Week cost goal</div>
+      <div class="value" id="week-cost-goal">$0.00</div>
+    </div>
+    <div class="total-item">
+      <div class="label">Week actual cost</div>
       <div class="value" id="total-cost">$0.00</div>
     </div>
   </div>
@@ -1316,12 +1333,14 @@ function countOverCap(days, capActive, maxPrice){
 }
 
 function weekTotals(days){
-  let calories = 0, cost = 0;
+  let calories = 0, cost = 0, mealCount = 0;
   days.forEach(day => {
     calories += day.total;
-    cost += Object.values(day.meals).reduce((s, m) => s + getMealPriceNumber(m), 0);
+    const meals = Object.values(day.meals);
+    cost += meals.reduce((s, m) => s + getMealPriceNumber(m), 0);
+    mealCount += meals.length;
   });
-  return { calories, cost };
+  return { calories, cost, mealCount };
 }
 
 // Each meal is filtered against the max-per-meal cap before selection, rather
@@ -1461,15 +1480,16 @@ function renderCurrentOrSaved(){
   }
   document.getElementById('prompt-state').style.display = 'none';
 
-  let days, target, editable;
+  let days, target, editable, capInfo;
   if(activeTab === 'current'){
     days = currentWeek;
     target = currentTargetGlobal;
     editable = true;
+    capInfo = activeCapInfo;
   }else{
     const saved = savedWeeks[activeTab];
-    if(!saved){ activeTab = 'current'; days = currentWeek; target = currentTargetGlobal; editable = true; }
-    else{ days = saved.days; target = saved.target; editable = false; }
+    if(!saved){ activeTab = 'current'; days = currentWeek; target = currentTargetGlobal; editable = true; capInfo = activeCapInfo; }
+    else{ days = saved.days; target = saved.target; editable = false; capInfo = saved.capInfo || activeCapInfo; }
   }
 
   days.forEach((day, idx) => {
@@ -1477,9 +1497,16 @@ function renderCurrentOrSaved(){
   });
 
   const totals = weekTotals(days);
-  document.getElementById('week-totals').style.display = 'inline-flex';
+  document.getElementById('week-totals').style.display = 'grid';
   document.getElementById('total-calories').textContent = `${totals.calories.toLocaleString()}*`;
   document.getElementById('total-cost').textContent = `$${totals.cost.toFixed(2)}*`;
+  document.getElementById('week-goal').textContent = (target * 7).toLocaleString();
+  const costGoalEl = document.getElementById('week-cost-goal');
+  if(capInfo && capInfo.capActive){
+    costGoalEl.textContent = `$${(capInfo.maxPrice * totals.mealCount).toFixed(2)}`;
+  }else{
+    costGoalEl.textContent = 'No cap set';
+  }
 
   document.getElementById('save-bar').style.display = editable ? 'flex' : 'none';
   document.getElementById('save-bar-top').style.display = editable ? 'flex' : 'none';
