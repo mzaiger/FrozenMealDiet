@@ -1,0 +1,242 @@
+# Configuration for kroger_new_items.py.
+#
+# This script adds NEW frozen items (not already in candidate_pool.json)
+# by pulling Kroger's live product catalog -- the one live, free,
+# non-scraped source of "what frozen products currently exist" available
+# here. Kroger has no "date added" field, so "new" means: in Kroger's
+# catalog today AND not already in candidate_pool.json by fuzzy name
+# match. It runs 4x a day (see .github/workflows/kroger-new-items.yml),
+# pulling Kroger until it has added run.max_new_items new products. See
+# the module docstring in kroger_new_items.py for the full step-by-step.
+#
+# Where each field on a new pool record comes from:
+#   _kroger_upc, PRODUCT_NAME, BRAND, PRICE_CURRENT/PRICE_RETAIL -- Kroger
+#       (price is the price at the store chosen under kroger: below --
+#       KROGER_ZIP, or location_id)
+#   PRODUCT_URL, SKU -- DuckDuckGo text search finds the Walmart page;
+#       SKU is the id part of that URL, and ?fulfillmentIntent=Pickup is
+#       appended to the URL
+#   INSTACART_URL -- BUILT from the cleaned product name (never searched)
+#   image_url -- DuckDuckGo Images, searched with the item's Walmart URL
+#       as the query; the top result wins, whoever hosts it
+#   calories -- the LARGEST of USDA FoodData Central, Open Food Facts and
+#       Gemini (Gemini answers from its own knowledge, no search), rounded
+#       to the nearest 10 -- same "largest wins" rule as
+#       DataCleaning/Max_Calories_Count.py
+#   servings_per_container -- USDA FoodData Central, pulled the way
+#       DataCleaning/build_meal_pool.py pulls it
+#   SOURCE -- always "Kroger", to tell these rows apart from the original
+#       2022 Walmart-CSV rows (which have no SOURCE column at all)
+#
+# A product is only added if it has ALL of: a Kroger price, a Walmart
+# PRODUCT_URL whose SKU isn't already on an active=True pool item, an
+# image_url, and at least one calorie number from the three sources.
+# servings_per_container is the one exception -- a USDA miss becomes "N/A"
+# rather than blocking the item.
+
+dedup:
+  # A Kroger item is treated as ALREADY IN THE POOL when its cleaned name
+  # scores ABOVE this (0-100, rapidfuzz token_sort_ratio) against any
+  # existing PRODUCT_NAME, cleaned the same way. "Cleaned" = the same
+  # cleanup used to build the Instacart search: everything after the
+  # first comma, sizes like "27 oz"/"6 ct", other numbers, punctuation
+  # and the word "frozen" removed. Only pool items with a matching brand
+  # are compared, and the one with the HIGHEST score gets the Kroger UPC
+  # recorded on it. Raise this to be pickier about what counts as a
+  # duplicate (more items get added); lower it to skip more.
+  # Why 90 and not lower: this pool is full of same-brand products whose
+  # names differ by one flavor word ("Great Value Blueberry Waffles" vs
+  # "Great Value Buttermilk Waffles" scores 81), and a low threshold
+  # treats those as the same product. At 90, only near-identical names
+  # (the same product in another size, say) count as duplicates. A real
+  # duplicate that slips through anyway is caught later: if its Walmart
+  # SKU is already active in the pool, its UPC is recorded on that item.
+  fuzzy_threshold: 90
+  # Brands must also match for two products to count as the same one -- a
+  # different brand is never a duplicate, however alike the names look.
+  # The pool's BRAND column is unreliable (e.g. "Homestyle Bakes" on
+  # Banquet products), so a brand also matches when it appears in the
+  # other product's name. This is the minimum similarity (0-100) for two
+  # brand spellings to count as the same brand ("Birds Eye" ~ "Birdseye").
+  brand_min_similarity: 88
+
+usda:
+  timeout_seconds: 15
+  max_retries: 2
+  retry_delay_seconds: 3
+  # Space between USDA calls -- USDA's API is generous/free, but this is
+  # a courtesy delay, not a rate-limit workaround.
+  min_call_interval_seconds: 0.5
+
+open_food_facts:
+  # No API key, but Open Food Facts asks for a descriptive User-Agent, and
+  # its anonymous SEARCH endpoint is tightly rate-limited (they document
+  # roughly 10 requests/minute for searches) -- hence the long spacing.
+  # Only a handful of new items get looked up per run, so this is cheap.
+  user_agent: "FrozenMealDiet/1.0 (github.com/mzaiger/FrozenMealDiet)"
+  timeout_seconds: 15
+  max_retries: 2
+  retry_delay_seconds: 5
+  min_call_interval_seconds: 6.5
+
+kroger:
+  # The Kroger store to take prices from. REQUIRED -- Kroger's API only
+  # returns prices when a search is scoped to a store, and this script
+  # skips the run if there isn't one. The store comes from the first of
+  # these that is set:
+  #   1. the KROGER_LOCATION_ID environment variable
+  #   2. location_id below
+  #   3. the KROGER_ZIP environment variable (a GitHub secret/variable in
+  #      the workflow): a ZIP code, turned into the NEAREST Kroger-family
+  #      store at the start of every run via Kroger's Locations API. The
+  #      store it picked is logged.
+  # To pin a specific store instead, run:
+  #     python kroger_new_items.py --find-location <ZIP>
+  # (needs KROGER_CLIENT_ID / KROGER_CLIENT_SECRET set) and paste the
+  # 8-character locationId of the store you want here, e.g. "01400943".
+  location_id: ""
+  # How far from the ZIP code to look for a store. Kroger's own default is
+  # only 10 miles, which returns nothing if no store is that close.
+  location_search_radius_miles: 100
+
+  # Kroger's own department groupings don't map 1:1 to Walmart's, so
+  # this is a set of search terms run against filter.term instead of a
+  # category ID. Deliberately broad/generic (e.g. "bowl", "meal" --
+  # not "frozen bowl") so each term's 50-result page isn't wasted on an
+  # over-narrow phrase match -- kroger_product_to_candidate() is what
+  # actually keeps results scoped to frozen items, by checking Kroger's
+  # own category labels for "frozen" rather than trusting the term.
+  # Covers both "frozen meal" and "frozen breakfast aisle" per the
+  # original ask.
+  search_terms:
+    - "bowl"
+    - "meal"
+    - "breakfast"
+    - "dinner"
+    - "entree"
+    - "pizza"
+    - "burrito"
+    - "pasta"
+    - "waffles"
+    - "pancakes"
+    - "french toast"
+    - "breakfast sandwich"
+    - "lasagna"
+    - "chicken nuggets"
+    - "pot pie"
+    - "mac and cheese"
+    - "fried rice"
+    - "egg bites"
+  # Kroger's product search caps at 50 results per page (filter.limit).
+  results_per_term: 50
+  # The run pulls Kroger one page at a time (round-robin across the terms
+  # above) and stops as soon as it has added run.max_new_items new
+  # products, so this is only a ceiling on how deep it will page into any
+  # one term. Kroger's filter.start tops out at 1000, i.e. 20 pages of 50.
+  max_pages_per_term: 20
+  timeout_seconds: 15
+
+ddg_walmart:
+  # DuckDuckGo text search (ddgs.text()) for "site:walmart.com <brand>
+  # <name>" -- free and keyless, unlike Serper.dev (paid credits) and the
+  # short-lived Groq openai/gpt-oss-20b + browser_search version this
+  # replaces (Groq's free tier caps at 8,000 tokens/minute and
+  # 200,000/day, and a single browser_search call is token-hungry enough
+  # that real runs hit that ceiling within a few products).
+  region: "us-en"
+  safesearch: "moderate"
+  max_retries: 5
+  # Results to look through per search. More results = more chances that
+  # one of them is the right Walmart page.
+  max_results: 10
+  # A Walmart page only counts as the same product as the Kroger one when
+  # the brand appears in the page's product name (taken from its URL) AND
+  # the two cleaned names score at least this (0-100, rapidfuzz
+  # token_sort_ratio). DDG returns the CLOSEST Walmart page, which is
+  # often a different flavor or brand -- e.g. a tortilla-chip page for a
+  # Kroger burrito bowl -- so without this check the wrong page's SKU gets
+  # used. Real same-product pairs score ~88-100; near-miss flavors ~55-75.
+  # Raise it to be stricter (more products skipped), lower it to be looser.
+  min_name_match_score: 75
+
+ddg_image:
+  min_delay_seconds: 4.0
+  max_delay_seconds: 9.0
+  max_retries: 5
+  region: "us-en"
+  safesearch: "moderate"
+  # The Walmart URL is the search query and the TOP result that has an
+  # image URL is used, whoever hosts it -- so this only needs to be big
+  # enough to skip over a result or two that come back without one.
+  max_results: 5
+
+gemini:
+  # Same fallback chain as gemini_meal_lookup.py -- gemini-2.5-flash-lite
+  # and gemini-2.0-flash-lite both 404 ("no longer available") as of
+  # 2026-09-13.
+  models:
+    - gemini-3.5-flash-lite
+    - gemini-3.1-flash-lite
+  timeout_seconds: 30
+  min_call_interval_seconds: 10
+  retry_delay_seconds: 60
+  max_retries: 3
+
+run:
+  # Brand-new items to ADD per run. The run keeps pulling Kroger (it may
+  # pull 100+ products to find this many new ones) until it has this many.
+  max_new_items: 20
+  # Ceiling on how many new products get run through the DDG
+  # steps in one run, counting the ones that fail (no Walmart page, no
+  # image, no calories) -- protects against DuckDuckGo rate-limiting if
+  # Kroger's remaining new products mostly turn out to be unsellable at
+  # Walmart.
+  max_enrichment_attempts: 60
+  # Stop starting new products after this long, so the workflow has time to
+  # commit what the run did instead of being killed mid-run (which would
+  # lose it). Keep it under the workflow's timeout-minutes.
+  max_runtime_minutes: 35
+
+pool:
+  path: candidate_pool.json
+  # New Kroger products that couldn't be added for a lasting reason (no
+  # Walmart page, no image results, no calorie number) -- their UPCs are
+  # kept here so they aren't retried every run. Delete an entry to retry.
+  skipped_upcs_path: kroger_skipped_upcs.json
+
+# {n}/{product_name}/{brand}/{size} are filled in per item; {count}/
+# {products_block} wrap the request (one product per call now).
+# {product_name} is Kroger's own product description for the item. Gemini
+# is only asked for calories -- price comes from Kroger,
+# servings_per_container from USDA, and the SKU from the Walmart URL.
+prompt:
+  item_line: |
+    {n}. {product_name} ({brand}, size: {size})
+  intro: |
+    You are estimating the calories of {count} frozen food products, based
+    on what you already know -- you do NOT have the ability to browse the
+    web right now, so do not claim to have looked anything up live.
+
+    Products:
+    {products_block}
+
+    For each product, give your best estimate of:
+    1. "recognized" -- true only if you actually recognize this specific
+       product well enough to give a real estimate, false if you'd just
+       be guessing blindly.
+    2. "calories" -- calories per serving, as it would appear on the
+       product's nutrition facts.
+
+    Return ONLY a JSON array with exactly {count} objects, in the same
+    order as the list above, and nothing else -- no markdown code
+    fences, no commentary before or after it. Each object must have
+    exactly these keys:
+    - "index": integer -- the product's number from the list above (1-based)
+    - "recognized": boolean
+    - "calories": integer or JSON null if unknown
+    - "notes": string -- one short sentence on your confidence or
+      reasoning, or why you don't recognize it
+
+    Do not invent a source or claim to have verified anything on a
+    website. If you do not recognize a product, set "recognized" to false
+    and "calories" to null for it.
