@@ -145,8 +145,21 @@ groq_search:
   endpoint: "https://api.groq.com/openai/v1/chat/completions"
   model: "openai/gpt-oss-20b"
   timeout_seconds: 30
+  # Retries for network errors / non-429 failures only -- a 429 gets its
+  # own wait (see max_rate_limit_wait_seconds below), not this delay.
   max_retries: 2
   retry_delay_seconds: 5
+  # Space between Groq calls. The free tier's real constraint here is
+  # tokens/minute (8,000 TPM as of 2026-09), not requests/minute (30) --
+  # a single browser_search call can burn a big chunk of that bucket, so
+  # this paces calls to leave the bucket room to refill instead of firing
+  # requests as fast as the rest of the pipeline can produce candidates.
+  min_call_interval_seconds: 3.0
+  # On a 429, Groq reports how long until the limit resets (in a header
+  # or the error text) -- find_walmart_listing() waits that long instead
+  # of retry_delay_seconds, capped at this many seconds so one stuck
+  # product can't eat the whole run.
+  max_rate_limit_wait_seconds: 90
   # Per Groq's own guidance for browser_search: low reasoning effort keeps
   # the browsing session short instead of an extended multi-page crawl.
   reasoning_effort: "low"

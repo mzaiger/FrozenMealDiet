@@ -748,6 +748,50 @@ WALMART_IP_URL_RE = re.compile(r"/ip/([^/]+)/(\d+)(?:[/?#]|$)")
 # inside citation markers or a sentence rather than one-per-line.
 _ANY_URL_RE = re.compile(r"https?://[^\s\)\]\}\"'<>]+")
 
+_DURATION_RE = re.compile(r"^(?:(\d+)m)?(\d+(?:\.\d+)?)s$")
+
+
+def _parse_duration_string(text):
+    """Parses a Groq-style duration string ('7.66s', '2m59.56s') into
+    seconds, or None if it doesn't look like one."""
+    m = _DURATION_RE.match((text or "").strip())
+    if not m:
+        return None
+    minutes = float(m.group(1)) if m.group(1) else 0.0
+    seconds = float(m.group(2))
+    return minutes * 60 + seconds
+
+
+def _parse_retry_after_seconds(resp, default):
+    """How long to wait before retrying a 429 from Groq. openai/gpt-oss-20b's
+    free tier is tight on tokens/minute (8,000 TPM as of 2026-09), and a
+    browser_search session can burn through a meaningful chunk of that in
+    one call, so a fixed short retry_delay isn't enough -- this reads the
+    actual reset time Groq reports instead: the standard Retry-After
+    header (seconds), Groq's own x-ratelimit-reset-tokens /
+    x-ratelimit-reset-requests headers ('7.66s', '2m59.56s' style
+    durations), or the "Please try again in Xm Ys" text in the error
+    body, in that order. Falls back to `default` if none of those parse."""
+    ra = resp.headers.get("Retry-After")
+    if ra:
+        try:
+            return max(float(ra), 0.0)
+        except ValueError:
+            pass
+    for header in ("x-ratelimit-reset-tokens", "x-ratelimit-reset-requests"):
+        secs = _parse_duration_string(resp.headers.get(header, ""))
+        if secs is not None:
+            return secs
+    try:
+        body = resp.text
+    except Exception:  # noqa: BLE001 -- best-effort only
+        body = ""
+    m = re.search(r"try again in\s+(?:(\d+)m)?(\d+(?:\.\d+)?)s", body)
+    if m:
+        minutes = float(m.group(1)) if m.group(1) else 0.0
+        return minutes * 60 + float(m.group(2))
+    return default
+
 
 def extract_walmart_candidate_urls(text, max_urls):
     """Pulls plausible Walmart product-page URLs out of a Groq browser-
@@ -837,7 +881,7 @@ def brand_and_name(candidate):
     return re.sub(r"\s+", " ", text).strip()
 
 
-def find_walmart_listing(candidate, api_key, cfg):
+def find_walmart_listing(candidate, api_key, cfg, rate_limiter=None):
     """Asks Groq's free openai/gpt-oss-20b model, using its built-in
     browser_search tool (console.groq.com/docs/browser-search, powered by
     Exa), to find the walmart.com product page for "<brand> <product
@@ -857,7 +901,14 @@ def find_walmart_listing(candidate, api_key, cfg):
     dict with product_url/sku (both None if nothing matched) plus
     query/reason/top-result metadata; "name_match_score" on success, and
     "closest_rejected" ((name, score) of the best product page that failed
-    the same-product check) when that was the reason for failing."""
+    the same-product check) when that was the reason for failing.
+
+    `rate_limiter` (a _RateLimiter) paces calls to stay under the free
+    tier's requests/minute cap; on top of that, a 429 response is retried
+    against the actual wait Groq reports (_parse_retry_after_seconds)
+    rather than the fixed retry_delay, since the free tier's real
+    constraint is tokens/minute and a browser_search call can eat a big
+    chunk of that bucket in one shot."""
     query = brand_and_name(candidate)
     gcfg = cfg["groq_search"]
     endpoint = gcfg["endpoint"]
@@ -866,6 +917,7 @@ def find_walmart_listing(candidate, api_key, cfg):
     max_retries = gcfg["max_retries"]
     retry_delay = gcfg["retry_delay_seconds"]
     max_urls = gcfg["max_candidate_urls"]
+    max_rate_limit_wait = gcfg.get("max_rate_limit_wait_seconds", 90)
 
     prompt = (
         "Use your browser search tool to find the walmart.com product page for "
@@ -892,6 +944,8 @@ def find_walmart_listing(candidate, api_key, cfg):
     last_error = None
     content = None
     for attempt in range(max_retries + 1):
+        if rate_limiter is not None:
+            rate_limiter.wait()
         try:
             resp = requests.post(
                 endpoint,
@@ -905,6 +959,14 @@ def find_walmart_listing(candidate, api_key, cfg):
                     "reason": f"auth_error: check GROQ_API_KEY (status {resp.status_code})",
                     "top_result_url": None,
                 }
+            if resp.status_code == 429:
+                wait_for = min(_parse_retry_after_seconds(resp, retry_delay), max_rate_limit_wait)
+                last_error = f"429 rate limited (waited {wait_for:.0f}s)"
+                if attempt < max_retries:
+                    log(f"    Groq rate limit hit for {query!r} -- waiting {wait_for:.0f}s "
+                        f"before retry {attempt + 1}/{max_retries}...")
+                    time.sleep(wait_for)
+                continue
             resp.raise_for_status()
             data = resp.json()
             content = ((data.get("choices") or [{}])[0].get("message") or {}).get("content") or ""
@@ -1547,7 +1609,7 @@ def enrich_candidate(c, ctx):
     cfg = ctx.cfg
 
     # Walmart page via Groq (openai/gpt-oss-20b + browser_search) -> PRODUCT_URL + SKU (the id in the URL).
-    walmart = find_walmart_listing(c, ctx.groq_key, cfg)
+    walmart = find_walmart_listing(c, ctx.groq_key, cfg, ctx.groq_rate_limiter)
     if not walmart["product_url"]:
         reason = walmart["reason"]
         if reason.startswith("auth_error"):
@@ -1713,6 +1775,7 @@ def main():
         cfg=cfg, pool=pool, active_skus=active_skus, location_id=location_id,
         groq_key=groq_key, gemini_key=gemini_key, usda_key=usda_key,
         ddgs=DDGS(), rate_limiter=_RateLimiter(cfg["gemini"]["min_call_interval_seconds"]),
+        groq_rate_limiter=_RateLimiter(cfg["groq_search"]["min_call_interval_seconds"]),
         idx=next_index(pool), run_date=datetime.now(timezone.utc).isoformat(),
     )
 
