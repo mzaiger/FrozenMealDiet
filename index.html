@@ -1499,11 +1499,12 @@ function renderCurrentOrSaved(){
   const totals = weekTotals(days);
   document.getElementById('week-totals').style.display = 'grid';
   document.getElementById('total-calories').textContent = `${totals.calories.toLocaleString()}*`;
-  document.getElementById('total-cost').textContent = `$${totals.cost.toFixed(2)}*`;
+  const actualPerMeal = totals.mealCount > 0 ? (totals.cost / totals.mealCount) : 0;
+  document.getElementById('total-cost').textContent = `$${totals.cost.toFixed(2)}* ($${actualPerMeal.toFixed(2)}/meal)`;
   document.getElementById('week-goal').textContent = (target * 7).toLocaleString();
   const costGoalEl = document.getElementById('week-cost-goal');
   if(capInfo && capInfo.capActive){
-    costGoalEl.textContent = `$${(capInfo.maxPrice * totals.mealCount).toFixed(2)}`;
+    costGoalEl.textContent = `$${(capInfo.maxPrice * totals.mealCount).toFixed(2)} ($${capInfo.maxPrice.toFixed(2)}/meal)`;
   }else{
     costGoalEl.textContent = 'No cap';
   }
