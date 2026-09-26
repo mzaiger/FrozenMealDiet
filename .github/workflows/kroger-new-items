@@ -1,4 +1,4 @@
-name: Discover new frozen items (Kroger + Serper + USDA + Gemini)
+name: Discover new frozen items (Kroger + Groq + USDA + Gemini)
 
 on:
   schedule:
@@ -44,7 +44,7 @@ jobs:
         env:
           KROGER_CLIENT_ID: ${{ secrets.KROGER_CLIENT_ID }}
           KROGER_CLIENT_SECRET: ${{ secrets.KROGER_CLIENT_SECRET }}
-          SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
           USDA_API_KEY: ${{ secrets.USDA_API_KEY }}
           # Store to take Kroger prices from. KROGER_ZIP (secret or variable)
