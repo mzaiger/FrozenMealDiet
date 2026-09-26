@@ -839,6 +839,14 @@ def find_walmart_listing(ddgs, candidate, cfg):
             time.sleep(wait)
             backoff = min(backoff * 2, 60)
         except (DDGSException, Exception) as e:  # noqa: BLE001
+            # ddgs raises DDGSException("No results found.") instead of
+            # returning [] when a search genuinely turns up nothing --
+            # that's a real answer, not a transient failure, so it's
+            # taken immediately instead of burning through retries/backoff
+            # for something that won't be different on attempt 2.
+            if "no results" in str(e).lower():
+                results = []
+                break
             last_error = str(e)
             if attempt < max_retries:
                 wait = min(backoff + random.uniform(0, 2), 90.0)
@@ -931,6 +939,13 @@ def search_image(ddgs, query, cfg):
             time.sleep(wait)
             backoff = min(backoff * 2, 60)
         except (DDGSException, Exception) as e:  # noqa: BLE001
+            # ddgs raises DDGSException("No results found.") instead of
+            # returning [] when a search genuinely turns up nothing --
+            # that's a real answer, not a transient failure, so it's
+            # taken immediately instead of burning through retries/backoff
+            # for something that won't be different on attempt 2.
+            if "no results" in str(e).lower():
+                return None, "no_results"
             if attempt < max_retries:
                 wait = min(backoff + random.uniform(0, 2), 90.0)
                 log(f"  DDG error on {query!r} (attempt {attempt}/{max_retries}): {e} -- retrying in {wait:.1f}s")
