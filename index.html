@@ -1498,7 +1498,8 @@ function renderCurrentOrSaved(){
 
   const totals = weekTotals(days);
   document.getElementById('week-totals').style.display = 'grid';
-  document.getElementById('total-calories').textContent = `${totals.calories.toLocaleString()}*`;
+  const caloriesPerMeal = totals.mealCount > 0 ? Math.round(totals.calories / totals.mealCount) : 0;
+  document.getElementById('total-calories').textContent = `${totals.calories.toLocaleString()}* (${caloriesPerMeal.toLocaleString()}/meal)`;
   const actualPerMeal = totals.mealCount > 0 ? (totals.cost / totals.mealCount) : 0;
   document.getElementById('total-cost').textContent = `$${totals.cost.toFixed(2)}* ($${actualPerMeal.toFixed(2)}/meal)`;
   document.getElementById('week-goal').textContent = (target * 7).toLocaleString();
