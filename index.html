@@ -1499,10 +1499,12 @@ function renderCurrentOrSaved(){
   const totals = weekTotals(days);
   document.getElementById('week-totals').style.display = 'grid';
   const caloriesPerMeal = totals.mealCount > 0 ? Math.round(totals.calories / totals.mealCount) : 0;
-  document.getElementById('total-calories').textContent = `${totals.calories.toLocaleString()}* (${caloriesPerMeal.toLocaleString()}/meal)`;
+  document.getElementById('total-calories').textContent = `${totals.calories.toLocaleString()} cal* (${caloriesPerMeal.toLocaleString()} cal/meal)`;
   const actualPerMeal = totals.mealCount > 0 ? (totals.cost / totals.mealCount) : 0;
   document.getElementById('total-cost').textContent = `$${totals.cost.toFixed(2)}* ($${actualPerMeal.toFixed(2)}/meal)`;
-  document.getElementById('week-goal').textContent = (target * 7).toLocaleString();
+  const weekGoalCals = target * 7;
+  const goalCaloriesPerMeal = totals.mealCount > 0 ? Math.round(weekGoalCals / totals.mealCount) : 0;
+  document.getElementById('week-goal').textContent = `${weekGoalCals.toLocaleString()} cal (${goalCaloriesPerMeal.toLocaleString()} cal/meal)`;
   const costGoalEl = document.getElementById('week-cost-goal');
   if(capInfo && capInfo.capActive){
     costGoalEl.textContent = `$${(capInfo.maxPrice * totals.mealCount).toFixed(2)} ($${capInfo.maxPrice.toFixed(2)}/meal)`;
