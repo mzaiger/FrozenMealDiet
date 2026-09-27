@@ -354,6 +354,12 @@
     color:var(--blue-deep);
   }
 
+  .week-totals .total-item .value .per-meal{
+    font-size:12px;
+    font-weight:500;
+    color:var(--ink-soft);
+  }
+
   @media (max-width:640px){
     .week-totals{
       grid-template-columns:repeat(2, minmax(0,1fr));
@@ -1499,15 +1505,15 @@ function renderCurrentOrSaved(){
   const totals = weekTotals(days);
   document.getElementById('week-totals').style.display = 'grid';
   const caloriesPerMeal = totals.mealCount > 0 ? Math.round(totals.calories / totals.mealCount) : 0;
-  document.getElementById('total-calories').textContent = `${totals.calories.toLocaleString()} cal* (${caloriesPerMeal.toLocaleString()} cal/meal)`;
+  document.getElementById('total-calories').innerHTML = `${totals.calories.toLocaleString()} cal*<br><span class="per-meal">${caloriesPerMeal.toLocaleString()} cal/meal</span>`;
   const actualPerMeal = totals.mealCount > 0 ? (totals.cost / totals.mealCount) : 0;
-  document.getElementById('total-cost').textContent = `$${totals.cost.toFixed(2)}* ($${actualPerMeal.toFixed(2)}/meal)`;
+  document.getElementById('total-cost').innerHTML = `$${totals.cost.toFixed(2)}*<br><span class="per-meal">$${actualPerMeal.toFixed(2)}/meal</span>`;
   const weekGoalCals = target * 7;
   const goalCaloriesPerMeal = totals.mealCount > 0 ? Math.round(weekGoalCals / totals.mealCount) : 0;
-  document.getElementById('week-goal').textContent = `${weekGoalCals.toLocaleString()} cal (${goalCaloriesPerMeal.toLocaleString()} cal/meal)`;
+  document.getElementById('week-goal').innerHTML = `${weekGoalCals.toLocaleString()} cal<br><span class="per-meal">${goalCaloriesPerMeal.toLocaleString()} cal/meal</span>`;
   const costGoalEl = document.getElementById('week-cost-goal');
   if(capInfo && capInfo.capActive){
-    costGoalEl.textContent = `$${(capInfo.maxPrice * totals.mealCount).toFixed(2)} ($${capInfo.maxPrice.toFixed(2)}/meal)`;
+    costGoalEl.innerHTML = `$${(capInfo.maxPrice * totals.mealCount).toFixed(2)}<br><span class="per-meal">$${capInfo.maxPrice.toFixed(2)}/meal</span>`;
   }else{
     costGoalEl.textContent = 'No cap';
   }
