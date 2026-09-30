@@ -4,59 +4,102 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Poor Man's Frozen Meal Diet</title>
+<meta name="theme-color" content="#123645" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;900&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
+  /* Look: freezer-aisle steel, shelf-tag yellow, Franklin Gothic type.
+     Fonts: Libre Franklin (everything) + Permanent Marker (day labels only).
+     Header photo: Unsplash, free to use under the Unsplash License. To swap it,
+     change the URL in --hero-photo below. */
   :root{
-    --frost: #EAF3F6;
+    --paper: #EEF2F0;
     --card: #FFFFFF;
-    --ink: #12232E;
-    --ink-soft: #4C6270;
-    --line: #D3E3E9;
-    --blue: #1E5F8C;
-    --blue-deep: #123B57;
-    --ice: #8FD9E8;
-    --good: #2C8C5E;
-    --warn: #C1443C;
+    --frost: #E6EDEB;
+    --line: #CBD6D3;
+    --line-strong: #AEBFBB;
+    --ink: #16262D;
+    --ink-soft: #4A5D65;
+    --steel: #2A5E73;
+    --steel-deep: #123645;
+    --tag: #F5C83B;
+    --tag-deep: #E3B21F;
+    --tape: #E7D8B2;
+    --good: #2B7A4B;
+    --warn: #B3382C;
+    --sans: 'Libre Franklin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --hand: 'Permanent Marker', 'Marker Felt', 'Bradley Hand', cursive;
+    --hero-photo: url("https://images.unsplash.com/photo-1601599967100-f16100982063?auto=format&fit=crop&w=1800&q=70");
+    /* Other free frozen-food photos that work here: photo-1438907046657-4ae137eb8c5e
+       (frozen berries), photo-1651383140368-9b3ee59c2981 (shelf of food). */
   }
 
   *{ box-sizing:border-box; }
 
   body{
     margin:0;
-    background:var(--frost);
-    background-image:
-      radial-gradient(circle at 10% 0%, rgba(143,217,232,0.35), transparent 45%),
-      radial-gradient(circle at 90% 15%, rgba(30,95,140,0.10), transparent 40%);
+    background:var(--paper);
     color:var(--ink);
-    font-family:'Inter', sans-serif;
+    font-family:var(--sans);
     padding:0 0 80px;
   }
 
+  /* Full-bleed photo band. The side padding keeps the content on the same
+     1080px column as <main>. */
   header{
-    max-width:1080px;
-    margin:0 auto;
-    padding:56px 24px 16px;
+    position:relative;
+    background:var(--steel-deep);
+    color:#fff;
+    padding:56px max(24px, calc(50% - 516px)) 28px;
   }
 
-  .kicker{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:13px;
-    letter-spacing:0.08em;
-    color:var(--blue);
+  @supports (mix-blend-mode:multiply){
+    header{
+      isolation:isolate;
+      background:#fff;
+    }
+
+    header::before,
+    header::after{
+      content:'';
+      position:absolute;
+      top:0;
+      right:0;
+      bottom:0;
+      left:0;
+      z-index:-1;
+    }
+
+    /* The photo, flattened to greys... */
+    header::before{
+      background:var(--hero-photo) center 40% / cover no-repeat;
+      filter:grayscale(1) contrast(1.15);
+    }
+
+    /* ...then dyed steel blue. Multiply can only darken, so the lightest pixel
+       of any photo is never lighter than the steel itself and the white type
+       stays readable whichever photo is used. If the photo fails to load, the
+       header is simply solid steel. */
+    header::after{
+      background:var(--steel);
+      mix-blend-mode:multiply;
+    }
   }
 
   h1{
-    font-family:'Bebas Neue', sans-serif;
+    font-family:var(--sans);
+    font-weight:900;
     font-size:clamp(40px, 7vw, 64px);
-    letter-spacing:0.01em;
-    margin:6px 0 8px;
-    color:var(--blue-deep);
-    line-height:0.95;
+    letter-spacing:-0.025em;
+    margin:0 0 10px;
+    color:#fff;
+    line-height:1;
+    text-wrap:balance;
   }
 
   .sub{
-    color:var(--ink-soft);
+    color:rgba(255,255,255,0.88);
     max-width:560px;
     font-size:15px;
     line-height:1.5;
@@ -78,8 +121,9 @@
        a bit wider than Chrome, e.g. iPad. */
     max-width:615px;
     background:var(--card);
+    color:var(--ink);
     border:1px solid var(--line);
-    border-radius:10px;
+    border-radius:4px;
     padding:20px 24px;
   }
 
@@ -122,17 +166,18 @@
   .field label{
     display:block;
     font-size:11px;
+    font-weight:600;
     color:var(--ink-soft);
     margin-bottom:6px;
   }
 
   .field input{
-    font-family:'IBM Plex Mono', monospace;
+    font-family:var(--sans);
     font-size:20px;
-    font-weight:600;
-    color:var(--blue-deep);
-    border:1px solid var(--line);
-    border-radius:6px;
+    font-weight:700;
+    color:var(--steel-deep);
+    border:1px solid var(--line-strong);
+    border-radius:3px;
     padding:8px 12px;
     width:120px;
     background:var(--frost);
@@ -154,8 +199,10 @@
     width:13px;
     height:13px;
     margin:0;
+    position:relative;
+    top:1px;
     cursor:pointer;
-    accent-color:var(--blue);
+    accent-color:var(--steel);
   }
 
   .diet-filters{
@@ -174,21 +221,27 @@
     color:var(--ink);
   }
 
+  .field .diet-checkbox-label{
+    font-weight:400;
+  }
+
   .diet-checkbox-label input[type="checkbox"]{
     width:13px;
     height:13px;
     margin:0;
+    position:relative;
+    top:1px;
     cursor:pointer;
-    accent-color:var(--blue);
+    accent-color:var(--steel);
   }
 
   .field select{
-    font-family:'Inter', sans-serif;
+    font-family:var(--sans);
     font-size:12px;
     font-weight:600;
-    color:var(--blue-deep);
-    border:1px solid var(--line);
-    border-radius:6px;
+    color:var(--steel-deep);
+    border:1px solid var(--line-strong);
+    border-radius:3px;
     padding:9px 10px;
     width:260px;
     background:var(--frost);
@@ -196,12 +249,12 @@
   }
 
   .field select:focus{
-    outline:2px solid var(--blue);
+    outline:2px solid var(--steel);
     outline-offset:1px;
   }
 
   .field input:focus{
-    outline:2px solid var(--blue);
+    outline:2px solid var(--steel);
     outline-offset:1px;
   }
 
@@ -214,13 +267,13 @@
   }
 
   button#generate{
-    font-family:'Inter', sans-serif;
-    font-weight:600;
+    font-family:var(--sans);
+    font-weight:700;
     font-size:14px;
-    background:var(--blue);
-    color:#fff;
-    border:none;
-    border-radius:6px;
+    background:var(--tag);
+    color:var(--ink);
+    border:1px solid rgba(22,38,45,0.3);
+    border-radius:3px;
     padding:13px 14px;
     width:140px;
     text-align:center;
@@ -228,12 +281,10 @@
     transition:background 0.15s ease;
   }
 
-  button#generate:hover{ background:var(--blue-deep); }
-  button#generate:focus-visible{ outline:2px solid var(--blue-deep); outline-offset:2px; }
+  button#generate:hover{ background:var(--tag-deep); }
+  button#generate:focus-visible{ outline:2px solid var(--steel-deep); outline-offset:2px; }
 
-  /* Filtered pool counter -- same glowing-ring treatment as the stat circles on
-     the Sportsbook dashboard (picks.html), recolored to the Generate button's
-     blue and scaled down. Label sits to the LEFT of the circle. The count is a
+  /* Filtered pool counter: label sits to the LEFT of the circle. The count is a
      stacked fraction (filtered over total) so 4-digit pool sizes still fit. */
   .pool-badge{
     display:flex;
@@ -250,12 +301,10 @@
   }
 
   .pool-badge-title b{
-    font-family:'Bebas Neue', sans-serif;
-    font-weight:400;
-    font-size:19px;
-    letter-spacing:0.02em;
+    font-family:var(--sans);
+    font-weight:800;
+    font-size:14px;
     color:var(--ink);
-    text-transform:uppercase;
   }
 
   .pool-badge-title span{
@@ -274,14 +323,13 @@
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    font-family:'IBM Plex Mono', monospace;
-    font-weight:600;
+    font-family:var(--sans);
+    font-weight:800;
     font-size:13px;
     line-height:1;
-    color:var(--blue);
-    border:3px solid var(--blue);
-    background:radial-gradient(circle at 32% 28%, rgba(30,95,140,0.28), rgba(30,95,140,0.04));
-    box-shadow:0 0 16px rgba(30,95,140,0.4), inset 0 0 12px rgba(30,95,140,0.18);
+    color:var(--steel-deep);
+    border:3px solid var(--steel);
+    background:var(--card);
   }
 
   .pool-circle .bar{
@@ -290,7 +338,7 @@
     height:2px;
     margin:3px 0;
     border-radius:1px;
-    background:var(--blue);
+    background:var(--steel);
   }
 
   /* Hanging indent: the asterisk sits in its own column so line 2 (and any
@@ -299,43 +347,51 @@
     display:flex;
     gap:0.4em;
     font-size:12px;
-    color:var(--ink-soft);
+    color:rgba(255,255,255,0.84);
     margin-top:14px;
     line-height:1.5;
   }
+
+  .calc-note strong{ color:#fff; }
 
   .calc-note .calc-star{
     flex:none;
   }
 
+  /* Sits on the photo, so it's a solid slip rather than a tint. */
   .budget-summary{
-    font-family:'IBM Plex Mono', monospace;
     font-size:13px;
     font-weight:600;
+    line-height:1.4;
     margin-top:10px;
     padding:10px 14px;
-    border-radius:6px;
+    border-radius:3px;
+    border-left:4px solid var(--steel);
+    background:var(--card);
     display:inline-block;
+    max-width:100%;
   }
 
   .budget-summary.in-range{
     color:var(--good);
-    background:rgba(44,140,94,0.1);
+    border-left-color:var(--good);
   }
 
   .budget-summary.off-range{
     color:var(--warn);
-    background:rgba(193,68,60,0.1);
+    border-left-color:var(--warn);
   }
 
+  /* Heavy top rule borrowed from the back-of-box nutrition panel. */
   .week-totals{
     display:grid;
     grid-template-columns:repeat(4, auto);
     gap:24px 32px;
     background:var(--card);
-    border:1px solid var(--line);
-    border-radius:10px;
-    padding:18px 24px;
+    border:1px solid var(--ink);
+    border-top-width:8px;
+    border-radius:2px;
+    padding:14px 24px 18px;
     margin-top:16px;
     margin-bottom:8px;
     width:fit-content;
@@ -343,15 +399,16 @@
 
   .week-totals .total-item .label{
     font-size:12px;
+    font-weight:600;
     color:var(--ink-soft);
     margin-bottom:4px;
   }
 
   .week-totals .total-item .value{
-    font-family:'IBM Plex Mono', monospace;
+    font-family:var(--sans);
     font-size:16px;
-    font-weight:700;
-    color:var(--blue-deep);
+    font-weight:800;
+    color:var(--ink);
   }
 
   .week-totals .total-item .value .per-meal{
@@ -384,18 +441,31 @@
   .day-card{
     background:var(--card);
     border:1px solid var(--line);
-    border-radius:10px;
+    border-radius:4px;
     padding:20px 22px 18px;
     display:flex;
     flex-direction:column;
     gap:14px;
   }
 
+  /* Day names are the masking-tape-and-marker labels you stick on freezer
+     containers. Delete this rule (and the nth-child one) for plain text. */
   .day-name{
-    font-family:'Bebas Neue', sans-serif;
-    font-size:26px;
-    color:var(--blue-deep);
-    letter-spacing:0.02em;
+    display:inline-block;
+    font-family:var(--hand);
+    font-size:22px;
+    line-height:1.15;
+    color:var(--ink);
+    padding:4px 16px 3px 14px;
+    background:var(--tape);
+    transform:rotate(-1.5deg);
+    transform-origin:left center;
+    -webkit-clip-path:polygon(0 0, 100% 0, calc(100% - 3px) 25%, 100% 50%, calc(100% - 3px) 75%, 100% 100%, 0 100%, 3px 75%, 0 50%, 3px 25%);
+    clip-path:polygon(0 0, 100% 0, calc(100% - 3px) 25%, 100% 50%, calc(100% - 3px) 75%, 100% 100%, 0 100%, 3px 75%, 0 50%, 3px 25%);
+  }
+
+  .day-card:nth-child(even) .day-name{
+    transform:rotate(1deg);
   }
 
   .meal-row{
@@ -413,8 +483,8 @@
 
   .meal-slot{
     font-size:11px;
-    color:var(--blue);
-    font-weight:600;
+    color:var(--steel);
+    font-weight:700;
     text-transform:lowercase;
   }
 
@@ -433,21 +503,29 @@
 
   .meal-link{
     font-size:11px;
-    color:var(--blue);
-    text-decoration:none;
+    color:var(--steel);
+    text-decoration:underline;
+    text-decoration-color:rgba(42,94,115,0.35);
+    text-underline-offset:2px;
     margin-left:6px;
     white-space:nowrap;
   }
 
-  .meal-link:hover{ text-decoration:underline; }
+  .meal-link:hover{ text-decoration-color:currentColor; }
 
   .meal-cal{
-    font-family:'IBM Plex Mono', monospace;
+    font-family:var(--sans);
     font-size:14px;
-    font-weight:600;
-    color:var(--ink-soft);
+    font-weight:700;
+    color:var(--ink);
     white-space:nowrap;
     padding-top:1px;
+  }
+
+  .meal-price{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:2px;
   }
 
   .meal-thumb-link{ flex-shrink:0; display:block; }
@@ -456,7 +534,8 @@
     width:90px;
     height:auto;
     max-height:150px;
-    border-radius:8px;
+    border:1px solid var(--line);
+    border-radius:3px;
     object-fit:contain;
     display:block;
     background:var(--card);
@@ -465,8 +544,8 @@
   .meal-thumb-empty{
     width:90px;
     height:90px;
-    background:linear-gradient(135deg, var(--frost), var(--ice));
-    opacity:0.6;
+    background:var(--frost);
+    border-style:dashed;
   }
 
   .meal-view-link{
@@ -491,16 +570,22 @@
   }
 
   .day-header-totals .value{
-    font-family:'IBM Plex Mono', monospace;
+    font-family:var(--sans);
     font-size:16px;
-    font-weight:700;
+    font-weight:800;
   }
 
+  /* The day's cost is the number this whole page is about, so it gets the
+     shelf-tag treatment. */
   .day-header-totals .price{
+    display:inline-block;
     font-size:12px;
-    color:var(--ink-soft);
-    font-family:'IBM Plex Mono', monospace;
-    margin-top:2px;
+    font-weight:700;
+    color:var(--ink);
+    background:var(--tag);
+    border-radius:2px;
+    padding:1px 7px;
+    margin-top:3px;
   }
 
   .value.in-range{ color:var(--good); }
@@ -513,8 +598,8 @@
   }
 
   .empty-state{
-    border:1px dashed var(--line);
-    border-radius:10px;
+    border:1.5px dashed var(--line-strong);
+    border-radius:4px;
     padding:40px 24px;
     text-align:center;
     color:var(--ink-soft);
@@ -524,29 +609,30 @@
   .tab-bar{
     display:flex;
     flex-wrap:wrap;
-    gap:8px;
+    gap:6px;
     margin-top:14px;
   }
 
   .tab-btn{
-    font-family:'Inter', sans-serif;
+    font-family:var(--sans);
     font-size:13px;
     font-weight:600;
     color:var(--ink-soft);
     background:var(--card);
     border:1px solid var(--line);
-    border-radius:8px 8px 0 0;
+    border-radius:4px 4px 0 0;
     padding:10px 16px;
     cursor:pointer;
   }
 
   .tab-btn.active{
-    color:var(--blue-deep);
-    background:var(--frost);
-    border-bottom:2px solid var(--blue);
+    color:var(--ink);
+    background:var(--paper);
+    border-bottom:2px solid var(--steel);
+    box-shadow:inset 0 3px 0 var(--tag);
   }
 
-  .tab-btn:hover:not(.active){ color:var(--blue); }
+  .tab-btn:hover:not(.active){ color:var(--steel); }
 
   .tab-clear{
     color:var(--warn);
@@ -554,24 +640,22 @@
     background:var(--card);
   }
 
-  .tab-clear:hover{ background:rgba(193,68,60,0.08); }
+  .tab-clear:hover{ background:rgba(179,56,44,0.08); }
 
   .regen-btn{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:10px;
+    font-family:var(--sans);
+    font-size:11px;
     font-weight:600;
-    letter-spacing:0.02em;
-    color:var(--blue);
-    background:var(--frost);
-    border:1px solid var(--line);
-    border-radius:5px;
-    padding:3px 7px;
+    color:var(--steel);
+    background:var(--card);
+    border:1px solid var(--line-strong);
+    border-radius:3px;
+    padding:3px 8px;
     margin-top:5px;
     cursor:pointer;
-    text-transform:uppercase;
   }
 
-  .regen-btn:hover{ background:var(--ice); border-color:var(--blue); }
+  .regen-btn:hover{ background:var(--frost); border-color:var(--steel); }
 
   .save-bar{
     display:flex;
@@ -588,19 +672,19 @@
 
   button#save-week,
   button#save-week-top{
-    font-family:'Inter', sans-serif;
-    font-weight:600;
+    font-family:var(--sans);
+    font-weight:700;
     font-size:14px;
-    background:var(--blue-deep);
+    background:var(--steel-deep);
     color:#fff;
     border:none;
-    border-radius:6px;
+    border-radius:3px;
     padding:11px 18px;
     cursor:pointer;
   }
 
   button#save-week:hover,
-  button#save-week-top:hover{ background:var(--blue); }
+  button#save-week-top:hover{ background:var(--steel); }
   button#save-week:disabled,
   button#save-week-top:disabled{ background:var(--line); color:var(--ink-soft); cursor:default; }
 
@@ -609,14 +693,13 @@
     color:var(--ink-soft);
   }
 
-  /* Same faded-tint pill as before, just blue (the Generate button's blue)
-     instead of green. */
   .save-confirmation{
     font-size:13px;
     font-weight:600;
-    color:var(--blue);
-    background:rgba(30,95,140,0.1);
-    border-radius:6px;
+    color:var(--steel-deep);
+    background:rgba(42,94,115,0.12);
+    border-left:4px solid var(--steel);
+    border-radius:3px;
     padding:10px 14px;
     margin-top:16px;
     margin-bottom:16px;
@@ -632,17 +715,26 @@
   }
 
   .empty-state code{
-    font-family:'IBM Plex Mono', monospace;
+    font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size:0.92em;
     background:var(--frost);
     padding:2px 6px;
-    border-radius:4px;
+    border-radius:3px;
+  }
+
+  a:focus-visible,
+  .tab-btn:focus-visible,
+  .regen-btn:focus-visible,
+  button#save-week:focus-visible,
+  button#save-week-top:focus-visible{
+    outline:2px solid var(--steel);
+    outline-offset:2px;
   }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="kicker">FROZEN &middot; WEEKLY</div>
   <h1>Poor Man's Frozen Meal Diet</h1>
   <p class="sub">Seven days of meals pulled from the frozen aisle — 3 to 5 meals a day depending on your calorie target, each day landing within 250 calories of goal.</p>
 
@@ -1398,10 +1490,10 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
   const nameHtml = name;
 
   const walmartLinkHtml = url
-    ? `<a class="meal-link" href="${url}" target="_blank" rel="noopener noreferrer">View on walmart.com &rarr;</a><br/>`
+    ? `<a class="meal-link" href="${url}" target="_blank" rel="noopener noreferrer">View on walmart.com</a><br/>`
     : '';
   const instacartLinkHtml = instacartUrl
-    ? `<a class="meal-link meal-link-instacart" href="${instacartUrl}" target="_blank" rel="noopener noreferrer">View on Instacart &rarr;</a>`
+    ? `<a class="meal-link meal-link-instacart" href="${instacartUrl}" target="_blank" rel="noopener noreferrer">View on Instacart</a>`
     : '';
   const viewLink = (walmartLinkHtml || instacartLinkHtml)
     ? `<div class="meal-view-link">${walmartLinkHtml}${walmartLinkHtml && instacartLinkHtml ? '' : ''}${instacartLinkHtml}</div>`
@@ -1429,7 +1521,7 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
     </div>
     <div style="text-align:right;">
       <div class="meal-cal">${calories} cal*</div>
-      <div style="font-size:12px; color:var(--ink-soft); margin-top:2px;">${priceDisplay}</div>
+      <div class="meal-price">${priceDisplay}</div>
     </div>
   `;
   return row;
