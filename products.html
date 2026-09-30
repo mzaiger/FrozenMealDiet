@@ -4,63 +4,100 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Products &middot; Poor Man's Frozen Meal Diet</title>
+<meta name="theme-color" content="#123645" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
+  /* Same look as index.html: freezer-aisle steel, shelf-tag yellow, Franklin
+     Gothic type. Header photo: Unsplash (free under the Unsplash License);
+     change the URL in --hero-photo to swap it. */
   :root{
-    --frost: #EAF3F6;
+    --paper: #EEF2F0;
     --card: #FFFFFF;
-    --ink: #12232E;
-    --ink-soft: #4C6270;
-    --line: #D3E3E9;
-    --blue: #1E5F8C;
-    --blue-deep: #123B57;
-    --ice: #8FD9E8;
-    --good: #2C8C5E;
-    --warn: #C1443C;
+    --frost: #E6EDEB;
+    --line: #CBD6D3;
+    --line-strong: #AEBFBB;
+    --ink: #16262D;
+    --ink-soft: #4A5D65;
+    --steel: #2A5E73;
+    --steel-deep: #123645;
+    --good: #2B7A4B;
+    --warn: #B3382C;
+    --sans: 'Libre Franklin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --hero-photo: url("https://images.unsplash.com/photo-1549099609-a3695f648b9f?auto=format&fit=crop&w=1800&q=70");
   }
 
   *{ box-sizing:border-box; }
 
   body{
     margin:0;
-    background:var(--frost);
-    background-image:
-      radial-gradient(circle at 10% 0%, rgba(143,217,232,0.35), transparent 45%),
-      radial-gradient(circle at 90% 15%, rgba(30,95,140,0.10), transparent 40%);
+    background:var(--paper);
     color:var(--ink);
-    font-family:'Inter', sans-serif;
+    font-family:var(--sans);
     padding:0 0 80px;
   }
 
+  /* Full-bleed photo band. The side padding keeps the content on the same
+     1080px column as <main>. */
   header{
-    max-width:1080px;
-    margin:0 auto;
-    padding:56px 24px 16px;
+    position:relative;
+    background:var(--steel-deep);
+    color:#fff;
+    padding:56px max(24px, calc(50% - 516px)) 28px;
+    margin-bottom:28px;
   }
 
-  .kicker{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:13px;
-    letter-spacing:0.08em;
-    color:var(--blue);
+  @supports (mix-blend-mode:multiply){
+    header{
+      isolation:isolate;
+      background:#fff;
+    }
+
+    header::before,
+    header::after{
+      content:'';
+      position:absolute;
+      top:0;
+      right:0;
+      bottom:0;
+      left:0;
+      z-index:-1;
+    }
+
+    /* The photo, flattened to greys... */
+    header::before{
+      background:var(--hero-photo) center 40% / cover no-repeat;
+      filter:grayscale(1) contrast(1.15);
+    }
+
+    /* ...then dyed steel blue. Multiply can only darken, so the lightest pixel
+       of any photo is never lighter than the steel itself and the white type
+       stays readable whichever photo is used. If the photo fails to load, the
+       header is simply solid steel. */
+    header::after{
+      background:var(--steel);
+      mix-blend-mode:multiply;
+    }
   }
 
   h1{
-    font-family:'Bebas Neue', sans-serif;
+    font-family:var(--sans);
+    font-weight:900;
     font-size:clamp(36px, 6vw, 56px);
-    letter-spacing:0.01em;
-    margin:6px 0 8px;
-    color:var(--blue-deep);
-    line-height:0.95;
+    letter-spacing:-0.025em;
+    margin:0 0 10px;
+    color:#fff;
+    line-height:1;
+    text-wrap:balance;
   }
 
   .sub{
-    color:var(--ink-soft);
+    color:rgba(255,255,255,0.88);
     max-width:640px;
     font-size:15px;
     line-height:1.5;
-    margin:0 0 8px;
+    margin:0;
   }
 
   main{
@@ -76,16 +113,16 @@
     gap:14px;
     background:var(--card);
     border:1px solid var(--line);
-    border-radius:10px;
+    border-radius:4px;
     padding:14px 18px;
     margin-bottom:18px;
   }
 
   .toolbar input[type="search"]{
-    font-family:'Inter', sans-serif;
+    font-family:var(--sans);
     font-size:14px;
-    border:1px solid var(--line);
-    border-radius:6px;
+    border:1px solid var(--line-strong);
+    border-radius:3px;
     padding:9px 12px;
     background:var(--frost);
     color:var(--ink);
@@ -94,13 +131,13 @@
   }
 
   .toolbar input[type="search"]:focus{
-    outline:2px solid var(--ice);
+    outline:2px solid var(--steel);
     outline-offset:1px;
   }
 
   .count-label{
-    font-family:'IBM Plex Mono', monospace;
     font-size:12px;
+    font-weight:600;
     color:var(--ink-soft);
     white-space:nowrap;
   }
@@ -117,20 +154,18 @@
     border-collapse:collapse;
     background:var(--card);
     border:1px solid var(--line);
-    border-radius:10px;
+    border-radius:4px;
     overflow:hidden;
   }
 
   thead th{
     text-align:left;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    letter-spacing:0.05em;
-    text-transform:uppercase;
-    color:var(--ink-soft);
+    font-size:12px;
+    font-weight:700;
+    color:var(--ink);
     background:var(--frost);
     padding:10px 14px;
-    border-bottom:1px solid var(--line);
+    border-bottom:2px solid var(--ink);
     position:sticky;
     top:0;
   }
@@ -144,7 +179,7 @@
   }
 
   tbody tr:hover{
-    background:rgba(143,217,232,0.10);
+    background:rgba(42,94,115,0.06);
   }
 
   td{
@@ -161,9 +196,9 @@
     width:56px;
     height:56px;
     object-fit:contain;
-    background:var(--frost);
+    background:var(--card);
     border:1px solid var(--line);
-    border-radius:6px;
+    border-radius:3px;
     display:block;
   }
 
@@ -171,21 +206,21 @@
     width:56px;
     height:56px;
     background:var(--frost);
-    border:1px solid var(--warn);
-    border-radius:6px;
+    border:1px dashed var(--warn);
+    border-radius:3px;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-family:'IBM Plex Mono', monospace;
     font-size:9px;
+    font-weight:600;
     color:var(--warn);
     text-align:center;
     line-height:1.2;
   }
 
   .prod-sku{
-    font-family:'IBM Plex Mono', monospace;
     font-size:12px;
+    font-weight:600;
     color:var(--ink-soft);
   }
 
@@ -201,22 +236,24 @@
   }
 
   .prod-link{
-    font-family:'IBM Plex Mono', monospace;
     font-size:12px;
-    color:var(--blue);
-    text-decoration:none;
+    font-weight:600;
+    color:var(--steel);
+    text-decoration:underline;
+    text-decoration-color:rgba(42,94,115,0.35);
+    text-underline-offset:2px;
   }
 
   .prod-link:hover{
-    text-decoration:underline;
+    text-decoration-color:currentColor;
   }
 
   .prod-link-instacart{
     color:var(--good);
+    text-decoration-color:rgba(43,122,75,0.35);
   }
 
   .prod-link-missing{
-    font-family:'IBM Plex Mono', monospace;
     font-size:12px;
     color:var(--ink-soft);
     opacity:0.6;
@@ -232,18 +269,19 @@
   }
 
   .pager button{
-    font-family:'IBM Plex Mono', monospace;
+    font-family:var(--sans);
     font-size:13px;
-    border:1px solid var(--line);
+    font-weight:600;
+    border:1px solid var(--line-strong);
     background:var(--card);
-    color:var(--blue-deep);
-    border-radius:6px;
+    color:var(--steel-deep);
+    border-radius:3px;
     padding:8px 12px;
     cursor:pointer;
   }
 
   .pager button:hover:not(:disabled){
-    border-color:var(--blue);
+    border-color:var(--steel);
   }
 
   .pager button:disabled{
@@ -252,14 +290,14 @@
   }
 
   .pager button.active{
-    background:var(--blue-deep);
-    border-color:var(--blue-deep);
+    background:var(--steel-deep);
+    border-color:var(--steel-deep);
     color:#fff;
   }
 
   .pager .page-jump{
-    font-family:'IBM Plex Mono', monospace;
     font-size:12px;
+    font-weight:600;
     color:var(--ink-soft);
     display:flex;
     align-items:center;
@@ -269,10 +307,11 @@
 
   .pager .page-jump input{
     width:54px;
-    font-family:'IBM Plex Mono', monospace;
+    font-family:var(--sans);
     font-size:13px;
-    border:1px solid var(--line);
-    border-radius:6px;
+    font-weight:600;
+    border:1px solid var(--line-strong);
+    border-radius:3px;
     padding:6px 8px;
     text-align:center;
   }
@@ -285,10 +324,17 @@
   }
 
   .empty-state code{
-    font-family:'IBM Plex Mono', monospace;
+    font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size:0.92em;
     background:var(--frost);
     padding:2px 6px;
-    border-radius:4px;
+    border-radius:3px;
+  }
+
+  a:focus-visible,
+  .pager button:focus-visible{
+    outline:2px solid var(--steel);
+    outline-offset:2px;
   }
 
   @media (max-width:640px){
@@ -309,7 +355,6 @@
 <body>
 
 <header>
-  <div class="kicker">FROZEN &middot; PRODUCT INDEX</div>
   <h1>Products</h1>
   <p class="sub">Every item in the pool, with its current image and links to Walmart / Instacart &mdash; use this to spot missing or wrong thumbnails.</p>
 </header>
@@ -395,11 +440,11 @@
       : `<div class="prod-thumb-empty">no image</div>`;
 
     const walmartLink = walmartUrl
-      ? `<a class="prod-link" href="${escapeHtml(walmartUrl)}" target="_blank" rel="noopener noreferrer">Walmart &rarr;</a>`
+      ? `<a class="prod-link" href="${escapeHtml(walmartUrl)}" target="_blank" rel="noopener noreferrer">Walmart</a>`
       : `<span class="prod-link-missing">no Walmart link</span>`;
 
     const instacartLink = instacartUrl
-      ? `<a class="prod-link prod-link-instacart" href="${escapeHtml(instacartUrl)}" target="_blank" rel="noopener noreferrer">Instacart &rarr;</a>`
+      ? `<a class="prod-link prod-link-instacart" href="${escapeHtml(instacartUrl)}" target="_blank" rel="noopener noreferrer">Instacart</a>`
       : `<span class="prod-link-missing">no Instacart link</span>`;
 
     const tr = document.createElement('tr');
@@ -469,7 +514,6 @@
         const gap = document.createElement('span');
         gap.textContent = '\u2026';
         gap.style.color = 'var(--ink-soft)';
-        gap.style.fontFamily = "'IBM Plex Mono', monospace";
         gap.style.fontSize = '13px';
         container.appendChild(gap);
       }
