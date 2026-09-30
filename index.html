@@ -522,7 +522,37 @@
     margin-top:12px;
   }
 
-  .meal-links + .meal-serving{ margin-top:12px; }
+  /* Left column: product image with the retailer chips stacked beneath it. */
+  .meal-left{
+    flex:0 0 96px;
+    width:96px;
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .meal-left .meal-thumb-link{ align-self:center; }
+
+  .meal-left .meal-links{
+    flex-direction:column;
+    flex-wrap:nowrap;
+    gap:5px;
+    margin-top:8px;
+  }
+
+  .meal-left .meal-link{
+    flex:none;
+    padding-right:8px;
+  }
+
+  /* Right column: calories, price, then the regenerate button. */
+  .meal-right{
+    flex:0 0 auto;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    text-align:right;
+  }
 
   .meal-link{
     --accent:var(--steel);
@@ -723,7 +753,7 @@
     border:1px solid;
     border-radius:3px;
     padding:3px 8px;
-    margin-top:10px;
+    margin-top:8px;
     cursor:pointer;
   }
 
@@ -1585,17 +1615,19 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
     : '';
 
   row.innerHTML = `
-    ${thumb}
+    <div class="meal-left">
+      ${thumb}
+      ${viewLink}
+    </div>
     <div class="meal-info">
       <div class="meal-slot">${slot}</div>
       <div class="meal-name">${nameHtml}</div>
-      ${viewLink}
       <div class="meal-serving">Serving: ${servingsPerContainer}</div>
-      ${regenBtn}
     </div>
-    <div style="text-align:right;">
+    <div class="meal-right">
       <div class="meal-cal">${calories} cal*</div>
       <div class="meal-price">${priceDisplay}</div>
+      ${regenBtn}
     </div>
   `;
   return row;
