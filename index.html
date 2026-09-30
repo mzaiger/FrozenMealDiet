@@ -482,7 +482,7 @@
 
   /* 2 x 3 grid so every row lines up across the columns:
        image        | slot + name | calories + price + serving
-       regenerate   | Walmart     | Instacart                    */
+       regenerate + Walmart + Instacart (one full-width row)    */
   .meal-row{
     display:grid;
     grid-template-columns:80px minmax(0,1fr) auto;
@@ -516,6 +516,9 @@
     font-size:12px;
     color:var(--ink-soft);
     margin-top:3px;
+    max-width:8ch;
+    overflow-wrap:anywhere;
+    text-align:right;
   }
 
   /* Retailer chips: a small brand tile plus the store name. They sit side by
@@ -527,15 +530,21 @@
     margin-top:12px;
   }
 
-  .meal-cell-regen{ justify-self:center; align-self:center; }
-  .meal-cell-walmart{ align-self:center; }
-  .meal-cell-instacart{ align-self:center; justify-self:end; }
-  .meal-cell-walmart .meal-link,
-  .meal-cell-instacart .meal-link{ display:inline-flex; }
+  /* Row 2 is one wide cell; the button and chips sit side by side and are
+     not tied to the columns above. */
+  .meal-actions{
+    grid-column:1 / -1;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:7px;
+  }
 
   .meal-money{
     text-align:right;
   }
+
+  .meal-money .meal-serving{ margin-left:auto; }
 
 
   .meal-link{
@@ -1609,9 +1618,7 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
       <div class="meal-price">${priceDisplay}</div>
       <div class="meal-serving">Serving: ${servingsPerContainer}</div>
     </div>
-    <div class="meal-cell-regen">${regenBtn}</div>
-    <div class="meal-cell-walmart">${walmartLinkHtml}</div>
-    <div class="meal-cell-instacart">${instacartLinkHtml}</div>
+    <div class="meal-actions">${regenBtn}${walmartLinkHtml}${instacartLinkHtml}</div>
   `;
   return row;
 }
