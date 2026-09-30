@@ -533,7 +533,7 @@
 
   .meal-left .regen-btn{ margin-top:8px; }
 
-  /* Right column: calories and price. */
+  /* Right column: calories, price and serving size. */
   .meal-right{
     flex:0 0 auto;
     display:flex;
@@ -1610,12 +1610,12 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
     <div class="meal-info">
       <div class="meal-slot">${slot}</div>
       <div class="meal-name">${nameHtml}</div>
-      <div class="meal-serving">Serving: ${servingsPerContainer}</div>
       ${viewLink}
     </div>
     <div class="meal-right">
       <div class="meal-cal">${calories} cal*</div>
       <div class="meal-price">${priceDisplay}</div>
+      <div class="meal-serving">Serving: ${servingsPerContainer}</div>
     </div>
   `;
   return row;
