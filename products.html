@@ -30,6 +30,18 @@
 
   *{ box-sizing:border-box; }
 
+  .sr-only{
+    position:absolute;
+    width:1px;
+    height:1px;
+    margin:-1px;
+    padding:0;
+    overflow:hidden;
+    clip:rect(0,0,0,0);
+    white-space:nowrap;
+    border:0;
+  }
+
   body{
     margin:0;
     background:var(--paper);
@@ -190,14 +202,14 @@
 
   .col-img{ width:72px; }
   .col-sku{ width:110px; }
-  .col-links{ width:180px; }
+  .col-links{ width:260px; }
 
   .prod-thumb{
     width:56px;
     height:56px;
     object-fit:contain;
     background:var(--card);
-    border:1px solid var(--line);
+    border:0px solid var(--line);
     border-radius:3px;
     display:block;
   }
@@ -229,34 +241,93 @@
     line-height:1.35;
   }
 
-  .prod-links{
+  /* Retailer chips: a small brand tile plus the store name (same as the main
+     page). Two chips stack in the Links column and sit side by side on phones. */
+  div.prod-links{
     display:flex;
-    flex-direction:column;
-    gap:4px;
+    flex-wrap:wrap;
+    gap:7px;
   }
 
   .prod-link{
+    --accent:var(--steel);
+    --tint:rgba(42,94,115,0.07);
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    min-width:104px;
+    padding:3px 12px 3px 3px;
     font-size:12px;
     font-weight:600;
-    color:var(--steel);
-    text-decoration:underline;
-    text-decoration-color:rgba(42,94,115,0.35);
-    text-underline-offset:2px;
+    line-height:20px;
+    color:var(--ink);
+    background:var(--card);
+    border:1px solid var(--line-strong);
+    border-radius:999px;
+    text-decoration:none;
+    white-space:nowrap;
+    -webkit-tap-highlight-color:transparent;
+    transition:color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
   }
 
-  .prod-link:hover{
-    text-decoration-color:currentColor;
+  .prod-link::before{
+    content:'';
+    flex:none;
+    width:20px;
+    height:20px;
+    background:var(--tile) center / contain no-repeat;
+    transition:transform .25s ease;
   }
+
+  .prod-link-walmart{ --tile:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='%232A5E73'/%3E%3Cg fill='%23F5C83B' transform='translate(12 12)'%3E%3Crect x='-1.5' y='-9.3' width='3' height='7' rx='1.5'/%3E%3Crect x='-1.5' y='-9.3' width='3' height='7' rx='1.5' transform='rotate(60)'/%3E%3Crect x='-1.5' y='-9.3' width='3' height='7' rx='1.5' transform='rotate(120)'/%3E%3Crect x='-1.5' y='-9.3' width='3' height='7' rx='1.5' transform='rotate(180)'/%3E%3Crect x='-1.5' y='-9.3' width='3' height='7' rx='1.5' transform='rotate(240)'/%3E%3Crect x='-1.5' y='-9.3' width='3' height='7' rx='1.5' transform='rotate(300)'/%3E%3C/g%3E%3C/svg%3E"); }
 
   .prod-link-instacart{
-    color:var(--good);
-    text-decoration-color:rgba(43,122,75,0.35);
+    --accent:var(--good);
+    --tint:rgba(43,122,75,0.08);
+    --tile:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='%230F3D2A'/%3E%3Cg transform='translate(-0.2 0.3)'%3E%3Cg fill='none' stroke='%236CCB7F' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M15.3 8.6 C15.1 6.5 14.3 5.1 12.9 4.2'/%3E%3Cpath d='M15.3 8.6 C16.3 6.8 17.9 6.1 19.6 6.2'/%3E%3Cpath d='M15.3 8.6 C17.1 8.8 18.5 9.6 19.3 11.1'/%3E%3C/g%3E%3Cpath d='M5.9 18.1 L12.5 7.3 A3.1 3.1 0 0 1 16.9 11.7 Z' fill='%23FF7A1A'/%3E%3C/g%3E%3C/svg%3E");
   }
 
+  .prod-link-name{
+    position:relative;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .prod-link:active{
+    background:var(--tint);
+    border-color:var(--accent);
+  }
+
+  @media (hover:hover){
+    .prod-link:hover{
+      color:var(--accent);
+      background:var(--tint);
+      border-color:var(--accent);
+      box-shadow:0 3px 10px rgba(22,38,45,0.12);
+      transform:translateY(-1px);
+    }
+    .prod-link:hover::before{ transform:rotate(-12deg) scale(1.08); }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .prod-link, .prod-link::before{ transition:none; }
+    .prod-link:hover, .prod-link:hover::before{ transform:none; }
+  }
+
+  /* Placeholder where a link is missing: same size as a chip so rows line up. */
   .prod-link-missing{
+    display:inline-flex;
+    align-items:center;
+    min-width:104px;
+    padding:3px 12px;
     font-size:12px;
+    line-height:20px;
     color:var(--ink-soft);
-    opacity:0.6;
+    border:1px dashed var(--line-strong);
+    border-radius:999px;
+    white-space:nowrap;
   }
 
   .pager{
@@ -440,11 +511,11 @@
       : `<div class="prod-thumb-empty">no image</div>`;
 
     const walmartLink = walmartUrl
-      ? `<a class="prod-link" href="${escapeHtml(walmartUrl)}" target="_blank" rel="noopener noreferrer">Walmart</a>`
+      ? `<a class="prod-link prod-link-walmart" href="${escapeHtml(walmartUrl)}" target="_blank" rel="noopener noreferrer" title="View on walmart.com"><span class="prod-link-name"><span class="sr-only">View on </span>Walmart</span></a>`
       : `<span class="prod-link-missing">no Walmart link</span>`;
 
     const instacartLink = instacartUrl
-      ? `<a class="prod-link prod-link-instacart" href="${escapeHtml(instacartUrl)}" target="_blank" rel="noopener noreferrer">Instacart</a>`
+      ? `<a class="prod-link prod-link-instacart" href="${escapeHtml(instacartUrl)}" target="_blank" rel="noopener noreferrer" title="View on Instacart"><span class="prod-link-name"><span class="sr-only">View on </span>Instacart</span></a>`
       : `<span class="prod-link-missing">no Instacart link</span>`;
 
     const tr = document.createElement('tr');
