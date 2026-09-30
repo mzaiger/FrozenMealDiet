@@ -480,11 +480,16 @@
     transform:rotate(1deg);
   }
 
+  /* 2 x 3 grid so every row lines up across the columns:
+       image        | slot + name | calories + price
+       regenerate   | links       | serving size          */
   .meal-row{
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-    gap:8px;
+    display:grid;
+    grid-template-columns:80px minmax(0,1fr) auto;
+    grid-template-rows:auto auto;
+    column-gap:8px;
+    row-gap:8px;
+    align-items:start;
     padding:10px 0;
     border-top:1px solid var(--line);
   }
@@ -525,25 +530,14 @@
     margin-top:12px;
   }
 
-  /* Left column: product image with the regenerate button beneath it. */
-  .meal-left{
-    flex:0 0 80px;
-    width:80px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
+  .meal-cell-regen{ justify-self:center; }
+  .meal-cell-links .meal-links{ margin-top:0; }
 
-  .meal-left .regen-btn{ margin-top:8px; }
-
-  /* Right column: calories, price and serving size. */
-  .meal-right{
-    flex:0 0 auto;
-    display:flex;
-    flex-direction:column;
-    align-items:flex-end;
+  .meal-money{
     text-align:right;
   }
+
+  .meal-row .meal-serving{ justify-self:end; margin-top:0; }
 
   .meal-link{
     --accent:var(--steel);
@@ -744,7 +738,7 @@
     border:1px solid;
     border-radius:3px;
     padding:3px 8px;
-    margin-top:8px;
+    margin-top:0;
     cursor:pointer;
   }
 
@@ -1606,20 +1600,18 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
     : '';
 
   row.innerHTML = `
-    <div class="meal-left">
-      ${thumb}
-      ${regenBtn}
-    </div>
+    ${thumb}
     <div class="meal-info">
       <div class="meal-slot">${slot}</div>
       <div class="meal-name">${nameHtml}</div>
-      ${viewLink}
     </div>
-    <div class="meal-right">
+    <div class="meal-money">
       <div class="meal-cal">${calories} cal*</div>
       <div class="meal-price">${priceDisplay}</div>
-      <div class="meal-serving">Serving: ${servingsPerContainer}</div>
     </div>
+    <div class="meal-cell-regen">${regenBtn}</div>
+    <div class="meal-cell-links">${viewLink}</div>
+    <div class="meal-serving">Serving: ${servingsPerContainer}</div>
   `;
   return row;
 }
