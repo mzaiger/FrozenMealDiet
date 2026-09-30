@@ -533,27 +533,13 @@
 
   .meal-left .regen-btn{ margin-top:8px; }
 
-  /* Right column: calories, price, then the retailer chips stacked below. */
+  /* Right column: calories and price. */
   .meal-right{
     flex:0 0 auto;
     display:flex;
     flex-direction:column;
     align-items:flex-end;
     text-align:right;
-  }
-
-  .meal-right .meal-links{
-    flex-direction:column;
-    flex-wrap:nowrap;
-    align-items:stretch;
-    gap:5px;
-    margin-top:10px;
-  }
-
-  .meal-right .meal-link{
-    flex:none;
-    justify-content:flex-start;
-    padding-right:10px;
   }
 
   .meal-link{
@@ -1625,11 +1611,11 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
       <div class="meal-slot">${slot}</div>
       <div class="meal-name">${nameHtml}</div>
       <div class="meal-serving">Serving: ${servingsPerContainer}</div>
+      ${viewLink}
     </div>
     <div class="meal-right">
       <div class="meal-cal">${calories} cal*</div>
       <div class="meal-price">${priceDisplay}</div>
-      ${viewLink}
     </div>
   `;
   return row;
