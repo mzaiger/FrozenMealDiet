@@ -1564,10 +1564,10 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
   // Retailer chips: brand tile (drawn in CSS) + store name. "View on" stays in
   // the tooltip and for screen readers.
   const walmartLinkHtml = url
-    ? `<a class="meal-link meal-link-walmart" href="${url}" target="_blank" rel="noopener noreferrer" title="View on walmart.com"><span class="meal-link-name"><span class="sr-only">View on </span>Walmart</span></a>`
+    ? `<a class="meal-link meal-link-walmart" href="${url}" target="_blank" rel="noopener noreferrer" title="View on walmart.com"><span class="meal-link-name"><span class="sr-only">View on </span>Walmart-></span></a>`
     : '';
   const instacartLinkHtml = instacartUrl
-    ? `<a class="meal-link meal-link-instacart" href="${instacartUrl}" target="_blank" rel="noopener noreferrer" title="View on Instacart"><span class="meal-link-name"><span class="sr-only">View on </span>Instacart</span></a>`
+    ? `<a class="meal-link meal-link-instacart" href="${instacartUrl}" target="_blank" rel="noopener noreferrer" title="View on Instacart"><span class="meal-link-name"><span class="sr-only">View on </span>Instacart-></span></a>`
     : '';
   const viewLink = (walmartLinkHtml || instacartLinkHtml)
     ? `<div class="meal-links">${walmartLinkHtml}${instacartLinkHtml}</div>`
