@@ -511,11 +511,11 @@
       : `<div class="prod-thumb-empty">no image</div>`;
 
     const walmartLink = walmartUrl
-      ? `<a class="prod-link prod-link-walmart" href="${escapeHtml(walmartUrl)}" target="_blank" rel="noopener noreferrer" title="View on walmart.com"><span class="prod-link-name"><span class="sr-only">View on </span>Walmart</span></a>`
+      ? `<a class="prod-link prod-link-walmart" href="${escapeHtml(walmartUrl)}" target="_blank" rel="noopener noreferrer" title="View on walmart.com"><span class="prod-link-name"><span class="sr-only">View on </span>Walmart &rarr;</span></a>`
       : `<span class="prod-link-missing">no Walmart link</span>`;
 
     const instacartLink = instacartUrl
-      ? `<a class="prod-link prod-link-instacart" href="${escapeHtml(instacartUrl)}" target="_blank" rel="noopener noreferrer" title="View on Instacart"><span class="prod-link-name"><span class="sr-only">View on </span>Instacart</span></a>`
+      ? `<a class="prod-link prod-link-instacart" href="${escapeHtml(instacartUrl)}" target="_blank" rel="noopener noreferrer" title="View on Instacart"><span class="prod-link-name"><span class="sr-only">View on </span>Instacart &rarr;</span></a>`
       : `<span class="prod-link-missing">no Instacart link</span>`;
 
     const tr = document.createElement('tr');
