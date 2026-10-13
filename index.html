@@ -546,29 +546,6 @@
 
   .meal-money .meal-serving{ margin-left:auto; }
 
-  /* Big "+" under Serving: opens products.html so a meal can be picked by hand. */
-  .pick-btn{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:46px;
-    height:46px;
-    margin:8px 0 0 auto;
-    padding:0 0 4px;
-    font-family:var(--sans);
-    font-size:34px;
-    font-weight:400;
-    line-height:1;
-    color:#fff;
-    background:var(--steel-deep);
-    border:0;
-    border-radius:50%;
-    cursor:pointer;
-    transition:background-color .15s ease, transform .15s ease;
-  }
-  .pick-btn:hover{ background:var(--steel); transform:scale(1.06); }
-  .pick-btn:focus-visible{ outline:2px solid var(--steel); outline-offset:2px; }
-
   /* Brief highlight on the meal you just picked after returning here. */
   @keyframes pickedFlash{
     from{ background:rgba(245,200,59,0.55); }
@@ -1638,6 +1615,7 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
   const regenBtn = canRegenerate
     ? `<button type="button" class="regen-btn" data-day="${dayIndex}" data-slot="${slot}" title="Swap this meal for another option">regenerate</button>`
     : '';
+  const pickBtn = `<button type="button" class="regen-btn pick-btn" data-day="${dayIndex}" data-slot="${slot}" title="Pick this meal by hand from the product list">choose</button>`;
 
   row.innerHTML = `
     ${thumb}
@@ -1649,9 +1627,8 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
       <div class="meal-cal">${calories} cal*</div>
       <div class="meal-price">${priceDisplay}</div>
       <div class="meal-serving">Serving: ${servingsPerContainer}</div>
-      <button type="button" class="pick-btn" data-day="${dayIndex}" data-slot="${slot}" title="Pick this meal by hand from the product list" aria-label="Choose a different meal for ${slot} by hand">+</button>
     </div>
-    <div class="meal-actions">${regenBtn}${walmartLinkHtml}${instacartLinkHtml}</div>
+    <div class="meal-actions">${regenBtn}${pickBtn}${walmartLinkHtml}${instacartLinkHtml}</div>
   `;
   return row;
 }
