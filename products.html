@@ -203,6 +203,53 @@
   .col-img{ width:72px; }
   .col-sku{ width:110px; }
   .col-links{ width:260px; }
+  .col-num{ width:84px; white-space:nowrap; }
+  .col-serving{ width:130px; }
+  .col-pick{ display:none; width:96px; }
+  table.pick-mode .col-pick{ display:table-cell; }
+
+  .prod-num{ font-size:13px; font-weight:600; white-space:nowrap; }
+  .prod-serving{ font-size:12px; color:var(--ink-soft); overflow-wrap:anywhere; }
+
+  /* Pick mode: opened from the "+" on a meal in index.html. */
+  .pick-banner{
+    display:none;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    flex-wrap:wrap;
+    background:#FFF4CC;
+    border:1px solid #E3C55A;
+    border-radius:4px;
+    padding:12px 18px;
+    margin-bottom:18px;
+    font-size:14px;
+  }
+  .pick-banner.on{ display:flex; }
+  .pick-banner button{
+    font-family:var(--sans);
+    font-size:13px;
+    font-weight:600;
+    border:1px solid var(--line-strong);
+    background:var(--card);
+    color:var(--steel-deep);
+    border-radius:3px;
+    padding:7px 12px;
+    cursor:pointer;
+  }
+  table.pick-mode tbody tr{ cursor:pointer; }
+  .select-btn{
+    font-family:var(--sans);
+    font-size:13px;
+    font-weight:700;
+    border:0;
+    background:var(--steel-deep);
+    color:#fff;
+    border-radius:3px;
+    padding:8px 14px;
+    cursor:pointer;
+  }
+  .select-btn:hover{ background:var(--steel); }
 
   .prod-thumb{
     width:56px;
@@ -403,6 +450,7 @@
   }
 
   a:focus-visible,
+  .select-btn:focus-visible,
   .pager button:focus-visible{
     outline:2px solid var(--steel);
     outline-offset:2px;
@@ -418,8 +466,9 @@
       gap:4px 12px;
     }
     td{ padding:2px 0; border:none; }
-    .col-img{ grid-row:1 / span 3; }
     .prod-sku::before{ content:'SKU '; }
+    .col-img{ grid-row:1 / span 5; }
+    table.pick-mode .col-pick{ display:block; width:auto; }
   }
 </style>
 </head>
@@ -431,6 +480,11 @@
 </header>
 
 <main>
+  <div class="pick-banner" id="pick-banner">
+    <span id="pick-banner-text">Choose a meal.</span>
+    <button type="button" id="pick-cancel">Cancel &amp; go back</button>
+  </div>
+
   <div class="toolbar">
     <input type="search" id="search-box" placeholder="Filter by product name or SKU&hellip;" />
     <span class="count-label" id="count-label"></span>
@@ -448,7 +502,11 @@
         <th class="col-img">Image</th>
         <th class="col-sku">SKU</th>
         <th>Product Name</th>
+        <th class="col-num">Calories</th>
+        <th class="col-num">Price</th>
+        <th class="col-serving">Serving</th>
         <th class="col-links">Links</th>
+        <th class="col-pick">Pick</th>
       </tr>
     </thead>
     <tbody id="products-body"></tbody>
@@ -498,6 +556,55 @@
   function getName(p){
     return p.PRODUCT_NAME || p.name || 'Unnamed item';
   }
+  function getCalories(p){
+    const n = Number(p.calories);
+    if (p.calories !== '' && p.calories != null && !isNaN(n) && n > 0) return n;
+    const off = p.open_food_facts && Number(p.open_food_facts.calories);
+    return off > 0 ? off : 0;
+  }
+  function getPriceNumber(p){
+    const n = parseFloat(p.PRICE_CURRENT ?? p.price ?? p.PRICE_RETAIL);
+    return isNaN(n) ? 0 : n;
+  }
+  function getServing(p){
+    return p.SERVINGS_PER_CONTAINER || p.servings_per_container || p.servings ||
+      (p.open_food_facts && p.open_food_facts.servings_per_container) || 'N/A';
+  }
+
+  // ---- Pick mode (opened from the "+" on a meal in index.html) ----
+  const pickRequest = (function(){
+    if (!/[?&]pick=1/.test(location.search)) return null;
+    try{
+      const r = JSON.parse(localStorage.getItem('freezerPickRequest') || 'null');
+      return (r && r.slot) ? r : null;
+    }catch(err){ return null; }
+  })();
+
+  function trimProduct(p){
+    // Only what index.html needs, so the stored hand-off stays small.
+    const keys = ['SKU','PRODUCT_NAME','PRICE_CURRENT','PRICE_RETAIL','PRODUCT_URL','INSTACART_URL',
+                  'image_url','calories','servings_per_container','SERVINGS_PER_CONTAINER','servings'];
+    const out = {};
+    keys.forEach(k => { if (p[k] !== undefined) out[k] = p[k]; });
+    if (!out.PRODUCT_NAME && p.name) out.PRODUCT_NAME = p.name;
+    return out;
+  }
+
+  function choose(p){
+    try{
+      localStorage.setItem('freezerPickResult', JSON.stringify({
+        tab: pickRequest.tab,
+        dayIndex: pickRequest.dayIndex,
+        slot: pickRequest.slot,
+        product: trimProduct(p)
+      }));
+      localStorage.removeItem('freezerPickRequest');
+    }catch(err){
+      alert("Couldn't save your pick in this browser's storage.");
+      return;
+    }
+    window.location.href = 'index.html';
+  }
 
   function renderRow(p){
     const sku = getSku(p);
@@ -518,13 +625,28 @@
       ? `<a class="prod-link prod-link-instacart" href="${escapeHtml(instacartUrl)}" target="_blank" rel="noopener noreferrer" title="View on Instacart"><span class="prod-link-name"><span class="sr-only">View on </span>Instacart &rarr;</span></a>`
       : `<span class="prod-link-missing">no Instacart link</span>`;
 
+    const cal = getCalories(p);
+    const price = getPriceNumber(p);
+    const serving = getServing(p);
+
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td class="col-img">${thumbImg}</td>
       <td class="prod-sku">${escapeHtml(sku)}</td>
       <td class="prod-name">${escapeHtml(name)}</td>
+      <td class="prod-num">${cal ? cal + ' cal' : 'N/A'}</td>
+      <td class="prod-num">${price ? '$' + price.toFixed(2) : 'N/A'}</td>
+      <td class="prod-serving">${escapeHtml(serving)}</td>
       <td class="prod-links"><div class="prod-links">${walmartLink}${instacartLink}</div></td>
+      <td class="col-pick"><button type="button" class="select-btn">Select</button></td>
     `;
+    if (pickRequest){
+      tr.querySelector('.select-btn').addEventListener('click', (e) => { e.stopPropagation(); choose(p); });
+      tr.addEventListener('click', (e) => {
+        if (e.target.closest('a')) return; // Walmart / Instacart links still just open
+        choose(p);
+      });
+    }
     return tr;
   }
 
@@ -649,6 +771,18 @@
       emptyEl.style.display = 'block';
       console.error('Failed to load candidate_pool.json', err);
     }
+  }
+
+  if (pickRequest){
+    tableEl.classList.add('pick-mode');
+    const where = [pickRequest.dayName, pickRequest.slot].filter(Boolean).join(' \u00b7 ');
+    document.getElementById('pick-banner-text').textContent =
+      'Choosing a meal for ' + where + ' \u2014 click a product (or Select) to put it in your plan.';
+    document.getElementById('pick-banner').classList.add('on');
+    document.getElementById('pick-cancel').addEventListener('click', () => {
+      try{ localStorage.removeItem('freezerPickRequest'); }catch(err){}
+      window.location.href = 'index.html';
+    });
   }
 
   init();

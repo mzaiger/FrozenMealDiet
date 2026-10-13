@@ -546,6 +546,36 @@
 
   .meal-money .meal-serving{ margin-left:auto; }
 
+  /* Big "+" under Serving: opens products.html so a meal can be picked by hand. */
+  .pick-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:46px;
+    height:46px;
+    margin:8px 0 0 auto;
+    padding:0 0 4px;
+    font-family:var(--sans);
+    font-size:34px;
+    font-weight:400;
+    line-height:1;
+    color:#fff;
+    background:var(--steel-deep);
+    border:0;
+    border-radius:50%;
+    cursor:pointer;
+    transition:background-color .15s ease, transform .15s ease;
+  }
+  .pick-btn:hover{ background:var(--steel); transform:scale(1.06); }
+  .pick-btn:focus-visible{ outline:2px solid var(--steel); outline-offset:2px; }
+
+  /* Brief highlight on the meal you just picked after returning here. */
+  @keyframes pickedFlash{
+    from{ background:rgba(245,200,59,0.55); }
+    to{ background:transparent; }
+  }
+  .meal-row.just-picked{ animation:pickedFlash 2.2s ease-out; }
+
 
   .meal-link{
     --accent:var(--steel);
@@ -1394,9 +1424,11 @@ async function loadPool(){
     if(restoreCurrentWeek()){
       activeTab = 'current';
     }
+    const pickedMeal = applyPendingPick();
     renderTabs();
     renderCurrentOrSaved();
     updateSaveButton();
+    flashPickedMeal(pickedMeal);
   }catch(err){
     setDataDate(null);
     document.getElementById('prompt-state').style.display = 'none';
@@ -1617,6 +1649,7 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
       <div class="meal-cal">${calories} cal*</div>
       <div class="meal-price">${priceDisplay}</div>
       <div class="meal-serving">Serving: ${servingsPerContainer}</div>
+      <button type="button" class="pick-btn" data-day="${dayIndex}" data-slot="${slot}" title="Pick this meal by hand from the product list" aria-label="Choose a different meal for ${slot} by hand">+</button>
     </div>
     <div class="meal-actions">${regenBtn}${walmartLinkHtml}${instacartLinkHtml}</div>
   `;
@@ -1768,6 +1801,61 @@ function regenerateMeal(dayIndex, slot){
   persistSavedWeeks();
 }
 
+// Manual pick: the "+" button remembers which day/slot (and which tab) it
+// was for, then opens products.html. Choosing a product there writes the
+// result back to storage and returns here; applyPendingPick() finishes it.
+function startManualPick(dayIndex, slot){
+  const days = (activeTab === 'current') ? currentWeek : (savedWeeks[activeTab] ? savedWeeks[activeTab].days : []);
+  const day = days[dayIndex];
+  const ok = setStorage('freezerPickRequest', JSON.stringify({
+    tab: activeTab,
+    dayIndex: dayIndex,
+    slot: slot,
+    dayName: day ? day.dayName : ''
+  }));
+  if(!ok){ alert("This browser won't let the page save the pick, so the product list can't send it back."); return; }
+  removeStorage('freezerPickResult');
+  window.location.href = 'products.html?pick=1';
+}
+
+function applyPendingPick(){
+  const raw = getStorage('freezerPickResult');
+  if(!raw) return null;
+  removeStorage('freezerPickResult');
+  let pick;
+  try{ pick = JSON.parse(raw); }catch(err){ return null; }
+  if(!pick || !pick.product || !pick.slot) return null;
+
+  let day, target;
+  if(pick.tab === 'current'){
+    day = currentWeek[pick.dayIndex];
+    target = currentTargetGlobal;
+  }else{
+    const saved = savedWeeks[pick.tab];
+    day = saved && saved.days[pick.dayIndex];
+    target = saved && saved.target;
+  }
+  if(!day || !day.meals || !day.meals[pick.slot]) return null;
+
+  day.meals[pick.slot] = (pick.tab === 'current') ? pick.product : compactMeal(pick.product);
+  day.total = Object.values(day.meals).reduce((s, m) => s + getMealCalories(m), 0);
+  day.inRange = day.total >= target - TOLERANCE && day.total <= target + TOLERANCE;
+
+  activeTab = pick.tab;
+  if(pick.tab === 'current') persistCurrentWeek(); else persistSavedWeeks();
+  return pick;
+}
+
+function flashPickedMeal(pick){
+  if(!pick) return;
+  const btn = Array.from(document.querySelectorAll('#week .pick-btn'))
+    .find(b => b.dataset.day === String(pick.dayIndex) && b.dataset.slot === pick.slot);
+  const row = btn && btn.closest('.meal-row');
+  if(!row) return;
+  row.scrollIntoView({ block: 'center' });
+  row.classList.add('just-picked');
+}
+
 function updateSaveButton(){
   const label = `Save as Week ${savedWeeks.length + 1}`;
   const disabled = !(currentWeek && currentWeek.length === DAY_NAMES.length);
@@ -1879,6 +1967,11 @@ document.getElementById('max-per-meal-enabled').addEventListener('change', funct
 document.getElementById('save-week').addEventListener('click', saveCurrentWeek);
 document.getElementById('save-week-top').addEventListener('click', saveCurrentWeek);
 document.getElementById('week').addEventListener('click', (e) => {
+  const pickBtn = e.target.closest('.pick-btn');
+  if(pickBtn){
+    startManualPick(parseInt(pickBtn.dataset.day, 10), pickBtn.dataset.slot);
+    return;
+  }
   const btn = e.target.closest('.regen-btn');
   if(!btn) return;
   regenerateMeal(parseInt(btn.dataset.day, 10), btn.dataset.slot);
