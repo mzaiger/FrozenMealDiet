@@ -1613,9 +1613,9 @@ function mealRow(slot, meal, canRegenerate, dayIndex){
     : `<div class="meal-thumb-link">${thumbImg}</div>`;
 
   const regenBtn = canRegenerate
-    ? `<button type="button" class="regen-btn" data-day="${dayIndex}" data-slot="${slot}" title="Swap this meal for another option">regenerate</button>`
+    ? `<button type="button" class="regen-btn" data-day="${dayIndex}" data-slot="${slot}" title="Swap this meal for another option">regen</button>`
     : '';
-  const pickBtn = `<button type="button" class="regen-btn pick-btn" data-day="${dayIndex}" data-slot="${slot}" title="Pick this meal by hand from the product list" aria-label="Choose this meal by hand">+</button>`;
+  const pickBtn = `<button type="button" class="regen-btn pick-btn" data-day="${dayIndex}" data-slot="${slot}" title="Pick this meal by hand from the product list" aria-label="Select this meal by hand">select</button>`;
 
   row.innerHTML = `
     ${thumb}
