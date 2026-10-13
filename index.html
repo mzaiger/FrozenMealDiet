@@ -535,9 +535,14 @@
   .meal-actions{
     grid-column:1 / -1;
     display:flex;
-    flex-wrap:wrap;
+    flex-wrap:nowrap;
     align-items:center;
-    gap:6px;
+    gap:4px;
+  }
+
+  /* Very narrow phones: not enough width for all four, so let them wrap. */
+  @media (max-width:380px){
+    .meal-actions{ flex-wrap:wrap; }
   }
 
   .meal-money{
@@ -560,10 +565,10 @@
     position:relative;
     display:inline-flex;
     align-items:center;
-    gap:5px;
+    gap:4px;
     flex:0 1 auto;
     min-width:0;
-    padding:3px 8px 3px 3px;
+    padding:2px 4px 2px 2px;
     font-size:12px;
     font-weight:600;
     line-height:20px;
@@ -752,7 +757,7 @@
     color:var(--ink);
     border:1px solid;
     border-radius:3px;
-    padding:3px 8px;
+    padding:3px 6px;
     margin-top:0;
     cursor:pointer;
   }
