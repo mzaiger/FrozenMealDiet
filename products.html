@@ -458,17 +458,36 @@
 
   @media (max-width:640px){
     thead{ display:none; }
-    table, tbody, tr, td{ display:block; width:100%; }
+    table, tbody{ display:block; width:100%; }
     tbody tr{
-      padding:12px 14px;
       display:grid;
-      grid-template-columns:64px 1fr;
-      gap:4px 12px;
+      grid-template-columns:64px auto auto minmax(0,1fr);
+      grid-template-areas:
+        "img sku     sku   sku"
+        "img name    name  name"
+        "img cal     price serving"
+        "links links links links"
+        "pick  pick  pick  pick";
+      column-gap:12px;
+      row-gap:4px;
+      align-items:center;
+      padding:14px;
     }
-    td{ padding:2px 0; border:none; }
+    td{ display:block; width:auto; padding:0; border:none; min-width:0; }
+    .col-img{ grid-area:img; align-self:start; width:auto; }
+    .prod-sku{ grid-area:sku; }
     .prod-sku::before{ content:'SKU '; }
-    .col-img{ grid-row:1 / span 5; }
-    table.pick-mode .col-pick{ display:block; width:auto; }
+    .prod-name{ grid-area:name; }
+    .prod-cal{ grid-area:cal; }
+    .prod-price{ grid-area:price; }
+    .prod-serving{ grid-area:serving; }
+    td.prod-links{ grid-area:links; width:auto; margin-top:8px; }
+    div.prod-links{ flex-wrap:nowrap; gap:8px; }
+    div.prod-links .prod-link,
+    div.prod-links .prod-link-missing{ flex:1 1 0; min-width:0; justify-content:flex-start; }
+    table.pick-mode .col-pick{ display:block; grid-area:pick; width:auto; margin-top:10px; }
+    .select-btn{ width:100%; padding:12px 14px; font-size:15px; }
+    .col-num, .col-serving{ width:auto; }
   }
 </style>
 </head>
@@ -634,8 +653,8 @@
       <td class="col-img">${thumbImg}</td>
       <td class="prod-sku">${escapeHtml(sku)}</td>
       <td class="prod-name">${escapeHtml(name)}</td>
-      <td class="prod-num">${cal ? cal + ' cal' : 'N/A'}</td>
-      <td class="prod-num">${price ? '$' + price.toFixed(2) : 'N/A'}</td>
+      <td class="prod-num prod-cal">${cal ? cal + ' cal' : 'N/A'}</td>
+      <td class="prod-num prod-price">${price ? '$' + price.toFixed(2) : 'N/A'}</td>
       <td class="prod-serving">${escapeHtml(serving)}</td>
       <td class="prod-links"><div class="prod-links">${walmartLink}${instacartLink}</div></td>
       <td class="col-pick"><button type="button" class="select-btn">Select</button></td>
