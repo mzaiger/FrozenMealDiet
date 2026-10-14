@@ -668,7 +668,7 @@
     return tr;
   }
 
-  function renderPage(){
+  function renderPage(toTop){
     const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
     currentPage = Math.min(Math.max(1, currentPage), totalPages);
 
@@ -687,7 +687,10 @@
     renderPager(pagerTop, totalPages);
     renderPager(pagerBottom, totalPages);
 
-    window.scrollTo({ top: tableEl.offsetTop - 20, behavior: 'instant' in window ? 'instant' : 'auto' });
+    // First load (e.g. arriving from a meal's "select" button): stay at the very
+    // top so the pick banner and search box are visible. Paging/filtering still
+    // jumps to the start of the table.
+    window.scrollTo({ top: toTop ? 0 : tableEl.offsetTop - 20, behavior: 'instant' in window ? 'instant' : 'auto' });
   }
 
   function renderPager(container, totalPages){
@@ -783,7 +786,7 @@
         return;
       }
       tableEl.style.display = 'table';
-      renderPage();
+      renderPage(true);
     } catch (err){
       statusEl.style.display = 'none';
       emptyEl.style.display = 'block';
