@@ -4,8 +4,12 @@ A 7-day frozen meal planner: `candidate_pool.json` holds the pool of
 frozen-food items (name, price, calories, serving, image, Walmart and
 Instacart links, link-liveness status), and `index.html` builds a
 randomized week of meals from that pool, kept within a calorie target and a
-per-meal price cap, all client-side. `products.html` is a browsable view of
-the same pool.
+per-meal price cap, all client-side. Each meal's **regen** button swaps in another meal
+within 100 calories either way of the one it replaces (the closest-calorie
+meal if nothing is that close), drawn from the same filtered pool and never
+repeating a meal already used that day; it works on saved weeks too. The
+range is the `REGEN_CALORIE_RANGE` constant in `index.html`.
+`products.html` is a browsable view of the same pool.
 
 The pool started as a Walmart product CSV export (~1,800 items, 2022)
 enriched with USDA calorie data, and keeps growing with new products found
