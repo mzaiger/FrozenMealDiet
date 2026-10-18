@@ -5,9 +5,11 @@ frozen-food items (name, price, calories, serving, image, Walmart and
 Instacart links, link-liveness status), and `index.html` builds a
 randomized week of meals from that pool, kept within a calorie target and a
 per-meal price cap, all client-side. Each meal's **regen** button swaps in another meal
-within 100 calories either way of the one it replaces (the closest-calorie
-meal if nothing is that close), drawn from the same filtered pool and never
-repeating a meal already used that day; it works on saved weeks too. The
+within 150 calories either way of the slot's original meal (so repeated
+presses stay near the starting calorie count; the closest-calorie meal if
+nothing is that close), drawn from the same filtered pool and never
+repeating a meal already used that day; it works on saved weeks too.
+Picking a meal by hand resets that slot's starting point. The
 range is the `REGEN_CALORIE_RANGE` constant in `index.html`.
 `products.html` is a browsable view of the same pool.
 

@@ -945,8 +945,9 @@
 <script>
 const TOLERANCE = 250;
 // Per-meal regen swaps in a meal within this many calories (either way) of the
-// one it replaces; if nothing in the pool is that close, the closest one wins.
-const REGEN_CALORIE_RANGE = 100;
+// slot's ORIGINAL meal (the one there before the first regen, so repeated
+// presses don't drift); if nothing in the pool is that close, the closest wins.
+const REGEN_CALORIE_RANGE = 150;
 const DAY_NAMES = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
 
 let pool = { generated_at: "", source: "", calories_source: "", breakfast: [], general: [] };
@@ -1162,7 +1163,7 @@ function persistCurrentWeek(){
     days: currentWeek.map(day => {
       const meals = {};
       Object.keys(day.meals).forEach(slot => { meals[slot] = compactMeal(day.meals[slot]); });
-      return { dayName: day.dayName, total: day.total, inRange: day.inRange, slotOrder: day.slotOrder, meals };
+      return { dayName: day.dayName, total: day.total, inRange: day.inRange, slotOrder: day.slotOrder, meals, regenBase: day.regenBase || {} };
     })
   };
   setStorage('freezerCurrentWeek', JSON.stringify(payload));
@@ -1190,7 +1191,8 @@ function restoreCurrentWeek(){
     total: day.total,
     inRange: day.inRange,
     slotOrder: day.slotOrder,
-    meals: day.meals
+    meals: day.meals,
+    regenBase: day.regenBase || {}
   }));
 
   return true;
@@ -1739,9 +1741,9 @@ function poolsForCapInfo(capInfo){
 // Picks the replacement for a regen: a random meal within REGEN_CALORIE_RANGE of
 // the meal being replaced, or the closest-calorie meal if none is that close.
 // `choices` is the candidate list (already de-duplicated against the day);
-// `original` is the meal being replaced, never picked again if avoidable.
-function pickRegenReplacement(choices, original){
-  const target = getMealCalories(original);
+// `original` is the meal currently in the slot (not picked again if avoidable);
+// `target` is the calorie count to stay near (the slot's original meal).
+function pickRegenReplacement(choices, original, target){
   const nameOf = m => m.PRODUCT_NAME || m.name;
   let cands = choices.filter(m => m !== original && nameOf(m) !== nameOf(original));
   if(!cands.length) cands = choices;
@@ -1768,7 +1770,9 @@ function regenerateMeal(dayIndex, slot){
     let choices = sourcePool.filter(m => !used.includes(m));
     if(!choices.length) choices = sourcePool;
 
-    day.meals[slot] = pickRegenReplacement(choices, day.meals[slot]);
+    if(!day.regenBase) day.regenBase = {};
+    if(day.regenBase[slot] == null) day.regenBase[slot] = getMealCalories(day.meals[slot]);
+    day.meals[slot] = pickRegenReplacement(choices, day.meals[slot], day.regenBase[slot]);
     day.total = Object.values(day.meals).reduce((s, m) => s + getMealCalories(m), 0);
     const low = currentTargetGlobal - TOLERANCE;
     const high = currentTargetGlobal + TOLERANCE;
@@ -1792,7 +1796,9 @@ function regenerateMeal(dayIndex, slot){
   let choices = sourcePool.filter(m => !usedNames.includes(m.PRODUCT_NAME || m.name));
   if(!choices.length) choices = sourcePool;
 
-  day.meals[slot] = compactMeal(pickRegenReplacement(choices, day.meals[slot]));
+  if(!day.regenBase) day.regenBase = {};
+  if(day.regenBase[slot] == null) day.regenBase[slot] = getMealCalories(day.meals[slot]);
+  day.meals[slot] = compactMeal(pickRegenReplacement(choices, day.meals[slot], day.regenBase[slot]));
   day.total = Object.values(day.meals).reduce((s, m) => s + getMealCalories(m), 0);
   const low = saved.target - TOLERANCE;
   const high = saved.target + TOLERANCE;
@@ -1839,6 +1845,7 @@ function applyPendingPick(){
   if(!day || !day.meals || !day.meals[pick.slot]) return null;
 
   day.meals[pick.slot] = (pick.tab === 'current') ? pick.product : compactMeal(pick.product);
+  if(day.regenBase) delete day.regenBase[pick.slot]; // a hand-picked meal becomes the new anchor
   day.total = Object.values(day.meals).reduce((s, m) => s + getMealCalories(m), 0);
   day.inRange = day.total >= target - TOLERANCE && day.total <= target + TOLERANCE;
 
@@ -1874,7 +1881,7 @@ function saveCurrentWeek(){
   const days = currentWeek.map(day => {
     const meals = {};
     Object.keys(day.meals).forEach(slot => { meals[slot] = compactMeal(day.meals[slot]); });
-    return { dayName: day.dayName, total: day.total, inRange: day.inRange, slotOrder: day.slotOrder, meals };
+    return { dayName: day.dayName, total: day.total, inRange: day.inRange, slotOrder: day.slotOrder, meals, regenBase: day.regenBase || {} };
   });
 
   savedWeeks.push({ label, target: currentTargetGlobal, capInfo: activeCapInfo, savedAt: new Date().toISOString(), days });
