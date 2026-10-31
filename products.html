@@ -505,7 +505,7 @@
   </div>
 
   <div class="toolbar">
-    <input type="search" id="search-box" placeholder="Filter by product name or SKU&hellip;" />
+    <input type="search" id="search-box" placeholder="Search products or SKU&hellip;" />
     <span class="count-label" id="count-label"></span>
   </div>
 
@@ -752,16 +752,124 @@
     container.appendChild(jump);
   }
 
+  // ---- Fuzzy search ---------------------------------------------------------
+  // Forgiving, Google-ish matching: "&" == "and", apostrophes/punctuation/accents are
+  // ignored, plural "s" is ignored, word order doesn't matter, partial words work
+  // ("chick fil" finds Chick-fil-A), and small typos are tolerated ("stake" -> Steak).
+  const STOP = new Set(['and', 'the', 'a', 'of', 'with', 'n']);
+
+  function normalize(str){
+    return String(str || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/&/g, ' and ')
+      .replace(/['\u2019`]/g, '')
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim();
+  }
+
+  function tokenize(str){
+    return normalize(str).split(' ')
+      .filter(t => t && !STOP.has(t))
+      .map(t => (t.length > 3 && t.endsWith('s') && !t.endsWith('ss')) ? t.slice(0, -1) : t);
+  }
+
+  // Levenshtein distance with adjacent transposition, bails out once it exceeds max.
+  function editDistance(a, b, max){
+    if (Math.abs(a.length - b.length) > max) return max + 1;
+    let prev2 = null;
+    let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+    for (let i = 1; i <= a.length; i++){
+      const cur = [i];
+      let rowMin = i;
+      for (let j = 1; j <= b.length; j++){
+        const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+        let v = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost);
+        if (prev2 && i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]){
+          v = Math.min(v, prev2[j - 2] + 1);
+        }
+        cur[j] = v;
+        if (v < rowMin) rowMin = v;
+      }
+      if (rowMin > max) return max + 1;
+      prev2 = prev;
+      prev = cur;
+    }
+    return prev[b.length];
+  }
+
+  // How well one query word matches one item word (0 = no match).
+  function tokenScore(q, t){
+    if (q === t) return 1;
+    if (t.startsWith(q)) return q.length >= 2 ? 0.85 : 0.5;
+    if (q.length >= 3 && t.includes(q)) return 0.6;
+    // Typo allowance grows with word length; the first letter must match so short words
+    // don't turn into noise.
+    const maxEdits = q.length >= 8 ? 2 : (q.length >= 5 ? 2 : (q.length >= 3 ? 1 : 0));
+    if (maxEdits && q[0] === t[0]){
+      if (editDistance(q, t, maxEdits) <= maxEdits) return 0.55;
+      // typo while still typing: compare against the same-length start of the word
+      if (t.length > q.length && editDistance(q, t.slice(0, q.length), maxEdits) <= maxEdits) return 0.45;
+    }
+    return 0;
+  }
+
+  function searchIndex(p){
+    if (!p._ix){
+      const nameTokens = tokenize(getName(p));
+      p._ix = {
+        nameTokens,
+        compact: normalize(getName(p)).replace(/ /g, ''),
+        nameStr: nameTokens.join(' '),
+        sku: String(getSku(p)).toLowerCase().trim()
+      };
+    }
+    return p._ix;
+  }
+
+  // Returns 0 when the item doesn't match, otherwise a relevance score (higher = better).
+  function fuzzyScore(p, qTokens, qCompact, qStr, qRaw){
+    const ix = searchIndex(p);
+    // SKU / UPC: plain substring match on what was typed
+    if (qRaw.length >= 3 && ix.sku && ix.sku.includes(qRaw)) return 2;
+    let total = 0;
+    for (const q of qTokens){
+      let best = 0;
+      for (const t of ix.nameTokens){ best = Math.max(best, tokenScore(q, t)); }
+      if (!best && q.length >= 4 && ix.compact.includes(q)) best = 0.4;   // "potpie" vs "Pot Pie"
+      if (!best) { total = 0; break; }
+      total += best;
+    }
+    if (total){
+      total /= qTokens.length;
+      if (ix.nameStr.includes(qStr)) total += 0.5;   // words appear together, in order
+      return total;
+    }
+    // Fallback for run-together / split words: "mcdonalds" vs "Mc Donalds"
+    if (qCompact.length >= 4 && ix.compact.includes(qCompact)) return 0.4;
+    return 0;
+  }
+
   function applyFilter(){
-    const q = searchEl.value.trim().toLowerCase();
-    if (!q){
+    const raw = searchEl.value.trim();
+    const qTokens = tokenize(raw);
+    const qCompact = normalize(raw).replace(/ /g, '');
+    const qStr = qTokens.join(' ');
+    const searching = qTokens.length > 0 || qCompact.length > 0;
+    if (searching && !qTokens.length) qTokens.push(qCompact);   // e.g. only "&" or "the"
+
+    if (!searching){
       filtered = allProducts;
     } else {
-      filtered = allProducts.filter(p => {
-        const name = getName(p).toLowerCase();
-        const sku = String(getSku(p)).toLowerCase();
-        return name.includes(q) || sku.includes(q);
-      });
+      const qRaw = raw.toLowerCase();
+      const scored = [];
+      for (const p of allProducts){
+        const sc = fuzzyScore(p, qTokens, qCompact, qStr, qRaw);
+        if (sc > 0) scored.push([sc, p]);
+      }
+      // Best match first; ties keep the original order because sort is stable.
+      scored.sort((a, b) => b[0] - a[0]);
+      filtered = scored.map(x => x[1]);
     }
     currentPage = 1;
     renderPage();
