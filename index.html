@@ -833,9 +833,45 @@
     outline:2px solid var(--steel);
     outline-offset:2px;
   }
+
+  /* Move notice dialog */
+  #move-notice{
+    border:none; border-radius:12px; padding:0; max-width:min(440px,92vw);
+    background:var(--card); color:var(--ink); font-family:var(--sans);
+    box-shadow:0 20px 60px rgba(18,54,69,.35);
+  }
+  #move-notice::backdrop{ background:rgba(18,54,69,.55); }
+  #move-notice .mn-bar{ background:var(--steel-deep); color:#fff; padding:14px 20px; font-weight:700; font-size:1.05rem; border-bottom:4px solid var(--tag); }
+  #move-notice .mn-body{ padding:18px 20px 6px; line-height:1.5; }
+  #move-notice .mn-body p{ margin:0 0 12px; }
+  #move-notice .mn-link{ display:inline-block; word-break:break-all; color:var(--steel); font-weight:700; }
+  #move-notice .mn-actions{ padding:8px 20px 20px; display:flex; justify-content:flex-end; }
+  #move-notice button{
+    font:inherit; font-weight:700; cursor:pointer; border:none; border-radius:8px;
+    padding:10px 20px; background:var(--steel); color:#fff;
+  }
+  #move-notice button:focus-visible{ outline:2px solid var(--steel); outline-offset:2px; }
 </style>
 </head>
 <body>
+
+<dialog id="move-notice" aria-labelledby="mn-title">
+  <div class="mn-bar" id="mn-title">A new version is available</div>
+  <div class="mn-body">
+    <p>A new version of this site has been created. <strong>This version will be removed on 12/1/2026.</strong></p>
+    <p>Visit the new site here:<br>
+      <a class="mn-link" href="https://marcitech.is-a.dev/SingleManDiet/">https://marcitech.is-a.dev/SingleManDiet/</a></p>
+  </div>
+  <div class="mn-actions"><button type="button" id="mn-close">Close and continue</button></div>
+</dialog>
+<script>
+(function(){
+  var d=document.getElementById('move-notice');
+  if(!d) return;
+  document.getElementById('mn-close').addEventListener('click',function(){ d.close(); });
+  if(typeof d.showModal==='function'){ d.showModal(); } else { d.setAttribute('open',''); }
+})();
+</script>
 
 <header>
   <h1>Poor Man's Frozen Meal Diet</h1>
